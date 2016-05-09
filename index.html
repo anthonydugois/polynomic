@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+<head>
+  <title>Bernstein</title>
+
+  <style>
+    body {
+      padding: 0;
+      margin: 0;
+    }
+    textarea {
+      width: 500px;
+      height: 250px;
+    }
+    svg {
+      display: block;
+      width: 100%;
+      height: 800px;
+    }
+    path {
+      fill: none;
+      stroke-width: 2px;
+    }
+    .from {
+      stroke: #000;
+    }
+    .to {
+      stroke: #f00;
+    }
+  </style>
+</head>
+<body>
+  <textarea class="input">M0 0 h50 v50 h5v5h5v5h30z</textarea>
+  <textarea class="output"></textarea>
+
+  <svg>
+    <path d="" class="from"></path>
+    <path d="" class="to"></path>
+  </svg>
+
+  <script src="dist/app.js"></script>
+</body>
+</html>
