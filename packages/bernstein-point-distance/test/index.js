@@ -16,4 +16,11 @@ describe("point-distance", function () {
 
     assert.strictEqual(test, expected)
   })
+
+  it("should give the distance between a point and a segment", function () {
+    const test = distanceSegment(M(0, 200), M(0, 0), M(0, 100))
+    const expected = 100
+
+    assert.strictEqual(test, expected)
+  })
 })

@@ -8272,6 +8272,13 @@
 
 	    _chai.assert.strictEqual(test, expected);
 	  });
+
+	  it("should give the distance between a point and a segment", function () {
+	    var test = (0, _bernsteinPointDistance.distanceSegment)((0, _bernsteinCore.M)(0, -100), (0, _bernsteinCore.M)(0, 0), (0, _bernsteinCore.M)(0, 100));
+	    var expected = 100;
+
+	    _chai.assert.strictEqual(test, expected);
+	  });
 	});
 
 /***/ },

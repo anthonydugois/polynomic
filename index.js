@@ -18,9 +18,9 @@ update(input.value)
 
 function update(value) {
   const path = parsePathstring(value)
-  let result = simplify(path, .001)
+  let result = simplify(path, 30)
 
-  console.log(result)
+  // console.log(result)
 
   output.value = buildPathstring(result)
 
