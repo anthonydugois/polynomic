@@ -1,15 +1,61 @@
+import clean from "bernstein-clean-path"
+import combine from "bernstein-combine-path"
+import join from "bernstein-join-paths"
+
 import translate from "bernstein-translate-path"
 import scale from "bernstein-scale-path"
 import skew from "bernstein-skew-path"
 import rotate from "bernstein-rotate-path"
+
 import parsePathstring from "bernstein-parse-pathstring"
 import buildPathstring from "bernstein-build-pathstring"
 
 export class Bernstein {
-  constructor(points) {
-    if (typeof points === "string") {
-      this.points = parsePathstring(points)
+  constructor(input) {
+    this.points = this.getPointList(input)
+  }
+
+  getPointList(input) {
+    if (input instanceof Bernstein) {
+      return input.getPoints()
     }
+
+    if (typeof input === "string") {
+      return parsePathstring(input)
+    }
+
+    return input
+  }
+
+  getPointListArray(arr) {
+    if (!Array.isArray(arr)) {
+      arr = [arr]
+    }
+
+    return arr.map(this.getPointList)
+  }
+
+  clean() {
+    this.points = clean(this.points)
+
+    return this
+  }
+
+  combine() {
+    this.points = combine(this.points)
+
+    return this
+  }
+
+  join(paths, shouldClose = false) {
+    paths = this.getPointListArray(paths)
+
+    this.points = join([
+      this.points,
+      ...paths
+    ], shouldClose)
+
+    return this
   }
 
   /**
