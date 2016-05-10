@@ -1,17 +1,33 @@
 import Point from "bernstein-core"
+import { isH, isV } from "bernstein-point-is"
+import isRelative from "bernstein-point-is-relative"
 
 export default function matrix(path, a) {
+  let lastComputedPoint
+
   return path.map((p, i) => {
-    const previous = i > 0 && path[i - 1]
-    const px = typeof p.x === "number" ? p.x : previous.x
-    const py = typeof p.y === "number" ? p.y : previous.y
+    const prev = i > 0 && path[i - 1]
+    const px = typeof p.x === "number" ? p.x : prev.x
+    const py = typeof p.y === "number" ? p.y : prev.y
     const px1 = typeof p.parameters.x1 === "number" && p.parameters.x1
     const py1 = typeof p.parameters.y1 === "number" && p.parameters.y1
     const px2 = typeof p.parameters.x2 === "number" && p.parameters.x2
     const py2 = typeof p.parameters.y2 === "number" && p.parameters.y2
 
+    // compute position
     const [x, y] = multiply3x1(a, [px, py, 1])
 
+    // get point code
+    let code = p.code
+
+    if (
+      (isH(p) && y !== lastComputedPoint.y)
+      || (isV(p) && x !== lastComputedPoint.x)
+    ) {
+      code = isRelative(p) ? "l" : "L"
+    }
+
+    // compute parameters
     let x1, y1, x2, y2
 
     if (px1 !== false && py1 !== false) {
@@ -22,13 +38,19 @@ export default function matrix(path, a) {
       [x2, y2] = multiply3x1(a, [px2, py2, 1])
     }
 
-    return Point(p.code, x, y, {
+    const parameters = {
       ...p.parameters,
       ...(typeof x1 !== "undefined" && { x1 }),
       ...(typeof y1 !== "undefined" && { y1 }),
       ...(typeof x2 !== "undefined" && { x2 }),
       ...(typeof y2 !== "undefined" && { y2 }),
-    })
+    }
+
+    // this point will be used to know if the next H or V
+    // should be converted into L
+    lastComputedPoint = Point(code, x, y, parameters)
+
+    return lastComputedPoint
   })
 }
 

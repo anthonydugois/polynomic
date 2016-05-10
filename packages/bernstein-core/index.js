@@ -1,3 +1,92 @@
+import translate from "bernstein-translate-path"
+import scale from "bernstein-scale-path"
+import skew from "bernstein-skew-path"
+import rotate from "bernstein-rotate-path"
+import parsePathstring from "bernstein-parse-pathstring"
+import buildPathstring from "bernstein-build-pathstring"
+
+export class Bernstein {
+  constructor(points) {
+    if (typeof points === "string") {
+      this.points = parsePathstring(points)
+    }
+  }
+
+  /**
+   * Transforms
+   */
+  translate(dx, dy) {
+    this.points = translate(this.points, dx, dy)
+
+    return this
+  }
+
+  translateX(dx) {
+    this.points = translate(this.points, dx, 0)
+
+    return this
+  }
+
+  translateY(dy) {
+    this.points = translate(this.points, 0, dy)
+
+    return this
+  }
+
+  scale(dx, dy) {
+    this.points = scale(this.points, dx, dy)
+
+    return this
+  }
+
+  scaleX(dx) {
+    this.points = scale(this.points, dx, 1)
+
+    return this
+  }
+
+  scaleY(dy) {
+    this.points = scale(this.points, 1, dy)
+
+    return this
+  }
+
+  skew(dx, dy) {
+    this.points = skew(this.points, dx, dy)
+
+    return this
+  }
+
+  skewX(dx) {
+    this.points = skew(this.points, dx, 0)
+
+    return this
+  }
+
+  skewY(dy) {
+    this.points = skew(this.points, 0, dy)
+
+    return this
+  }
+
+  rotate(theta) {
+    this.points = rotate(this.points, theta)
+
+    return this
+  }
+
+  /**
+   * Getters
+   */
+  getPoints() {
+    return this.points
+  }
+
+  getPath() {
+    return buildPathstring(this.points)
+  }
+}
+
 export default function Point(code, x, y, parameters = {}) {
   return {
     code,

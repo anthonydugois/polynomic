@@ -1,9 +1,4 @@
-import parsePathstring from "bernstein-parse-pathstring"
-import buildPathstring from "bernstein-build-pathstring"
-import translate from "bernstein-translate-path"
-import rotate from "bernstein-rotate-path"
-import combine from "bernstein-combine-path"
-import simplify from "bernstein-simplify-path"
+import { Bernstein } from "bernstein-core"
 
 const input = document.querySelector(".input")
 const output = document.querySelector(".output")
@@ -17,13 +12,26 @@ input.addEventListener("blur", function (e) {
 update(input.value)
 
 function update(value) {
-  const path = parsePathstring(value)
-  let result = simplify(path, 30)
+  const path = new Bernstein(value)
 
-  // console.log(result)
+  path.translateX(50)
+  path.rotate(Math.PI / 4)
 
-  output.value = buildPathstring(result)
+  output.value = path.getPath()
 
   from.setAttribute("d", value)
   to.setAttribute("d", output.value)
+
+  /*function a() {
+    path.rotate(Math.PI / 40)
+
+    output.value = path.getPath()
+
+    from.setAttribute("d", value)
+    to.setAttribute("d", output.value)
+
+    setTimeout(a, 10)
+  }
+
+  a()*/
 }
