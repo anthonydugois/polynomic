@@ -1,4 +1,3 @@
-import deepEqual from "deep-equal"
 import { m, M, z } from "bernstein-core"
 import { isM, isL, isH, isV, isZ } from "bernstein-point-is"
 import isRelative from "bernstein-point-is-relative"
@@ -108,9 +107,9 @@ export function makeSureFirstPointsAreM(path) {
 export function removeConsecutiveSamePoints(path) {
   return path.reduce(
     (acc, point, i) => {
-      const previous = i > 0 && acc[acc.length - 1]
+      const prev = i > 0 && acc[acc.length - 1]
 
-      if (previous && deepEqual(previous, point)) {
+      if (prev && prev.x === point.x && prev.y === point.y) {
         return acc
       }
 

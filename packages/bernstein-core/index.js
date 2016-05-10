@@ -13,9 +13,14 @@ import buildPathstring from "bernstein-build-pathstring"
 export class Bernstein {
   constructor(input) {
     this.points = this.getPointList(input)
+    this.origin = { x: 0, y: 0 }
   }
 
   getPointList(input) {
+    if (input instanceof SVGPathElement) {
+      return parsePathstring(input.getAttribute("d"))
+    }
+
     if (input instanceof Bernstein) {
       return input.getPoints()
     }
@@ -61,6 +66,24 @@ export class Bernstein {
   /**
    * Transforms
    */
+  setOrigin(x, y) {
+    this.origin = { x, y }
+
+    return this
+  }
+
+  computeOrigin() {
+    if (this.origin.x !== 0 || this.origin.y !== 0) {
+      this.points = translate(this.points, -this.origin.x, -this.origin.y)
+    }
+  }
+
+  resetOrigin() {
+    if (this.origin.x !== 0 || this.origin.y !== 0) {
+      this.points = translate(this.points, this.origin.x, this.origin.y)
+    }
+  }
+
   translate(dx, dy) {
     this.points = translate(this.points, dx, dy)
 
@@ -80,7 +103,9 @@ export class Bernstein {
   }
 
   scale(dx, dy) {
+    this.computeOrigin()
     this.points = scale(this.points, dx, dy)
+    this.resetOrigin()
 
     return this
   }
@@ -98,7 +123,9 @@ export class Bernstein {
   }
 
   skew(dx, dy) {
+    this.computeOrigin()
     this.points = skew(this.points, dx, dy)
+    this.resetOrigin()
 
     return this
   }
@@ -116,7 +143,9 @@ export class Bernstein {
   }
 
   rotate(theta) {
+    this.computeOrigin()
     this.points = rotate(this.points, theta)
+    this.resetOrigin()
 
     return this
   }
@@ -129,7 +158,7 @@ export class Bernstein {
   }
 
   getPath() {
-    return buildPathstring(this.points)
+    return buildPathstring(this.getPoints())
   }
 }
 

@@ -21,11 +21,7 @@ import { makeSureFirstPointsAreM } from "bernstein-clean-path"
  *   { code: "z", x: 100, y: 100, parameters: {} },
  * ]
  */
-export default function join(paths, shouldClose = false) {
-  if (!Array.isArray(paths)) {
-    paths = [paths]
-  }
-
+export default function join(paths, shouldClose) {
   return paths.reduce(
     (acc, path) => {
       if (shouldClose) {
