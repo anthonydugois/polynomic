@@ -73,15 +73,11 @@ export class Bernstein {
   }
 
   computeOrigin() {
-    if (this.origin.x !== 0 || this.origin.y !== 0) {
-      this.points = translate(this.points, -this.origin.x, -this.origin.y)
-    }
+    this.translate(-this.origin.x, -this.origin.y)
   }
 
   resetOrigin() {
-    if (this.origin.x !== 0 || this.origin.y !== 0) {
-      this.points = translate(this.points, this.origin.x, this.origin.y)
-    }
+    this.translate(this.origin.x, this.origin.y)
   }
 
   translate(dx, dy) {
