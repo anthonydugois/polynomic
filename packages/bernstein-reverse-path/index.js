@@ -1,5 +1,4 @@
 import Point from "bernstein-point"
-import isRelative from "bernstein-point-is-relative"
 
 export default function reverse(path) {
   const reversed = []
@@ -27,11 +26,11 @@ export default function reverse(path) {
     let parameters = next.parameters
 
     if (next.isT()) {
-      code = isRelative(next) ? "q" : "Q"
+      code = next.isRelative() ? "q" : "Q"
     }
 
     if (next.isS()) {
-      code = isRelative(next) ? "c" : "C"
+      code = next.isRelative() ? "c" : "C"
     }
 
     if (next.isC() || next.isS()) {

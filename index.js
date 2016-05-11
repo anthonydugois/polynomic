@@ -14,8 +14,6 @@ update(input.value)
 function update(value) {
   const path = new Bernstein(value)
 
-  path.reverse()
-
   output.value = path.getPath()
 
   from.setAttribute("d", value)

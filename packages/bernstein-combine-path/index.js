@@ -1,5 +1,4 @@
 import { l, L, z, Z } from "bernstein-point"
-import isRelative from "bernstein-point-is-relative"
 
 /**
  * Combines the subpaths by removing "zM" commands
@@ -23,7 +22,7 @@ export default function combine(path) {
       if (i > 0 && point.isM()) {
         return [
           ...acc,
-          isRelative(point) ?
+          point.isRelative() ?
             l(point.x, point.y) :
             L(point.x, point.y),
         ]
@@ -33,7 +32,7 @@ export default function combine(path) {
         if (i === path.length - 1) {
           return [
             ...acc,
-            isRelative(point) ?
+            point.isRelative() ?
               z(path[0]) :
               Z(path[0]),
           ]

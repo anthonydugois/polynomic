@@ -1,5 +1,7 @@
 import * as pointTypes from "./pointTypes"
 import * as assertTypes from "bernstein-point-is"
+import isRelative from "bernstein-point-is-relative"
+import distance, { distanceSegment } from "bernstein-point-distance"
 
 export default class Point {
   constructor(code, x, y, parameters = {}) {
@@ -7,6 +9,18 @@ export default class Point {
     this.x = x
     this.y = y
     this.parameters = parameters
+  }
+
+  distance(point) {
+    return distance(this, point)
+  }
+
+  distanceSegment(l1, l2) {
+    return distanceSegment(this, l1, l2)
+  }
+
+  isRelative() {
+    return isRelative(this)
   }
 
   isM() {
