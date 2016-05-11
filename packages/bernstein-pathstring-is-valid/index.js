@@ -1,4 +1,4 @@
-import * as points from "bernstein-core"
+import * as points from "bernstein-point"
 import { getSegments } from "bernstein-parse-pathstring"
 
 export default function isValid(d) {

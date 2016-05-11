@@ -1,5 +1,5 @@
 import { assert } from "chai"
-import { M } from "bernstein-core"
+import { M } from "bernstein-point"
 import distance, { distanceSegment } from "bernstein-point-distance"
 
 describe("point-distance", function () {

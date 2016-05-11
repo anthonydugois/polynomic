@@ -1,4 +1,4 @@
-import Point from "bernstein-core"
+import Point from "bernstein-point"
 
 export default function distance(p1, p2) {
   return Math.sqrt(sqDistance(p1, p2))

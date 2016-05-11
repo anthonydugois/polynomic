@@ -1,4 +1,4 @@
-import * as points from "bernstein-core"
+import * as points from "bernstein-point"
 import { isM } from "bernstein-point-is"
 
 /**

@@ -1,4 +1,4 @@
-import { Bernstein } from "bernstein-core"
+import Bernstein from "bernstein-core"
 
 const input = document.querySelector(".input")
 const output = document.querySelector(".output")
@@ -14,7 +14,7 @@ update(input.value)
 function update(value) {
   const path = new Bernstein(value)
 
-  path.setOrigin(100, 100)
+  path.simplify(1)
 
   output.value = path.getPath()
 

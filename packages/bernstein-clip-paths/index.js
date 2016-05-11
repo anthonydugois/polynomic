@@ -1,4 +1,4 @@
-import Point, { L } from "bernstein-core"
+import Point, { L } from "bernstein-point"
 import { isM, isZ } from "bernstein-point-is"
 import isInside from "bernstein-point-is-inside"
 import clean from "bernstein-clean-path"

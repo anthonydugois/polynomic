@@ -1,4 +1,4 @@
-import { l, L, z, Z } from "bernstein-core"
+import { l, L, z, Z } from "bernstein-point"
 import { isM, isZ } from "bernstein-point-is"
 import isRelative from "bernstein-point-is-relative"
 

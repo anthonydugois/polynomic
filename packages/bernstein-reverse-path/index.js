@@ -1,4 +1,4 @@
-import Point from "bernstein-core"
+import Point from "bernstein-point"
 import { isM, isC, isA, isZ } from "bernstein-point-is"
 
 export default function reverse(path) {

@@ -1,5 +1,5 @@
 import { assert } from "chai"
-import { M, L } from "bernstein-core"
+import { M, L } from "bernstein-point"
 import { segmentSegment } from "bernstein-intersections"
 
 describe("intersections", function () {

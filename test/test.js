@@ -70,14 +70,15 @@
 		"./bernstein-point-is-relative/test/index.js": 71,
 		"./bernstein-point-is/test/index.js": 72,
 		"./bernstein-point-minmax/test/index.js": 73,
-		"./bernstein-reverse-path/test/index.js": 75,
-		"./bernstein-rotate-path/test/index.js": 77,
-		"./bernstein-scale-path/test/index.js": 79,
-		"./bernstein-simplify-path/test/index.js": 81,
-		"./bernstein-skew-path/test/index.js": 83,
-		"./bernstein-split-path/test/index.js": 85,
-		"./bernstein-translate-path/test/index.js": 87,
-		"./bernstein-union-paths/test/index.js": 89
+		"./bernstein-point/test/index.js": 75,
+		"./bernstein-reverse-path/test/index.js": 76,
+		"./bernstein-rotate-path/test/index.js": 78,
+		"./bernstein-scale-path/test/index.js": 80,
+		"./bernstein-simplify-path/test/index.js": 82,
+		"./bernstein-skew-path/test/index.js": 84,
+		"./bernstein-split-path/test/index.js": 86,
+		"./bernstein-translate-path/test/index.js": 88,
+		"./bernstein-union-paths/test/index.js": 90
 	};
 	function webpackContext(req) {
 		return __webpack_require__(webpackContextResolve(req));
@@ -6435,9 +6436,9 @@
 	exports.default = parsePathstring;
 	exports.getSegments = getSegments;
 
-	var _bernsteinCore = __webpack_require__(41);
+	var _bernsteinPoint = __webpack_require__(41);
 
-	var points = _interopRequireWildcard(_bernsteinCore);
+	var points = _interopRequireWildcard(_bernsteinPoint);
 
 	var _bernsteinPointIs = __webpack_require__(42);
 
@@ -6827,9 +6828,9 @@
 	});
 	exports.default = buildPathstring;
 
-	var _bernsteinCore = __webpack_require__(41);
+	var _bernsteinPoint = __webpack_require__(41);
 
-	var _bernsteinCore2 = _interopRequireDefault(_bernsteinCore);
+	var _bernsteinPoint2 = _interopRequireDefault(_bernsteinPoint);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -6844,7 +6845,7 @@
 	 */
 	function buildPathstring(points) {
 	  return points.reduce(function (acc, point, i) {
-	    return "" + acc + point.code + buildSegment[point.code](point, i > 0 ? points[i - 1] : (0, _bernsteinCore2.default)(null, 0, 0));
+	    return "" + acc + point.code + buildSegment[point.code](point, i > 0 ? points[i - 1] : (0, _bernsteinPoint2.default)(null, 0, 0));
 	  }, "").replace(/\s+/g, " ");
 	}
 
@@ -7186,9 +7187,9 @@
 	});
 	exports.default = isValid;
 
-	var _bernsteinCore = __webpack_require__(41);
+	var _bernsteinPoint = __webpack_require__(41);
 
-	var points = _interopRequireWildcard(_bernsteinCore);
+	var points = _interopRequireWildcard(_bernsteinPoint);
 
 	var _bernsteinParsePathstring = __webpack_require__(40);
 
@@ -7292,11 +7293,7 @@
 	exports.makeSureFirstPointsAreM = makeSureFirstPointsAreM;
 	exports.removeConsecutiveSamePoints = removeConsecutiveSamePoints;
 
-	var _deepEqual = __webpack_require__(45);
-
-	var _deepEqual2 = _interopRequireDefault(_deepEqual);
-
-	var _bernsteinCore = __webpack_require__(41);
+	var _bernsteinPoint = __webpack_require__(41);
 
 	var _bernsteinPointIs = __webpack_require__(42);
 
@@ -7349,7 +7346,7 @@
 	    }
 
 	    if (shouldSimplifyClosure(first, point)) {
-	      return (0, _bernsteinCore.z)(first);
+	      return (0, _bernsteinPoint.z)(first);
 	    }
 
 	    return point;
@@ -7374,13 +7371,13 @@
 	function makeSureFirstPointsAreM(path) {
 	  return path.map(function (point, i) {
 	    if (i === 0 && !(0, _bernsteinPointIs.isM)(point)) {
-	      return (0, _bernsteinPointIsRelative2.default)(point) ? (0, _bernsteinCore.m)(point.x, point.y) : (0, _bernsteinCore.M)(point.x, point.y);
+	      return (0, _bernsteinPointIsRelative2.default)(point) ? (0, _bernsteinPoint.m)(point.x, point.y) : (0, _bernsteinPoint.M)(point.x, point.y);
 	    }
 
 	    if (i > 0 && (0, _bernsteinPointIs.isZ)(path[i - 1]) && !(0, _bernsteinPointIs.isM)(point)) {
 	      var prev = path[i - 1];
 
-	      return (0, _bernsteinPointIsRelative2.default)(point) ? (0, _bernsteinCore.m)(point.x, point.y, prev) : (0, _bernsteinCore.M)(point.x, point.y, prev);
+	      return (0, _bernsteinPointIsRelative2.default)(point) ? (0, _bernsteinPoint.m)(point.x, point.y, prev) : (0, _bernsteinPoint.M)(point.x, point.y, prev);
 	    }
 
 	    return point;
@@ -7402,9 +7399,9 @@
 	 */
 	function removeConsecutiveSamePoints(path) {
 	  return path.reduce(function (acc, point, i) {
-	    var previous = i > 0 && acc[acc.length - 1];
+	    var prev = i > 0 && acc[acc.length - 1];
 
-	    if (previous && (0, _deepEqual2.default)(previous, point)) {
+	    if (prev && prev.x === point.x && prev.y === point.y) {
 	      return acc;
 	    }
 
@@ -7434,9 +7431,9 @@
 
 	var _chai = __webpack_require__(3);
 
-	var _bernsteinCore = __webpack_require__(41);
+	var _bernsteinPoint = __webpack_require__(41);
 
-	var points = _interopRequireWildcard(_bernsteinCore);
+	var points = _interopRequireWildcard(_bernsteinPoint);
 
 	var _bernsteinClipPaths = __webpack_require__(53);
 
@@ -7517,9 +7514,9 @@
 	exports.getIntersectedPaths = getIntersectedPaths;
 	exports.getIntersectionPoint = getIntersectionPoint;
 
-	var _bernsteinCore = __webpack_require__(41);
+	var _bernsteinPoint = __webpack_require__(41);
 
-	var _bernsteinCore2 = _interopRequireDefault(_bernsteinCore);
+	var _bernsteinPoint2 = _interopRequireDefault(_bernsteinPoint);
 
 	var _bernsteinPointIs = __webpack_require__(42);
 
@@ -7570,7 +7567,7 @@
 	    var clipPath = c;
 
 
-	    var clippedShape = [(0, _bernsteinCore2.default)(current.code, current.x, current.y, current.parameters)];
+	    var clippedShape = [(0, _bernsteinPoint2.default)(current.code, current.x, current.y, current.parameters)];
 
 	    while (!current.isVisited) {
 	      sourcePath[index].isVisited = true;
@@ -7581,13 +7578,13 @@
 	        do {
 	          index = index < sourcePath.length - 1 ? index + 1 : 0;
 	          current = sourcePath[index];
-	          clippedShape.push((0, _bernsteinCore2.default)(current.code, current.x, current.y, current.parameters));
+	          clippedShape.push((0, _bernsteinPoint2.default)(current.code, current.x, current.y, current.parameters));
 	        } while (!isIntersection(current));
 	      } else {
 	        do {
 	          index = index > 0 ? index - 1 : sourcePath.length - 1;
 	          current = sourcePath[index];
-	          clippedShape.push((0, _bernsteinCore2.default)(current.code, current.x, current.y, current.parameters));
+	          clippedShape.push((0, _bernsteinPoint2.default)(current.code, current.x, current.y, current.parameters));
 	        } while (!isIntersection(current));
 	      }
 
@@ -7640,12 +7637,12 @@
 
 	          if (inter !== false) {
 	            var sIndex = ++i;
-	            var sInter = (0, _bernsteinCore.L)(inter.x, inter.y);
+	            var sInter = (0, _bernsteinPoint.L)(inter.x, inter.y);
 
 	            console.log(sIndex, sInter);
 
 	            var cIndex = ++j;
-	            var cInter = (0, _bernsteinCore.L)(inter.x, inter.y);
+	            var cInter = (0, _bernsteinPoint.L)(inter.x, inter.y);
 
 	            // step 1
 	            // add intersections in each path
@@ -7735,7 +7732,7 @@
 	});
 	exports.default = combine;
 
-	var _bernsteinCore = __webpack_require__(41);
+	var _bernsteinPoint = __webpack_require__(41);
 
 	var _bernsteinPointIs = __webpack_require__(42);
 
@@ -7766,12 +7763,12 @@
 	function combine(path) {
 	  return path.reduce(function (acc, point, i) {
 	    if (i > 0 && (0, _bernsteinPointIs.isM)(point)) {
-	      return [].concat(_toConsumableArray(acc), [(0, _bernsteinPointIsRelative2.default)(point) ? (0, _bernsteinCore.l)(point.x, point.y) : (0, _bernsteinCore.L)(point.x, point.y)]);
+	      return [].concat(_toConsumableArray(acc), [(0, _bernsteinPointIsRelative2.default)(point) ? (0, _bernsteinPoint.l)(point.x, point.y) : (0, _bernsteinPoint.L)(point.x, point.y)]);
 	    }
 
 	    if ((0, _bernsteinPointIs.isZ)(point)) {
 	      if (i === path.length - 1) {
-	        return [].concat(_toConsumableArray(acc), [(0, _bernsteinPointIsRelative2.default)(point) ? (0, _bernsteinCore.z)(path[0]) : (0, _bernsteinCore.Z)(path[0])]);
+	        return [].concat(_toConsumableArray(acc), [(0, _bernsteinPointIsRelative2.default)(point) ? (0, _bernsteinPoint.z)(path[0]) : (0, _bernsteinPoint.Z)(path[0])]);
 	      }
 
 	      return acc;
@@ -7827,13 +7824,13 @@
 
 	var _chai = __webpack_require__(3);
 
-	var _bernsteinCore = __webpack_require__(41);
+	var _bernsteinPoint = __webpack_require__(41);
 
 	var _bernsteinIntersections = __webpack_require__(59);
 
 	describe("intersections", function () {
 	  it("should give the intersection point between two segments", function () {
-	    _chai.assert.deepEqual((0, _bernsteinIntersections.segmentSegment)((0, _bernsteinCore.M)(0, 0), (0, _bernsteinCore.L)(100, 100), (0, _bernsteinCore.M)(100, 0), (0, _bernsteinCore.L)(0, 100)), { x: 50, y: 50 });
+	    _chai.assert.deepEqual((0, _bernsteinIntersections.segmentSegment)((0, _bernsteinPoint.M)(0, 0), (0, _bernsteinPoint.L)(100, 100), (0, _bernsteinPoint.M)(100, 0), (0, _bernsteinPoint.L)(0, 100)), { x: 50, y: 50 });
 	  });
 
 	  it("should give the intersection point between a segment and a quad Bezier curve", function () {});
@@ -7949,7 +7946,7 @@
 	});
 	exports.default = join;
 
-	var _bernsteinCore = __webpack_require__(41);
+	var _bernsteinPoint = __webpack_require__(41);
 
 	var _bernsteinPointIs = __webpack_require__(42);
 
@@ -7976,18 +7973,12 @@
 	 *   { code: "z", x: 100, y: 100, parameters: {} },
 	 * ]
 	 */
-	function join(paths) {
-	  var shouldClose = arguments.length <= 1 || arguments[1] === undefined ? false : arguments[1];
-
-	  if (!Array.isArray(paths)) {
-	    paths = [paths];
-	  }
-
+	function join(paths, shouldClose) {
 	  return paths.reduce(function (acc, path) {
 	    if (shouldClose) {
 	      path = (0, _bernsteinCleanPath.makeSureFirstPointsAreM)(path);
 
-	      return [].concat(_toConsumableArray(acc), _toConsumableArray(path), _toConsumableArray(!(0, _bernsteinPointIs.isZ)(path[path.length - 1]) && [(0, _bernsteinCore.z)(path[0])]));
+	      return [].concat(_toConsumableArray(acc), _toConsumableArray(path), _toConsumableArray(!(0, _bernsteinPointIs.isZ)(path[path.length - 1]) && [(0, _bernsteinPoint.z)(path[0])]));
 	    }
 
 	    return [].concat(_toConsumableArray(acc), _toConsumableArray(path));
@@ -8048,21 +8039,31 @@
 	exports.default = matrix;
 	exports.multiply3x1 = multiply3x1;
 
-	var _bernsteinCore = __webpack_require__(41);
+	var _bernsteinPoint = __webpack_require__(41);
 
-	var _bernsteinCore2 = _interopRequireDefault(_bernsteinCore);
+	var _bernsteinPoint2 = _interopRequireDefault(_bernsteinPoint);
+
+	var _bernsteinPointIs = __webpack_require__(42);
+
+	var _bernsteinPointIsRelative = __webpack_require__(51);
+
+	var _bernsteinPointIsRelative2 = _interopRequireDefault(_bernsteinPointIsRelative);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function matrix(path, a) {
+	  var lastComputedPoint = void 0;
+
 	  return path.map(function (p, i) {
-	    var previous = i > 0 && path[i - 1];
-	    var px = typeof p.x === "number" ? p.x : previous.x;
-	    var py = typeof p.y === "number" ? p.y : previous.y;
+	    var prev = i > 0 && path[i - 1];
+	    var px = typeof p.x === "number" ? p.x : prev.x;
+	    var py = typeof p.y === "number" ? p.y : prev.y;
 	    var px1 = typeof p.parameters.x1 === "number" && p.parameters.x1;
 	    var py1 = typeof p.parameters.y1 === "number" && p.parameters.y1;
 	    var px2 = typeof p.parameters.x2 === "number" && p.parameters.x2;
 	    var py2 = typeof p.parameters.y2 === "number" && p.parameters.y2;
+
+	    // compute position
 
 	    var _multiply3x = multiply3x1(a, [px, py, 1]);
 
@@ -8071,7 +8072,15 @@
 	    var x = _multiply3x2[0];
 	    var y = _multiply3x2[1];
 
+	    // get point code
 
+	    var code = p.code;
+
+	    if ((0, _bernsteinPointIs.isH)(p) && y !== lastComputedPoint.y || (0, _bernsteinPointIs.isV)(p) && x !== lastComputedPoint.x) {
+	      code = (0, _bernsteinPointIsRelative2.default)(p) ? "l" : "L";
+	    }
+
+	    // compute parameters
 	    var x1 = void 0,
 	        y1 = void 0,
 	        x2 = void 0,
@@ -8095,7 +8104,13 @@
 	      y2 = _multiply3x6[1];
 	    }
 
-	    return (0, _bernsteinCore2.default)(p.code, x, y, _extends({}, p.parameters, typeof x1 !== "undefined" && { x1: x1 }, typeof y1 !== "undefined" && { y1: y1 }, typeof x2 !== "undefined" && { x2: x2 }, typeof y2 !== "undefined" && { y2: y2 }));
+	    var parameters = _extends({}, p.parameters, typeof x1 !== "undefined" && { x1: x1 }, typeof y1 !== "undefined" && { y1: y1 }, typeof x2 !== "undefined" && { x2: x2 }, typeof y2 !== "undefined" && { y2: y2 });
+
+	    // this point will be used to know if the next H or V
+	    // should be converted into L
+	    lastComputedPoint = (0, _bernsteinPoint2.default)(code, x, y, parameters);
+
+	    return lastComputedPoint;
 	  });
 	}
 
@@ -8124,9 +8139,9 @@
 
 	var _chai = __webpack_require__(3);
 
-	var _bernsteinCore = __webpack_require__(41);
+	var _bernsteinPoint = __webpack_require__(41);
 
-	var points = _interopRequireWildcard(_bernsteinCore);
+	var points = _interopRequireWildcard(_bernsteinPoint);
 
 	var _bernsteinParsePathstring = __webpack_require__(40);
 
@@ -8250,7 +8265,7 @@
 
 	var _chai = __webpack_require__(3);
 
-	var _bernsteinCore = __webpack_require__(41);
+	var _bernsteinPoint = __webpack_require__(41);
 
 	var _bernsteinPointDistance = __webpack_require__(69);
 
@@ -8260,21 +8275,21 @@
 
 	describe("point-distance", function () {
 	  it("should give the distance between two points", function () {
-	    var test = (0, _bernsteinPointDistance2.default)((0, _bernsteinCore.M)(0, 0), (0, _bernsteinCore.M)(0, 100));
+	    var test = (0, _bernsteinPointDistance2.default)((0, _bernsteinPoint.M)(0, 0), (0, _bernsteinPoint.M)(0, 100));
 	    var expected = 100;
 
 	    _chai.assert.strictEqual(test, expected);
 	  });
 
 	  it("should give the distance between a point and a segment", function () {
-	    var test = (0, _bernsteinPointDistance.distanceSegment)((0, _bernsteinCore.M)(100, 50), (0, _bernsteinCore.M)(0, 0), (0, _bernsteinCore.M)(0, 100));
+	    var test = (0, _bernsteinPointDistance.distanceSegment)((0, _bernsteinPoint.M)(100, 50), (0, _bernsteinPoint.M)(0, 0), (0, _bernsteinPoint.M)(0, 100));
 	    var expected = 100;
 
 	    _chai.assert.strictEqual(test, expected);
 	  });
 
 	  it("should give the distance between a point and a segment", function () {
-	    var test = (0, _bernsteinPointDistance.distanceSegment)((0, _bernsteinCore.M)(0, -100), (0, _bernsteinCore.M)(0, 0), (0, _bernsteinCore.M)(0, 100));
+	    var test = (0, _bernsteinPointDistance.distanceSegment)((0, _bernsteinPoint.M)(0, 200), (0, _bernsteinPoint.M)(0, 0), (0, _bernsteinPoint.M)(0, 100));
 	    var expected = 100;
 
 	    _chai.assert.strictEqual(test, expected);
@@ -8293,9 +8308,9 @@
 	exports.default = distance;
 	exports.distanceSegment = distanceSegment;
 
-	var _bernsteinCore = __webpack_require__(41);
+	var _bernsteinPoint = __webpack_require__(41);
 
-	var _bernsteinCore2 = _interopRequireDefault(_bernsteinCore);
+	var _bernsteinPoint2 = _interopRequireDefault(_bernsteinPoint);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -8319,7 +8334,7 @@
 	  }
 
 	  var t = Math.max(0, Math.min(1, ((p1.x - p2.x) * (p3.x - p2.x) + (p1.y - p2.y) * (p3.y - p2.y)) / segment));
-	  var p4 = (0, _bernsteinCore2.default)(null, p2.x + t * (p3.x - p2.x), p2.y + t * (p3.y - p2.y));
+	  var p4 = (0, _bernsteinPoint2.default)(null, p2.x + t * (p3.x - p2.x), p2.y + t * (p3.y - p2.y));
 
 	  return sqDistance(p1, p4);
 	}
@@ -8336,7 +8351,7 @@
 
 	var _bernsteinParsePathstring2 = _interopRequireDefault(_bernsteinParsePathstring);
 
-	var _bernsteinCore = __webpack_require__(41);
+	var _bernsteinPoint = __webpack_require__(41);
 
 	var _bernsteinPointIsInside = __webpack_require__(54);
 
@@ -8348,11 +8363,11 @@
 	  var path = (0, _bernsteinParsePathstring2.default)("M0 0L100 0L100 100L0 100");
 
 	  it("should check that the point is inside the given path", function () {
-	    _chai.assert.isTrue((0, _bernsteinPointIsInside2.default)((0, _bernsteinCore.M)(50, 50), path));
+	    _chai.assert.isTrue((0, _bernsteinPointIsInside2.default)((0, _bernsteinPoint.M)(50, 50), path));
 	  });
 
 	  it("should check that the point is not inside the given path", function () {
-	    _chai.assert.isFalse((0, _bernsteinPointIsInside2.default)((0, _bernsteinCore.M)(400, 50), path));
+	    _chai.assert.isFalse((0, _bernsteinPointIsInside2.default)((0, _bernsteinPoint.M)(400, 50), path));
 	  });
 	});
 
@@ -8364,7 +8379,7 @@
 
 	var _chai = __webpack_require__(3);
 
-	var _bernsteinCore = __webpack_require__(41);
+	var _bernsteinPoint = __webpack_require__(41);
 
 	var _bernsteinPointIsRelative = __webpack_require__(51);
 
@@ -8374,11 +8389,11 @@
 
 	describe("point-is-relative", function () {
 	  it("should check that the command `m` is relative", function () {
-	    _chai.assert.isTrue((0, _bernsteinPointIsRelative2.default)((0, _bernsteinCore.m)(0, 0)));
+	    _chai.assert.isTrue((0, _bernsteinPointIsRelative2.default)((0, _bernsteinPoint.m)(0, 0)));
 	  });
 
 	  it("should check that the command `M` is absolute", function () {
-	    _chai.assert.isFalse((0, _bernsteinPointIsRelative2.default)((0, _bernsteinCore.M)(0, 0)));
+	    _chai.assert.isFalse((0, _bernsteinPointIsRelative2.default)((0, _bernsteinPoint.M)(0, 0)));
 	  });
 	});
 
@@ -8390,21 +8405,21 @@
 
 	var _chai = __webpack_require__(3);
 
-	var _bernsteinCore = __webpack_require__(41);
+	var _bernsteinPoint = __webpack_require__(41);
 
 	var _bernsteinPointIs = __webpack_require__(42);
 
 	describe("point-is", function () {
 	  it("should check that the point is M", function () {
-	    _chai.assert.isTrue((0, _bernsteinPointIs.isM)((0, _bernsteinCore.m)(0, 0)));
+	    _chai.assert.isTrue((0, _bernsteinPointIs.isM)((0, _bernsteinPoint.m)(0, 0)));
 	  });
 
 	  it("should check that the point is Q", function () {
-	    _chai.assert.isTrue((0, _bernsteinPointIs.isQ)((0, _bernsteinCore.Q)(20, 20, 0, 0)));
+	    _chai.assert.isTrue((0, _bernsteinPointIs.isQ)((0, _bernsteinPoint.Q)(20, 20, 0, 0)));
 	  });
 
 	  it("should check that the point is not Z", function () {
-	    _chai.assert.isFalse((0, _bernsteinPointIs.isZ)((0, _bernsteinCore.L)(0, 0)));
+	    _chai.assert.isFalse((0, _bernsteinPointIs.isZ)((0, _bernsteinPoint.L)(0, 0)));
 	  });
 	});
 
@@ -8416,9 +8431,9 @@
 
 	var _chai = __webpack_require__(3);
 
-	var _bernsteinCore = __webpack_require__(41);
+	var _bernsteinPoint = __webpack_require__(41);
 
-	var _bernsteinCore2 = _interopRequireDefault(_bernsteinCore);
+	var _bernsteinPoint2 = _interopRequireDefault(_bernsteinPoint);
 
 	var _bernsteinPointMinmax = __webpack_require__(74);
 
@@ -8426,11 +8441,11 @@
 
 	describe("point-minmax", function () {
 	  it("should give the min point", function () {
-	    _chai.assert.deepEqual((0, _bernsteinPointMinmax.min)((0, _bernsteinCore.M)(0, 100), (0, _bernsteinCore.M)(100, 0)), (0, _bernsteinCore2.default)(null, 0, 0));
+	    _chai.assert.deepEqual((0, _bernsteinPointMinmax.min)((0, _bernsteinPoint.M)(0, 100), (0, _bernsteinPoint.M)(100, 0)), (0, _bernsteinPoint2.default)(null, 0, 0));
 	  });
 
 	  it("should give the max point", function () {
-	    _chai.assert.deepEqual((0, _bernsteinPointMinmax.max)((0, _bernsteinCore.M)(0, 100), (0, _bernsteinCore.M)(100, 0)), (0, _bernsteinCore2.default)(null, 100, 100));
+	    _chai.assert.deepEqual((0, _bernsteinPointMinmax.max)((0, _bernsteinPoint.M)(0, 100), (0, _bernsteinPoint.M)(100, 0)), (0, _bernsteinPoint2.default)(null, 100, 100));
 	  });
 	});
 
@@ -8446,22 +8461,28 @@
 	exports.min = min;
 	exports.max = max;
 
-	var _bernsteinCore = __webpack_require__(41);
+	var _bernsteinPoint = __webpack_require__(41);
 
-	var _bernsteinCore2 = _interopRequireDefault(_bernsteinCore);
+	var _bernsteinPoint2 = _interopRequireDefault(_bernsteinPoint);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function min(p1, p2) {
-	  return (0, _bernsteinCore2.default)(null, Math.min(p1.x, p2.x), Math.min(p1.y, p2.y));
+	  return (0, _bernsteinPoint2.default)(null, Math.min(p1.x, p2.x), Math.min(p1.y, p2.y));
 	}
 
 	function max(p1, p2) {
-	  return (0, _bernsteinCore2.default)(null, Math.max(p1.x, p2.x), Math.max(p1.y, p2.y));
+	  return (0, _bernsteinPoint2.default)(null, Math.max(p1.x, p2.x), Math.max(p1.y, p2.y));
 	}
 
 /***/ },
 /* 75 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+/***/ },
+/* 76 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -8476,7 +8497,7 @@
 
 	var _bernsteinPathIsEqual2 = _interopRequireDefault(_bernsteinPathIsEqual);
 
-	var _bernsteinReversePath = __webpack_require__(76);
+	var _bernsteinReversePath = __webpack_require__(77);
 
 	var _bernsteinReversePath2 = _interopRequireDefault(_bernsteinReversePath);
 
@@ -8493,7 +8514,7 @@
 	});
 
 /***/ },
-/* 76 */
+/* 77 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -8506,9 +8527,9 @@
 
 	exports.default = reverse;
 
-	var _bernsteinCore = __webpack_require__(41);
+	var _bernsteinPoint = __webpack_require__(41);
 
-	var _bernsteinCore2 = _interopRequireDefault(_bernsteinCore);
+	var _bernsteinPoint2 = _interopRequireDefault(_bernsteinPoint);
 
 	var _bernsteinPointIs = __webpack_require__(42);
 
@@ -8540,7 +8561,7 @@
 	      next = reverseArc(next);
 	    }
 
-	    reversed.splice(insert, 0, (0, _bernsteinCore2.default)(next.code, point.x, point.y, next.parameters));
+	    reversed.splice(insert, 0, (0, _bernsteinPoint2.default)(next.code, point.x, point.y, next.parameters));
 	  }
 
 	  return reversed.reverse();
@@ -8567,7 +8588,7 @@
 	}
 
 /***/ },
-/* 77 */
+/* 78 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -8586,7 +8607,7 @@
 
 	var _bernsteinPathIsEqual2 = _interopRequireDefault(_bernsteinPathIsEqual);
 
-	var _bernsteinRotatePath = __webpack_require__(78);
+	var _bernsteinRotatePath = __webpack_require__(79);
 
 	var _bernsteinRotatePath2 = _interopRequireDefault(_bernsteinRotatePath);
 
@@ -8603,7 +8624,7 @@
 	});
 
 /***/ },
-/* 78 */
+/* 79 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -8624,7 +8645,7 @@
 	}
 
 /***/ },
-/* 79 */
+/* 80 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -8639,7 +8660,7 @@
 
 	var _bernsteinPathIsEqual2 = _interopRequireDefault(_bernsteinPathIsEqual);
 
-	var _bernsteinScalePath = __webpack_require__(80);
+	var _bernsteinScalePath = __webpack_require__(81);
 
 	var _bernsteinScalePath2 = _interopRequireDefault(_bernsteinScalePath);
 
@@ -8656,14 +8677,14 @@
 	  });
 
 	  it("should scale x0.5 the path on x", function () {
-	    var test = (0, _bernsteinScalePath.scaleX)(path, .5);
+	    var test = (0, _bernsteinScalePath2.default)(path, .5, 1);
 	    var expected = "M0 0L50 0Q75 150 100 200";
 
 	    _chai.assert.isTrue((0, _bernsteinPathIsEqual2.default)(test, expected));
 	  });
 
 	  it("should scale x0.5 the path on y", function () {
-	    var test = (0, _bernsteinScalePath.scaleY)(path, .5);
+	    var test = (0, _bernsteinScalePath2.default)(path, 1, .5);
 	    var expected = "M0 0L100 0Q150 75 200 100";
 
 	    _chai.assert.isTrue((0, _bernsteinPathIsEqual2.default)(test, expected));
@@ -8671,7 +8692,7 @@
 	});
 
 /***/ },
-/* 80 */
+/* 81 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -8680,8 +8701,6 @@
 	  value: true
 	});
 	exports.default = scale;
-	exports.scaleX = scaleX;
-	exports.scaleY = scaleY;
 
 	var _bernsteinMatrixPath = __webpack_require__(64);
 
@@ -8693,16 +8712,8 @@
 	  return (0, _bernsteinMatrixPath2.default)(path, [sx, 0, 0, 0, sy, 0, 0, 0, 1]);
 	}
 
-	function scaleX(path, sx) {
-	  return (0, _bernsteinMatrixPath2.default)(path, [sx, 0, 0, 0, 1, 0, 0, 0, 1]);
-	}
-
-	function scaleY(path, sy) {
-	  return (0, _bernsteinMatrixPath2.default)(path, [1, 0, 0, 0, sy, 0, 0, 0, 1]);
-	}
-
 /***/ },
-/* 81 */
+/* 82 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -8717,7 +8728,7 @@
 
 	var _bernsteinPathIsEqual2 = _interopRequireDefault(_bernsteinPathIsEqual);
 
-	var _bernsteinSimplifyPath = __webpack_require__(82);
+	var _bernsteinSimplifyPath = __webpack_require__(83);
 
 	var _bernsteinSimplifyPath2 = _interopRequireDefault(_bernsteinSimplifyPath);
 
@@ -8742,7 +8753,7 @@
 	});
 
 /***/ },
-/* 82 */
+/* 83 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -8757,11 +8768,15 @@
 	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 	function simplify(path, tolerance) {
+	  return douglasPeucker(path, tolerance);
+	}
+
+	function douglasPeucker(path, tolerance) {
 	  var simplified = void 0;
 	  var max = 0;
 	  var index = 0;
 
-	  for (var i = 1, len = path.length; i < len; i++) {
+	  for (var i = 1, len = path.length; i < len - 1; i++) {
 	    var point = path[i];
 	    var distance = (0, _bernsteinPointDistance.distanceSegment)(point, path[0], path[path.length - 1]);
 
@@ -8772,10 +8787,10 @@
 	  }
 
 	  if (max >= tolerance) {
-	    var res1 = simplify(path.slice(0, index), tolerance);
-	    var res2 = simplify(path.slice(index, path.length), tolerance);
+	    var res1 = douglasPeucker(path.slice(0, index + 1), tolerance);
+	    var res2 = douglasPeucker(path.slice(index, path.length), tolerance);
 
-	    simplified = [].concat(_toConsumableArray(res1.slice(0, res1.length - 1)), _toConsumableArray(res2.slice(0, res2.length)));
+	    simplified = [].concat(_toConsumableArray(res1.slice(0, res1.length - 1)), _toConsumableArray(res2));
 	  } else {
 	    simplified = [path[0], path[path.length - 1]];
 	  }
@@ -8784,7 +8799,7 @@
 	}
 
 /***/ },
-/* 83 */
+/* 84 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -8803,7 +8818,7 @@
 
 	var _bernsteinPathIsEqual2 = _interopRequireDefault(_bernsteinPathIsEqual);
 
-	var _bernsteinSkewPath = __webpack_require__(84);
+	var _bernsteinSkewPath = __webpack_require__(85);
 
 	var _bernsteinSkewPath2 = _interopRequireDefault(_bernsteinSkewPath);
 
@@ -8820,14 +8835,14 @@
 	  });
 
 	  it("should skew the path of PI/6 on x", function () {
-	    var test = (0, _bernsteinBuildPathstring2.default)((0, _bernsteinSkewPath.skewX)(path, Math.PI / 6));
+	    var test = (0, _bernsteinBuildPathstring2.default)((0, _bernsteinSkewPath2.default)(path, Math.PI / 6, 0));
 	    var expected = "M0 0L100 0L157.735 100";
 
 	    _chai.assert.isTrue((0, _bernsteinPathIsEqual2.default)(test, expected));
 	  });
 
 	  it("should skew the path of PI/6 on y", function () {
-	    var test = (0, _bernsteinBuildPathstring2.default)((0, _bernsteinSkewPath.skewY)(path, Math.PI / 6));
+	    var test = (0, _bernsteinBuildPathstring2.default)((0, _bernsteinSkewPath2.default)(path, 0, Math.PI / 6));
 	    var expected = "M0 0L100 57.735L100 157.735";
 
 	    _chai.assert.isTrue((0, _bernsteinPathIsEqual2.default)(test, expected));
@@ -8835,7 +8850,7 @@
 	});
 
 /***/ },
-/* 84 */
+/* 85 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -8844,8 +8859,6 @@
 	  value: true
 	});
 	exports.default = skew;
-	exports.skewX = skewX;
-	exports.skewY = skewY;
 
 	var _bernsteinMatrixPath = __webpack_require__(64);
 
@@ -8857,16 +8870,8 @@
 	  return (0, _bernsteinMatrixPath2.default)(path, [1, Math.tan(thetaX), 0, Math.tan(thetaY), 1, 0, 0, 0, 1]);
 	}
 
-	function skewX(path, thetaX) {
-	  return (0, _bernsteinMatrixPath2.default)(path, [1, Math.tan(thetaX), 0, 0, 1, 0, 0, 0, 1]);
-	}
-
-	function skewY(path, thetaY) {
-	  return (0, _bernsteinMatrixPath2.default)(path, [1, 0, 0, Math.tan(thetaY), 1, 0, 0, 0, 1]);
-	}
-
 /***/ },
-/* 85 */
+/* 86 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -8881,7 +8886,7 @@
 
 	var _bernsteinPathIsEqual2 = _interopRequireDefault(_bernsteinPathIsEqual);
 
-	var _bernsteinSplitPath = __webpack_require__(86);
+	var _bernsteinSplitPath = __webpack_require__(87);
 
 	var _bernsteinSplitPath2 = _interopRequireDefault(_bernsteinSplitPath);
 
@@ -8899,7 +8904,7 @@
 	});
 
 /***/ },
-/* 86 */
+/* 87 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -8932,7 +8937,7 @@
 	}
 
 /***/ },
-/* 87 */
+/* 88 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -8947,7 +8952,7 @@
 
 	var _bernsteinPathIsEqual2 = _interopRequireDefault(_bernsteinPathIsEqual);
 
-	var _bernsteinTranslatePath = __webpack_require__(88);
+	var _bernsteinTranslatePath = __webpack_require__(89);
 
 	var _bernsteinTranslatePath2 = _interopRequireDefault(_bernsteinTranslatePath);
 
@@ -8964,14 +8969,14 @@
 	  });
 
 	  it("should translate the path of 100px on x", function () {
-	    var test = (0, _bernsteinTranslatePath.translateX)(path, 100);
+	    var test = (0, _bernsteinTranslatePath2.default)(path, 100, 0);
 	    var expected = "M100 0L200 0Q250 150 300 200";
 
 	    _chai.assert.isTrue((0, _bernsteinPathIsEqual2.default)(test, expected));
 	  });
 
 	  it("should translate the path of 100px on y", function () {
-	    var test = (0, _bernsteinTranslatePath.translateY)(path, 100);
+	    var test = (0, _bernsteinTranslatePath2.default)(path, 0, 100);
 	    var expected = "M0 100L100 100Q150 250 200 300";
 
 	    _chai.assert.isTrue((0, _bernsteinPathIsEqual2.default)(test, expected));
@@ -8979,7 +8984,7 @@
 	});
 
 /***/ },
-/* 88 */
+/* 89 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -8988,8 +8993,6 @@
 	  value: true
 	});
 	exports.default = translate;
-	exports.translateX = translateX;
-	exports.translateY = translateY;
 
 	var _bernsteinMatrixPath = __webpack_require__(64);
 
@@ -9001,27 +9004,19 @@
 	  return (0, _bernsteinMatrixPath2.default)(path, [1, 0, dx, 0, 1, dy, 0, 0, 1]);
 	}
 
-	function translateX(path, dx) {
-	  return (0, _bernsteinMatrixPath2.default)(path, [1, 0, dx, 0, 1, 0, 0, 0, 1]);
-	}
-
-	function translateY(path, dy) {
-	  return (0, _bernsteinMatrixPath2.default)(path, [1, 0, 0, 0, 1, dy, 0, 0, 1]);
-	}
-
 /***/ },
-/* 89 */
+/* 90 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 
 	var _chai = __webpack_require__(3);
 
-	var _bernsteinCore = __webpack_require__(41);
+	var _bernsteinPoint = __webpack_require__(41);
 
-	var points = _interopRequireWildcard(_bernsteinCore);
+	var points = _interopRequireWildcard(_bernsteinPoint);
 
-	var _bernsteinUnionPaths = __webpack_require__(90);
+	var _bernsteinUnionPaths = __webpack_require__(91);
 
 	var _bernsteinUnionPaths2 = _interopRequireDefault(_bernsteinUnionPaths);
 
@@ -9032,7 +9027,7 @@
 	describe.skip("union-paths", function () {});
 
 /***/ },
-/* 90 */
+/* 91 */
 /***/ function(module, exports) {
 
 	"use strict";

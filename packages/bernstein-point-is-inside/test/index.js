@@ -1,6 +1,6 @@
 import { assert } from "chai"
 import parsePathstring from "bernstein-parse-pathstring"
-import { M } from "bernstein-core"
+import { M } from "bernstein-point"
 import isInside from "bernstein-point-is-inside"
 
 describe("point-is-inside", function () {

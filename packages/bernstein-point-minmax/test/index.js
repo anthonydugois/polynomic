@@ -1,5 +1,5 @@
 import { assert } from "chai"
-import Point, { M } from "bernstein-core"
+import Point, { M } from "bernstein-point"
 import { min, max } from "bernstein-point-minmax"
 
 describe("point-minmax", function () {

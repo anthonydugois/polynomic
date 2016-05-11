@@ -1,5 +1,5 @@
 import { assert } from "chai"
-import { m, L, Q } from "bernstein-core"
+import { m, L, Q } from "bernstein-point"
 import { isM, isQ, isZ } from "bernstein-point-is"
 
 describe("point-is", function () {

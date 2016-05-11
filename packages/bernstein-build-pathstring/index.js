@@ -1,4 +1,4 @@
-import Point from "bernstein-core"
+import Point from "bernstein-point"
 
 /**
  * Transforms a formatted point list into pathstring

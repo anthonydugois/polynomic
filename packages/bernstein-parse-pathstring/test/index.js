@@ -1,5 +1,5 @@
 import { assert } from "chai"
-import * as points from "bernstein-core"
+import * as points from "bernstein-point"
 import parsePathstring, { getSegments } from "bernstein-parse-pathstring"
 
 describe("parse-pathstring", function () {

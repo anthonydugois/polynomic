@@ -1,5 +1,5 @@
 import { assert } from "chai"
-import { m, M } from "bernstein-core"
+import { m, M } from "bernstein-point"
 import isRelative from "bernstein-point-is-relative"
 
 describe("point-is-relative", function () {

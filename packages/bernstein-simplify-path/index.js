@@ -23,7 +23,10 @@ function douglasPeucker(path, tolerance) {
     const res1 = douglasPeucker(path.slice(0, index + 1), tolerance)
     const res2 = douglasPeucker(path.slice(index, path.length), tolerance)
 
-    simplified = [...res1, ...res2]
+    simplified = [
+      ...res1.slice(0, res1.length - 1),
+      ...res2,
+    ]
   } else {
     simplified = [path[0], path[path.length - 1]]
   }

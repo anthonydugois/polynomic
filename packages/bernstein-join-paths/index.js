@@ -1,4 +1,4 @@
-import { z } from "bernstein-core"
+import { z } from "bernstein-point"
 import { isZ } from "bernstein-point-is"
 import { makeSureFirstPointsAreM } from "bernstein-clean-path"
 

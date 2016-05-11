@@ -1,5 +1,5 @@
 import { assert } from "chai"
-import * as points from "bernstein-core"
+import * as points from "bernstein-point"
 import clip, {
   getIntersectedPaths,
   getIntersectionPoint,
