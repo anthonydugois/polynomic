@@ -16,7 +16,7 @@ import buildPathstring from "bernstein-build-pathstring"
 
 export default class Bernstein {
   constructor(input) {
-    this.points = this.getPointList(input)
+    this.path = this.getPointList(input)
     this.origin = { x: 0, y: 0 }
   }
 
@@ -26,7 +26,7 @@ export default class Bernstein {
     }
 
     if (input instanceof Bernstein) {
-      return input.getPoints()
+      return input.getPath()
     }
 
     if (typeof input === "string") {
@@ -45,29 +45,29 @@ export default class Bernstein {
   }
 
   isEqual(path) {
-    return isEqual(this.points, path)
+    return isEqual(this.path, path)
   }
 
   clean() {
-    this.points = clean(this.points)
+    this.path = clean(this.path)
 
     return this
   }
 
   combine() {
-    this.points = combine(this.points)
+    this.path = combine(this.path)
 
     return this
   }
 
   reverse() {
-    this.points = reverse(this.points)
+    this.path = reverse(this.path)
 
     return this
   }
 
   simplify(tolerance) {
-    this.points = simplify(this.points, tolerance)
+    this.path = simplify(this.path, tolerance)
 
     return this
   }
@@ -75,8 +75,8 @@ export default class Bernstein {
   join(paths, shouldClose = false) {
     paths = this.getPointListArray(paths)
 
-    this.points = join([
-      this.points,
+    this.path = join([
+      this.path,
       ...paths
     ], shouldClose)
 
@@ -101,19 +101,19 @@ export default class Bernstein {
   }
 
   translate(dx, dy) {
-    this.points = translate(this.points, dx, dy)
+    this.path = translate(this.path, dx, dy)
 
     return this
   }
 
   translateX(dx) {
-    this.points = translate(this.points, dx, 0)
+    this.path = translate(this.path, dx, 0)
 
     return this
   }
 
   translateY(dy) {
-    this.points = translate(this.points, 0, dy)
+    this.path = translate(this.path, 0, dy)
 
     return this
   }
@@ -124,47 +124,47 @@ export default class Bernstein {
     }
 
     this.computeOrigin()
-    this.points = scale(this.points, dx, dy)
+    this.path = scale(this.path, dx, dy)
     this.resetOrigin()
 
     return this
   }
 
   scaleX(dx) {
-    this.points = scale(this.points, dx, 1)
+    this.path = scale(this.path, dx, 1)
 
     return this
   }
 
   scaleY(dy) {
-    this.points = scale(this.points, 1, dy)
+    this.path = scale(this.path, 1, dy)
 
     return this
   }
 
   skew(dx, dy) {
     this.computeOrigin()
-    this.points = skew(this.points, dx, dy)
+    this.path = skew(this.path, dx, dy)
     this.resetOrigin()
 
     return this
   }
 
   skewX(dx) {
-    this.points = skew(this.points, dx, 0)
+    this.path = skew(this.path, dx, 0)
 
     return this
   }
 
   skewY(dy) {
-    this.points = skew(this.points, 0, dy)
+    this.path = skew(this.path, 0, dy)
 
     return this
   }
 
   rotate(theta) {
     this.computeOrigin()
-    this.points = rotate(this.points, theta)
+    this.path = rotate(this.path, theta)
     this.resetOrigin()
 
     return this
@@ -173,11 +173,11 @@ export default class Bernstein {
   /**
    * Getters
    */
-  getPoints() {
-    return this.points
+  getPath() {
+    return this.path
   }
 
-  getPath() {
-    return buildPathstring(this.getPoints())
+  getPathstring() {
+    return buildPathstring(this.getPath())
   }
 }

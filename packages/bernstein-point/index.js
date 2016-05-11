@@ -1,6 +1,7 @@
 import * as pointTypes from "./pointTypes"
 import * as assertTypes from "bernstein-point-is"
 import isRelative from "bernstein-point-is-relative"
+import isInside from "bernstein-point-is-inside"
 import distance, { distanceSegment } from "bernstein-point-distance"
 
 export default class Point {
@@ -17,6 +18,10 @@ export default class Point {
 
   distanceSegment(l1, l2) {
     return distanceSegment(this, l1, l2)
+  }
+
+  isInside() {
+    return isInside(this, path)
   }
 
   isRelative() {

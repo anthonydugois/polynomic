@@ -14,7 +14,7 @@ update(input.value)
 function update(value) {
   const path = new Bernstein(value)
 
-  output.value = path.getPath()
+  output.value = path.getPathstring()
 
   from.setAttribute("d", value)
   to.setAttribute("d", output.value)
@@ -22,8 +22,8 @@ function update(value) {
   function a() {
     path.rotate(Math.PI / 40)
 
-    to.setAttribute("d", path.getPath())
-    output.value = path.getPath()
+    to.setAttribute("d", path.getPathstring())
+    output.value = path.getPathstring()
     requestAnimationFrame(a)
   }
 
