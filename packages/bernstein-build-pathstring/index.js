@@ -1,4 +1,4 @@
-import Point from "bernstein-point"
+import Point, { defaultPoint } from "bernstein-point"
 
 /**
  * Transforms a formatted point list into pathstring
@@ -11,7 +11,7 @@ import Point from "bernstein-point"
  */
 export default function buildPathstring(points) {
   return points.reduce(
-    (acc, point, i) => `${ acc }${ point.code }${ buildSegment[point.code](point, i > 0 ? points[i - 1] : Point(null, 0, 0)) }`,
+    (acc, point, i) => `${ acc }${ point.code }${ buildSegment[point.code](point, i > 0 ? points[i - 1] : defaultPoint) }`,
     ""
   ).replace(/\s+/g, " ")
 }

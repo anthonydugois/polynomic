@@ -119,6 +119,10 @@ export default class Bernstein {
   }
 
   scale(dx, dy) {
+    if (typeof dy === "undefined") {
+      dy = dx
+    }
+
     this.computeOrigin()
     this.points = scale(this.points, dx, dy)
     this.resetOrigin()

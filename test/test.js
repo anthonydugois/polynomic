@@ -6570,7 +6570,6 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.default = Point;
 	exports.m = m;
 	exports.M = M;
 	exports.l = l;
@@ -6591,71 +6590,75 @@
 	exports.A = A;
 	exports.z = z;
 	exports.Z = Z;
-	function Point(code, x, y) {
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var Point = function Point(code, x, y) {
 	  var parameters = arguments.length <= 3 || arguments[3] === undefined ? {} : arguments[3];
 
-	  return {
-	    code: code,
-	    x: x,
-	    y: y,
-	    parameters: parameters
-	  };
-	}
+	  _classCallCheck(this, Point);
 
-	var defaultPoint = Point(null, 0, 0);
+	  this.code = code;
+	  this.x = x;
+	  this.y = y;
+	  this.parameters = parameters;
+	};
+
+	exports.default = Point;
+	var defaultPoint = exports.defaultPoint = new Point(null, 0, 0);
 
 	function m(dx, dy) {
 	  var prev = arguments.length <= 2 || arguments[2] === undefined ? defaultPoint : arguments[2];
 
-	  return Point("m", prev.x + dx, prev.y + dy);
+	  return new Point("m", prev.x + dx, prev.y + dy);
 	}
 
 	function M(x, y) {
 	  var prev = arguments.length <= 2 || arguments[2] === undefined ? defaultPoint : arguments[2];
 
-	  return Point("M", x, y);
+	  return new Point("M", x, y);
 	}
 
 	function l(dx, dy) {
 	  var prev = arguments.length <= 2 || arguments[2] === undefined ? defaultPoint : arguments[2];
 
-	  return Point("l", prev.x + dx, prev.y + dy);
+	  return new Point("l", prev.x + dx, prev.y + dy);
 	}
 
 	function L(x, y) {
 	  var prev = arguments.length <= 2 || arguments[2] === undefined ? defaultPoint : arguments[2];
 
-	  return Point("L", x, y);
+	  return new Point("L", x, y);
 	}
 
 	function h(dx) {
 	  var prev = arguments.length <= 1 || arguments[1] === undefined ? defaultPoint : arguments[1];
 
-	  return Point("h", prev.x + dx, prev.y);
+	  return new Point("h", prev.x + dx, prev.y);
 	}
 
 	function H(x) {
 	  var prev = arguments.length <= 1 || arguments[1] === undefined ? defaultPoint : arguments[1];
 
-	  return Point("H", x, prev.y);
+	  return new Point("H", x, prev.y);
 	}
 
 	function v(dy) {
 	  var prev = arguments.length <= 1 || arguments[1] === undefined ? defaultPoint : arguments[1];
 
-	  return Point("v", prev.x, prev.y + dy);
+	  return new Point("v", prev.x, prev.y + dy);
 	}
 
 	function V(y) {
 	  var prev = arguments.length <= 1 || arguments[1] === undefined ? defaultPoint : arguments[1];
 
-	  return Point("V", prev.x, y);
+	  return new Point("V", prev.x, y);
 	}
 
 	function q(dx1, dy1, dx, dy) {
 	  var prev = arguments.length <= 4 || arguments[4] === undefined ? defaultPoint : arguments[4];
 
-	  return Point("q", prev.x + dx, prev.y + dy, {
+	  return new Point("q", prev.x + dx, prev.y + dy, {
 	    x1: prev.x + dx1,
 	    y1: prev.y + dy1
 	  });
@@ -6664,7 +6667,7 @@
 	function Q(x1, y1, x, y) {
 	  var prev = arguments.length <= 4 || arguments[4] === undefined ? defaultPoint : arguments[4];
 
-	  return Point("Q", x, y, {
+	  return new Point("Q", x, y, {
 	    x1: x1,
 	    y1: y1
 	  });
@@ -6673,19 +6676,19 @@
 	function t(dx, dy) {
 	  var prev = arguments.length <= 2 || arguments[2] === undefined ? defaultPoint : arguments[2];
 
-	  return Point("t", prev.x + dx, prev.y + dy);
+	  return new Point("t", prev.x + dx, prev.y + dy);
 	}
 
 	function T(x, y) {
 	  var prev = arguments.length <= 2 || arguments[2] === undefined ? defaultPoint : arguments[2];
 
-	  return Point("T", x, y);
+	  return new Point("T", x, y);
 	}
 
 	function c(dx1, dy1, dx2, dy2, dx, dy) {
 	  var prev = arguments.length <= 6 || arguments[6] === undefined ? defaultPoint : arguments[6];
 
-	  return Point("c", prev.x + dx, prev.y + dy, {
+	  return new Point("c", prev.x + dx, prev.y + dy, {
 	    x1: prev.x + dx1,
 	    y1: prev.y + dy1,
 	    x2: prev.x + dx2,
@@ -6696,7 +6699,7 @@
 	function C(x1, y1, x2, y2, x, y) {
 	  var prev = arguments.length <= 6 || arguments[6] === undefined ? defaultPoint : arguments[6];
 
-	  return Point("C", x, y, {
+	  return new Point("C", x, y, {
 	    x1: x1,
 	    y1: y1,
 	    x2: x2,
@@ -6707,7 +6710,7 @@
 	function s(dx2, dy2, dx, dy) {
 	  var prev = arguments.length <= 4 || arguments[4] === undefined ? defaultPoint : arguments[4];
 
-	  return Point("s", prev.x + dx, prev.y + dy, {
+	  return new Point("s", prev.x + dx, prev.y + dy, {
 	    x2: prev.x + dx2,
 	    y2: prev.y + dy2
 	  });
@@ -6716,7 +6719,7 @@
 	function S(x2, y2, x, y) {
 	  var prev = arguments.length <= 4 || arguments[4] === undefined ? defaultPoint : arguments[4];
 
-	  return Point("S", x, y, {
+	  return new Point("S", x, y, {
 	    x2: x2,
 	    y2: y2
 	  });
@@ -6725,7 +6728,7 @@
 	function a(rx, ry, rotation, large, sweep, dx, dy) {
 	  var prev = arguments.length <= 7 || arguments[7] === undefined ? defaultPoint : arguments[7];
 
-	  return Point("a", prev.x + dx, prev.y + dy, {
+	  return new Point("a", prev.x + dx, prev.y + dy, {
 	    rx: rx,
 	    ry: ry,
 	    rotation: rotation,
@@ -6737,7 +6740,7 @@
 	function A(rx, ry, rotation, large, sweep, x, y) {
 	  var prev = arguments.length <= 7 || arguments[7] === undefined ? defaultPoint : arguments[7];
 
-	  return Point("A", x, y, {
+	  return new Point("A", x, y, {
 	    rx: rx,
 	    ry: ry,
 	    rotation: rotation,
@@ -6749,13 +6752,13 @@
 	function z() {
 	  var firstPoint = arguments.length <= 0 || arguments[0] === undefined ? defaultPoint : arguments[0];
 
-	  return Point("z", firstPoint.x, firstPoint.y);
+	  return new Point("z", firstPoint.x, firstPoint.y);
 	}
 
 	function Z() {
 	  var firstPoint = arguments.length <= 0 || arguments[0] === undefined ? defaultPoint : arguments[0];
 
-	  return Point("Z", firstPoint.x, firstPoint.y);
+	  return new Point("Z", firstPoint.x, firstPoint.y);
 	}
 
 /***/ },
@@ -6845,7 +6848,7 @@
 	 */
 	function buildPathstring(points) {
 	  return points.reduce(function (acc, point, i) {
-	    return "" + acc + point.code + buildSegment[point.code](point, i > 0 ? points[i - 1] : (0, _bernsteinPoint2.default)(null, 0, 0));
+	    return "" + acc + point.code + buildSegment[point.code](point, i > 0 ? points[i - 1] : _bernsteinPoint.defaultPoint);
 	  }, "").replace(/\s+/g, " ");
 	}
 
@@ -8108,7 +8111,7 @@
 
 	    // this point will be used to know if the next H or V
 	    // should be converted into L
-	    lastComputedPoint = (0, _bernsteinPoint2.default)(code, x, y, parameters);
+	    lastComputedPoint = new _bernsteinPoint2.default(code, x, y, parameters);
 
 	    return lastComputedPoint;
 	  });
@@ -8334,7 +8337,7 @@
 	  }
 
 	  var t = Math.max(0, Math.min(1, ((p1.x - p2.x) * (p3.x - p2.x) + (p1.y - p2.y) * (p3.y - p2.y)) / segment));
-	  var p4 = (0, _bernsteinPoint2.default)(null, p2.x + t * (p3.x - p2.x), p2.y + t * (p3.y - p2.y));
+	  var p4 = new _bernsteinPoint2.default(null, p2.x + t * (p3.x - p2.x), p2.y + t * (p3.y - p2.y));
 
 	  return sqDistance(p1, p4);
 	}
@@ -8441,11 +8444,11 @@
 
 	describe("point-minmax", function () {
 	  it("should give the min point", function () {
-	    _chai.assert.deepEqual((0, _bernsteinPointMinmax.min)((0, _bernsteinPoint.M)(0, 100), (0, _bernsteinPoint.M)(100, 0)), (0, _bernsteinPoint2.default)(null, 0, 0));
+	    _chai.assert.deepEqual((0, _bernsteinPointMinmax.min)((0, _bernsteinPoint.M)(0, 100), (0, _bernsteinPoint.M)(100, 0)), new _bernsteinPoint2.default(null, 0, 0));
 	  });
 
 	  it("should give the max point", function () {
-	    _chai.assert.deepEqual((0, _bernsteinPointMinmax.max)((0, _bernsteinPoint.M)(0, 100), (0, _bernsteinPoint.M)(100, 0)), (0, _bernsteinPoint2.default)(null, 100, 100));
+	    _chai.assert.deepEqual((0, _bernsteinPointMinmax.max)((0, _bernsteinPoint.M)(0, 100), (0, _bernsteinPoint.M)(100, 0)), new _bernsteinPoint2.default(null, 100, 100));
 	  });
 	});
 
@@ -8468,11 +8471,11 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function min(p1, p2) {
-	  return (0, _bernsteinPoint2.default)(null, Math.min(p1.x, p2.x), Math.min(p1.y, p2.y));
+	  return new _bernsteinPoint2.default(null, Math.min(p1.x, p2.x), Math.min(p1.y, p2.y));
 	}
 
 	function max(p1, p2) {
-	  return (0, _bernsteinPoint2.default)(null, Math.max(p1.x, p2.x), Math.max(p1.y, p2.y));
+	  return new _bernsteinPoint2.default(null, Math.max(p1.x, p2.x), Math.max(p1.y, p2.y));
 	}
 
 /***/ },
@@ -8561,7 +8564,7 @@
 	      next = reverseArc(next);
 	    }
 
-	    reversed.splice(insert, 0, (0, _bernsteinPoint2.default)(next.code, point.x, point.y, next.parameters));
+	    reversed.splice(insert, 0, new _bernsteinPoint2.default(next.code, point.x, point.y, next.parameters));
 	  }
 
 	  return reversed.reverse();

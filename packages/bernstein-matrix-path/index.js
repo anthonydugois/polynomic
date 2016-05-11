@@ -48,7 +48,7 @@ export default function matrix(path, a) {
 
     // this point will be used to know if the next H or V
     // should be converted into L
-    lastComputedPoint = Point(code, x, y, parameters)
+    lastComputedPoint = new Point(code, x, y, parameters)
 
     return lastComputedPoint
   })

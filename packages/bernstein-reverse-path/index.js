@@ -1,5 +1,6 @@
 import Point from "bernstein-point"
-import { isM, isC, isA, isZ } from "bernstein-point-is"
+import { isM, isQ, isT, isC, isS, isA, isZ } from "bernstein-point-is"
+import isRelative from "bernstein-point-is-relative"
 
 export default function reverse(path) {
   const reversed = []
@@ -23,38 +24,44 @@ export default function reverse(path) {
       point = path[i - 1]
     }
 
-    if (isC(next)) {
-      next = reverseAnchors(next)
-    } else if (isA(next)) {
-      next = reverseArc(next)
+    let code = next.code
+    let parameters = next.parameters
+
+    if (isT(next)) {
+      code = isRelative(next) ? "q" : "Q"
     }
 
-    reversed.splice(insert, 0, Point(next.code, point.x, point.y, next.parameters))
+    if (isS(next)) {
+      code = isRelative(next) ? "c" : "C"
+    }
+
+    if (isC(next) || isS(next)) {
+      parameters = reverseAnchors(parameters)
+    }
+
+    if (isA(next)) {
+      parameters = reverseArc(parameters)
+    }
+
+    reversed.splice(insert, 0, new Point(code, point.x, point.y, parameters))
   }
 
   return reversed.reverse()
 }
 
-function reverseAnchors(point) {
+function reverseAnchors(parameters) {
   return {
-    ...point,
-    parameters: {
-      ...point.parameters,
-      x1: point.parameters.x2,
-      y1: point.parameters.y2,
-      x2: point.parameters.x1,
-      y2: point.parameters.y1,
-    },
+    ...parameters,
+    x1: parameters.x2,
+    y1: parameters.y2,
+    x2: parameters.x1,
+    y2: parameters.y1,
   }
 }
 
-function reverseArc(point) {
+function reverseArc(parameters) {
   return {
-    ...point,
-    parameters: {
-      ...point.parameters,
-      large: point.parameters.large ^ 1,
-      sweep: point.parameters.sweep ^ 1,
-    },
+    ...parameters,
+    sweep: parameters.sweep ^ 1,
   }
 }
