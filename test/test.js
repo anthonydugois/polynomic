@@ -6563,13 +6563,17 @@
 
 /***/ },
 /* 41 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
+	exports.defaultPoint = undefined;
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 	exports.m = m;
 	exports.M = M;
 	exports.l = l;
@@ -6590,6 +6594,8 @@
 	exports.A = A;
 	exports.z = z;
 	exports.Z = Z;
+
+	var _bernsteinPointIs = __webpack_require__(42);
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -6676,13 +6682,37 @@
 	function t(dx, dy) {
 	  var prev = arguments.length <= 2 || arguments[2] === undefined ? defaultPoint : arguments[2];
 
-	  return new Point("t", prev.x + dx, prev.y + dy);
+	  var parameters = {
+	    x1: prev.x,
+	    y1: prev.y
+	  };
+
+	  if ((0, _bernsteinPointIs.isQ)(prev) || (0, _bernsteinPointIs.isT)(prev)) {
+	    parameters = {
+	      x1: 2 * prev.x - prev.parameters.x1,
+	      y1: 2 * prev.y - prev.parameters.y1
+	    };
+	  }
+
+	  return new Point("t", prev.x + dx, prev.y + dy, parameters);
 	}
 
 	function T(x, y) {
 	  var prev = arguments.length <= 2 || arguments[2] === undefined ? defaultPoint : arguments[2];
 
-	  return new Point("T", x, y);
+	  var parameters = {
+	    x1: prev.x,
+	    y1: prev.y
+	  };
+
+	  if ((0, _bernsteinPointIs.isQ)(prev) || (0, _bernsteinPointIs.isT)(prev)) {
+	    parameters = {
+	      x1: 2 * prev.x - prev.parameters.x1,
+	      y1: 2 * prev.y - prev.parameters.y1
+	    };
+	  }
+
+	  return new Point("T", x, y, parameters);
 	}
 
 	function c(dx1, dy1, dx2, dy2, dx, dy) {
@@ -6710,19 +6740,41 @@
 	function s(dx2, dy2, dx, dy) {
 	  var prev = arguments.length <= 4 || arguments[4] === undefined ? defaultPoint : arguments[4];
 
-	  return new Point("s", prev.x + dx, prev.y + dy, {
+	  var parameters = {
+	    x1: prev.x,
+	    y1: prev.y,
 	    x2: prev.x + dx2,
 	    y2: prev.y + dy2
-	  });
+	  };
+
+	  if ((0, _bernsteinPointIs.isC)(prev) || (0, _bernsteinPointIs.isS)(prev)) {
+	    parameters = _extends({}, parameters, {
+	      x1: 2 * prev.x - prev.parameters.x2,
+	      y1: 2 * prev.y - prev.parameters.y2
+	    });
+	  }
+
+	  return new Point("s", prev.x + dx, prev.y + dy, parameters);
 	}
 
 	function S(x2, y2, x, y) {
 	  var prev = arguments.length <= 4 || arguments[4] === undefined ? defaultPoint : arguments[4];
 
-	  return new Point("S", x, y, {
+	  var parameters = {
+	    x1: prev.x,
+	    y1: prev.y,
 	    x2: x2,
 	    y2: y2
-	  });
+	  };
+
+	  if ((0, _bernsteinPointIs.isC)(prev) || (0, _bernsteinPointIs.isS)(prev)) {
+	    parameters = _extends({}, parameters, {
+	      x1: 2 * prev.x - prev.parameters.x2,
+	      y1: 2 * prev.y - prev.parameters.y2
+	    });
+	  }
+
+	  return new Point("S", x, y, parameters);
 	}
 
 	function a(rx, ry, rotation, large, sweep, dx, dy) {
@@ -8508,9 +8560,9 @@
 
 	describe("reverse-path", function () {
 	  it("should reverse the path", function () {
-	    var path = (0, _bernsteinParsePathstring2.default)("M0 0 h50 v50 c100 0 0 100 100 100 z M300 300 h100 v100 a50 50 0 1 0 200 200 z");
+	    var path = (0, _bernsteinParsePathstring2.default)("M 0 0 H 100 Q 150 0 150 100 T 200 150 T 250 200 V 200 A 50 50 0 0 1 250 250 V 350 H 350 C 400 350 400 450 400 550 S 400 700 300 700 z M 500 350 L 450 250 V 100 H 600 L 650 250 T 655 250 S 20 20 20 20 z");
 	    var test = (0, _bernsteinReversePath2.default)(path);
-	    var expected = "M600 600a50 50 0 0 1 -200 -200v-100h-100zM150 150c-100 0 0 -100 -100 -100v-50h-50z";
+	    var expected = "M20 20C20 20 655 250 655 250Q650 250 650 250L600 100H450V250L500 350zM300 700C400 700 400 650 400 550C400 450 400 350 350 350H250V250A50 50 0 0 0 250 200V200Q250 100 200 150Q150 200 150 100Q150 0 100 0H0z";
 
 	    _chai.assert.isTrue((0, _bernsteinPathIsEqual2.default)(test, expected));
 	  });
@@ -8536,6 +8588,10 @@
 
 	var _bernsteinPointIs = __webpack_require__(42);
 
+	var _bernsteinPointIsRelative = __webpack_require__(51);
+
+	var _bernsteinPointIsRelative2 = _interopRequireDefault(_bernsteinPointIsRelative);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function reverse(path) {
@@ -8558,35 +8614,43 @@
 	      point = path[i - 1];
 	    }
 
-	    if ((0, _bernsteinPointIs.isC)(next)) {
-	      next = reverseAnchors(next);
-	    } else if ((0, _bernsteinPointIs.isA)(next)) {
-	      next = reverseArc(next);
+	    var code = next.code;
+	    var parameters = next.parameters;
+
+	    if ((0, _bernsteinPointIs.isT)(next)) {
+	      code = (0, _bernsteinPointIsRelative2.default)(next) ? "q" : "Q";
 	    }
 
-	    reversed.splice(insert, 0, new _bernsteinPoint2.default(next.code, point.x, point.y, next.parameters));
+	    if ((0, _bernsteinPointIs.isS)(next)) {
+	      code = (0, _bernsteinPointIsRelative2.default)(next) ? "c" : "C";
+	    }
+
+	    if ((0, _bernsteinPointIs.isC)(next) || (0, _bernsteinPointIs.isS)(next)) {
+	      parameters = reverseAnchors(parameters);
+	    }
+
+	    if ((0, _bernsteinPointIs.isA)(next)) {
+	      parameters = reverseArc(parameters);
+	    }
+
+	    reversed.splice(insert, 0, new _bernsteinPoint2.default(code, point.x, point.y, parameters));
 	  }
 
 	  return reversed.reverse();
 	}
 
-	function reverseAnchors(point) {
-	  return _extends({}, point, {
-	    parameters: _extends({}, point.parameters, {
-	      x1: point.parameters.x2,
-	      y1: point.parameters.y2,
-	      x2: point.parameters.x1,
-	      y2: point.parameters.y1
-	    })
+	function reverseAnchors(parameters) {
+	  return _extends({}, parameters, {
+	    x1: parameters.x2,
+	    y1: parameters.y2,
+	    x2: parameters.x1,
+	    y2: parameters.y1
 	  });
 	}
 
-	function reverseArc(point) {
-	  return _extends({}, point, {
-	    parameters: _extends({}, point.parameters, {
-	      large: point.parameters.large ^ 1,
-	      sweep: point.parameters.sweep ^ 1
-	    })
+	function reverseArc(parameters) {
+	  return _extends({}, parameters, {
+	    sweep: parameters.sweep ^ 1
 	  });
 	}
 

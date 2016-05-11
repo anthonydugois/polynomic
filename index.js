@@ -25,7 +25,7 @@ function update(value) {
     path.rotate(Math.PI / 40)
 
     to.setAttribute("d", path.getPath())
-    // output.value = path.getPath()
+    output.value = path.getPath()
     requestAnimationFrame(a)
   }
 

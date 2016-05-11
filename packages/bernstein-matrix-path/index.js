@@ -1,5 +1,4 @@
 import Point from "bernstein-point"
-import { isH, isV } from "bernstein-point-is"
 import isRelative from "bernstein-point-is-relative"
 
 export default function matrix(path, a) {
@@ -21,8 +20,8 @@ export default function matrix(path, a) {
     let code = p.code
 
     if (
-      (isH(p) && y !== lastComputedPoint.y)
-      || (isV(p) && x !== lastComputedPoint.x)
+      (p.isH() && y !== lastComputedPoint.y)
+      || (p.isV() && x !== lastComputedPoint.x)
     ) {
       code = isRelative(p) ? "l" : "L"
     }

@@ -1,5 +1,4 @@
 import Point from "bernstein-point"
-import { isM, isQ, isT, isC, isS, isA, isZ } from "bernstein-point-is"
 import isRelative from "bernstein-point-is-relative"
 
 export default function reverse(path) {
@@ -10,15 +9,15 @@ export default function reverse(path) {
     let insert = reversed.length
     let point = path[i]
 
-    if (isM(point)) {
+    if (point.isM()) {
       firstPointIndex = i
     }
 
-    let next = i < len - 1 && !isZ(path[i + 1]) ?
+    let next = i < len - 1 && !path[i + 1].isZ() ?
       path[i + 1] :
       path[firstPointIndex]
 
-    if (isZ(point)) {
+    if (point.isZ()) {
       insert = firstPointIndex
       next = point
       point = path[i - 1]
@@ -27,19 +26,19 @@ export default function reverse(path) {
     let code = next.code
     let parameters = next.parameters
 
-    if (isT(next)) {
+    if (next.isT()) {
       code = isRelative(next) ? "q" : "Q"
     }
 
-    if (isS(next)) {
+    if (next.isS()) {
       code = isRelative(next) ? "c" : "C"
     }
 
-    if (isC(next) || isS(next)) {
+    if (next.isC() || next.isS()) {
       parameters = reverseAnchors(parameters)
     }
 
-    if (isA(next)) {
+    if (next.isA()) {
       parameters = reverseArc(parameters)
     }
 

@@ -1,5 +1,4 @@
 import { l, L, z, Z } from "bernstein-point"
-import { isM, isZ } from "bernstein-point-is"
 import isRelative from "bernstein-point-is-relative"
 
 /**
@@ -21,7 +20,7 @@ import isRelative from "bernstein-point-is-relative"
 export default function combine(path) {
   return path.reduce(
     (acc, point, i) => {
-      if (i > 0 && isM(point)) {
+      if (i > 0 && point.isM()) {
         return [
           ...acc,
           isRelative(point) ?
@@ -30,7 +29,7 @@ export default function combine(path) {
         ]
       }
 
-      if (isZ(point)) {
+      if (point.isZ()) {
         if (i === path.length - 1) {
           return [
             ...acc,
