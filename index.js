@@ -14,6 +14,8 @@ update(input.value)
 function update(value) {
   const path = new Bernstein(value)
 
+  path.convertToCubics()
+
   output.value = path.getPathstring()
 
   from.setAttribute("d", value)

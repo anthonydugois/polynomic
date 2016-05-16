@@ -33,9 +33,9 @@ export function getSegments(d) {
 
   return d
     // remove invalid characters
-    .replace(/[^mlhvqtcsaz\d\s,-]/gi, "")
+    .replace(/[^mlhvqtcsaz\d\s,.-]/gi, "")
     // split in segments e.g. ["M0 0", "l50 50", ...]
-    .split(/([mlhvqtcsaz][\d\s,-]*)/i)
+    .split(/([mlhvqtcsaz][\d\s,.-]*)/i)
     // remove empty segments
     .filter(cleanArray)
     .map(
@@ -43,7 +43,7 @@ export function getSegments(d) {
         // remove extra whitespaces
         .replace(/[\s,]+/g, " ")
         // split command and parameters
-        .split(/([mlhvqtcsaz]|-*\d+)/i)
+        .split(/([mlhvqtcsaz]|-*[\d.]+)/i)
         // remove empty values
         .filter(cleanArray)
         // trim and parse integers
@@ -69,8 +69,11 @@ function buildPointList(segments) {
     (acc, [code, ...parameters]) => {
       const p = points[code]
 
-      let pointList
-      let prev = acc.length > 0 ? acc[acc.length - 1] : undefined
+      let pointList, prev
+
+      if (acc.length > 0) {
+        prev = acc[acc.length - 1]
+      }
 
       if (prev && prev.isM()) {
         firstPoint = prev

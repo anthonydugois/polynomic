@@ -1,8 +1,13 @@
 import * as pointTypes from "./pointTypes"
 import * as assertTypes from "bernstein-point-is"
+
 import isRelative from "bernstein-point-is-relative"
 import isInside from "bernstein-point-is-inside"
 import distance, { distanceSegment } from "bernstein-point-distance"
+
+import lineToCubic from "bernstein-point-l-to-c"
+import quadraticToCubic from "bernstein-point-q-to-c"
+import arcToCubic from "bernstein-point-a-to-c"
 
 export default class Point {
   constructor(code, x, y, parameters = {}) {
@@ -10,6 +15,22 @@ export default class Point {
     this.x = x
     this.y = y
     this.parameters = parameters
+  }
+
+  toCubic(prev) {
+    if (this.isL() || this.isH() || this.isV()) {
+      return lineToCubic(prev, this)
+    }
+
+    if (this.isQ() || this.isT()) {
+      return quadraticToCubic(prev, this)
+    }
+
+    if (this.isA()) {
+      return arcToCubic(prev, this)
+    }
+
+    return this
   }
 
   distance(point) {

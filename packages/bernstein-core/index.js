@@ -13,11 +13,16 @@ import rotate from "bernstein-rotate-path"
 
 import parsePathstring from "bernstein-parse-pathstring"
 import buildPathstring from "bernstein-build-pathstring"
+import isValid from "bernstein-pathstring-is-valid"
 
 export default class Bernstein {
   constructor(input) {
     this.path = this.getPointList(input)
     this.origin = { x: 0, y: 0 }
+  }
+
+  static isValid(pathstring) {
+    return isValid(pathstring)
   }
 
   getPointList(input) {
@@ -83,10 +88,45 @@ export default class Bernstein {
     return this
   }
 
+  convertToCubics() {
+    this.path = this.path.reduce(
+      (acc, point, i) => {
+        const cubic = point.toCubic(i > 0 && this.path[i - 1])
+
+        if (Array.isArray(cubic)) {
+          return [...acc, ...cubic]
+        }
+
+        return [...acc, cubic]
+      },
+      []
+    )
+
+    return this
+  }
+
   /**
    * Transforms
    */
   setOrigin(x, y) {
+    switch (x) {
+      case "left": x = 0
+      break
+      case "center": x = 0
+      break
+      case "right": x = 0
+      break
+    }
+
+    switch (y) {
+      case "top": y = 0
+      break
+      case "center": y = 0
+      break
+      case "bottom": y = 0
+      break
+    }
+
     this.origin = { x, y }
 
     return this
