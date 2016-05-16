@@ -13,10 +13,10 @@ update(input.value)
 
 function update(value) {
   const path = new Bernstein(value)
+  const { xMin, xMax, yMin, yMax } = path.boundingBox()
+  const pathbbox = `M${xMin} ${yMin}H${xMax} V${yMax} H${xMin}z`
 
-  path.convertToCubics()
-
-  output.value = path.getPathstring()
+  output.value = pathbbox
 
   from.setAttribute("d", value)
   to.setAttribute("d", output.value)

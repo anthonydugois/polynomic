@@ -11,6 +11,9 @@ import scale from "bernstein-scale-path"
 import skew from "bernstein-skew-path"
 import rotate from "bernstein-rotate-path"
 
+import toCubics from "bernstein-path-to-cubics"
+import boundingBox from "bernstein-path-boundingbox"
+
 import parsePathstring from "bernstein-parse-pathstring"
 import buildPathstring from "bernstein-build-pathstring"
 import isValid from "bernstein-pathstring-is-valid"
@@ -89,42 +92,39 @@ export default class Bernstein {
   }
 
   convertToCubics() {
-    this.path = this.path.reduce(
-      (acc, point, i) => {
-        const cubic = point.toCubic(i > 0 && this.path[i - 1])
-
-        if (Array.isArray(cubic)) {
-          return [...acc, ...cubic]
-        }
-
-        return [...acc, cubic]
-      },
-      []
-    )
+    this.path = toCubics(this.path)
 
     return this
+  }
+
+  boundingBox() {
+    return boundingBox(this.path)
   }
 
   /**
    * Transforms
    */
   setOrigin(x, y) {
-    switch (x) {
-      case "left": x = 0
-      break
-      case "center": x = 0
-      break
-      case "right": x = 0
-      break
-    }
+    if (typeof x === "string" || typeof y === "string") {
+      const bbox = this.boundingBox()
 
-    switch (y) {
-      case "top": y = 0
-      break
-      case "center": y = 0
-      break
-      case "bottom": y = 0
-      break
+      switch (x) {
+        case "left": x = bbox.xMin
+        break
+        case "center": x = bbox.xMin + bbox.width / 2
+        break
+        case "right": x = bbox.xMax
+        break
+      }
+
+      switch (y) {
+        case "top": y = bbox.yMin
+        break
+        case "center": y = bbox.yMin + bbox.height / 2
+        break
+        case "bottom": y = bbox.yMax
+        break
+      }
     }
 
     this.origin = { x, y }

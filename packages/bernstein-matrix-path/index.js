@@ -1,7 +1,7 @@
-import Point from "bernstein-point"
+import Point, { defaultPoint } from "bernstein-point"
 
 export default function matrix(path, a) {
-  let lastComputedPoint
+  let lastComputedPoint = defaultPoint
 
   return path.map((p, i) => {
     const prev = i > 0 && path[i - 1]
