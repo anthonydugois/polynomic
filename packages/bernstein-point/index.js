@@ -41,7 +41,7 @@ export default class Point {
     return distanceSegment(this, l1, l2)
   }
 
-  isInside() {
+  isInside(path) {
     return isInside(this, path)
   }
 
