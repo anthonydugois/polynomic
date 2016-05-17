@@ -13,10 +13,10 @@ update(input.value)
 
 function update(value) {
   const path = new Bernstein(value)
-  const { xMin, xMax, yMin, yMax } = path.boundingBox()
-  const pathbbox = `M${xMin} ${yMin}H${xMax} V${yMax} H${xMin}z`
 
-  output.value = pathbbox
+  path.setOrigin(90, "center")
+
+  output.value = path.getPathstring()
 
   from.setAttribute("d", value)
   to.setAttribute("d", output.value)
@@ -29,5 +29,5 @@ function update(value) {
     requestAnimationFrame(a)
   }
 
-  // a()
+  //a()
 }
