@@ -14,7 +14,7 @@ update(input.value)
 function update(value) {
   const path = new Bernstein(value)
 
-  path.setOrigin(90, "center")
+  path.setOrigin("99%", "25%")
 
   output.value = path.getPathstring()
 
