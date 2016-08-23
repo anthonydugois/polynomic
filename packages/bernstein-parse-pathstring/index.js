@@ -25,30 +25,36 @@ export default function parsePathstring(d) {
  * --> [["M", 0, 0], ["l", 50, 50], ["q", 100, 100, 150, 150], ["z"]]
  */
 export function getSegments(d) {
-  const cleanArray = (str) => str.trim().length > 0
-  const clean = (str) => {
-    str = str.trim()
-    return isNaN(str) ? str : parseFloat(str)
-  }
-
   return d
     // remove invalid characters
     .replace(/[^mlhvqtcsaz\d\s,.-]/gi, "")
     // split in segments e.g. ["M0 0", "l50 50", ...]
     .split(/([mlhvqtcsaz][\d\s,.-]*)/i)
     // remove empty segments
-    .filter(cleanArray)
-    .map(
-      (segment) => segment
-        // remove extra whitespaces
-        .replace(/[\s,]+/g, " ")
-        // split command and parameters
-        .split(/([mlhvqtcsaz]|-*[\d.]+)/i)
-        // remove empty values
-        .filter(cleanArray)
-        // trim and parse integers
-        .map(clean)
-    )
+    .filter(isStringNotEmpty)
+    // split segment by path values
+    .map(splitSegment)
+}
+
+function isStringNotEmpty(str) {
+  return str.trim().length > 0
+}
+
+function convertNumberLikeInActualNumber(str) {
+  str = str.trim()
+  return isNaN(str) ? str : parseFloat(str)
+}
+
+function splitSegment(segment) {
+  return segment
+    // remove extra whitespaces
+    .replace(/[\s,]+/g, " ")
+    // split command and parameters
+    .split(/([mlhvqtcsaz]|-*[\d.]+)/i)
+    // remove empty values
+    .filter(isStringNotEmpty)
+    // trim and parse numbers
+    .map(convertNumberLikeInActualNumber)
 }
 
 /**
@@ -68,7 +74,6 @@ function buildPointList(segments) {
   return segments.reduce(
     (acc, [code, ...parameters]) => {
       const p = points[code]
-
       let pointList, prev
 
       if (acc.length > 0) {
@@ -80,16 +85,15 @@ function buildPointList(segments) {
       }
 
       if (p.length > 0) {
-        pointList = chunks(parameters, p.length).map(
-          (chunk) => prev = p(...chunk, prev)
-        )
+        pointList = chunks(parameters, p.length)
+        pointList = pointList.map((chunk) => prev = p(...chunk, prev))
       } else {
         pointList = [p(firstPoint)]
       }
 
       return [...acc, ...pointList]
     },
-    []
+    [],
   )
 }
 

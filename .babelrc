@@ -1,0 +1,11 @@
+{
+  "presets": [
+    "es2015",
+    "es2016"
+  ],
+  "plugins": [
+    "syntax-trailing-function-commas",
+    "transform-object-rest-spread",
+    "transform-export-extensions"
+  ]
+}
