@@ -1,25 +1,4 @@
-import Point, { defaultPoint } from "bernstein-point"
-
-/**
- * Transforms a formatted point list into pathstring
- * e.g. [
- *   { code: "M", x: 0, y: 0, parameters: {} },
- *   { code: "l", x: 50, y: 50, parameters: {} },
- *   { code: "q", x: 150, y: 150, parameters: { x1: 100, y1: 100 } },
- * ]
- * --> "M0 0 l50 50 q50 50 100 100"
- */
-export default function buildPathstring(points) {
-  return points.reduce(
-    (acc, point, i) => `${ acc }${ point.code }${ buildSegment[point.code](point, i > 0 ? points[i - 1] : defaultPoint) }`,
-    ""
-  ).replace(/\s+/g, " ")
-}
-
-function r(n, precision = 3) {
-  const coef = Math.pow(10, precision)
-  return Math.round(n * coef) / coef
-}
+import { defaultPoint } from "bernstein-point"
 
 /**
  * This object references all the functions which build pathstring segments.
@@ -110,4 +89,25 @@ const buildSegment = {
   Z() {
     return ""
   },
+}
+
+function r(n, precision = 3) {
+  const coef = Math.pow(10, precision)
+  return Math.round(n * coef) / coef
+}
+
+/**
+ * Transforms a formatted point list into pathstring
+ * e.g. [
+ *   { code: "M", x: 0, y: 0, parameters: {} },
+ *   { code: "l", x: 50, y: 50, parameters: {} },
+ *   { code: "q", x: 150, y: 150, parameters: { x1: 100, y1: 100 } },
+ * ]
+ * --> "M0 0 l50 50 q50 50 100 100"
+ */
+export default function buildPathstring(points) {
+  return points.reduce(
+    (acc, point, i) => `${ acc }${ point.code }${ buildSegment[point.code](point, i > 0 ? points[i - 1] : defaultPoint) }`,
+    ""
+  ).replace(/\s+/g, " ")
 }

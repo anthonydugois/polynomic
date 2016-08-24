@@ -40,8 +40,8 @@ export default function arcToCubic(prev, point, center = null) {
 
     if (ellipse > 1) {
       ellipse = Math.sqrt(ellipse)
-      rx = ellipse * rx
-      ry = ellipse * ry
+      rx *= ellipse
+      ry *= ellipse
     }
 
     sqRx = Math.pow(rx, 2)
