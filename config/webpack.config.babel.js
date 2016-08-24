@@ -3,10 +3,10 @@ import webpack from "webpack"
 
 export default {
   entry: {
-    app: path.join(__dirname, "..", "index.js"),
+    index: path.join(__dirname, "..", "src", "index.js"),
   },
   output: {
-    path: path.join(__dirname, "..", "dist"),
+    path: path.join(__dirname, ".."),
     filename: "[name].js",
     libraryTarget: "umd",
   },

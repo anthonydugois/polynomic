@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Advanced utilities to manipulate SVG paths.",
   "main": "index.js",
+  "files": [
+    "index.js"
+  ],
   "author": "Anthony Dugois <dev.anthonydugois@gmail.com>",
   "license": "MIT",
   "devDependencies": {
@@ -29,7 +32,7 @@
   "scripts": {
     "prod": "npm run clean && npm run build",
     "build": "webpack --config ./config/webpack.config.babel.js",
-    "clean": "rimraf dist test",
+    "clean": "rimraf test",
     "test": "webpack --config ./config/webpack.config.test.babel.js --target node && mocha",
     "lint": "eslint packages/** --ignore-pattern packages/**/test.js",
     "prepublish": "npm run prod"
