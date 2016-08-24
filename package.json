@@ -27,12 +27,11 @@
     "deep-equal": "^1.0.1"
   },
   "scripts": {
-    "start": "webpack-dev-server --inline --hot --config ./config/webpack.config.babel.js",
     "prod": "npm run clean && npm run build",
     "build": "webpack --config ./config/webpack.config.babel.js",
     "clean": "rimraf dist test",
     "test": "webpack --config ./config/webpack.config.test.babel.js --target node && mocha",
     "lint": "eslint packages/** --ignore-pattern packages/**/test.js",
-    "lint:fix": "eslint --fix"
+    "prepublish": "npm run prod"
   }
 }

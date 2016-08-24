@@ -108,8 +108,8 @@ export default class Bernstein {
     const bbox = this.boundingBox()
 
     return {
-      x: bbox.xMin + bbox.width * n / 100,
-      y: bbox.yMin + bbox.height * n / 100,
+      x: bbox.xMin + ((bbox.width * n) / 100),
+      y: bbox.yMin + ((bbox.height * n) / 100),
     }
   }
 

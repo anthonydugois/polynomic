@@ -146,8 +146,8 @@ export function t(dx, dy, prev = defaultPoint) {
 
   if (prev.isQ() || prev.isT()) {
     parameters = {
-      x1: 2 * prev.x - prev.parameters.x1,
-      y1: 2 * prev.y - prev.parameters.y1,
+      x1: (2 * prev.x) - prev.parameters.x1,
+      y1: (2 * prev.y) - prev.parameters.y1,
     }
   }
 
@@ -162,8 +162,8 @@ export function T(x, y, prev = defaultPoint) {
 
   if (prev.isQ() || prev.isT()) {
     parameters = {
-      x1: 2 * prev.x - prev.parameters.x1,
-      y1: 2 * prev.y - prev.parameters.y1,
+      x1: (2 * prev.x) - prev.parameters.x1,
+      y1: (2 * prev.y) - prev.parameters.y1,
     }
   }
 
@@ -199,8 +199,8 @@ export function s(dx2, dy2, dx, dy, prev = defaultPoint) {
   if (prev.isC() || prev.isS()) {
     parameters = {
       ...parameters,
-      x1: 2 * prev.x - prev.parameters.x2,
-      y1: 2 * prev.y - prev.parameters.y2,
+      x1: (2 * prev.x) - prev.parameters.x2,
+      y1: (2 * prev.y) - prev.parameters.y2,
     }
   }
 
@@ -218,8 +218,8 @@ export function S(x2, y2, x, y, prev = defaultPoint) {
   if (prev.isC() || prev.isS()) {
     parameters = {
       ...parameters,
-      x1: 2 * prev.x - prev.parameters.x2,
-      y1: 2 * prev.y - prev.parameters.y2,
+      x1: (2 * prev.x) - prev.parameters.x2,
+      y1: (2 * prev.y) - prev.parameters.y2,
     }
   }
 

@@ -7,8 +7,8 @@ export default {
   },
   output: {
     path: path.join(__dirname, "..", "dist"),
-    publicPath: "/dist/",
     filename: "[name].js",
+    libraryTarget: "umd",
   },
   resolve: {
     root: path.join(__dirname, "..", "packages"),
@@ -20,6 +20,13 @@ export default {
     })
   ],
   module: {
+    preLoaders: [
+      {
+        test: /\.js$/,
+        loader: "eslint",
+        include: path.join(__dirname, "..", "packages"),
+      },
+    ],
     loaders: [
       {
         test: /\.js$/,

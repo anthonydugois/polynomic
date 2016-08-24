@@ -53,22 +53,22 @@ export default function matrix(path, a) {
 }
 
 export function multiply3x1(a, b) {
-  const a00 = a[0 * 3 + 0]
-  const a01 = a[0 * 3 + 1]
-  const a02 = a[0 * 3 + 2]
-  const a10 = a[1 * 3 + 0]
-  const a11 = a[1 * 3 + 1]
-  const a12 = a[1 * 3 + 2]
-  const a20 = a[2 * 3 + 0]
-  const a21 = a[2 * 3 + 1]
-  const a22 = a[2 * 3 + 2]
+  const a00 = a[(0 * 3) + 0]
+  const a01 = a[(0 * 3) + 1]
+  const a02 = a[(0 * 3) + 2]
+  const a10 = a[(1 * 3) + 0]
+  const a11 = a[(1 * 3) + 1]
+  const a12 = a[(1 * 3) + 2]
+  const a20 = a[(2 * 3) + 0]
+  const a21 = a[(2 * 3) + 1]
+  const a22 = a[(2 * 3) + 2]
   const b0 = b[0]
   const b1 = b[1]
   const b2 = b[2]
 
   return [
-    a00 * b0 + a01 * b1 + a02 * b2,
-    a10 * b0 + a11 * b1 + a12 * b2,
-    a20 * b0 + a21 * b1 + a22 * b2,
+    (a00 * b0) + (a01 * b1) + (a02 * b2),
+    (a10 * b0) + (a11 * b1) + (a12 * b2),
+    (a20 * b0) + (a21 * b1) + (a22 * b2),
   ]
 }

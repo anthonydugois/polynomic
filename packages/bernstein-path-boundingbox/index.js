@@ -56,10 +56,10 @@ function cubicBoundingBox(prev, point) {
 }
 
 function getMinMax(p0, p1, p2, p3) {
-  const a = 3 * p3 - 9 * p2 + 9 * p1 - 3 * p0
-  const b = 6 * p0 - 12 * p1 + 6 * p2
-  const c = 3 * p1 - 3 * p0
-  const d = Math.pow(b, 2) - 4 * a * c
+  const a = ((3 * p3) - (9 * p2)) + ((9 * p1) - (3 * p0))
+  const b = ((6 * p0) - (12 * p1)) + (6 * p2)
+  const c = (3 * p1) - (3 * p0)
+  const d = Math.pow(b, 2) - (4 * a * c)
 
   let min = p0
   let max = p0
@@ -106,5 +106,8 @@ function getMinMax(p0, p1, p2, p3) {
 }
 
 function cubic(p0, p1, p2, p3, t) {
-  return p0 * Math.pow(1 - t, 3) + p1 * 3 * t * Math.pow(1 - t, 2) + p2 * 3 * Math.pow(t, 2) * (1 - t) + p3 * Math.pow(t, 3)
+  return (p0 * Math.pow(1 - t, 3))
+    + (p1 * 3 * t * Math.pow(1 - t, 2))
+    + (p2 * 3 * Math.pow(t, 2) * (1 - t))
+    + (p3 * Math.pow(t, 3))
 }
