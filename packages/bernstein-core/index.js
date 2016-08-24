@@ -120,28 +120,43 @@ export default class Bernstein {
   setOrigin(x, y) {
     if (typeof x === "string") {
       switch (x) {
-        case "left": x = this.relToAbs(0).x
+        case "left":
+          x = this.relToAbs(0).x
         break
-        case "center": x = this.relToAbs(50).x
+
+        case "center":
+          x = this.relToAbs(50).x
         break
-        case "right": x = this.relToAbs(100).x
+
+        case "right":
+          x = this.relToAbs(100).x
         break
-        default: x = this.relToAbs(this.parseRel(x)).x
+
+        default:
+          x = this.relToAbs(this.parseRel(x)).x
         break
       }
     }
 
     if (typeof y === "string") {
       switch (y) {
-        case "top": y = this.relToAbs(0).y
+        case "top":
+          y = this.relToAbs(0).y
         break
-        case "center": y = this.relToAbs(50).y
+
+        case "center":
+          y = this.relToAbs(50).y
         break
-        case "bottom": y = this.relToAbs(100).y
+
+        case "bottom":
+          y = this.relToAbs(100).y
         break
-        default: y = this.relToAbs(this.parseRel(y)).y
+
+        default:
+          y = this.relToAbs(this.parseRel(y)).y
         break
       }
+
     }
 
     this.origin = { x, y }
