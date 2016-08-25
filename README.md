@@ -32,6 +32,20 @@ const pathstring = path.getPathstring()
 
 See the [official documentation](http://anthonydugois.com/bernstein/).
 
+## Contributing
+
+Clone the repo:
+
+```
+git clone https://github.com/anthonydugois/bernstein.git
+```
+
+Run tests:
+
+```
+npm run test
+```
+
 ## License
 
 MIT
