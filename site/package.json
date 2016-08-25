@@ -14,6 +14,7 @@
     "test": "npm run build"
   },
   "phenomic": {
+    "destination": "../docs",
     "CNAME": true
   },
   "babel": {
