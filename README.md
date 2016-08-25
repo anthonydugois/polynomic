@@ -1,16 +1,16 @@
 # Bernstein
 
-Bernstein is a set of advanced utilities to manipulate SVG paths.
+> Bernstein is a set of advanced utilities to manipulate SVG paths.
 
 Visit the website to see some [some demos](http://anthonydugois.com/bernstein/)!
 
-## Installation
+### Installation
 
 ```
 npm install --save bernstein
 ```
 
-## Getting started
+### Getting started
 
 ```javascript
 import Bernstein from "bernstein"
@@ -28,11 +28,11 @@ path
 const pathstring = path.getPathstring()
 ```
 
-## Documentation
+### Documentation
 
 See the [official documentation](http://anthonydugois.com/bernstein/).
 
-## Contributing
+### Contributing
 
 Clone the repo:
 
@@ -46,6 +46,6 @@ Run tests:
 npm run test
 ```
 
-## License
+### License
 
 MIT
