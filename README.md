@@ -2,7 +2,7 @@
 
 > Bernstein is a set of advanced utilities to manipulate SVG paths.
 
-Visit the website to see some [some demos](http://anthonydugois.com/bernstein/)!
+Visit the website to see [some demos](http://anthonydugois.com/bernstein/)!
 
 ### Installation
 
