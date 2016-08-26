@@ -156,7 +156,6 @@ export default class Bernstein {
           y = this.relToAbs(this.parseRel(y)).y
         break
       }
-
     }
 
     this.origin = { x, y }
