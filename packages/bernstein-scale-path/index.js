@@ -1,15 +1,9 @@
 import matrix from "bernstein-matrix-path"
-import makeOriginAware from "bernstein-path-origin"
 
-function scale(path, sx, sy) {
+export default function scale(path, sx, sy, ...origin) {
   return matrix(path, [
     sx, 0, 0,
     0, sy, 0,
     0, 0, 1,
-  ])
+  ], ...origin)
 }
-
-export default (path, sx, sy, ...origin) => makeOriginAware(
-  scale,
-  ...origin,
-)(path, sx, sy)

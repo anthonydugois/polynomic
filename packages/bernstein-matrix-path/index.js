@@ -1,6 +1,58 @@
 import Point, { defaultPoint } from "bernstein-point"
+import translate from "bernstein-translate-path"
+import boundingBox from "bernstein-path-boundingbox"
 
-export default function matrix(path, a) {
+const POSITIONS = {
+  left: 0,
+  right: 100,
+  top: 0,
+  bottom: 100,
+  center: 50,
+}
+
+function relativeToAbsoluteX(x, bbox) {
+  x = x.toLowerCase()
+  x = Object.keys(POSITIONS).indexOf(x) > -1 ? POSITIONS[x] : parseRelative(x)
+
+  return bbox.xMin + ((bbox.width * x) / 100)
+}
+
+function relativeToAbsoluteY(y, bbox) {
+  y = y.toLowerCase()
+  y = Object.keys(POSITIONS).indexOf(y) > -1 ? POSITIONS[y] : parseRelative(y)
+
+  return bbox.yMin + ((bbox.height * y) / 100)
+}
+
+function parseRelative(str) {
+  return parseFloat(str.replace("%", ""))
+}
+
+export default function matrix(path, m, x = 0, y = 0) {
+  if (typeof x === "string" || typeof y === "string") {
+    const bbox = boundingBox(path)
+
+    if (typeof x === "string") {
+      x = relativeToAbsoluteX(x, bbox)
+    }
+
+    if (typeof y === "string") {
+      y = relativeToAbsoluteY(y, bbox)
+    }
+  }
+
+  if (x !== 0 || y !== 0) {
+    path = translate(path, -x, -y)
+    path = transformer(path, m)
+    path = translate(path, x, y)
+  } else {
+    path = transformer(path, m)
+  }
+
+  return path
+}
+
+function transformer(path, m) {
   let lastComputedPoint = defaultPoint
 
   return path.map((p, i) => {
@@ -13,7 +65,7 @@ export default function matrix(path, a) {
     const py2 = typeof p.parameters.y2 === "number" && p.parameters.y2
 
     // compute position
-    const [x, y] = multiply3x1(a, [px, py, 1])
+    const [x, y] = multiply3x1(m, [px, py, 1])
 
     // get point code
     let code = p.code
@@ -29,11 +81,11 @@ export default function matrix(path, a) {
     let x1, y1, x2, y2
 
     if (px1 !== false && py1 !== false) {
-      [x1, y1] = multiply3x1(a, [px1, py1, 1])
+      [x1, y1] = multiply3x1(m, [px1, py1, 1])
     }
 
     if (px2 !== false && py2 !== false) {
-      [x2, y2] = multiply3x1(a, [px2, py2, 1])
+      [x2, y2] = multiply3x1(m, [px2, py2, 1])
     }
 
     const parameters = {
