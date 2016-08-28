@@ -1,7 +1,7 @@
 import path from "path"
 import webpack from "webpack"
 
-const srcPath = path.join(__dirname, "..", "src")
+const srcPath = path.join(__dirname, "..")
 const testPath = path.join(__dirname, "..", "test")
 const bootstrapPath = path.join(__dirname, "webpack.test.bootstrap.js")
 

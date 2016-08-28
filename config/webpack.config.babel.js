@@ -1,7 +1,7 @@
 import path from "path"
 import webpack from "webpack"
 
-const srcPath = path.join(__dirname, "..", "src")
+const srcPath = path.join(__dirname, "..")
 const distPath = path.join(__dirname, "..", "dist")
 
 export default {

@@ -1,0 +1,6 @@
+config
+docs
+node_modules
+site
+test
+**/test.js
