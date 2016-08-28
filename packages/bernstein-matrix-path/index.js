@@ -1,4 +1,6 @@
 import Point, { defaultPoint } from "bernstein-point"
+import { isH, isV } from "bernstein-point-is"
+import isRelative from "bernstein-point-is-relative"
 
 export default function matrix(path, m) {
   let lastComputedPoint = defaultPoint
@@ -20,10 +22,10 @@ export default function matrix(path, m) {
     let code = point.code
 
     if (
-      (point.isH() && y !== lastComputedPoint.y)
-      || (point.isV() && x !== lastComputedPoint.x)
+      (isH(point) && y !== lastComputedPoint.y)
+      || (isV(point) && x !== lastComputedPoint.x)
     ) {
-      code = point.isRelative() ? "l" : "L"
+      code = isRelative(point) ? "l" : "L"
     }
 
     // compute parameters
@@ -47,7 +49,7 @@ export default function matrix(path, m) {
 
     // this point will be used to know if the next H or V
     // should be converted into L
-    lastComputedPoint = new Point(code, x, y, parameters)
+    lastComputedPoint = Point(code, x, y, parameters)
 
     return lastComputedPoint
   })

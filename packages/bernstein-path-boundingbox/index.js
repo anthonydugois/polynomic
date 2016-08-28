@@ -1,4 +1,5 @@
 import Point from "bernstein-point"
+import { isM, isZ } from "bernstein-point-is"
 import toCubics from "bernstein-path-to-cubics"
 
 export default function boundingBox(rawPath) {
@@ -10,7 +11,7 @@ export default function boundingBox(rawPath) {
     const point = path[i]
     const prev = i > 0 && path[i - 1]
 
-    if (point.isM() || point.isZ()) {
+    if (isM(point) || isZ(point)) {
       x.push(point.x)
       y.push(point.y)
     } else {
@@ -37,10 +38,10 @@ export default function boundingBox(rawPath) {
 }
 
 function cubicBoundingBox(prev, point) {
-  const p0 = new Point(null, prev.x, prev.y)
-  const p1 = new Point(null, point.parameters.x1, point.parameters.y1)
-  const p2 = new Point(null, point.parameters.x2, point.parameters.y2)
-  const p3 = new Point(null, point.x, point.y)
+  const p0 = Point(null, prev.x, prev.y)
+  const p1 = Point(null, point.parameters.x1, point.parameters.y1)
+  const p2 = Point(null, point.parameters.x2, point.parameters.y2)
+  const p3 = Point(null, point.x, point.y)
 
   const x = getMinMax(p0.x, p1.x, p2.x, p3.x)
   const y = getMinMax(p0.y, p1.y, p2.y, p3.y)

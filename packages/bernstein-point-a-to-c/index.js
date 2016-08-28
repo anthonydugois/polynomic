@@ -1,5 +1,6 @@
-import rotate from "bernstein-rotate-path"
 import Point, { C, c } from "bernstein-point"
+import isRelative from "bernstein-point-is-relative"
+import rotate from "bernstein-rotate-path"
 
 export default function arcToCubic(prev, point, center = null) {
   let partial = []
@@ -83,13 +84,13 @@ export default function arcToCubic(prev, point, center = null) {
 
   if (Math.abs(f2 - f1) > pi2_3) {
     const _f2 = f2
-    const _point = new Point(point.code, x2, y2, point.parameters)
+    const _point = Point(point.code, x2, y2, point.parameters)
 
     f2 = f1 + (pi2_3 * (point.parameters.sweep === 1 && f2 > f1 ? 1 : -1))
     x2 = cx + (rx * Math.cos(f2))
     y2 = cy + (ry * Math.sin(f2))
 
-    const _prev = new Point(prev.code, x2, y2, prev.parameters)
+    const _prev = Point(prev.code, x2, y2, prev.parameters)
 
     partial = arcToCubic(_prev, _point, [cx, cy, f2, _f2])
   }
@@ -106,7 +107,7 @@ export default function arcToCubic(prev, point, center = null) {
   p2[0] = (2 * p1[0]) - p2[0]
   p2[1] = (2 * p1[1]) - p2[1]
 
-  const cubic = point.isRelative() ?
+  const cubic = isRelative(point) ?
     c(p2[0], p2[1], p3[0], p3[1], p4[0], p4[1]) :
     C(p2[0], p2[1], p3[0], p3[1], p4[0], p4[1])
 

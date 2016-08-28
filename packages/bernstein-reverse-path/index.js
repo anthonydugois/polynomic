@@ -1,4 +1,6 @@
 import Point from "bernstein-point"
+import { isM, isT, isC, isS, isA, isZ } from "bernstein-point-is"
+import isRelative from "bernstein-point-is-relative"
 
 export default function reverse(path) {
   const reversed = []
@@ -8,15 +10,15 @@ export default function reverse(path) {
     let insert = reversed.length
     let point = path[i]
 
-    if (point.isM()) {
+    if (isM(point)) {
       firstPointIndex = i
     }
 
-    let next = i < len - 1 && !path[i + 1].isZ() ?
+    let next = i < len - 1 && !isZ(path[i + 1]) ?
       path[i + 1] :
       path[firstPointIndex]
 
-    if (point.isZ()) {
+    if (isZ(point)) {
       insert = firstPointIndex
       next = point
       point = path[i - 1]
@@ -25,23 +27,23 @@ export default function reverse(path) {
     let code = next.code
     let parameters = next.parameters
 
-    if (next.isT()) {
-      code = next.isRelative() ? "q" : "Q"
+    if (isT(next)) {
+      code = isRelative(next) ? "q" : "Q"
     }
 
-    if (next.isS()) {
-      code = next.isRelative() ? "c" : "C"
+    if (isS(next)) {
+      code = isRelative(next) ? "c" : "C"
     }
 
-    if (next.isC() || next.isS()) {
+    if (isC(next) || isS(next)) {
       parameters = reverseAnchors(parameters)
     }
 
-    if (next.isA()) {
+    if (isA(next)) {
       parameters = reverseArc(parameters)
     }
 
-    reversed.splice(insert, 0, new Point(code, point.x, point.y, parameters))
+    reversed.splice(insert, 0, Point(code, point.x, point.y, parameters))
   }
 
   return reversed.reverse()

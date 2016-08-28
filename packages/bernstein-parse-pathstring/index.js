@@ -1,4 +1,5 @@
 import * as points from "bernstein-point"
+import { isM } from "bernstein-point-is"
 
 /**
  * Transforms a pathstring in a formatted point list
@@ -76,7 +77,7 @@ function buildPointList(segments) {
         prev = acc[acc.length - 1]
       }
 
-      if (prev && prev.isM()) {
+      if (prev && isM(prev)) {
         firstPoint = prev
       }
 

@@ -1,4 +1,6 @@
 import { m, M, z } from "bernstein-point"
+import { isM, isL, isH, isV, isZ } from "bernstein-point-is"
+import isRelative from "bernstein-point-is-relative"
 
 /**
  * Cleans the given path
@@ -36,7 +38,7 @@ export function simplifyClosures(path) {
   let first
 
   return path.map((point) => {
-    if (point.isM()) {
+    if (isM(point)) {
       first = point
     }
 
@@ -49,7 +51,7 @@ export function simplifyClosures(path) {
 }
 
 function shouldSimplifyClosure(first, point) {
-  return (point.isL() || point.isH() || point.isV())
+  return (isL(point) || isH(point) || isV(point))
     && first.x === point.x
     && first.y === point.y
 }
@@ -67,16 +69,16 @@ function shouldSimplifyClosure(first, point) {
  */
 export function makeSureFirstPointsAreM(path) {
   return path.map((point, index) => {
-    if (index === 0 && !point.isM()) {
-      return point.isRelative() ?
+    if (index === 0 && !isM(point)) {
+      return isRelative(point) ?
         m(point.x, point.y) :
         M(point.x, point.y)
     }
 
-    if (index > 0 && path[index - 1].isZ() && !point.isM()) {
+    if (index > 0 && isZ(path[index - 1]) && !isM(point)) {
       const prev = path[index - 1]
 
-      return point.isRelative() ?
+      return isRelative(point) ?
         m(point.x, point.y, prev) :
         M(point.x, point.y, prev)
     }

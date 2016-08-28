@@ -1,4 +1,5 @@
 import { z } from "bernstein-point"
+import { isZ } from "bernstein-point-is"
 import { makeSureFirstPointsAreM } from "bernstein-clean-path"
 
 /**
@@ -29,7 +30,7 @@ export default function join(paths, shouldClose = false) {
         return [
           ...acc,
           ...path,
-          ...!path[path.length - 1].isZ() && [z(path[0])],
+          ...!isZ(path[path.length - 1]) && [z(path[0])],
         ]
       }
 

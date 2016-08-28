@@ -1,39 +1,45 @@
+import * as pointTypes from "bernstein-point/pointTypes"
+
+export default function is(point, code) {
+  return point.code.toLowerCase() === code.toLowerCase()
+}
+
 export function isM(point) {
-  return point.code.toLowerCase() === "m"
+  return is(point, pointTypes.M)
 }
 
 export function isL(point) {
-  return point.code.toLowerCase() === "l"
+  return is(point, pointTypes.L)
 }
 
 export function isH(point) {
-  return point.code.toLowerCase() === "h"
+  return is(point, pointTypes.H)
 }
 
 export function isV(point) {
-  return point.code.toLowerCase() === "v"
+  return is(point, pointTypes.V)
 }
 
 export function isQ(point) {
-  return point.code.toLowerCase() === "q"
+  return is(point, pointTypes.Q)
 }
 
 export function isT(point) {
-  return point.code.toLowerCase() === "t"
+  return is(point, pointTypes.T)
 }
 
 export function isC(point) {
-  return point.code.toLowerCase() === "c"
+  return is(point, pointTypes.C)
 }
 
 export function isS(point) {
-  return point.code.toLowerCase() === "s"
+  return is(point, pointTypes.S)
 }
 
 export function isA(point) {
-  return point.code.toLowerCase() === "a"
+  return is(point, pointTypes.A)
 }
 
 export function isZ(point) {
-  return point.code.toLowerCase() === "z"
+  return is(point, pointTypes.Z)
 }
