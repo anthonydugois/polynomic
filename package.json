@@ -2,9 +2,10 @@
   "name": "bernstein",
   "version": "1.0.0",
   "description": "Advanced utilities to manipulate SVG paths.",
-  "main": "index.js",
+  "main": "dist/index.js",
   "files": [
-    "index.js"
+    "dist",
+    "lib"
   ],
   "author": "Anthony Dugois <dev.anthonydugois@gmail.com>",
   "license": "MIT",
