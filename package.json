@@ -31,8 +31,12 @@
   },
   "scripts": {
     "prod": "npm run clean && npm run build",
-    "build": "webpack --config ./config/webpack.config.babel.js",
-    "clean": "rimraf test",
+    "build": "npm run build:dist && npm run build:docs",
+    "build:dist": "webpack --config ./config/webpack.config.babel.js",
+    "build:docs": "cd site && npm run build",
+    "clean": "npm run clean:test && npm run clean:docs",
+    "clean:test": "rimraf test",
+    "clean:docs": "rimraf docs",
     "test": "webpack --config ./config/webpack.config.test.babel.js --target node && mocha",
     "lint": "eslint src --ignore-pattern **/test.js",
     "prepublish": "npm run prod"
