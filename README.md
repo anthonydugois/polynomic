@@ -41,7 +41,7 @@ git clone https://github.com/anthonydugois/bernstein.git
 Run tests:
 
 ```
-npm run test
+npm test
 ```
 
 Run linting:
