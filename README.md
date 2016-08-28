@@ -15,17 +15,15 @@ npm install --save bernstein
 ```javascript
 import Bernstein from "bernstein"
 
-// Create a new Bernstein instance
-const path = new Bernstein("M0 0 L100 0 L100 100 L0 100 z")
+// Parse a pathstring
+let path = Bernstein.pathstring.parse("M0 0 L100 0 L100 100 L0 100 z")
 
 // Perform some transforms on the path
-path
-  .setOrigin("center", "center")
-  .rotate(Math.PI / 4)
-  .translate(25, 50)
+path = Bernstein.rotate(path, Math.PI / 4, "center", "center")
+path = Bernstein.translate(path, 25, 50)
 
-// Get the resulting pathstring
-const pathstring = path.getPathstring()
+// Get the new resulting pathstring
+const pathstring = Bernstein.pathstring.build(path)
 ```
 
 ### Documentation
@@ -44,6 +42,12 @@ Run tests:
 
 ```
 npm run test
+```
+
+Run linting:
+
+```
+npm run lint
 ```
 
 ### License

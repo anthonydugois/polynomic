@@ -1,7 +1,7 @@
 import { isL, isH, isV, isQ, isT, isA } from "lib/point/is"
-import lineToCubic from "lib/point/l-to-c"
-import quadraticToCubic from "lib/point/q-to-c"
-import arcToCubic from "lib/point/a-to-c"
+import lineToCubic from "lib/point/line-to-cubic"
+import quadraticToCubic from "lib/point/quadratic-to-cubic"
+import arcToCubic from "lib/point/arc-to-cubic"
 
 export default function toCubic(prev, point) {
   if (isL(point) || isH(point) || isV(point)) {
