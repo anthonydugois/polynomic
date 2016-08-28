@@ -1,4 +1,4 @@
-import { defaultPoint } from "lib/point"
+import { defaultPoint } from "lib/point/points"
 
 /**
  * This object references all the functions which build pathstring segments.

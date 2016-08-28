@@ -1,45 +1,45 @@
-import * as pointTypes from "lib/point/types"
+import * as types from "lib/point/points/types"
 
 export default function is(point, code) {
   return point.code.toLowerCase() === code.toLowerCase()
 }
 
 export function isM(point) {
-  return is(point, pointTypes.M)
+  return is(point, types.M)
 }
 
 export function isL(point) {
-  return is(point, pointTypes.L)
+  return is(point, types.L)
 }
 
 export function isH(point) {
-  return is(point, pointTypes.H)
+  return is(point, types.H)
 }
 
 export function isV(point) {
-  return is(point, pointTypes.V)
+  return is(point, types.V)
 }
 
 export function isQ(point) {
-  return is(point, pointTypes.Q)
+  return is(point, types.Q)
 }
 
 export function isT(point) {
-  return is(point, pointTypes.T)
+  return is(point, types.T)
 }
 
 export function isC(point) {
-  return is(point, pointTypes.C)
+  return is(point, types.C)
 }
 
 export function isS(point) {
-  return is(point, pointTypes.S)
+  return is(point, types.S)
 }
 
 export function isA(point) {
-  return is(point, pointTypes.A)
+  return is(point, types.A)
 }
 
 export function isZ(point) {
-  return is(point, pointTypes.Z)
+  return is(point, types.Z)
 }

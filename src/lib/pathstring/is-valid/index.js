@@ -1,4 +1,4 @@
-import * as points from "lib/point"
+import * as points from "lib/point/points"
 import { getSegments } from "lib/pathstring/parse"
 
 export default function isValid(d) {

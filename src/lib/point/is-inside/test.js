@@ -1,6 +1,6 @@
 import { assert } from "chai"
 import parsePathstring from "lib/pathstring/parse"
-import { M } from "lib/point"
+import { M } from "lib/point/points"
 import isInside from "lib/point/is-inside"
 
 describe("point-is-inside", function () {

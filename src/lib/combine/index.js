@@ -1,4 +1,4 @@
-import { l, L, z, Z } from "lib/point"
+import { l, L, z, Z } from "lib/point/points"
 import { isM, isZ } from "lib/point/is"
 import isRelative from "lib/point/is-relative"
 

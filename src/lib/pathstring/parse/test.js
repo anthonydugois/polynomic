@@ -1,5 +1,5 @@
 import { assert } from "chai"
-import * as points from "lib/point"
+import * as points from "lib/point/points"
 import parsePathstring, { getSegments } from "lib/pathstring/parse"
 
 describe("parse-pathstring", function () {

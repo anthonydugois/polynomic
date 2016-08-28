@@ -1,4 +1,4 @@
-import Point, { C, c } from "lib/point"
+import Point, { C, c } from "lib/point/points"
 import isRelative from "lib/point/is-relative"
 import rotate from "lib/rotate"
 

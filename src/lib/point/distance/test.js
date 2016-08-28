@@ -1,5 +1,5 @@
 import { assert } from "chai"
-import { M } from "lib/point"
+import { M } from "lib/point/points"
 import distance, { distanceSegment } from "lib/point/distance"
 
 describe("point-distance", function () {

@@ -1,5 +1,5 @@
 import { assert } from "chai"
-import { m, L, Q } from "lib/point"
+import { m, L, Q } from "lib/point/points"
 import { isM, isQ, isZ } from "lib/point/is"
 
 describe("point-is", function () {

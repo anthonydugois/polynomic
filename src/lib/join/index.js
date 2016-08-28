@@ -1,4 +1,4 @@
-import { z } from "lib/point"
+import { z } from "lib/point/points"
 import { isZ } from "lib/point/is"
 import { makeSureFirstPointsAreM } from "lib/clean"
 

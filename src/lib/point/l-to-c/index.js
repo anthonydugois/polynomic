@@ -1,4 +1,4 @@
-import { C, c } from "lib/point"
+import { C, c } from "lib/point/points"
 import isRelative from "lib/point/is-relative"
 
 export default function lineToCubic(prev, point) {

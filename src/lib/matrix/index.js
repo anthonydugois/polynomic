@@ -1,4 +1,4 @@
-import Point, { defaultPoint } from "lib/point"
+import Point, { defaultPoint } from "lib/point/points"
 import { isH, isV } from "lib/point/is"
 import isRelative from "lib/point/is-relative"
 

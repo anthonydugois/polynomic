@@ -1,4 +1,4 @@
-import Point from "lib/point"
+import Point from "lib/point/points"
 import { isM, isZ } from "lib/point/is"
 import toCubics from "lib/to-cubics"
 

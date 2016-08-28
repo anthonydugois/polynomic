@@ -1,5 +1,5 @@
 import { assert } from "chai"
-import Point, { M } from "lib/point"
+import Point, { M } from "lib/point/points"
 import { min, max } from "lib/point/min-max"
 
 describe("point-minmax", function () {
