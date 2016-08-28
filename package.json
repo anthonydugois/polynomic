@@ -20,6 +20,7 @@
     "chai": "^3.5.0",
     "eslint": "^3.3.1",
     "eslint-loader": "^1.5.0",
+    "gh-pages": "^0.11.0",
     "mocha": "^3.0.2",
     "path": "^0.12.7",
     "rimraf": "^2.5.4",
@@ -30,16 +31,14 @@
     "deep-equal": "^1.0.1"
   },
   "scripts": {
-    "prod": "npm run clean && npm run build",
-    "build": "npm run build:dist && npm run build:docs",
-    "build:dist": "webpack --config ./config/webpack.config.babel.js",
+    "build": "npm run clean && webpack --config ./config/webpack.config.babel.js",
     "build:docs": "cd site && npm run build",
-    "clean": "npm run clean:dist && npm run clean:test && npm run clean:docs",
-    "clean:dist": "rimraf dist",
-    "clean:test": "rimraf test",
+    "clean": "rimraf dist test",
     "clean:docs": "rimraf docs",
     "test": "webpack --config ./config/webpack.config.test.babel.js --target node && mocha",
     "lint": "eslint",
-    "prepublish": "npm run prod"
+    "prepublish": "npm run prod",
+    "predeploy": "npm run clean:docs && npm run build:docs",
+    "deploy": "gh-pages -d docs"
   }
 }
