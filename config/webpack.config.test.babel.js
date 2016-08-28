@@ -1,16 +1,20 @@
 import path from "path"
 import webpack from "webpack"
 
+const srcPath = path.join(__dirname, "..", "src")
+const testPath = path.join(__dirname, "..", "test")
+const bootstrapPath = path.join(__dirname, "webpack.test.bootstrap.js")
+
 export default {
   entry: {
-    test: path.join(__dirname, "webpack.test.bootstrap.js"),
+    test: bootstrapPath,
   },
   output: {
-    path: path.join(__dirname, "..", "test"),
+    path: testPath,
     filename: "[name].js",
   },
   resolve: {
-    root: path.join(__dirname, "..", "packages"),
+    root: srcPath,
     extensions: ["", ".js"],
   },
   module: {

@@ -1,17 +1,20 @@
 import path from "path"
 import webpack from "webpack"
 
+const srcPath = path.join(__dirname, "..", "src")
+const distPath = path.join(__dirname, "..", "dist")
+
 export default {
   entry: {
-    index: path.join(__dirname, "..", "src", "index.js"),
+    index: path.join(srcPath, "index"),
   },
   output: {
-    path: path.join(__dirname, ".."),
+    path: distPath,
     filename: "[name].js",
     libraryTarget: "umd",
   },
   resolve: {
-    root: path.join(__dirname, "..", "packages"),
+    root: srcPath,
     extensions: ["", ".js"],
   },
   plugins: [
@@ -24,7 +27,7 @@ export default {
       {
         test: /\.js$/,
         loader: "eslint",
-        include: path.join(__dirname, "..", "packages"),
+        include: srcPath,
       },
     ],
     loaders: [
