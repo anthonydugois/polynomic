@@ -34,7 +34,7 @@
     "build": "webpack --config ./config/webpack.config.babel.js",
     "clean": "rimraf test",
     "test": "webpack --config ./config/webpack.config.test.babel.js --target node && mocha",
-    "lint": "eslint packages/** --ignore-pattern packages/**/test.js",
+    "lint": "eslint src --ignore-pattern **/test.js",
     "prepublish": "npm run prod"
   }
 }
