@@ -4,17 +4,23 @@ export default function split(path, codes, shouldKeep = false) {
   }
 
   return path.reduce(
-    (acc, point, i) => {
+    (acc, point, index) => {
       if (codes.indexOf(point.code) >= 0) {
-        return [...acc, shouldKeep ? [point] : []]
-      } else if (i === 0) {
-        return [...acc, [point]]
+        return [
+          ...acc,
+          shouldKeep ? [point] : [],
+        ]
+      } else if (index === 0) {
+        return [
+          ...acc,
+          [point],
+        ]
       }
 
       acc[acc.length - 1].push(point)
 
       return acc
     },
-    []
+    [],
   )
 }

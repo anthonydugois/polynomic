@@ -28,7 +28,10 @@ function douglasPeucker(path, tolerance) {
       ...res2,
     ]
   } else {
-    simplified = [path[0], path[path.length - 1]]
+    simplified = [
+      path[0],
+      path[path.length - 1],
+    ]
   }
 
   return simplified

@@ -18,8 +18,8 @@ import { l, L, z, Z } from "bernstein-point"
  */
 export default function combine(path) {
   return path.reduce(
-    (acc, point, i) => {
-      if (i > 0 && point.isM()) {
+    (acc, point, index) => {
+      if (index > 0 && point.isM()) {
         return [
           ...acc,
           point.isRelative() ?
@@ -29,7 +29,7 @@ export default function combine(path) {
       }
 
       if (point.isZ()) {
-        if (i === path.length - 1) {
+        if (index === path.length - 1) {
           return [
             ...acc,
             point.isRelative() ?
@@ -43,6 +43,6 @@ export default function combine(path) {
 
       return [...acc, point]
     },
-    []
+    [],
   )
 }

@@ -108,6 +108,6 @@ function r(n, precision = 3) {
 export default function buildPathstring(points) {
   return points.reduce(
     (acc, point, i) => `${ acc }${ point.code }${ buildSegment[point.code](point, i > 0 ? points[i - 1] : defaultPoint) }`,
-    ""
+    "",
   ).replace(/\s+/g, " ")
 }

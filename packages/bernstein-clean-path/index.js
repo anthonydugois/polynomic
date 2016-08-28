@@ -15,11 +15,7 @@ import { m, M, z } from "bernstein-point"
  * ]
  */
 export default function clean(path) {
-  return simplifyClosures(
-    makeSureFirstPointsAreM(
-      removeConsecutiveSamePoints(path)
-    )
-  )
+  return simplifyClosures(makeSureFirstPointsAreM(removeConsecutiveSamePoints(path)))
 }
 
 /**
@@ -39,7 +35,7 @@ export default function clean(path) {
 export function simplifyClosures(path) {
   let first
 
-  return path.map((point, index) => {
+  return path.map((point) => {
     if (point.isM()) {
       first = point
     }
@@ -70,15 +66,15 @@ function shouldSimplifyClosure(first, point) {
  * ]
  */
 export function makeSureFirstPointsAreM(path) {
-  return path.map((point, i) => {
-    if (i === 0 && !point.isM()) {
+  return path.map((point, index) => {
+    if (index === 0 && !point.isM()) {
       return point.isRelative() ?
         m(point.x, point.y) :
         M(point.x, point.y)
     }
 
-    if (i > 0 && path[i - 1].isZ() && !point.isM()) {
-      const prev = path[i - 1]
+    if (index > 0 && path[index - 1].isZ() && !point.isM()) {
+      const prev = path[index - 1]
 
       return point.isRelative() ?
         m(point.x, point.y, prev) :
@@ -104,8 +100,8 @@ export function makeSureFirstPointsAreM(path) {
  */
 export function removeConsecutiveSamePoints(path) {
   return path.reduce(
-    (acc, point, i) => {
-      const prev = i > 0 && acc[acc.length - 1]
+    (acc, point, index) => {
+      const prev = index > 0 && acc[acc.length - 1]
 
       if (prev && prev.x === point.x && prev.y === point.y) {
         return acc
@@ -113,6 +109,6 @@ export function removeConsecutiveSamePoints(path) {
 
       return [...acc, point]
     },
-    []
+    [],
   )
 }

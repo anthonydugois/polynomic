@@ -1,4 +1,4 @@
-import matrix from "bernstein-matrix-path"
+import matrixOrigin from "bernstein-matrix-origin-path"
 
 function parseDeg(str) {
   return parseFloat(str.replace("deg", ""))
@@ -13,7 +13,7 @@ export default function rotate(path, theta, ...origin) {
     theta = degToRad(parseDeg(theta))
   }
 
-  return matrix(path, [
+  return matrixOrigin(path, [
     Math.cos(theta), -Math.sin(theta), 0,
     Math.sin(theta), Math.cos(theta), 0,
     0, 0, 1,

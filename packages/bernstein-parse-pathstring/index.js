@@ -12,10 +12,6 @@ import * as points from "bernstein-point"
  * ]
  */
 export default function parsePathstring(d) {
-  if (typeof d !== "string") {
-    throw new Error("The provided value in parsePathstring() should be a string.")
-  }
-
   return buildPointList(getSegments(d))
 }
 

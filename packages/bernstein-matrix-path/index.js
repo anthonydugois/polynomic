@@ -1,80 +1,29 @@
 import Point, { defaultPoint } from "bernstein-point"
-import translate from "bernstein-translate-path"
-import boundingBox from "bernstein-path-boundingbox"
 
-const POSITIONS = {
-  left: 0,
-  right: 100,
-  top: 0,
-  bottom: 100,
-  center: 50,
-}
-
-function relativeToAbsoluteX(x, bbox) {
-  x = x.toLowerCase()
-  x = Object.keys(POSITIONS).indexOf(x) > -1 ? POSITIONS[x] : parseRelative(x)
-
-  return bbox.xMin + ((bbox.width * x) / 100)
-}
-
-function relativeToAbsoluteY(y, bbox) {
-  y = y.toLowerCase()
-  y = Object.keys(POSITIONS).indexOf(y) > -1 ? POSITIONS[y] : parseRelative(y)
-
-  return bbox.yMin + ((bbox.height * y) / 100)
-}
-
-function parseRelative(str) {
-  return parseFloat(str.replace("%", ""))
-}
-
-export default function matrix(path, m, x = 0, y = 0) {
-  if (typeof x === "string" || typeof y === "string") {
-    const bbox = boundingBox(path)
-
-    if (typeof x === "string") {
-      x = relativeToAbsoluteX(x, bbox)
-    }
-
-    if (typeof y === "string") {
-      y = relativeToAbsoluteY(y, bbox)
-    }
-  }
-
-  if (x !== 0 || y !== 0) {
-    path = translate(path, -x, -y)
-    path = transformer(path, m)
-    path = translate(path, x, y)
-  } else {
-    path = transformer(path, m)
-  }
-
-  return path
-}
-
-function transformer(path, m) {
+export default function matrix(path, m) {
   let lastComputedPoint = defaultPoint
 
-  return path.map((p, i) => {
-    const prev = i > 0 && path[i - 1]
-    const px = typeof p.x === "number" ? p.x : prev.x
-    const py = typeof p.y === "number" ? p.y : prev.y
-    const px1 = typeof p.parameters.x1 === "number" && p.parameters.x1
-    const py1 = typeof p.parameters.y1 === "number" && p.parameters.y1
-    const px2 = typeof p.parameters.x2 === "number" && p.parameters.x2
-    const py2 = typeof p.parameters.y2 === "number" && p.parameters.y2
+  return path.map((point, index) => {
+    const prev = index > 0 && path[index - 1]
+
+    const px = typeof point.x === "number" ? point.x : prev.x
+    const py = typeof point.y === "number" ? point.y : prev.y
+    const px1 = typeof point.parameters.x1 === "number" && point.parameters.x1
+    const py1 = typeof point.parameters.y1 === "number" && point.parameters.y1
+    const px2 = typeof point.parameters.x2 === "number" && point.parameters.x2
+    const py2 = typeof point.parameters.y2 === "number" && point.parameters.y2
 
     // compute position
     const [x, y] = multiply3x1(m, [px, py, 1])
 
     // get point code
-    let code = p.code
+    let code = point.code
 
     if (
-      (p.isH() && y !== lastComputedPoint.y)
-      || (p.isV() && x !== lastComputedPoint.x)
+      (point.isH() && y !== lastComputedPoint.y)
+      || (point.isV() && x !== lastComputedPoint.x)
     ) {
-      code = p.isRelative() ? "l" : "L"
+      code = point.isRelative() ? "l" : "L"
     }
 
     // compute parameters
@@ -89,7 +38,7 @@ function transformer(path, m) {
     }
 
     const parameters = {
-      ...p.parameters,
+      ...point.parameters,
       ...(typeof x1 !== "undefined" && { x1 }),
       ...(typeof y1 !== "undefined" && { y1 }),
       ...(typeof x2 !== "undefined" && { x2 }),

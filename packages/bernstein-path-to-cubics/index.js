@@ -1,7 +1,7 @@
 export default function toCubics(path) {
   return path.reduce(
-    (acc, point, i) => {
-      const cubic = point.toCubic(i > 0 && path[i - 1])
+    (acc, point, index) => {
+      const cubic = point.toCubic(index > 0 && path[index - 1])
 
       if (Array.isArray(cubic)) {
         return [...acc, ...cubic]
@@ -9,6 +9,6 @@ export default function toCubics(path) {
 
       return [...acc, cubic]
     },
-    []
+    [],
   )
 }

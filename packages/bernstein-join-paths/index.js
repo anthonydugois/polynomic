@@ -20,7 +20,7 @@ import { makeSureFirstPointsAreM } from "bernstein-clean-path"
  *   { code: "z", x: 100, y: 100, parameters: {} },
  * ]
  */
-export default function join(paths, shouldClose) {
+export default function join(paths, shouldClose = false) {
   return paths.reduce(
     (acc, path) => {
       if (shouldClose) {
@@ -35,6 +35,6 @@ export default function join(paths, shouldClose) {
 
       return [...acc, ...path]
     },
-    []
+    [],
   )
 }

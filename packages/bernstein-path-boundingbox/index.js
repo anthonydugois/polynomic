@@ -1,8 +1,8 @@
 import Point from "bernstein-point"
 import toCubics from "bernstein-path-to-cubics"
 
-export default function boundingBox(_path) {
-  const path = toCubics(_path)
+export default function boundingBox(rawPath) {
+  const path = toCubics(rawPath)
   const x = []
   const y = []
 
@@ -16,10 +16,8 @@ export default function boundingBox(_path) {
     } else {
       const { xMin, xMax, yMin, yMax } = cubicBoundingBox(prev, point)
 
-      x.push(xMin)
-      x.push(xMax)
-      y.push(yMin)
-      y.push(yMax)
+      x.push(xMin, xMax)
+      y.push(yMin, yMax)
     }
   }
 
