@@ -5,8 +5,8 @@ import Helmet from "react-helmet"
 import "./index.global.css"
 import styles from "./index.css"
 
-import Header from "../Header"
-import Footer from "../Footer"
+import Header from "Header"
+import Footer from "Footer"
 
 export default class Layout extends Component {
   static propTypes = {
@@ -18,13 +18,14 @@ export default class Layout extends Component {
   };
 
   render() {
-    const {
-      pkg
-    } = this.context.metadata
+    const { children } = this.props
+    const { pkg } = this.context.metadata
 
     return (
       <div className={ styles.layout }>
         <Helmet
+          defaultTitle="Advanced utilities to manipulate SVG paths | Bernstein"
+          titleTemplate="%s | Bernstein"
           meta={ [
             {
               name: "generator",
@@ -37,24 +38,19 @@ export default class Layout extends Component {
             {
               name: "twitter:site",
               content: `@${ pkg.twitter }`
-            }
+            },
+            {
+              name: "viewport",
+              content: "width=device-width, initial-scale=1"
+            },
           ] }
-          script={ [
-            { src: "https://cdn.polyfill.io/v2/polyfill.min.js" }
-          ] }
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             />
+          script={ [{ src: "https://cdn.polyfill.io/v2/polyfill.min.js" }] } />
 
-        { /* meta viewport safari/chrome/edge */ }
-        <Helmet meta={ [ {
-          name: "viewport",
-          content: "width=device-width, initial-scale=1"
-        } ] }
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        />
         <style>{ "@-ms-viewport { width: device-width; }" }</style>
 
         <Header />
-        <div className={ styles.content }>
-          { this.props.children }
+        <div className={ styles.layoutContent }>
+          { children }
         </div>
         <Footer />
       </div>

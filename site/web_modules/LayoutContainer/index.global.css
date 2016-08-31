@@ -28,6 +28,7 @@ body {
 html {
   min-height: 100%;
   background: #fff;
+  font-size: 16px;
 }
 
 body {
@@ -50,29 +51,13 @@ body {
   position: relative;
 }
 
-:root {
-  --phenomic-HeadingAnchor-width: 1.4rem;
-  --phenomic-HeadingAnchor-margin: 0.4rem;
-}
-
 .phenomic-HeadingAnchor {
-  display: block;
-  text-align: center;
-  margin-left: calc(-1 * (var(--phenomic-HeadingAnchor-width) + var(--phenomic-HeadingAnchor-margin)));
-  margin-right: var(--phenomic-HeadingAnchor-margin);
-  width: var(--phenomic-HeadingAnchor-width);
-  line-height: var(--phenomic-HeadingAnchor-width);
+  position: absolute;
+  left: -.5rem;
+  transform: translateX(-100%);
   text-decoration: none;
-
-  opacity: 0.1;
-  transition: opacity 0.2s;
 
   @nest :--headings:hover & {
     opacity: 1;
   }
-}
-
-/* minimal styling, prefer removing this and use local styles */
-a {
-  color: #0e63e3;
 }
