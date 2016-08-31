@@ -1,3 +1,86 @@
 .typography {
+  font-family: "Roboto", sans-serif;
+  color: #1d262f;
 
+  & :first-child {
+    margin-top: 0;
+  }
+
+  & :last-child {
+    margin-bottom: 0;
+  }
+
+  & h1,
+  & h2,
+  & h3,
+  & p,
+  & ul,
+  & ol {
+    margin: 0;
+    padding: 0;
+    font-weight: 400;
+
+    & code {
+      margin: 0;
+      padding: .3rem .5rem;
+      background: #1d262f;
+      border-radius: 2px;
+      font-family: "Fira Mono", monospace;
+      font-weight: 400;
+      font-size: .8em;
+      color: #fff;
+    }
+
+    & em {
+      margin: 0 .25rem;
+      font-size: .9em;
+      color: color(#1d262f l(+60%));
+    }
+  }
+
+  & h1 {
+    margin: 4rem 0 1rem;
+    font-size: 2rem;
+    font-weight: 500;
+
+    & + h2 {
+      margin-top: 3rem;
+    }
+  }
+
+  & h2 {
+    margin: 5rem 0 1rem;
+    font-size: 1.5rem;
+  }
+
+  & h3 {
+    margin: 1.5rem 0 1rem;
+    font-size: 1.2rem;
+    color: color(#1d262f l(+30%));
+  }
+
+  & p {
+    margin: 1rem 0;
+    line-height: 1.6;
+    font-size: 1.2rem;
+  }
+
+  & ul,
+  & ol {
+    margin: 1rem 0;
+    padding: 0 2rem;
+
+    & li {
+      margin: .5rem 0;
+      font-size: 1.2rem;
+    }
+  }
+
+  & strong {
+    font-weight: bold;
+  }
+
+  & em {
+    font-style: italic;
+  }
 }

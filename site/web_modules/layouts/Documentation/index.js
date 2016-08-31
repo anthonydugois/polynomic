@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from "react"
 import Helmet from "react-helmet"
 import { BodyContainer } from "phenomic"
 import Container from "Container"
+import Typography from "Typography"
 import Nav from "./Nav"
 
 import styles from "./index.css"
@@ -23,9 +24,11 @@ export default class Documentation extends Component {
             <Nav />
           </div>
           <div className={ styles.documentationContent }>
-            <BodyContainer>
-              { body }
-            </BodyContainer>
+            <Typography>
+              <BodyContainer>
+                { body }
+              </BodyContainer>
+            </Typography>
           </div>
         </div>
       </Container>

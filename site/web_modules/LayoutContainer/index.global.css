@@ -1,4 +1,5 @@
 /* Using global sytles is not recommended, prefer local styles via CSS Modules */
+@import url(https://fonts.googleapis.com/css?family=Fira+Mono:400,700|Roboto:400,400i,500);
 
 /*
  * box model like it should be
@@ -55,9 +56,97 @@ body {
   position: absolute;
   left: -.5rem;
   transform: translateX(-100%);
+  transition: color .2s;
   text-decoration: none;
+  font-weight: 500;
+  color: color(#1d262f l(+75%));
 
   @nest :--headings:hover & {
-    opacity: 1;
+    color: #298dff;
   }
+}
+
+.hljs-comment {
+  color: #536c88;
+}
+
+.hljs-variable,
+.hljs-attribute,
+.hljs-tag,
+.hljs-regexp,
+.ruby .hljs-constant,
+.xml .hljs-tag .hljs-title,
+.xml .hljs-pi,
+.xml .hljs-doctype,
+.html .hljs-doctype,
+.css .hljs-id,
+.css .hljs-class,
+.css .hljs-pseudo {
+  color: #298dff;
+}
+
+.hljs-number,
+.hljs-preprocessor,
+.hljs-built_in,
+.hljs-literal,
+.hljs-params,
+.hljs-constant {
+  color: #24cc94;
+}
+
+.ruby .hljs-class .hljs-title,
+.css .hljs-rules .hljs-attribute {
+  color: #29e0a3;
+}
+
+.hljs-string,
+.hljs-value,
+.hljs-inheritance,
+.hljs-header,
+.ruby .hljs-symbol,
+.xml .hljs-cdata {
+  color: #708f85;
+}
+
+.hljs-title,
+.css .hljs-hexcolor {
+  color: #5cffc9;
+}
+
+.hljs-function,
+.python .hljs-decorator,
+.python .hljs-title,
+.ruby .hljs-function .hljs-title,
+.ruby .hljs-title .hljs-keyword,
+.perl .hljs-sub,
+.javascript .hljs-title,
+.coffeescript .hljs-title {
+  color: #47ebb4;
+}
+
+.hljs-keyword,
+.javascript .hljs-function {
+  color: #5ca8ff;
+}
+
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 1rem 1.25rem;
+  background: #1d262f;
+  border-radius: 2px;
+  line-height: 1.8;
+  font-family: "Fira Mono", monospace;
+  font-size: .8rem;
+  color: #57718e;
+}
+
+.coffeescript .javascript,
+.javascript .xml,
+.tex .hljs-formula,
+.xml .javascript,
+.xml .vbscript,
+.xml .css,
+.xml .hljs-cdata {
+  opacity: 0.5;
 }
