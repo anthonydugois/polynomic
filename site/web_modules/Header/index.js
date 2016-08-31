@@ -7,9 +7,8 @@ import twitterSvg from "../icons/iconmonstr-twitter-1.svg"
 import gitHubSvg from "../icons/iconmonstr-github-1.svg"
 
 export default class Header extends Component {
-  
   static contextTypes = {
-    metadata: PropTypes.object.isRequired,
+    metadata: PropTypes.object.isRequired
   };
 
   render() {
@@ -23,30 +22,37 @@ export default class Header extends Component {
           <div className={ styles.navPart1 }>
             <Link
               className={ styles.link }
-              to="/"
-            >
-              { "Home" }
+              to="/">
             </Link>
           </div>
           <div className={ styles.navPart2 }>
-            { pkg.twitter &&
+            <Link
+              className={ styles.link }
+              to="/get-started">
+              Get started
+            </Link>
+
+            <Link
+              className={ styles.link }
+              to="/docs">
+              Docs
+            </Link>
+
+            { pkg.twitter && (
               <a
-                href={ `https://twitter.com/${pkg.twitter}` }
-                className={ styles.link }
-              >
+                href={ `https://twitter.com/${ pkg.twitter }` }
+                className={ styles.link }>
                 <Svg svg={ twitterSvg } />
-                  { "Twitter" }
               </a>
-            }
-            { pkg.repository &&
-              <a
-                href={ pkg.repository }
-                className={ styles.link }
-              >
-                <Svg svg={ gitHubSvg } />
-                { "GitHub" }
-              </a>
-            }
+            ) }
+
+            { pkg.repository && (
+                <a
+                  href={ pkg.repository }
+                  className={ styles.link }>
+                  <Svg svg={ gitHubSvg } />
+                </a>
+              ) }
           </div>
         </nav>
       </header>

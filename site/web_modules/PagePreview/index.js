@@ -25,7 +25,7 @@ const PagePreview = ({ __url, title, date }) => {
 PagePreview.propTypes = {
   __url: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-  date: PropTypes.string,
+  date: PropTypes.string
 }
 
 export default PagePreview

@@ -23,7 +23,7 @@ const PagesList = ({ pages }) => {
 }
 
 PagesList.propTypes = {
-  pages: PropTypes.array.isRequired,
+  pages: PropTypes.array.isRequired
 }
 
 export default PagesList

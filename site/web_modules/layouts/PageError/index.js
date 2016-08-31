@@ -5,18 +5,18 @@ export default class PageError extends Component {
 
   static propTypes = {
     error: PropTypes.oneOfType([ PropTypes.number, PropTypes.string ]),
-    errorText: PropTypes.string,
+    errorText: PropTypes.string
   };
 
   static defaultProps = {
     error: 404,
-    errorText: "Page Not Found",
+    errorText: "Page Not Found"
   };
 
   render() {
     const {
       error,
-      errorText,
+      errorText
     } = this.props
 
     return (

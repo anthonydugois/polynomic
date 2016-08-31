@@ -8,7 +8,7 @@ class Page extends Component {
     const { props, context } = this
 
     const {
-      pkg,
+      pkg
     } = context.metadata
 
     const {
@@ -17,7 +17,7 @@ class Page extends Component {
       head,
       body,
       header,
-      footer,
+      footer
     } = props
 
     invariant(
@@ -32,14 +32,14 @@ class Page extends Component {
       { property: "og:title", content: metaTitle },
       {
         property: "og:url",
-        content: joinUri(process.env.PHENOMIC_USER_URL, __url),
+        content: joinUri(process.env.PHENOMIC_USER_URL, __url)
       },
       { property: "og:description", content: head.description },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:title", content: metaTitle },
       { name: "twitter:creator", content: `@${ pkg.twitter }` },
       { name: "twitter:description", content: head.description },
-      { name: "description", content: head.description },
+      { name: "description", content: head.description }
     ]
 
     return (
@@ -69,11 +69,11 @@ Page.propTypes = {
   head: PropTypes.object.isRequired,
   body: PropTypes.string.isRequired,
   header: PropTypes.element,
-  footer: PropTypes.element,
+  footer: PropTypes.element
 }
 
 Page.contextTypes = {
-  metadata: PropTypes.object.isRequired,
+  metadata: PropTypes.object.isRequired
 }
 
 export default Page

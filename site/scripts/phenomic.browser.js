@@ -9,7 +9,7 @@ import phenomicClient from "phenomic/lib/client"
 phenomicClient({
   metadata,
   routes,
-  store,
+  store
 })
 
 // hot loading

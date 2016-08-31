@@ -8,14 +8,14 @@ const numberOfLatestPosts = 6
 
 export default class Homepage extends Component {
   static contextTypes = {
-    collection: PropTypes.array.isRequired,
+    collection: PropTypes.array.isRequired
   }
 
   render() {
     const latestPosts = enhanceCollection(this.context.collection, {
       filter: { layout: "Post" },
       sort: "date",
-      reverse: true,
+      reverse: true
     })
     .slice(0, numberOfLatestPosts)
 

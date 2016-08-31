@@ -36,7 +36,7 @@ export const makeConfig = (config = {}) => {
           loader: "json-loader",
         },
 
-        // *.js => babel + eslint
+        // *.js => babel
         {
           test: /\.js$/,
           loaders: [
@@ -45,7 +45,6 @@ export const makeConfig = (config = {}) => {
               ? "?cacheDirectory=true&presets[]=babel-preset-react-hmre"
               : "?cacheDirectory=true"
             }`,
-            "eslint-loader?fix",
           ],
           include: [
             path.resolve(__dirname, "scripts"),
@@ -146,7 +145,6 @@ export const makeConfig = (config = {}) => {
     },
 
     postcss: () => [
-      require("stylelint")(),
       require("postcss-cssnext")({ browsers: "last 2 versions" }),
       require("postcss-reporter")(),
       ...!config.production ? [
