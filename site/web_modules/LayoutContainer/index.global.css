@@ -54,26 +54,40 @@ body {
 
 .phenomic-HeadingAnchor {
   position: absolute;
-  left: -.5rem;
+  padding-right: .75rem;
   transform: translateX(-100%);
-  transition: color .2s;
+  opacity: 0;
+  transition: opacity .2s, color .2s;
+  text-align: right;
   text-decoration: none;
   font-weight: 500;
-  color: color(#1d262f l(+75%));
+  color: color(#182234 l(+70%));
+
+  &:hover,
+  &:focus {
+    color: #295cc2;
+  }
 
   @nest :--headings:hover & {
-    color: #298dff;
+    opacity: 1;
   }
 }
 
+/* Base16 Duotone-DarkLake Dark - Theme */
+/* by adapted from: Simurai (https://github.com/simurai/duotone-dark-syntax/) */
+/* Original Base16 color scheme by Chris Kempson (https://github.com/chriskempson/base16) */
+
+/* Duotone-DarkLake Comment */
 .hljs-comment {
-  color: #536c88;
+  color: #526589;
 }
 
+/* Duotone-DarkLake Red */
 .hljs-variable,
 .hljs-attribute,
 .hljs-tag,
 .hljs-regexp,
+.hljs-name,
 .ruby .hljs-constant,
 .xml .hljs-tag .hljs-title,
 .xml .hljs-pi,
@@ -82,37 +96,42 @@ body {
 .css .hljs-id,
 .css .hljs-class,
 .css .hljs-pseudo {
-  color: #298dff;
+  color: #295cc2;
 }
 
+/* Duotone-DarkLake Orange */
 .hljs-number,
 .hljs-preprocessor,
 .hljs-built_in,
 .hljs-literal,
 .hljs-params,
 .hljs-constant {
-  color: #24cc94;
+  color: #f075b5;
 }
 
+/* Duotone-DarkLake Yellow */
 .ruby .hljs-class .hljs-title,
-.css .hljs-rules .hljs-attribute {
-  color: #29e0a3;
+.css .hljs-rule .hljs-attribute {
+  color: #f584bf;
 }
 
+/* Duotone-DarkLake Green */
 .hljs-string,
 .hljs-value,
 .hljs-inheritance,
 .hljs-header,
 .ruby .hljs-symbol,
 .xml .hljs-cdata {
-  color: #708f85;
+  color: #ba97a9;
 }
 
+/* Duotone-DarkLake Aqua */
 .hljs-title,
 .css .hljs-hexcolor {
-  color: #5cffc9;
+  color: #ffa3d3;
 }
 
+/* Duotone-DarkLake Blue */
 .hljs-function,
 .python .hljs-decorator,
 .python .hljs-title,
@@ -121,24 +140,42 @@ body {
 .perl .hljs-sub,
 .javascript .hljs-title,
 .coffeescript .hljs-title {
-  color: #47ebb4;
+  color: #f994c9;
 }
 
+/* Duotone-DarkLake Purple */
 .hljs-keyword,
 .javascript .hljs-function {
-  color: #5ca8ff;
+  color: #406abf;
+}
+
+.diff .hljs-deletion,
+.diff .hljs-addition {
+  color: #182234;
+  display: inline-block;
+  width: 100%;
+}
+.diff .hljs-deletion {
+  background-color: #295cc2;
+}
+.diff .hljs-addition {
+  background-color: #ba97a9;
+}
+.diff .hljs-change {
+  color: #f994c9;
 }
 
 .hljs {
   display: block;
   overflow-x: auto;
   padding: 1rem 1.25rem;
-  background: #1d262f;
+  background: #182234;
   border-radius: 2px;
   line-height: 1.8;
   font-family: "Fira Mono", monospace;
-  font-size: .8rem;
-  color: #57718e;
+  font-size: .9rem;
+  color: #4e72bc;
+  -webkit-text-size-adjust: none;
 }
 
 .coffeescript .javascript,

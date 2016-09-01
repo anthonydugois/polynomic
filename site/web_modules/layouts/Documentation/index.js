@@ -10,6 +10,7 @@ import styles from "./index.css"
 export default class Documentation extends Component {
   render() {
     const {
+      __url,
       head,
       body,
     } = this.props
@@ -21,10 +22,10 @@ export default class Documentation extends Component {
 
         <div className={ styles.documentation }>
           <div className={ styles.documentationNav }>
-            <Nav />
+            <Nav active={ __url } />
           </div>
           <div className={ styles.documentationContent }>
-            <Typography>
+            <Typography title={ head.title }>
               <BodyContainer>
                 { body }
               </BodyContainer>

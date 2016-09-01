@@ -1,16 +1,20 @@
+:root {
+  --color: #182234;
+}
+
 .typography {
   font-family: "Roboto", sans-serif;
-  color: #1d262f;
+  line-height: 1;
+  color: #182234;
 
-  & :first-child {
-    margin-top: 0;
+  &Title {
+    margin: 0;
+    padding: 0;
+    margin-bottom: 4rem;
+    font-weight: 400;
+    font-size: 2.4rem;
   }
 
-  & :last-child {
-    margin-bottom: 0;
-  }
-
-  & h1,
   & h2,
   & h3,
   & p,
@@ -22,8 +26,8 @@
 
     & code {
       margin: 0;
-      padding: .3rem .5rem;
-      background: #1d262f;
+      padding: .4em .6em;
+      background: var(--color);
       border-radius: 2px;
       font-family: "Fira Mono", monospace;
       font-weight: 400;
@@ -34,44 +38,42 @@
     & em {
       margin: 0 .25rem;
       font-size: .9em;
-      color: color(#1d262f l(+60%));
-    }
-  }
-
-  & h1 {
-    margin: 4rem 0 1rem;
-    font-size: 2rem;
-    font-weight: 500;
-
-    & + h2 {
-      margin-top: 3rem;
+      color: color(var(--color) l(+60%));
     }
   }
 
   & h2 {
-    margin: 5rem 0 1rem;
-    font-size: 1.5rem;
+    margin: 5rem 0 1.5rem;
+    font-size: 1.25rem;
+
+    &:first-of-type {
+      margin-top: 0;
+    }
   }
 
   & h3 {
     margin: 1.5rem 0 1rem;
+    border-bottom: 6px solid color(var(--color) l(+80%));
+    line-height: .7;
     font-size: 1.2rem;
-    color: color(#1d262f l(+30%));
+    font-weight: 500;
+    color: color(var(--color) l(+35%));
   }
 
   & p {
-    margin: 1rem 0;
+    margin: .5rem 0;
     line-height: 1.6;
     font-size: 1.2rem;
   }
 
   & ul,
   & ol {
-    margin: 1rem 0;
+    margin: 2rem 0 2.5rem;
     padding: 0 2rem;
 
     & li {
       margin: .5rem 0;
+      line-height: 1.4;
       font-size: 1.2rem;
     }
   }

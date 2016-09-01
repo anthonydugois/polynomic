@@ -8,13 +8,23 @@ export default class Typography extends Component {
       PropTypes.array,
       PropTypes.object,
     ]),
+    title: PropTypes.string,
   };
 
   render() {
-    const { children } = this.props
+    const {
+      children,
+      title,
+    } = this.props
 
     return (
       <div className={ styles.typography }>
+        { title && (
+          <h1 className={ styles.typographyTitle }>
+            { title }
+          </h1>
+        ) }
+
         { children }
       </div>
     )
