@@ -10,8 +10,8 @@ Applies a 2D translation on a given path. You can pass absolute or relative valu
 ### Arguments
 
 1. `path` *Array* The path to transform.
-3. `dx` *number | string* The offset on the x-axis.
-4. `dy` *number | string* The offset on the y-axis.
+2. `dx` *number | string* The offset on the x-axis.
+3. `dy` *number | string* The offset on the y-axis.
 
 ### Returns
 
@@ -37,10 +37,10 @@ Applies a 2D skew transformation on a given path. You can pass values in radians
 ### Arguments
 
 1. `path` *Array* The path to transform.
-3. `thetaX` *number | string* The skewing angle to apply on the x-axis.
-4. `[thetaY]` *number | string* The skewing angle to apply on the y-axis.
-3. `[x = 0]` *number | string* The x coordinate of the transformation origin.
-4. `[y = 0]` *number | string* The y coordinate of the transformation origin.
+2. `thetaX` *number | string* The skewing angle to apply on the x-axis.
+3. `[thetaY]` *number | string* The skewing angle to apply on the y-axis.
+4. `[x = 0]` *number | string* The x coordinate of the transformation origin.
+5. `[y = 0]` *number | string* The y coordinate of the transformation origin.
 
 ### Returns
 
@@ -66,10 +66,10 @@ Applies a 2D scale transformation on a given path.
 ### Arguments
 
 1. `path` *Array* The path to transform.
-3. `sx` *number* The scale value to apply on the x-axis.
-4. `[sy]` *number* The scale value to apply on the y-axis.
-3. `[x = 0]` *number | string* The x coordinate of the transformation origin.
-4. `[y = 0]` *number | string* The y coordinate of the transformation origin.
+2. `sx` *number* The scale value to apply on the x-axis.
+3. `[sy]` *number* The scale value to apply on the y-axis.
+4. `[x = 0]` *number | string* The x coordinate of the transformation origin.
+5. `[y = 0]` *number | string* The y coordinate of the transformation origin.
 
 ### Returns
 
@@ -95,7 +95,7 @@ Applies a 2D rotation on a given path. You can pass value in radians or degrees.
 ### Arguments
 
 1. `path` *Array* The path to transform.
-3. `theta` *number | string* The rotation angle to apply.
+2. `theta` *number | string* The rotation angle to apply.
 3. `[x = 0]` *number | string* The x coordinate of the transformation origin.
 4. `[y = 0]` *number | string* The y coordinate of the transformation origin.
 
