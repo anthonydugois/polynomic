@@ -715,3 +715,128 @@ Bernstein.point.Point("C", 100, 100, {
 //   },
 // }
 ```
+
+
+## `point.isInside(point, path)`
+
+Checks if a point is inside a given path.
+
+### Arguments
+
+1. `point` *Object* The point to check.
+2. `path` *Array* The path where you want to check if the point is inside or not.
+
+### Returns
+
+*boolean* Returns `true` if the point is inside the point, else `false`.
+
+### Example
+
+```js
+// bernstein/lib/point/is-inside
+
+const point = Bernstein.point.M(50, 50)
+const path = Bernstein.pathstring.parse("M0 0H100V100H0z")
+
+Bernstein.point.isInside(point, path)
+
+// ➜ true
+
+const point = Bernstein.point.M(200, 200)
+const path = Bernstein.pathstring.parse("M0 0H100V100H0z")
+
+Bernstein.point.isInside(point, path)
+
+// ➜ false
+```
+
+
+## `point.isRelative(point)`
+
+Checks if a point is relative or not.
+
+### Arguments
+
+1. `point` *Object* The point to check.
+
+### Returns
+
+*boolean* Returns `true` if the point is relative, else `false`.
+
+### Example
+
+```js
+// bernstein/lib/point/is-relative
+
+const relative = Bernstein.point.m(0, 0)
+Bernstein.point.isRelative(relative)
+
+// ➜ true
+
+const absolute = Bernstein.point.M(0, 0)
+Bernstein.point.isRelative(absolute)
+
+// ➜ false
+```
+
+
+## `point.toCubic(prev, point)`
+
+Converts the given point into a `C` point.
+
+### Arguments
+
+1. `prev` *Object* The previous point.
+2. `point` *Object* The point to convert.
+
+### Returns
+
+*Array | Object* The converted point. Returns an array if the given point is an arc.
+
+### Example
+
+```js
+// bernstein/lib/point/to-cubic
+
+const prev = Bernstein.point.M(0, 0)
+const point = Bernstein.point.Q(60, 60, 120, 120)
+Bernstein.point.toCubic(prev, point)
+
+// ➜ {
+//   code: "C",
+//   x: 120,
+//   y: 120,
+//   parameters: {
+//     x1: 40,
+//     y1: 40,
+//     x2: 80,
+//     y2: 80,
+//   },
+// }
+```
+
+
+## `point.distance(p1, p2)`
+
+Computes the distance between `p1` and `p2`.
+
+### Arguments
+
+1. `p1` *Object* The first point.
+2. `p2` *Object* The second point.
+
+### Returns
+
+*number* The distance between the points.
+
+### Example
+
+```js
+// bernstein/lib/point/distance
+
+const p1 = Bernstein.point.M(0, 0)
+const p2 = Bernstein.point.L(100, 100)
+Bernstein.point.distance(p1, p2)
+
+// ➜ 141.421356237
+```
