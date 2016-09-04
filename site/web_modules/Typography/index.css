@@ -43,7 +43,7 @@
   }
 
   & h2 {
-    margin: 5rem 0 1.5rem;
+    margin: 2rem 0 1.5rem;
     font-size: 1.25rem;
 
     &:first-of-type {
@@ -58,6 +58,26 @@
     font-size: 1.2rem;
     font-weight: 500;
     color: color(var(--color) l(+35%));
+  }
+
+  & hr {
+    margin: 5rem 0;
+    height: 1px;
+    width: 100%;
+    border: none;
+    background: color(var(--color) l(+75%));
+  }
+
+  & blockquote {
+    margin: 1rem 0 2rem;
+    padding: 1rem 2rem;
+    background: color(var(--color) l(+80%));
+    border-radius: 2px;
+    color: color(var(--color) l(+40%));
+
+    & p {
+      font-size: 1rem;
+    }
   }
 
   & p {

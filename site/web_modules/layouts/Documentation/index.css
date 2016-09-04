@@ -1,10 +1,10 @@
 :root {
   --color: #182234;
-  --colorLink: #295cc2;
 }
 
 .documentation {
   display: flex;
+  padding: 0 2rem;
 
   &Nav {
     flex: 0 0 8rem;
@@ -12,15 +12,13 @@
   }
   &Content {
     flex: 1;
-    padding: 2rem 0;
+    padding: 3rem 0;
     margin-left: 4rem;
-    padding-left: 4rem;
-    border-left: 1px solid color(var(--color) l(+80%));
   }
 }
 
 .nav {
-  padding: 2rem 0;
+  padding: 3rem 0;
 
   &Sticky {
     composes: nav;
@@ -31,21 +29,28 @@
   &List {
     padding: 0;
     margin: 0;
-    list-style: none;
+    list-style-position: inside;
   }
     &Item {
-      padding: .2rem 0;
+      margin: .8rem 0;
+      font-family: "Fira Mono", monospace;
+      font-size: .85rem;
+      color: var(--color);
+
+      &:first-child {
+        margin-top: 0;
+      }
+      &:last-child {
+        margin-bottom: 0;
+      }
     }
       &Link {
         text-decoration: none;
-        font-family: "Roboto", sans-serif;
-        font-size: 1.05rem;
-        color: color(var(--colorLink) l(+20%));
+        color: color(var(--color) l(+50%));
 
         &Active {
           composes: navLink;
-          font-weight: 500;
-          color: var(--colorLink);
+          color: var(--color);
         }
       }
 }

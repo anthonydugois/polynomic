@@ -44,6 +44,7 @@ Bernstein.pathstring.parse("M0 0L100 100z")
 // ]
 ```
 
+---
 
 ## `pathstring.build(path)`
 
@@ -62,16 +63,18 @@ Builds an array of points into a pathstring.
 ```js
 // bernstein/lib/pathstring/build
 
-const path = [
+path = [
   Bernstein.point.M(0, 0),
   Bernstein.point.L(100, 100),
   Bernstein.point.z(),
 ]
+
 Bernstein.pathstring.build(path)
 
 // ➜ "M0 0L100 100z"
 ```
 
+---
 
 ## `pathstring.isValid(d)`
 
@@ -79,7 +82,7 @@ Checks if the given pathstring is a valid SVG path.
 
 1. Checks if the first point is a `M` ;
 2. Checks if all points have a correct number of parameters ;
-3. Checks if there are no invalid characters (`/^[mlhvqtcsaz\d\s,.-]*$/gi`).
+3. Checks if there are no invalid characters (the characters which match the regex `/^[mlhvqtcsaz\d\s,.-]*$/gi` are considered invalid).
 
 ### Arguments
 

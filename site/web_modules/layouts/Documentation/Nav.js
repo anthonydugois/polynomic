@@ -48,7 +48,7 @@ export default class Nav extends Component {
       <nav
         className={ isSticky ? styles.navSticky : styles.nav }
         ref={ (nav) => this.nav = nav }>
-        <ul className={ styles.navList }>
+        <ol className={ styles.navList }>
           <NavItem
             active={ active }
             to="/docs/">
@@ -78,7 +78,7 @@ export default class Nav extends Component {
             to="/docs/transforms/">
             Transforms
           </NavItem>
-        </ul>
+        </ol>
       </nav>
     )
   }

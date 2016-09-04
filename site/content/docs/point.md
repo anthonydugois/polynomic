@@ -31,6 +31,7 @@ Bernstein.point.M(0, 0)
 // }
 ```
 
+---
 
 ## `point.L(x, y)`
 
@@ -60,6 +61,7 @@ Bernstein.point.L(100, 100)
 // }
 ```
 
+---
 
 ## `point.H(x, [prev])`
 
@@ -79,7 +81,8 @@ Creates a new `H` point.
 ```js
 // bernstein/lib/point/points
 
-const prev = Bernstein.point.M(0, 0)
+prev = Bernstein.point.M(0, 0)
+
 Bernstein.point.H(100, prev)
 
 // ➜ {
@@ -90,6 +93,7 @@ Bernstein.point.H(100, prev)
 // }
 ```
 
+---
 
 ## `point.V(y, [prev])`
 
@@ -109,7 +113,8 @@ Creates a new `V` point.
 ```js
 // bernstein/lib/point/points
 
-const prev = Bernstein.point.M(0, 0)
+prev = Bernstein.point.M(0, 0)
+
 Bernstein.point.V(100, prev)
 
 // ➜ {
@@ -120,6 +125,7 @@ Bernstein.point.V(100, prev)
 // }
 ```
 
+---
 
 ## `point.Q(x1, y1, x, y)`
 
@@ -154,6 +160,7 @@ Bernstein.point.Q(50, 50, 100, 100)
 // }
 ```
 
+---
 
 ## `point.T(x, y, [prev])`
 
@@ -174,7 +181,8 @@ Creates a new `T` point.
 ```js
 // bernstein/lib/point/points
 
-const prev = Bernstein.point.Q(50, 50, 100, 100)
+prev = Bernstein.point.Q(50, 50, 100, 100)
+
 Bernstein.point.T(200, 200, prev)
 
 // ➜ {
@@ -188,6 +196,7 @@ Bernstein.point.T(200, 200, prev)
 // }
 ```
 
+---
 
 ## `point.C(x1, y1, x2, y2, x, y)`
 
@@ -226,6 +235,7 @@ Bernstein.point.C(25, 25, 75, 75, 100, 100)
 // }
 ```
 
+---
 
 ## `point.S(x2, y2, x, y, [prev])`
 
@@ -248,7 +258,8 @@ Creates a new `S` point.
 ```js
 // bernstein/lib/point/points
 
-const prev = Bernstein.point.C(25, 25, 75, 75, 100, 100)
+prev = Bernstein.point.C(25, 25, 75, 75, 100, 100)
+
 Bernstein.point.S(175, 175, 200, 200, prev)
 
 // ➜ {
@@ -264,6 +275,7 @@ Bernstein.point.S(175, 175, 200, 200, prev)
 // }
 ```
 
+---
 
 ## `point.A(rx, ry, rotation, large, sweep, x, y)`
 
@@ -304,6 +316,7 @@ Bernstein.point.A(50, 50, 0, 1, 1, 100, 0)
 // }
 ```
 
+---
 
 ## `point.Z([related])`
 
@@ -322,7 +335,8 @@ Creates a new `Z` point.
 ```js
 // bernstein/lib/point/points
 
-const related = Bernstein.point.M(0, 0)
+related = Bernstein.point.M(0, 0)
+
 Bernstein.point.Z(related)
 
 // ➜ {
@@ -333,6 +347,7 @@ Bernstein.point.Z(related)
 // }
 ```
 
+---
 
 ## `point.m(dx, dy, [prev])`
 
@@ -363,6 +378,7 @@ Bernstein.point.m(0, 0)
 // }
 ```
 
+---
 
 ## `point.l(dx, dy, [prev])`
 
@@ -383,7 +399,8 @@ Creates a new relative `l` point.
 ```js
 // bernstein/lib/point/points
 
-const prev = Bernstein.point.M(0, 0)
+prev = Bernstein.point.M(0, 0)
+
 Bernstein.point.l(100, 100, prev)
 
 // ➜ {
@@ -394,6 +411,7 @@ Bernstein.point.l(100, 100, prev)
 // }
 ```
 
+---
 
 ## `point.h(dx, [prev])`
 
@@ -413,7 +431,8 @@ Creates a new relative `h` point.
 ```js
 // bernstein/lib/point/points
 
-const prev = Bernstein.point.M(0, 0)
+prev = Bernstein.point.M(0, 0)
+
 Bernstein.point.h(100, prev)
 
 // ➜ {
@@ -424,6 +443,7 @@ Bernstein.point.h(100, prev)
 // }
 ```
 
+---
 
 ## `point.v(dy, [prev])`
 
@@ -443,7 +463,8 @@ Creates a new relative `v` point.
 ```js
 // bernstein/lib/point/points
 
-const prev = Bernstein.point.M(0, 0)
+prev = Bernstein.point.M(0, 0)
+
 Bernstein.point.v(100, prev)
 
 // ➜ {
@@ -454,6 +475,7 @@ Bernstein.point.v(100, prev)
 // }
 ```
 
+---
 
 ## `point.q(dx1, dy1, dx, dy, [prev])`
 
@@ -476,7 +498,8 @@ Creates a new relative `q` point.
 ```js
 // bernstein/lib/point/points
 
-const prev = Bernstein.point.M(0, 0)
+prev = Bernstein.point.M(0, 0)
+
 Bernstein.point.q(50, 50, 100, 100, prev)
 
 // ➜ {
@@ -490,6 +513,7 @@ Bernstein.point.q(50, 50, 100, 100, prev)
 // }
 ```
 
+---
 
 ## `point.t(dx, dy, [prev])`
 
@@ -510,7 +534,8 @@ Creates a new relative `t` point.
 ```js
 // bernstein/lib/point/points
 
-const prev = Bernstein.point.Q(50, 50, 100, 100)
+prev = Bernstein.point.Q(50, 50, 100, 100)
+
 Bernstein.point.t(100, 100, prev)
 
 // ➜ {
@@ -524,6 +549,7 @@ Bernstein.point.t(100, 100, prev)
 // }
 ```
 
+---
 
 ## `point.c(dx1, dy1, dx2, dy2, dx, dy, [prev])`
 
@@ -548,7 +574,8 @@ Creates a new relative `c` point.
 ```js
 // bernstein/lib/point/points
 
-const prev = Bernstein.point.M(0, 0)
+prev = Bernstein.point.M(0, 0)
+
 Bernstein.point.c(25, 25, 75, 75, 100, 100, prev)
 
 // ➜ {
@@ -564,6 +591,7 @@ Bernstein.point.c(25, 25, 75, 75, 100, 100, prev)
 // }
 ```
 
+---
 
 ## `point.s(dx2, dy2, dx, dy, [prev])`
 
@@ -586,7 +614,8 @@ Creates a new relative `s` point.
 ```js
 // bernstein/lib/point/points
 
-const prev = Bernstein.point.C(25, 25, 50, 50, 100, 100)
+prev = Bernstein.point.C(25, 25, 50, 50, 100, 100)
+
 Bernstein.point.s(75, 75, 100, 100)
 
 // ➜ {
@@ -602,6 +631,7 @@ Bernstein.point.s(75, 75, 100, 100)
 // }
 ```
 
+---
 
 ## `point.a(rx, ry, rotation, large, sweep, dx, dy, [prev])`
 
@@ -627,7 +657,8 @@ Creates a new relative `a` point.
 ```js
 // bernstein/lib/point/points
 
-const prev = Bernstein.point.M(0, 0)
+prev = Bernstein.point.M(0, 0)
+
 Bernstein.point.a(50, 50, 0, 1, 1, 100, 0)
 
 // ➜ {
@@ -644,6 +675,7 @@ Bernstein.point.a(50, 50, 0, 1, 1, 100, 0)
 // }
 ```
 
+---
 
 ## `point.z([related])`
 
@@ -662,7 +694,8 @@ Creates a new `z` point.
 ```js
 // bernstein/lib/point/points
 
-const related = Bernstein.point.M(0, 0)
+related = Bernstein.point.M(0, 0)
+
 Bernstein.point.z(related)
 
 // ➜ {
@@ -673,6 +706,7 @@ Bernstein.point.z(related)
 // }
 ```
 
+---
 
 ## `point.Point(code, x, y, [parameters = {}])`
 
@@ -716,6 +750,7 @@ Bernstein.point.Point("C", 100, 100, {
 // }
 ```
 
+---
 
 ## `point.isInside(point, path)`
 
@@ -735,21 +770,22 @@ Checks if a point is inside a given path.
 ```js
 // bernstein/lib/point/is-inside
 
-const point = Bernstein.point.M(50, 50)
-const path = Bernstein.pathstring.parse("M0 0H100V100H0z")
+point = Bernstein.point.M(50, 50)
+path = Bernstein.pathstring.parse("M0 0H100V100H0z")
 
 Bernstein.point.isInside(point, path)
 
 // ➜ true
 
-const point = Bernstein.point.M(200, 200)
-const path = Bernstein.pathstring.parse("M0 0H100V100H0z")
+point = Bernstein.point.M(200, 200)
+path = Bernstein.pathstring.parse("M0 0H100V100H0z")
 
 Bernstein.point.isInside(point, path)
 
 // ➜ false
 ```
 
+---
 
 ## `point.isRelative(point)`
 
@@ -768,17 +804,20 @@ Checks if a point is relative or not.
 ```js
 // bernstein/lib/point/is-relative
 
-const relative = Bernstein.point.m(0, 0)
+relative = Bernstein.point.m(0, 0)
+
 Bernstein.point.isRelative(relative)
 
 // ➜ true
 
-const absolute = Bernstein.point.M(0, 0)
+absolute = Bernstein.point.M(0, 0)
+
 Bernstein.point.isRelative(absolute)
 
 // ➜ false
 ```
 
+---
 
 ## `point.toCubic(prev, point)`
 
@@ -798,8 +837,9 @@ Converts the given point into a `C` point.
 ```js
 // bernstein/lib/point/to-cubic
 
-const prev = Bernstein.point.M(0, 0)
-const point = Bernstein.point.Q(60, 60, 120, 120)
+prev = Bernstein.point.M(0, 0)
+point = Bernstein.point.Q(60, 60, 120, 120)
+
 Bernstein.point.toCubic(prev, point)
 
 // ➜ {
@@ -815,6 +855,7 @@ Bernstein.point.toCubic(prev, point)
 // }
 ```
 
+---
 
 ## `point.distance(p1, p2)`
 
@@ -834,8 +875,9 @@ Computes the distance between `p1` and `p2`.
 ```js
 // bernstein/lib/point/distance
 
-const p1 = Bernstein.point.M(0, 0)
-const p2 = Bernstein.point.L(100, 100)
+p1 = Bernstein.point.M(0, 0)
+p2 = Bernstein.point.L(100, 100)
+
 Bernstein.point.distance(p1, p2)
 
 // ➜ 141.421356237

@@ -24,11 +24,13 @@ Applies a 2D translation on a given path. You can pass absolute or relative valu
 
 path = Bernstein.pathstring.parse("M0 0L100 0Q150 150 200 200")
 path = Bernstein.translate(path, 100, 0)
-path = Bernstein.pathstring.build(path)
+
+Bernstein.pathstring.build(path)
 
 // ➜ "M100 0L200 0Q250 150 300 200"
 ```
 
+---
 
 ## `skew(path, thetaX, [thetaY, x = 0, y = 0])`
 
@@ -53,11 +55,13 @@ Applies a 2D skew transformation on a given path. You can pass values in radians
 
 path = Bernstein.pathstring.parse("M0 0L100 0L100 100")
 path = Bernstein.skew(path, Math.PI / 6, 0)
-path = Bernstein.pathstring.build(path)
+
+Bernstein.pathstring.build(path)
 
 // ➜ "M0 0L100 0L157.735 100"
 ```
 
+---
 
 ## `scale(path, sx, [sy, x = 0, y = 0])`
 
@@ -82,11 +86,13 @@ Applies a 2D scale transformation on a given path.
 
 path = Bernstein.pathstring.parse("M0 0L100 0Q150 150 200 200")
 path = Bernstein.scale(path, 0.5, 1)
-path = Bernstein.pathstring.build(path)
+
+Bernstein.pathstring.build(path)
 
 // ➜ "M0 0L50 0Q75 150 100 200"
 ```
 
+---
 
 ## `rotate(path, theta, [x = 0, y = 0])`
 
@@ -110,11 +116,13 @@ Applies a 2D rotation on a given path. You can pass value in radians or degrees.
 
 path = Bernstein.pathstring.parse("M0 0L100 0")
 path = Bernstein.rotate(path, "90deg")
-path = Bernstein.pathstring.build(path)
+
+Bernstein.pathstring.build(path)
 
 // ➜ "M0 0L0 100"
 ```
 
+---
 
 ## `matrix(path, transform)`
 
@@ -140,11 +148,13 @@ path = Bernstein.matrix(path, [
   0, 1, 0,
   0, 0, 1,
 ])
-path = Bernstein.pathstring.build(path)
+
+Bernstein.pathstring.build(path)
 
 // ➜ "M0 0L100 0L100 100"
 ```
 
+---
 
 ## `matrixOrigin(path, transform, [x = 0, y = 0])`
 
@@ -172,7 +182,8 @@ path = Bernstein.matrixOrigin(path, [
   0, 1, 0,
   0, 0, 1,
 ], 50, 50)
-path = Bernstein.pathstring.build(path)
+
+Bernstein.pathstring.build(path)
 
 // ➜ "M0 0L100 0L100 100"
 ```

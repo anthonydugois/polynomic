@@ -39,7 +39,7 @@
     "pretest": "webpack --config ./config/webpack.config.test.babel.js --target node",
     "test": "mocha",
     "lint": "eslint",
-    "prepublish": "npm run prod",
+    "prepublish": "npm run build",
     "predeploy": "npm run clean:docs && npm run build:docs",
     "deploy": "gh-pages -d docs"
   }
