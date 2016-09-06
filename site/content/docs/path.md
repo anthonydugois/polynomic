@@ -142,15 +142,15 @@ Bernstein.pathstring.build(path)
 
 ---
 
-## `split(path, codes, [shouldKeep = false])`
+## `split(path, separators, [shouldKeep = false])`
 
-Splits the given path by the given point codes.
+Splits the given path into an array of subpaths.
 
 ### Arguments
 
 1. `path` *Array* The path you want to split.
-2. `codes` *Array | string* The codes by which you want to split the path.
-3. `[shouldKeep = false]` *boolean* If `true`, keeps the point codes.
+2. `separators` *Array | string* The point codes which splits the path.
+3. `[shouldKeep = false]` *boolean* If `true`, keeps the separators in the path.
 
 ### Returns
 
@@ -162,14 +162,14 @@ Splits the given path by the given point codes.
 // bernstein/lib/split
 
 path = Bernstein.pathstring.parse("M0 0L100 0L100 100zM100 100L200 100L200 200zM200 200L300 200L300 300")
-codes = ["z", "Z"]
+separators = ["z", "Z"]
 
-paths = Bernstein.split(path, codes)
+subpaths = Bernstein.split(path, separators)
 
 [
-  Bernstein.pathstring.build(paths[0]),
-  Bernstein.pathstring.build(paths[1]),
-  Bernstein.pathstring.build(paths[2]),
+  Bernstein.pathstring.build(subpaths[0]),
+  Bernstein.pathstring.build(subpaths[1]),
+  Bernstein.pathstring.build(subpaths[2]),
 ]
 
 // ➜ [
