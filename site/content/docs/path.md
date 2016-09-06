@@ -242,3 +242,62 @@ Bernstein.pathstring.build(path)
 
 // ➜ "M100 100L100 0L0 0"
 ```
+
+---
+
+## `toCubics(path)`
+
+Converts points into cubic curves without any visual change.
+
+### Arguments
+
+1. `path` *Array* The path you want to convert.
+
+### Returns
+
+*Array* The converted path.
+
+### Example
+
+```js
+// bernstein/lib/to-cubics
+
+path = Bernstein.pathstring.parse("M0 0L100 0L100 100")
+path = Bernstein.toCubics(path)
+
+Bernstein.pathstring.build(path)
+
+// ➜ "M0 0C0 0 100 0 100 0C100 0 100 100 100 100"
+```
+
+---
+
+## `clean(path)`
+
+Cleans the path.
+
+1. Simplifies the closures ;
+2. Makes sure the first point is a `M` point ;
+3. Makes sure there is a `M` point after each `Z` point ;
+4. Removes each point that is the same than the previous one.
+
+### Arguments
+
+1. `path` *Array* The path you want to clean.
+
+### Returns
+
+*Array* The cleaned path.
+
+### Example
+
+```js
+// bernstein/lib/clean
+
+path = Bernstein.pathstring.parse("L0 0l50 50l0 0h50v50 L0 0")
+path = Bernstein.clean(path)
+
+Bernstein.pathstring.build(path)
+
+// ➜ "M0 0l50 50h50v50z"
+```
