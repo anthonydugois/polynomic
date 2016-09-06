@@ -3,7 +3,7 @@ title: Point
 layout: Documentation
 ---
 
-## `point.M(x, y)`
+## `M(x, y)`
 
 Creates a new `M` point.
 
@@ -33,7 +33,7 @@ Bernstein.point.M(0, 0)
 
 ---
 
-## `point.L(x, y)`
+## `L(x, y)`
 
 Creates a new `L` point.
 
@@ -63,7 +63,7 @@ Bernstein.point.L(100, 100)
 
 ---
 
-## `point.H(x, [prev])`
+## `H(x, [prev])`
 
 Creates a new `H` point.
 
@@ -95,7 +95,7 @@ Bernstein.point.H(100, prev)
 
 ---
 
-## `point.V(y, [prev])`
+## `V(y, [prev])`
 
 Creates a new `V` point.
 
@@ -127,7 +127,7 @@ Bernstein.point.V(100, prev)
 
 ---
 
-## `point.Q(x1, y1, x, y)`
+## `Q(x1, y1, x, y)`
 
 Creates a new `Q` point.
 
@@ -162,7 +162,7 @@ Bernstein.point.Q(50, 50, 100, 100)
 
 ---
 
-## `point.T(x, y, [prev])`
+## `T(x, y, [prev])`
 
 Creates a new `T` point.
 
@@ -198,7 +198,7 @@ Bernstein.point.T(200, 200, prev)
 
 ---
 
-## `point.C(x1, y1, x2, y2, x, y)`
+## `C(x1, y1, x2, y2, x, y)`
 
 Creates a new `C` point.
 
@@ -237,7 +237,7 @@ Bernstein.point.C(25, 25, 75, 75, 100, 100)
 
 ---
 
-## `point.S(x2, y2, x, y, [prev])`
+## `S(x2, y2, x, y, [prev])`
 
 Creates a new `S` point.
 
@@ -277,7 +277,7 @@ Bernstein.point.S(175, 175, 200, 200, prev)
 
 ---
 
-## `point.A(rx, ry, rotation, large, sweep, x, y)`
+## `A(rx, ry, rotation, large, sweep, x, y)`
 
 Creates a new `A` point.
 
@@ -318,7 +318,7 @@ Bernstein.point.A(50, 50, 0, 1, 1, 100, 0)
 
 ---
 
-## `point.Z([related])`
+## `Z([related])`
 
 Creates a new `Z` point.
 
@@ -349,7 +349,7 @@ Bernstein.point.Z(related)
 
 ---
 
-## `point.m(dx, dy, [prev])`
+## `m(dx, dy, [prev])`
 
 Creates a new relative `m` point.
 
@@ -380,7 +380,7 @@ Bernstein.point.m(0, 0)
 
 ---
 
-## `point.l(dx, dy, [prev])`
+## `l(dx, dy, [prev])`
 
 Creates a new relative `l` point.
 
@@ -413,7 +413,7 @@ Bernstein.point.l(100, 100, prev)
 
 ---
 
-## `point.h(dx, [prev])`
+## `h(dx, [prev])`
 
 Creates a new relative `h` point.
 
@@ -445,7 +445,7 @@ Bernstein.point.h(100, prev)
 
 ---
 
-## `point.v(dy, [prev])`
+## `v(dy, [prev])`
 
 Creates a new relative `v` point.
 
@@ -477,7 +477,7 @@ Bernstein.point.v(100, prev)
 
 ---
 
-## `point.q(dx1, dy1, dx, dy, [prev])`
+## `q(dx1, dy1, dx, dy, [prev])`
 
 Creates a new relative `q` point.
 
@@ -515,7 +515,7 @@ Bernstein.point.q(50, 50, 100, 100, prev)
 
 ---
 
-## `point.t(dx, dy, [prev])`
+## `t(dx, dy, [prev])`
 
 Creates a new relative `t` point.
 
@@ -551,7 +551,7 @@ Bernstein.point.t(100, 100, prev)
 
 ---
 
-## `point.c(dx1, dy1, dx2, dy2, dx, dy, [prev])`
+## `c(dx1, dy1, dx2, dy2, dx, dy, [prev])`
 
 Creates a new relative `c` point.
 
@@ -593,7 +593,7 @@ Bernstein.point.c(25, 25, 75, 75, 100, 100, prev)
 
 ---
 
-## `point.s(dx2, dy2, dx, dy, [prev])`
+## `s(dx2, dy2, dx, dy, [prev])`
 
 Creates a new relative `s` point.
 
@@ -633,7 +633,7 @@ Bernstein.point.s(75, 75, 100, 100)
 
 ---
 
-## `point.a(rx, ry, rotation, large, sweep, dx, dy, [prev])`
+## `a(rx, ry, rotation, large, sweep, dx, dy, [prev])`
 
 Creates a new relative `a` point.
 
@@ -677,7 +677,7 @@ Bernstein.point.a(50, 50, 0, 1, 1, 100, 0)
 
 ---
 
-## `point.z([related])`
+## `z([related])`
 
 Creates a new `z` point.
 
@@ -708,7 +708,7 @@ Bernstein.point.z(related)
 
 ---
 
-## `point.Point(code, x, y, [parameters = {}])`
+## `Point(code, x, y, [parameters = {}])`
 
 Creates a new point with the provided parameters.
 
@@ -752,7 +752,7 @@ Bernstein.point.Point("C", 100, 100, {
 
 ---
 
-## `point.isInside(point, path)`
+## `isInside(point, path)`
 
 Checks if a point is inside a given path.
 
@@ -787,7 +787,7 @@ Bernstein.point.isInside(point, path)
 
 ---
 
-## `point.isRelative(point)`
+## `isRelative(point)`
 
 Checks if a point is relative or not.
 
@@ -819,7 +819,7 @@ Bernstein.point.isRelative(absolute)
 
 ---
 
-## `point.toCubic(prev, point)`
+## `toCubic(prev, point)`
 
 Converts the given point into a `C` point.
 
@@ -857,7 +857,7 @@ Bernstein.point.toCubic(prev, point)
 
 ---
 
-## `point.distance(p1, p2)`
+## `distance(p1, p2)`
 
 Computes the distance between `p1` and `p2`.
 

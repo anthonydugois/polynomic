@@ -3,7 +3,7 @@ title: Pathstring
 layout: Documentation
 ---
 
-## `pathstring.parse(d)`
+## `parse(d)`
 
 Parses a pathstring and build an array of points with absolute coords.
 
@@ -46,7 +46,7 @@ Bernstein.pathstring.parse("M0 0L100 100z")
 
 ---
 
-## `pathstring.build(path)`
+## `build(path)`
 
 Builds an array of points into a pathstring.
 
@@ -76,7 +76,7 @@ Bernstein.pathstring.build(path)
 
 ---
 
-## `pathstring.isValid(d)`
+## `isValid(d)`
 
 Checks if the given pathstring is a valid SVG path.
 

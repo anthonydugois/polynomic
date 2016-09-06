@@ -19,26 +19,26 @@ Checks if the pathstring `d1` is equal to the pathstring `d2`. Paths can be pass
 ### Example
 
 ```js
-// bernstein/lib/is-equal
+// bernstein/lib/path/is-equal
 
 d1 = "M0 0L100 100z"
 d2 = Bernstein.pathstring.parse("M0 0L100 100z")
 
-Bernstein.isEqual(d1, d2)
+Bernstein.path.isEqual(d1, d2)
 
 // ➜ true
 
 d1 = "M0 0L100 100z"
 d2 = "M 0, 0 L 100 100 z"
 
-Bernstein.isEqual(d1, d2)
+Bernstein.path.isEqual(d1, d2)
 
 // ➜ true
 
 d1 = "M0 0L100 100z"
 d2 = "M0 0L100 100L200 100L300 300z"
 
-Bernstein.isEqual(d1, d2)
+Bernstein.path.isEqual(d1, d2)
 
 // ➜ false
 ```
@@ -60,11 +60,11 @@ Computes the bounding box of the given path.
 ### Example
 
 ```js
-// bernstein/lib/bounding-box
+// bernstein/lib/path/bounding-box
 
 path = Bernstein.pathstring.parse("M0 0L100 100z")
 
-Bernstein.boundingBox(path)
+Bernstein.path.boundingBox(path)
 
 // ➜ {
 //   x: 0,
@@ -91,10 +91,10 @@ Combines subpaths by removing `Z` `M` consecutive points.
 ### Example
 
 ```js
-// bernstein/lib/combine
+// bernstein/lib/path/combine
 
 path = Bernstein.pathstring.parse("M0 0L100 100z M150 150 L200 200"),
-path = Bernstein.combine(path)
+path = Bernstein.path.combine(path)
 
 Bernstein.pathstring.build(path)
 
@@ -119,9 +119,9 @@ Joins the given paths.
 ### Example
 
 ```js
-// bernstein/lib/join
+// bernstein/lib/path/join
 
-path = Bernstein.join([
+path = Bernstein.path.join([
   Bernstein.pathstring.parse("M0 0L100 0"),
   Bernstein.pathstring.parse("L100 100L100 200"),
   Bernstein.pathstring.parse("M200 200h50v50"),
@@ -131,7 +131,7 @@ Bernstein.pathstring.build(path)
 
 // ➜ "M0 0L100 0 L100 100L100 200 M200 200h50v50"
 
-path = Bernstein.join([
+path = Bernstein.path.join([
   Bernstein.pathstring.parse("M0 0L100 0"),
   Bernstein.pathstring.parse("L100 100L100 200"),
   Bernstein.pathstring.parse("M200 200h50v50"),
@@ -161,12 +161,12 @@ Splits the given path into an array of subpaths.
 ### Example
 
 ```js
-// bernstein/lib/split
+// bernstein/lib/path/split
 
 path = Bernstein.pathstring.parse("M0 0L100 0L100 100zM100 100L200 100L200 200zM200 200L300 200L300 300")
 separators = ["z", "Z"]
 
-subpaths = Bernstein.split(path, separators)
+subpaths = Bernstein.path.split(path, separators)
 
 [
   Bernstein.pathstring.build(subpaths[0]),
@@ -199,17 +199,17 @@ Simplifies the given path using the Ramer-Douglas-Peucker algorithm.
 ### Example
 
 ```js
-// bernstein/lib/simplify
+// bernstein/lib/path/simplify
 
 path = Bernstein.pathstring.parse("M0 0 L50 0 L100 5")
-path = Bernstein.simplify(path, 5)
+path = Bernstein.path.simplify(path, 5)
 
 Bernstein.pathstring.build(path)
 
 // ➜ "M0 0 L100 5"
 
 path = Bernstein.pathstring.parse("M0 0 L50 0 L100 5")
-path = Bernstein.simplify(path, 1)
+path = Bernstein.path.simplify(path, 1)
 
 Bernstein.pathstring.build(path)
 
@@ -233,10 +233,10 @@ Reverses the path code without any visual change.
 ### Example
 
 ```js
-// bernstein/lib/reverse
+// bernstein/lib/path/reverse
 
 path = Bernstein.pathstring.parse("M0 0 L100 0 L100 100")
-path = Bernstein.reverse(path)
+path = Bernstein.path.reverse(path)
 
 Bernstein.pathstring.build(path)
 
@@ -260,10 +260,10 @@ Converts points into cubic curves without any visual change.
 ### Example
 
 ```js
-// bernstein/lib/to-cubics
+// bernstein/lib/path/to-cubics
 
 path = Bernstein.pathstring.parse("M0 0L100 0L100 100")
-path = Bernstein.toCubics(path)
+path = Bernstein.path.toCubics(path)
 
 Bernstein.pathstring.build(path)
 
@@ -292,10 +292,10 @@ Cleans the path.
 ### Example
 
 ```js
-// bernstein/lib/clean
+// bernstein/lib/path/clean
 
 path = Bernstein.pathstring.parse("L0 0l50 50l0 0h50v50 L0 0")
-path = Bernstein.clean(path)
+path = Bernstein.path.clean(path)
 
 Bernstein.pathstring.build(path)
 

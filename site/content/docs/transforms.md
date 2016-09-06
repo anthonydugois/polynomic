@@ -20,10 +20,10 @@ Applies a 2D translation on a given path. You can pass absolute or relative valu
 ### Example
 
 ```js
-// bernstein/lib/translate
+// bernstein/lib/transforms/translate
 
 path = Bernstein.pathstring.parse("M0 0L100 0Q150 150 200 200")
-path = Bernstein.translate(path, 100, 0)
+path = Bernstein.transforms.translate(path, 100, 0)
 
 Bernstein.pathstring.build(path)
 
@@ -51,10 +51,10 @@ Applies a 2D skew transformation on a given path. You can pass values in radians
 ### Example
 
 ```js
-// bernstein/lib/skew
+// bernstein/lib/transforms/skew
 
 path = Bernstein.pathstring.parse("M0 0L100 0L100 100")
-path = Bernstein.skew(path, Math.PI / 6, 0)
+path = Bernstein.transforms.skew(path, Math.PI / 6, 0)
 
 Bernstein.pathstring.build(path)
 
@@ -82,10 +82,10 @@ Applies a 2D scale transformation on a given path.
 ### Example
 
 ```js
-// bernstein/lib/scale
+// bernstein/lib/transforms/scale
 
 path = Bernstein.pathstring.parse("M0 0L100 0Q150 150 200 200")
-path = Bernstein.scale(path, 0.5, 1)
+path = Bernstein.transforms.scale(path, 0.5, 1)
 
 Bernstein.pathstring.build(path)
 
@@ -112,10 +112,10 @@ Applies a 2D rotation on a given path. You can pass value in radians or degrees.
 ### Example
 
 ```js
-// bernstein/lib/rotate
+// bernstein/lib/transforms/rotate
 
 path = Bernstein.pathstring.parse("M0 0L100 0")
-path = Bernstein.rotate(path, "90deg")
+path = Bernstein.transforms.rotate(path, "90deg")
 
 Bernstein.pathstring.build(path)
 
@@ -140,10 +140,10 @@ Transforms a path using a 3x3 transformation matrix.
 ### Example
 
 ```js
-// bernstein/lib/matrix
+// bernstein/lib/transforms/matrix
 
 path = Bernstein.pathstring.parse("M0 0L100 0L100 100")
-path = Bernstein.matrix(path, [
+path = Bernstein.transforms.matrix(path, [
   1, 0, 0,
   0, 1, 0,
   0, 0, 1,
@@ -174,10 +174,10 @@ Same as the `matrix` function, but will be based on a custom origin. You can pas
 ### Example
 
 ```js
-// bernstein/lib/matrix-origin
+// bernstein/lib/transforms/matrix-origin
 
 path = Bernstein.pathstring.parse("M0 0L100 0L100 100")
-path = Bernstein.matrixOrigin(path, [
+path = Bernstein.transforms.matrixOrigin(path, [
   1, 0, 0,
   0, 1, 0,
   0, 0, 1,
