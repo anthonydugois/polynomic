@@ -11,6 +11,7 @@
     position: relative;
   }
   &Content {
+    overflow: hidden;
     flex: 1;
     padding: 3rem 0;
     margin-left: 4rem;

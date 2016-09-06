@@ -162,7 +162,7 @@ Splits the given path by the given point codes.
 // bernstein/lib/split
 
 path = Bernstein.pathstring.parse("M0 0L100 0L100 100zM100 100L200 100L200 200zM200 200L300 200L300 300")
-codes = ["z"]
+codes = ["z", "Z"]
 
 paths = Bernstein.split(path, codes)
 
