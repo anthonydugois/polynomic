@@ -121,19 +121,21 @@ Joins the given paths.
 ```js
 // bernstein/lib/join
 
-paths = [
+path = Bernstein.join([
   Bernstein.pathstring.parse("M0 0L100 0"),
   Bernstein.pathstring.parse("L100 100L100 200"),
   Bernstein.pathstring.parse("M200 200h50v50"),
-]
-
-path = Bernstein.join(paths)
+])
 
 Bernstein.pathstring.build(path)
 
 // ➜ "M0 0L100 0 L100 100L100 200 M200 200h50v50"
 
-path = Bernstein.join(paths, true)
+path = Bernstein.join([
+  Bernstein.pathstring.parse("M0 0L100 0"),
+  Bernstein.pathstring.parse("L100 100L100 200"),
+  Bernstein.pathstring.parse("M200 200h50v50"),
+], true)
 
 Bernstein.pathstring.build(path)
 
@@ -177,4 +179,66 @@ subpaths = Bernstein.split(path, separators)
   "M100 100L200 100L200 200",
   "M200 200L300 200L300 300",
 ]
+```
+
+---
+
+## `simplify(path, tolerance)`
+
+Simplifies the given path using the Ramer-Douglas-Peucker algorithm.
+
+### Arguments
+
+1. `path` *Array* The path you want to simplify.
+2. `tolerance` *number* The maximum distance between original and simplified curve.
+
+### Returns
+
+*Array* The simplified path.
+
+### Example
+
+```js
+// bernstein/lib/simplify
+
+path = Bernstein.pathstring.parse("M0 0 L50 0 L100 5")
+path = Bernstein.simplify(path, 5)
+
+Bernstein.pathstring.build(path)
+
+// ➜ "M0 0 L100 5"
+
+path = Bernstein.pathstring.parse("M0 0 L50 0 L100 5")
+path = Bernstein.simplify(path, 1)
+
+Bernstein.pathstring.build(path)
+
+// ➜ "M0 0 L50 0 L100 5"
+```
+
+---
+
+## `reverse(path)`
+
+Reverses the path code without any visual change.
+
+### Arguments
+
+1. `path` *Array* The path you want to reverse.
+
+### Returns
+
+*Array* The reversed path.
+
+### Example
+
+```js
+// bernstein/lib/reverse
+
+path = Bernstein.pathstring.parse("M0 0 L100 0 L100 100")
+path = Bernstein.reverse(path)
+
+Bernstein.pathstring.build(path)
+
+// ➜ "M100 100L100 0L0 0"
 ```
