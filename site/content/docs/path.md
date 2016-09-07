@@ -245,7 +245,7 @@ Bernstein.pathstring.build(path)
 
 ---
 
-## `toCubics(path)`
+## `toCubic(path)`
 
 Converts points into cubic curves without any visual change.
 
@@ -260,10 +260,10 @@ Converts points into cubic curves without any visual change.
 ### Example
 
 ```js
-// bernstein/lib/path/to-cubics
+// bernstein/lib/path/to-cubic
 
 path = Bernstein.pathstring.parse("M0 0L100 0L100 100")
-path = Bernstein.path.toCubics(path)
+path = Bernstein.path.toCubic(path)
 
 Bernstein.pathstring.build(path)
 
