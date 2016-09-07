@@ -19,26 +19,26 @@ Checks if the pathstring `d1` is equal to the pathstring `d2`. Paths can be pass
 ### Example
 
 ```js
-// bernstein/lib/path/is-equal
+// polynomic/lib/path/is-equal
 
 d1 = "M0 0L100 100z"
-d2 = Bernstein.pathstring.parse("M0 0L100 100z")
+d2 = Polynomic.pathstring.parse("M0 0L100 100z")
 
-Bernstein.path.isEqual(d1, d2)
+Polynomic.path.isEqual(d1, d2)
 
 // ➜ true
 
 d1 = "M0 0L100 100z"
 d2 = "M 0, 0 L 100 100 z"
 
-Bernstein.path.isEqual(d1, d2)
+Polynomic.path.isEqual(d1, d2)
 
 // ➜ true
 
 d1 = "M0 0L100 100z"
 d2 = "M0 0L100 100L200 100L300 300z"
 
-Bernstein.path.isEqual(d1, d2)
+Polynomic.path.isEqual(d1, d2)
 
 // ➜ false
 ```
@@ -60,11 +60,11 @@ Computes the bounding box of the given path.
 ### Example
 
 ```js
-// bernstein/lib/path/bounding-box
+// polynomic/lib/path/bounding-box
 
-path = Bernstein.pathstring.parse("M0 0L100 100z")
+path = Polynomic.pathstring.parse("M0 0L100 100z")
 
-Bernstein.path.boundingBox(path)
+Polynomic.path.boundingBox(path)
 
 // ➜ {
 //   x: 0,
@@ -91,12 +91,12 @@ Combines subpaths by removing `Z` `M` consecutive points.
 ### Example
 
 ```js
-// bernstein/lib/path/combine
+// polynomic/lib/path/combine
 
-path = Bernstein.pathstring.parse("M0 0L100 100z M150 150 L200 200"),
-path = Bernstein.path.combine(path)
+path = Polynomic.pathstring.parse("M0 0L100 100z M150 150 L200 200"),
+path = Polynomic.path.combine(path)
 
-Bernstein.pathstring.build(path)
+Polynomic.pathstring.build(path)
 
 // ➜ "M0 0L100 100L150 150L200 200"
 ```
@@ -119,25 +119,25 @@ Joins the given paths.
 ### Example
 
 ```js
-// bernstein/lib/path/join
+// polynomic/lib/path/join
 
-path = Bernstein.path.join([
-  Bernstein.pathstring.parse("M0 0L100 0"),
-  Bernstein.pathstring.parse("L100 100L100 200"),
-  Bernstein.pathstring.parse("M200 200h50v50"),
+path = Polynomic.path.join([
+  Polynomic.pathstring.parse("M0 0L100 0"),
+  Polynomic.pathstring.parse("L100 100L100 200"),
+  Polynomic.pathstring.parse("M200 200h50v50"),
 ])
 
-Bernstein.pathstring.build(path)
+Polynomic.pathstring.build(path)
 
 // ➜ "M0 0L100 0 L100 100L100 200 M200 200h50v50"
 
-path = Bernstein.path.join([
-  Bernstein.pathstring.parse("M0 0L100 0"),
-  Bernstein.pathstring.parse("L100 100L100 200"),
-  Bernstein.pathstring.parse("M200 200h50v50"),
+path = Polynomic.path.join([
+  Polynomic.pathstring.parse("M0 0L100 0"),
+  Polynomic.pathstring.parse("L100 100L100 200"),
+  Polynomic.pathstring.parse("M200 200h50v50"),
 ], true)
 
-Bernstein.pathstring.build(path)
+Polynomic.pathstring.build(path)
 
 // ➜ "M0 0L100 0z M100 100L100 200z M200 200h50v50z"
 ```
@@ -161,17 +161,17 @@ Splits the given path into an array of subpaths.
 ### Example
 
 ```js
-// bernstein/lib/path/split
+// polynomic/lib/path/split
 
-path = Bernstein.pathstring.parse("M0 0L100 0L100 100zM100 100L200 100L200 200zM200 200L300 200L300 300")
+path = Polynomic.pathstring.parse("M0 0L100 0L100 100zM100 100L200 100L200 200zM200 200L300 200L300 300")
 separators = ["z", "Z"]
 
-subpaths = Bernstein.path.split(path, separators)
+subpaths = Polynomic.path.split(path, separators)
 
 [
-  Bernstein.pathstring.build(subpaths[0]),
-  Bernstein.pathstring.build(subpaths[1]),
-  Bernstein.pathstring.build(subpaths[2]),
+  Polynomic.pathstring.build(subpaths[0]),
+  Polynomic.pathstring.build(subpaths[1]),
+  Polynomic.pathstring.build(subpaths[2]),
 ]
 
 // ➜ [
@@ -199,19 +199,19 @@ Simplifies the given path using the Ramer-Douglas-Peucker algorithm.
 ### Example
 
 ```js
-// bernstein/lib/path/simplify
+// polynomic/lib/path/simplify
 
-path = Bernstein.pathstring.parse("M0 0 L50 0 L100 5")
-path = Bernstein.path.simplify(path, 5)
+path = Polynomic.pathstring.parse("M0 0 L50 0 L100 5")
+path = Polynomic.path.simplify(path, 5)
 
-Bernstein.pathstring.build(path)
+Polynomic.pathstring.build(path)
 
 // ➜ "M0 0 L100 5"
 
-path = Bernstein.pathstring.parse("M0 0 L50 0 L100 5")
-path = Bernstein.path.simplify(path, 1)
+path = Polynomic.pathstring.parse("M0 0 L50 0 L100 5")
+path = Polynomic.path.simplify(path, 1)
 
-Bernstein.pathstring.build(path)
+Polynomic.pathstring.build(path)
 
 // ➜ "M0 0 L50 0 L100 5"
 ```
@@ -233,12 +233,12 @@ Reverses the path code without any visual change.
 ### Example
 
 ```js
-// bernstein/lib/path/reverse
+// polynomic/lib/path/reverse
 
-path = Bernstein.pathstring.parse("M0 0 L100 0 L100 100")
-path = Bernstein.path.reverse(path)
+path = Polynomic.pathstring.parse("M0 0 L100 0 L100 100")
+path = Polynomic.path.reverse(path)
 
-Bernstein.pathstring.build(path)
+Polynomic.pathstring.build(path)
 
 // ➜ "M100 100L100 0L0 0"
 ```
@@ -260,12 +260,12 @@ Converts points into cubic curves without any visual change.
 ### Example
 
 ```js
-// bernstein/lib/path/to-cubic
+// polynomic/lib/path/to-cubic
 
-path = Bernstein.pathstring.parse("M0 0L100 0L100 100")
-path = Bernstein.path.toCubic(path)
+path = Polynomic.pathstring.parse("M0 0L100 0L100 100")
+path = Polynomic.path.toCubic(path)
 
-Bernstein.pathstring.build(path)
+Polynomic.pathstring.build(path)
 
 // ➜ "M0 0C0 0 100 0 100 0C100 0 100 100 100 100"
 ```
@@ -292,12 +292,12 @@ Cleans the path.
 ### Example
 
 ```js
-// bernstein/lib/path/clean
+// polynomic/lib/path/clean
 
-path = Bernstein.pathstring.parse("L0 0l50 50l0 0h50v50 L0 0")
-path = Bernstein.path.clean(path)
+path = Polynomic.pathstring.parse("L0 0l50 50l0 0h50v50 L0 0")
+path = Polynomic.path.clean(path)
 
-Bernstein.pathstring.build(path)
+Polynomic.pathstring.build(path)
 
 // ➜ "M0 0l50 50h50v50z"
 ```

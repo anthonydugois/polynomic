@@ -1,19 +1,27 @@
 ---
-title: Phenomic default boilerplate
 layout: Homepage
 ---
 
-Hi there.
+## Get started
 
-Before having fun with Phenomic, be sure to read (or at least pretend to)
-the documentation :
+```sh
+npm install --save polynomic
+```
 
-* [Setup](https://phenomic.io/docs/setup/)
-* [Usage](https://phenomic.io/docs/usage/)
-* [FAQ](https://phenomic.io/docs/faq/)
+## Basic usage
 
-Built with
-<a href="https://facebook.github.io/react/">
-  <img alt="" src="assets/react.svg" width="16" height="16" />
-  React
-</a>.
+```js
+import Polynomic from "polynomic"
+
+// Parse a pathstring
+let path = Polynomic.pathstring.parse("M0 0 L100 0 L100 100 L0 100 z")
+
+// Perform some transforms on the path
+path = Polynomic.path.rotate(path, Math.PI / 4, "center", "center")
+path = Polynomic.path.translate(path, 25, 50)
+
+// Get the new resulting pathstring
+const pathstring = Polynomic.pathstring.build(path)
+
+// ➜ ""
+```

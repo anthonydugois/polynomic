@@ -1,9 +1,9 @@
 {
   "private": true,
-  "name": "bernstein",
-  "homepage": "http://anthonydugois.com/bernstein/",
+  "name": "polynomic",
+  "homepage": "http://anthonydugois.com/polynomic/",
   "twitter": "a_dugois",
-  "repository": "https://github.com/anthonydugois/bernstein.git",
+  "repository": "https://github.com/anthonydugois/polynomic.git",
   "scripts": {
     "lint:js": "eslint --ignore-path .gitignore --fix .",
     "lint:css": "stylelint \"web_modules/**/*.css\"",

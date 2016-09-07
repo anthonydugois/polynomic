@@ -1,6 +1,8 @@
 import React, { Component, PropTypes } from "react"
 import Helmet from "react-helmet"
 import { BodyContainer } from "phenomic"
+import Header from "Header"
+import Footer from "Footer"
 import Container from "Container"
 import Typography from "Typography"
 import Nav from "./Nav"
@@ -16,23 +18,29 @@ export default class Documentation extends Component {
     } = this.props
 
     return (
-      <Container>
-        <Helmet
-          title={ head.title } />
+      <div>
+        <Header />
 
-        <div className={ styles.documentation }>
-          <div className={ styles.documentationNav }>
-            <Nav active={ __url } />
+        <Container>
+          <Helmet
+            title={ head.title } />
+
+          <div className={ styles.documentation }>
+            <div className={ styles.documentationNav }>
+              <Nav active={ __url } />
+            </div>
+            <div className={ styles.documentationContent }>
+              <Typography title={ head.title }>
+                <BodyContainer>
+                  { body }
+                </BodyContainer>
+              </Typography>
+            </div>
           </div>
-          <div className={ styles.documentationContent }>
-            <Typography title={ head.title }>
-              <BodyContainer>
-                { body }
-              </BodyContainer>
-            </Typography>
-          </div>
-        </div>
-      </Container>
+        </Container>
+
+        <Footer />
+      </div>
     )
   }
 }

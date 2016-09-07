@@ -1,12 +1,10 @@
 import React, { Component, PropTypes } from "react"
 import Helmet from "react-helmet"
+import GitHubCorner from "GitHubCorner"
 
 // Import global CSS before other components and their styles
 import "./index.global.css"
 import styles from "./index.css"
-
-import Header from "Header"
-import Footer from "Footer"
 
 export default class Layout extends Component {
   static propTypes = {
@@ -24,8 +22,8 @@ export default class Layout extends Component {
     return (
       <div className={ styles.layout }>
         <Helmet
-          defaultTitle="Advanced utilities to manipulate SVG paths | Bernstein"
-          titleTemplate="%s | Bernstein"
+          defaultTitle="Polynomic"
+          titleTemplate="%s | Polynomic"
           meta={ [
             {
               name: "generator",
@@ -48,11 +46,8 @@ export default class Layout extends Component {
 
         <style>{ "@-ms-viewport { width: device-width; }" }</style>
 
-        <Header />
-        <div className={ styles.layoutContent }>
-          { children }
-        </div>
-        <Footer />
+        <GitHubCorner />
+        { children }
       </div>
     )
   }

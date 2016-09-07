@@ -18,9 +18,9 @@ Parses a pathstring and build an array of points with absolute coords.
 ### Example
 
 ```js
-// bernstein/lib/pathstring/parse
+// polynomic/lib/pathstring/parse
 
-Bernstein.pathstring.parse("M0 0L100 100z")
+Polynomic.pathstring.parse("M0 0L100 100z")
 
 // ➜ [
 //   {
@@ -61,15 +61,15 @@ Builds an array of points into a pathstring.
 ### Example
 
 ```js
-// bernstein/lib/pathstring/build
+// polynomic/lib/pathstring/build
 
 path = [
-  Bernstein.point.M(0, 0),
-  Bernstein.point.L(100, 100),
-  Bernstein.point.z(),
+  Polynomic.point.M(0, 0),
+  Polynomic.point.L(100, 100),
+  Polynomic.point.z(),
 ]
 
-Bernstein.pathstring.build(path)
+Polynomic.pathstring.build(path)
 
 // ➜ "M0 0L100 100z"
 ```
@@ -95,21 +95,21 @@ Checks if the given pathstring is a valid SVG path.
 ### Example
 
 ```js
-// bernstein/lib/pathstring/is-valid
+// polynomic/lib/pathstring/is-valid
 
-Bernstein.pathstring.isValid("M0,0l0 0a50 50, 0,1,0 -10 10")
+Polynomic.pathstring.isValid("M0,0l0 0a50 50, 0,1,0 -10 10")
 
 // ➜ true
 
-Bernstein.pathstring.isValid("l10,10")
+Polynomic.pathstring.isValid("l10,10")
 
 // ➜ false
 
-Bernstein.pathstring.isValid("q10 20,30")
+Polynomic.pathstring.isValid("q10 20,30")
 
 // ➜ false
 
-Bernstein.pathstring.isValid("(╯°□°)╯︵ ┻━┻")
+Polynomic.pathstring.isValid("(╯°□°)╯︵ ┻━┻")
 
 // ➜ false
 ```

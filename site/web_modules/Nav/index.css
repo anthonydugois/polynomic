@@ -1,0 +1,48 @@
+:root {
+  --color: #182234;
+}
+
+.nav {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+
+  &Link {
+    position: relative;
+    margin: 0 1rem;
+    transition: color .2s;
+    text-decoration: none;
+    line-height: .6;
+    font-family: "Fira Mono", monospace;
+    font-size: .85rem;
+    color: color(var(--color) l(+40%));
+
+    &::before,
+    &::after {
+      content: "";
+      z-index: 5;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      height: 6px;
+    }
+    &::before {
+      background: color(var(--color) l(+80%));
+    }
+    &::after {
+      background: var(--color);
+      transform: scaleX(0);
+      transition: transform .2s;
+    }
+
+    &:focus,
+    &:hover {
+      color: var(--color);
+
+      &::after {
+        transform: scaleX(1);
+      }
+    }
+  }
+}

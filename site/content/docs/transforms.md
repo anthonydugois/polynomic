@@ -20,12 +20,12 @@ Applies a 2D translation on a given path. You can pass absolute or relative valu
 ### Example
 
 ```js
-// bernstein/lib/transforms/translate
+// polynomic/lib/transforms/translate
 
-path = Bernstein.pathstring.parse("M0 0L100 0Q150 150 200 200")
-path = Bernstein.transforms.translate(path, 100, 0)
+path = Polynomic.pathstring.parse("M0 0L100 0Q150 150 200 200")
+path = Polynomic.transforms.translate(path, 100, 0)
 
-Bernstein.pathstring.build(path)
+Polynomic.pathstring.build(path)
 
 // ➜ "M100 0L200 0Q250 150 300 200"
 ```
@@ -51,12 +51,12 @@ Applies a 2D skew transformation on a given path. You can pass values in radians
 ### Example
 
 ```js
-// bernstein/lib/transforms/skew
+// polynomic/lib/transforms/skew
 
-path = Bernstein.pathstring.parse("M0 0L100 0L100 100")
-path = Bernstein.transforms.skew(path, Math.PI / 6, 0)
+path = Polynomic.pathstring.parse("M0 0L100 0L100 100")
+path = Polynomic.transforms.skew(path, Math.PI / 6, 0)
 
-Bernstein.pathstring.build(path)
+Polynomic.pathstring.build(path)
 
 // ➜ "M0 0L100 0L157.735 100"
 ```
@@ -82,12 +82,12 @@ Applies a 2D scale transformation on a given path.
 ### Example
 
 ```js
-// bernstein/lib/transforms/scale
+// polynomic/lib/transforms/scale
 
-path = Bernstein.pathstring.parse("M0 0L100 0Q150 150 200 200")
-path = Bernstein.transforms.scale(path, 0.5, 1)
+path = Polynomic.pathstring.parse("M0 0L100 0Q150 150 200 200")
+path = Polynomic.transforms.scale(path, 0.5, 1)
 
-Bernstein.pathstring.build(path)
+Polynomic.pathstring.build(path)
 
 // ➜ "M0 0L50 0Q75 150 100 200"
 ```
@@ -112,12 +112,12 @@ Applies a 2D rotation on a given path. You can pass value in radians or degrees.
 ### Example
 
 ```js
-// bernstein/lib/transforms/rotate
+// polynomic/lib/transforms/rotate
 
-path = Bernstein.pathstring.parse("M0 0L100 0")
-path = Bernstein.transforms.rotate(path, "90deg")
+path = Polynomic.pathstring.parse("M0 0L100 0")
+path = Polynomic.transforms.rotate(path, "90deg")
 
-Bernstein.pathstring.build(path)
+Polynomic.pathstring.build(path)
 
 // ➜ "M0 0L0 100"
 ```
@@ -140,16 +140,16 @@ Transforms a path using a 3x3 transformation matrix.
 ### Example
 
 ```js
-// bernstein/lib/transforms/matrix
+// polynomic/lib/transforms/matrix
 
-path = Bernstein.pathstring.parse("M0 0L100 0L100 100")
-path = Bernstein.transforms.matrix(path, [
+path = Polynomic.pathstring.parse("M0 0L100 0L100 100")
+path = Polynomic.transforms.matrix(path, [
   1, 0, 0,
   0, 1, 0,
   0, 0, 1,
 ])
 
-Bernstein.pathstring.build(path)
+Polynomic.pathstring.build(path)
 
 // ➜ "M0 0L100 0L100 100"
 ```
@@ -174,16 +174,16 @@ Same as the `matrix` function, but will be based on a custom origin. You can pas
 ### Example
 
 ```js
-// bernstein/lib/transforms/matrix-origin
+// polynomic/lib/transforms/matrix-origin
 
-path = Bernstein.pathstring.parse("M0 0L100 0L100 100")
-path = Bernstein.transforms.matrixOrigin(path, [
+path = Polynomic.pathstring.parse("M0 0L100 0L100 100")
+path = Polynomic.transforms.matrixOrigin(path, [
   1, 0, 0,
   0, 1, 0,
   0, 0, 1,
 ], 50, 50)
 
-Bernstein.pathstring.build(path)
+Polynomic.pathstring.build(path)
 
 // ➜ "M0 0L100 0L100 100"
 ```

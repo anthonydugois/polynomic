@@ -1,6 +1,5 @@
 :root {
   --color: #182234;
-  --colorLink: #295cc2;
 }
 
 .header {
@@ -10,43 +9,9 @@
     align-items: center;
     border-bottom: 1px solid color(var(--color) l(+80%));
   }
-    &Brand {
+    &Logo {
       display: inline-block;
-      height: 3rem;
+      font-size: 3rem;
       color: var(--color);
-
-      & svg {
-        height: 100%;
-        fill: currentColor;
-      }
     }
-    &Links {
-      margin-left: auto;
-      display: flex;
-      align-items: center;
-    }
-      &Link {
-        position: relative;
-        margin: 0 1rem;
-        text-decoration: none;
-        line-height: .6;
-        font-family: "Fira Mono", monospace;
-        font-size: .85rem;
-        color: color(var(--color) l(+50%));
-
-        &::after {
-          content: "";
-          position: absolute;
-          top: 100%;
-          left: 0;
-          right: 0;
-          height: 6px;
-          background: color(var(--color) l(+80%));
-        }
-
-        &:focus,
-        &:hover {
-          color: var(--color);
-        }
-      }
 }

@@ -1,0 +1,56 @@
+:root {
+  --color: #182234;
+}
+
+.homepage {
+  &Header {
+    padding: 10rem 0;
+
+    &Content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+      &Title {
+        margin: 0;
+        padding: 0;
+
+        &Link {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          text-decoration: none;
+          color: var(--color);
+        }
+        &Logo {
+          font-size: 5rem;
+        }
+        &Text {
+          margin-top: 1.5rem;
+          font-family: "Roboto", sans-serif;
+          font-weight: 400;
+          font-size: 3rem;
+        }
+      }
+      &Lead {
+        margin: 0;
+        padding: 0;
+        margin-top: 1.5rem;
+        line-height: 1.4;
+        font-family: "Roboto", sans-serif;
+        font-size: 1.25rem;
+        color: color(var(--color) l(+60%));
+      }
+      &Nav {
+        margin-top: 2rem;
+        padding: 2rem;
+        border-top: 1px solid color(var(--color) l(+75%));
+      }
+  }
+  &Content {
+    padding: 0 2rem;
+  }
+}

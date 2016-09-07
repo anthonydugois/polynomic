@@ -1,7 +1,7 @@
 {
-  "name": "bernstein",
+  "name": "polynomic",
   "version": "1.0.0",
-  "description": "Advanced utilities to manipulate SVG paths.",
+  "description": "Advanced utilities to manipulate SVG paths",
   "main": "dist/index.js",
   "files": [
     "dist",

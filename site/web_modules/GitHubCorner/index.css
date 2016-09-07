@@ -1,0 +1,23 @@
+:root {
+  --color: #182234;
+}
+
+.gitHubCorner {
+  z-index: 1000;
+  position: fixed;
+  top: 0;
+  right: 0;
+
+  &Octocat {
+    fill: white;
+  }
+  &Background {
+    fill: var(--color);
+  }
+}
+
+@media screen and (max-width: 65em) {
+  .gitHubCorner {
+    display: none;
+  }
+}

@@ -19,9 +19,9 @@ Creates a new `M` point.
 ### Example
 
 ```js
-// bernstein/lib/point/points
+// polynomic/lib/point/points
 
-Bernstein.point.M(0, 0)
+Polynomic.point.M(0, 0)
 
 // ➜ {
 //   code: "M",
@@ -49,9 +49,9 @@ Creates a new `L` point.
 ### Example
 
 ```js
-// bernstein/lib/point/points
+// polynomic/lib/point/points
 
-Bernstein.point.L(100, 100)
+Polynomic.point.L(100, 100)
 
 // ➜ {
 //   code: "L",
@@ -79,11 +79,11 @@ Creates a new `H` point.
 ### Example
 
 ```js
-// bernstein/lib/point/points
+// polynomic/lib/point/points
 
-prev = Bernstein.point.M(0, 0)
+prev = Polynomic.point.M(0, 0)
 
-Bernstein.point.H(100, prev)
+Polynomic.point.H(100, prev)
 
 // ➜ {
 //   code: "H",
@@ -111,11 +111,11 @@ Creates a new `V` point.
 ### Example
 
 ```js
-// bernstein/lib/point/points
+// polynomic/lib/point/points
 
-prev = Bernstein.point.M(0, 0)
+prev = Polynomic.point.M(0, 0)
 
-Bernstein.point.V(100, prev)
+Polynomic.point.V(100, prev)
 
 // ➜ {
 //   code: "V",
@@ -145,9 +145,9 @@ Creates a new `Q` point.
 ### Example
 
 ```js
-// bernstein/lib/point/points
+// polynomic/lib/point/points
 
-Bernstein.point.Q(50, 50, 100, 100)
+Polynomic.point.Q(50, 50, 100, 100)
 
 // ➜ {
 //   code: "Q",
@@ -179,11 +179,11 @@ Creates a new `T` point.
 ### Example
 
 ```js
-// bernstein/lib/point/points
+// polynomic/lib/point/points
 
-prev = Bernstein.point.Q(50, 50, 100, 100)
+prev = Polynomic.point.Q(50, 50, 100, 100)
 
-Bernstein.point.T(200, 200, prev)
+Polynomic.point.T(200, 200, prev)
 
 // ➜ {
 //   code: "T",
@@ -218,9 +218,9 @@ Creates a new `C` point.
 ### Example
 
 ```js
-// bernstein/lib/point/points
+// polynomic/lib/point/points
 
-Bernstein.point.C(25, 25, 75, 75, 100, 100)
+Polynomic.point.C(25, 25, 75, 75, 100, 100)
 
 // ➜ {
 //   code: "C",
@@ -256,11 +256,11 @@ Creates a new `S` point.
 ### Example
 
 ```js
-// bernstein/lib/point/points
+// polynomic/lib/point/points
 
-prev = Bernstein.point.C(25, 25, 75, 75, 100, 100)
+prev = Polynomic.point.C(25, 25, 75, 75, 100, 100)
 
-Bernstein.point.S(175, 175, 200, 200, prev)
+Polynomic.point.S(175, 175, 200, 200, prev)
 
 // ➜ {
 //   code: "S",
@@ -298,9 +298,9 @@ Creates a new `A` point.
 ### Example
 
 ```js
-// bernstein/lib/point/points
+// polynomic/lib/point/points
 
-Bernstein.point.A(50, 50, 0, 1, 1, 100, 0)
+Polynomic.point.A(50, 50, 0, 1, 1, 100, 0)
 
 // ➜ {
 //   code: "A",
@@ -333,11 +333,11 @@ Creates a new `Z` point.
 ### Example
 
 ```js
-// bernstein/lib/point/points
+// polynomic/lib/point/points
 
-related = Bernstein.point.M(0, 0)
+related = Polynomic.point.M(0, 0)
 
-Bernstein.point.Z(related)
+Polynomic.point.Z(related)
 
 // ➜ {
 //   code: "Z",
@@ -366,9 +366,9 @@ Creates a new relative `m` point.
 ### Example
 
 ```js
-// bernstein/lib/point/points
+// polynomic/lib/point/points
 
-Bernstein.point.m(0, 0)
+Polynomic.point.m(0, 0)
 
 // ➜ {
 //   code: "m",
@@ -397,11 +397,11 @@ Creates a new relative `l` point.
 ### Example
 
 ```js
-// bernstein/lib/point/points
+// polynomic/lib/point/points
 
-prev = Bernstein.point.M(0, 0)
+prev = Polynomic.point.M(0, 0)
 
-Bernstein.point.l(100, 100, prev)
+Polynomic.point.l(100, 100, prev)
 
 // ➜ {
 //   code: "l",
@@ -429,11 +429,11 @@ Creates a new relative `h` point.
 ### Example
 
 ```js
-// bernstein/lib/point/points
+// polynomic/lib/point/points
 
-prev = Bernstein.point.M(0, 0)
+prev = Polynomic.point.M(0, 0)
 
-Bernstein.point.h(100, prev)
+Polynomic.point.h(100, prev)
 
 // ➜ {
 //   code: "h",
@@ -461,11 +461,11 @@ Creates a new relative `v` point.
 ### Example
 
 ```js
-// bernstein/lib/point/points
+// polynomic/lib/point/points
 
-prev = Bernstein.point.M(0, 0)
+prev = Polynomic.point.M(0, 0)
 
-Bernstein.point.v(100, prev)
+Polynomic.point.v(100, prev)
 
 // ➜ {
 //   code: "v",
@@ -496,11 +496,11 @@ Creates a new relative `q` point.
 ### Example
 
 ```js
-// bernstein/lib/point/points
+// polynomic/lib/point/points
 
-prev = Bernstein.point.M(0, 0)
+prev = Polynomic.point.M(0, 0)
 
-Bernstein.point.q(50, 50, 100, 100, prev)
+Polynomic.point.q(50, 50, 100, 100, prev)
 
 // ➜ {
 //   code: "q",
@@ -532,11 +532,11 @@ Creates a new relative `t` point.
 ### Example
 
 ```js
-// bernstein/lib/point/points
+// polynomic/lib/point/points
 
-prev = Bernstein.point.Q(50, 50, 100, 100)
+prev = Polynomic.point.Q(50, 50, 100, 100)
 
-Bernstein.point.t(100, 100, prev)
+Polynomic.point.t(100, 100, prev)
 
 // ➜ {
 //   code: "t",
@@ -572,11 +572,11 @@ Creates a new relative `c` point.
 ### Example
 
 ```js
-// bernstein/lib/point/points
+// polynomic/lib/point/points
 
-prev = Bernstein.point.M(0, 0)
+prev = Polynomic.point.M(0, 0)
 
-Bernstein.point.c(25, 25, 75, 75, 100, 100, prev)
+Polynomic.point.c(25, 25, 75, 75, 100, 100, prev)
 
 // ➜ {
 //   code: "c",
@@ -612,11 +612,11 @@ Creates a new relative `s` point.
 ### Example
 
 ```js
-// bernstein/lib/point/points
+// polynomic/lib/point/points
 
-prev = Bernstein.point.C(25, 25, 50, 50, 100, 100)
+prev = Polynomic.point.C(25, 25, 50, 50, 100, 100)
 
-Bernstein.point.s(75, 75, 100, 100)
+Polynomic.point.s(75, 75, 100, 100)
 
 // ➜ {
 //   code: "s",
@@ -655,11 +655,11 @@ Creates a new relative `a` point.
 ### Example
 
 ```js
-// bernstein/lib/point/points
+// polynomic/lib/point/points
 
-prev = Bernstein.point.M(0, 0)
+prev = Polynomic.point.M(0, 0)
 
-Bernstein.point.a(50, 50, 0, 1, 1, 100, 0)
+Polynomic.point.a(50, 50, 0, 1, 1, 100, 0)
 
 // ➜ {
 //   code: "a",
@@ -692,11 +692,11 @@ Creates a new `z` point.
 ### Example
 
 ```js
-// bernstein/lib/point/points
+// polynomic/lib/point/points
 
-related = Bernstein.point.M(0, 0)
+related = Polynomic.point.M(0, 0)
 
-Bernstein.point.z(related)
+Polynomic.point.z(related)
 
 // ➜ {
 //   code: "z",
@@ -728,9 +728,9 @@ Creates a new point with the provided parameters.
 ### Example
 
 ```js
-// bernstein/lib/point/points
+// polynomic/lib/point/points
 
-Bernstein.point.Point("C", 100, 100, {
+Polynomic.point.Point("C", 100, 100, {
   x1: 25,
   y1: 25,
   x2: 75,
@@ -768,19 +768,19 @@ Checks if a point is inside a given path.
 ### Example
 
 ```js
-// bernstein/lib/point/is-inside
+// polynomic/lib/point/is-inside
 
-point = Bernstein.point.M(50, 50)
-path = Bernstein.pathstring.parse("M0 0H100V100H0z")
+point = Polynomic.point.M(50, 50)
+path = Polynomic.pathstring.parse("M0 0H100V100H0z")
 
-Bernstein.point.isInside(point, path)
+Polynomic.point.isInside(point, path)
 
 // ➜ true
 
-point = Bernstein.point.M(200, 200)
-path = Bernstein.pathstring.parse("M0 0H100V100H0z")
+point = Polynomic.point.M(200, 200)
+path = Polynomic.pathstring.parse("M0 0H100V100H0z")
 
-Bernstein.point.isInside(point, path)
+Polynomic.point.isInside(point, path)
 
 // ➜ false
 ```
@@ -802,17 +802,17 @@ Checks if a point is relative or not.
 ### Example
 
 ```js
-// bernstein/lib/point/is-relative
+// polynomic/lib/point/is-relative
 
-relative = Bernstein.point.m(0, 0)
+relative = Polynomic.point.m(0, 0)
 
-Bernstein.point.isRelative(relative)
+Polynomic.point.isRelative(relative)
 
 // ➜ true
 
-absolute = Bernstein.point.M(0, 0)
+absolute = Polynomic.point.M(0, 0)
 
-Bernstein.point.isRelative(absolute)
+Polynomic.point.isRelative(absolute)
 
 // ➜ false
 ```
@@ -835,12 +835,12 @@ Converts the given point into a `C` point.
 ### Example
 
 ```js
-// bernstein/lib/point/to-cubic
+// polynomic/lib/point/to-cubic
 
-prev = Bernstein.point.M(0, 0)
-point = Bernstein.point.Q(60, 60, 120, 120)
+prev = Polynomic.point.M(0, 0)
+point = Polynomic.point.Q(60, 60, 120, 120)
 
-Bernstein.point.toCubic(prev, point)
+Polynomic.point.toCubic(prev, point)
 
 // ➜ {
 //   code: "C",
@@ -873,12 +873,12 @@ Computes the distance between `p1` and `p2`.
 ### Example
 
 ```js
-// bernstein/lib/point/distance
+// polynomic/lib/point/distance
 
-p1 = Bernstein.point.M(0, 0)
-p2 = Bernstein.point.L(100, 100)
+p1 = Polynomic.point.M(0, 0)
+p2 = Polynomic.point.L(100, 100)
 
-Bernstein.point.distance(p1, p2)
+Polynomic.point.distance(p1, p2)
 
 // ➜ 141.421356237
 ```

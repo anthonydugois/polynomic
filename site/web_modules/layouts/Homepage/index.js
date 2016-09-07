@@ -1,29 +1,32 @@
 import React, { Component, PropTypes } from "react"
-import enhanceCollection from "phenomic/lib/enhance-collection"
+import { BodyContainer } from "phenomic"
+import Container from "Container"
+import Header from "./Header"
+import Footer from "Footer"
+import Typography from "Typography"
 
-import Page from "../Page"
-import PagesList from "../../PagesList"
-
-const numberOfLatestPosts = 6
+import styles from "./index.css"
 
 export default class Homepage extends Component {
-  static contextTypes = {
-    collection: PropTypes.array.isRequired
-  }
-
   render() {
-    const latestPosts = enhanceCollection(this.context.collection, {
-      filter: { layout: "Post" },
-      sort: "date",
-      reverse: true
-    })
-    .slice(0, numberOfLatestPosts)
+    const { body } = this.props
 
     return (
-      <Page { ...this.props }>
-        <h2>{ "Latest Posts" }</h2>
-        <PagesList pages={ latestPosts } />
-      </Page>
+      <div>
+        <Header />
+
+        <Container>
+          <div className={ styles.homepageContent }>
+            <Typography>
+              <BodyContainer>
+                { body }
+              </BodyContainer>
+            </Typography>
+          </div>
+        </Container>
+
+        <Footer />
+      </div>
     )
   }
 }

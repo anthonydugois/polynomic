@@ -1,41 +1,41 @@
-# Bernstein
+# Polynomic
 
-> Bernstein is a set of advanced utilities to manipulate SVG paths.
+> A set of advanced utilities to manipulate SVG paths.
 
-Visit the website to see [some demos](http://anthonydugois.com/bernstein/)!
+Visit the website to see [some demos](http://anthonydugois.com/polynomic/)!
 
 ### Installation
 
-```
-npm install --save bernstein
+```sh
+npm install --save polynomic
 ```
 
-### Getting started
+### Basic usage
 
-```javascript
-import Bernstein from "bernstein"
+```js
+import Polynomic from "polynomic"
 
 // Parse a pathstring
-let path = Bernstein.pathstring.parse("M0 0 L100 0 L100 100 L0 100 z")
+let path = Polynomic.pathstring.parse("M0 0 L100 0 L100 100 L0 100 z")
 
 // Perform some transforms on the path
-path = Bernstein.rotate(path, Math.PI / 4, "center", "center")
-path = Bernstein.translate(path, 25, 50)
+path = Polynomic.rotate(path, Math.PI / 4, "center", "center")
+path = Polynomic.translate(path, 25, 50)
 
 // Get the new resulting pathstring
-const pathstring = Bernstein.pathstring.build(path)
+const pathstring = Polynomic.pathstring.build(path)
 ```
 
 ### Documentation
 
-See the [official documentation](http://anthonydugois.com/bernstein/).
+See the [official documentation](http://anthonydugois.com/polynomic/).
 
 ### Contributing
 
 Clone the repo:
 
 ```
-git clone https://github.com/anthonydugois/bernstein.git
+git clone https://github.com/anthonydugois/polynomic.git
 ```
 
 Run tests:

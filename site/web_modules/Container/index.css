@@ -2,3 +2,9 @@
   width: 65rem;
   margin: auto;
 }
+
+@media screen and (max-width: 65em) {
+  .container {
+    width: 100%;
+  }
+}
