@@ -14,6 +14,7 @@
     "test": "npm run build"
   },
   "phenomic": {
+    "assets": false,
     "destination": "../docs",
     "CNAME": false
   },
