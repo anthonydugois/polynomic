@@ -1,4 +1,4 @@
-import pointToCubic from "point/to-cubic"
+import pointToCubic from "../../point/to-cubic"
 
 export default function toCubic(path) {
   return path.reduce(

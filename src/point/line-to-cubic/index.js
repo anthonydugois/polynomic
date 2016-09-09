@@ -1,5 +1,5 @@
-import { C, c } from "point/points"
-import isRelative from "point/is-relative"
+import { C, c } from "../points"
+import isRelative from "../is-relative"
 
 export default function lineToCubic(prev, point) {
   return isRelative(point) ?

@@ -1,5 +1,5 @@
-import matrixOrigin from "transforms/matrix-origin"
-import { parseDeg, degToRad } from "utils"
+import matrixOrigin from "../matrix-origin"
+import { parseDeg, degToRad } from "../../utils"
 
 export default function rotate(path, theta, x = 0, y = 0) {
   if (typeof theta === "string") {

@@ -1,5 +1,5 @@
 import deepEqual from "deep-equal"
-import parse from "pathstring/parse"
+import parse from "../../pathstring/parse"
 
 export default function isEqual(d1, d2) {
   if (typeof d1 === "string" && typeof d2 === "string") {

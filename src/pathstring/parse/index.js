@@ -1,5 +1,5 @@
-import * as points from "point/points"
-import { isM } from "point/is"
+import * as points from "../../point/points"
+import { isM } from "../../point/is"
 
 /**
  * Transforms a pathstring in a formatted point list

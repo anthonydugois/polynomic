@@ -1,12 +1,12 @@
-import boundingBox from "path/bounding-box"
-import clean from "path/clean"
-import combine from "path/combine"
-import isEqual from "path/is-equal"
-import join from "path/join"
-import reverse from "path/reverse"
-import simplify from "path/simplify"
-import split from "path/split"
-import toCubic from "path/to-cubic"
+import boundingBox from "./bounding-box"
+import clean from "./clean"
+import combine from "./combine"
+import isEqual from "./is-equal"
+import join from "./join"
+import reverse from "./reverse"
+import simplify from "./simplify"
+import split from "./split"
+import toCubic from "./to-cubic"
 
 export default {
   boundingBox,

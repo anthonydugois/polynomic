@@ -1,10 +1,10 @@
-import Point, * as points from "point/points"
-import is, * as asserts from "point/is"
-import isInside from "point/is-inside"
-import isRelative from "point/is-relative"
-import distance from "point/distance"
-import { min, max } from "point/min-max"
-import toCubic from "point/to-cubic"
+import Point, * as points from "./points"
+import is, * as asserts from "./is"
+import isInside from "./is-inside"
+import isRelative from "./is-relative"
+import distance from "./distance"
+import { min, max } from "./min-max"
+import toCubic from "./to-cubic"
 
 export default {
   Point,

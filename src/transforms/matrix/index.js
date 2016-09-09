@@ -1,6 +1,6 @@
-import Point, { defaultPoint } from "point/points"
-import { isH, isV } from "point/is"
-import isRelative from "point/is-relative"
+import Point, { defaultPoint } from "../../point/points"
+import { isH, isV } from "../../point/is"
+import isRelative from "../../point/is-relative"
 
 export default function matrix(path, m) {
   let lastComputedPoint = defaultPoint

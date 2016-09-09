@@ -1,4 +1,4 @@
-import matrixOrigin from "transforms/matrix-origin"
+import matrixOrigin from "../matrix-origin"
 
 export default function scale(path, sx, sy, x = 0, y = 0) {
   // uniform scaling

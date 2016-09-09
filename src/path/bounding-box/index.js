@@ -1,6 +1,6 @@
-import Point from "point/points"
-import { isM, isZ } from "point/is"
-import toCubic from "path/to-cubic"
+import Point from "../../point/points"
+import { isM, isZ } from "../../point/is"
+import toCubic from "../to-cubic"
 
 export default function boundingBox(rawPath) {
   const path = toCubic(rawPath)

@@ -1,6 +1,6 @@
-import { m, M, z } from "point/points"
-import { isM, isL, isH, isV, isZ } from "point/is"
-import isRelative from "point/is-relative"
+import { m, M, z } from "../../point/points"
+import { isM, isL, isH, isV, isZ } from "../../point/is"
+import isRelative from "../../point/is-relative"
 
 /**
  * Cleans the given path

@@ -1,4 +1,4 @@
-import * as types from "point/points/types"
+import * as types from "../points/types"
 
 export default function is(point, code) {
   return point.code.toLowerCase() === code.toLowerCase()

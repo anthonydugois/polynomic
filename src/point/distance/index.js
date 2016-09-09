@@ -1,4 +1,4 @@
-import Point from "point/points"
+import Point from "../points"
 
 export default function distance(p1, p2) {
   return Math.sqrt(squareDistance(p1, p2))

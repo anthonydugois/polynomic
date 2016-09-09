@@ -1,6 +1,6 @@
-import matrix from "transforms/matrix"
-import translate from "transforms/translate"
-import { absoluteCoords } from "utils"
+import matrix from "../matrix"
+import translate from "../translate"
+import { absoluteCoords } from "../../utils"
 
 export default function matrixOrigin(path, m, x = 0, y = 0) {
   const coords = absoluteCoords(path, x, y)

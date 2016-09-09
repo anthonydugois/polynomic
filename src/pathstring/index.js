@@ -1,6 +1,6 @@
-import build from "pathstring/build"
-import isValid from "pathstring/is-valid"
-import parse from "pathstring/parse"
+import build from "./build"
+import isValid from "./is-valid"
+import parse from "./parse"
 
 export default {
   build,

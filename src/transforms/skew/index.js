@@ -1,5 +1,5 @@
-import matrixOrigin from "transforms/matrix-origin"
-import { parseDeg, degToRad } from "utils"
+import matrixOrigin from "../matrix-origin"
+import { parseDeg, degToRad } from "../../utils"
 
 export default function skew(path, thetaX, thetaY, x = 0, y = 0) {
   if (typeof thetaY === "undefined") {

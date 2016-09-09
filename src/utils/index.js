@@ -1,4 +1,4 @@
-import boundingBox from "path/bounding-box"
+import boundingBox from "../path/bounding-box"
 
 // alias for relative positions (%)
 const POSITIONS = {

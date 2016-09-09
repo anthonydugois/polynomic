@@ -1,5 +1,5 @@
-import * as points from "point/points"
-import { getSegments } from "pathstring/parse"
+import * as points from "../../point/points"
+import { getSegments } from "../parse"
 
 export default function isValid(d) {
   return checkFirstM(d)

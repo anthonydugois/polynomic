@@ -1,4 +1,4 @@
-import Point from "point/points"
+import Point from "../points"
 
 export function min(p1, p2) {
   return Point(null, Math.min(p1.x, p2.x), Math.min(p1.y, p2.y))

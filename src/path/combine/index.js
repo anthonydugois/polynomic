@@ -1,6 +1,6 @@
-import { l, L, z, Z } from "point/points"
-import { isM, isZ } from "point/is"
-import isRelative from "point/is-relative"
+import { l, L, z, Z } from "../../point/points"
+import { isM, isZ } from "../../point/is"
+import isRelative from "../../point/is-relative"
 
 /**
  * Combines the subpaths by removing "zM" commands

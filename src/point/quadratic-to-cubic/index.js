@@ -1,5 +1,5 @@
-import { C, c } from "point/points"
-import isRelative from "point/is-relative"
+import { C, c } from "../points"
+import isRelative from "../is-relative"
 
 export default function quadraticToCubic(prev, point) {
   const x1 = ((1 / 3) * prev.x) + ((2 / 3) * point.parameters.x1)

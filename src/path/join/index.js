@@ -1,6 +1,6 @@
-import { z } from "point/points"
-import { isZ } from "point/is"
-import { makeSureFirstPointsAreM } from "path/clean"
+import { z } from "../../point/points"
+import { isZ } from "../../point/is"
+import { makeSureFirstPointsAreM } from "../clean"
 
 /**
  * Joins the paths and returns one global path
