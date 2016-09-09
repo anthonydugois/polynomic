@@ -1,16 +1,12 @@
 import path from "path"
 import webpack from "webpack"
 
-const srcPath = path.join(__dirname, "..")
+const srcPath = path.join(__dirname, "..", "src")
 const distPath = path.join(__dirname, "..", "dist")
 
 export default {
-  entry: {
-    index: path.join(srcPath, "index"),
-  },
   output: {
-    path: distPath,
-    filename: "[name].js",
+    library: "Polynomic",
     libraryTarget: "umd",
   },
   resolve: {
@@ -20,16 +16,12 @@ export default {
   plugins: [
     new webpack.DefinePlugin({
       "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV),
-    })
+    }),
+    ...process.env.NODE_ENV === "production" && [
+      new webpack.optimize.UglifyJsPlugin({ compress: { warnings: false }}),
+    ],
   ],
   module: {
-    preLoaders: [
-      {
-        test: /\.js$/,
-        loader: "eslint",
-        include: srcPath,
-      },
-    ],
     loaders: [
       {
         test: /\.js$/,

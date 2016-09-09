@@ -10,6 +10,7 @@ import PageLoading from "../layouts/PageLoading"
 import Homepage from "../layouts/Homepage"
 import Post from "../layouts/Post"
 import Documentation from "../layouts/Documentation"
+import Playground from "../layouts/Playground"
 
 class PageContainer extends Component {
   render() {
@@ -24,6 +25,7 @@ class PageContainer extends Component {
           Homepage,
           Post,
           Documentation,
+          Playground,
         } }
       />
     )

@@ -2,7 +2,7 @@
   "name": "polynomic",
   "version": "1.0.0",
   "description": "Advanced utilities to manipulate SVG paths",
-  "main": "dist/index.js",
+  "main": "lib/index.js",
   "files": [
     "dist",
     "lib"
@@ -10,6 +10,7 @@
   "author": "Anthony Dugois <dev.anthonydugois@gmail.com>",
   "license": "MIT",
   "devDependencies": {
+    "babel-cli": "^6.14.0",
     "babel-core": "^6.13.2",
     "babel-eslint": "^6.1.2",
     "babel-loader": "^6.2.5",
@@ -19,28 +20,32 @@
     "babel-preset-es2015": "^6.13.2",
     "babel-preset-es2016": "^6.11.3",
     "chai": "^3.5.0",
+    "cross-env": "^2.0.1",
     "eslint": "^3.3.1",
-    "eslint-loader": "^1.5.0",
     "gh-pages": "^0.11.0",
     "mocha": "^3.0.2",
     "path": "^0.12.7",
     "rimraf": "^2.5.4",
-    "webpack": "^1.13.2",
-    "webpack-dev-server": "^1.15.0"
+    "webpack": "^1.13.2"
   },
   "dependencies": {
     "deep-equal": "^1.0.1"
   },
   "scripts": {
-    "build": "npm run clean && webpack --config ./config/webpack.config.babel.js",
-    "build:docs": "cd site && npm run build",
-    "clean": "rimraf dist test",
-    "clean:docs": "rimraf docs",
+    "lint": "eslint src",
+    "clean": "npm run build:clean && npm run docs:clean",
+    "build": "npm run build:clean && npm run build:commonjs && npm run build:umd && npm run build:umd:min",
+    "build:commonjs": "cross-env BABEL_ENV=commonjs babel src --out-dir lib",
+    "build:umd": "cross-env BABEL_ENV=commonjs NODE_ENV=development webpack --config ./config/webpack.config.babel.js src/index.js dist/polynomic.js",
+    "build:umd:min": "cross-env BABEL_ENV=commonjs NODE_ENV=production webpack --config ./config/webpack.config.babel.js src/index.js dist/polynomic.min.js",
+    "build:clean": "rimraf lib dist test",
+    "docs": "npm run docs:clean && npm run docs:build",
+    "docs:build": "cd site && npm run build",
+    "docs:clean": "rimraf docs",
+    "prepublish": "npm run lint && npm run build",
+    "predeploy": "npm run docs",
+    "deploy": "gh-pages -d docs",
     "pretest": "webpack --config ./config/webpack.config.test.babel.js --target node",
-    "test": "mocha",
-    "lint": "eslint",
-    "prepublish": "npm run build",
-    "predeploy": "npm run clean:docs && npm run build:docs",
-    "deploy": "gh-pages -d docs"
+    "test": "mocha"
   }
 }
