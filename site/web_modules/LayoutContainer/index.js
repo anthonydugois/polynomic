@@ -1,18 +1,21 @@
 import React, { Component, PropTypes } from "react"
 import Helmet from "react-helmet"
-import GitHubCorner from "GitHubCorner"
+import Svg from "react-svg-inline"
 
-// Import global CSS before other components and their styles
+import githubCorner from "icons/github-corner.svg"
 import "./index.global.css"
 import styles from "./index.css"
 
 export default class Layout extends Component {
   static propTypes = {
-    children: PropTypes.oneOfType([ PropTypes.array, PropTypes.object ])
+    children: PropTypes.oneOfType([
+      PropTypes.array,
+      PropTypes.object,
+    ]),
   };
 
   static contextTypes = {
-    metadata: PropTypes.object.isRequired
+    metadata: PropTypes.object.isRequired,
   };
 
   render() {
@@ -27,26 +30,31 @@ export default class Layout extends Component {
           meta={ [
             {
               name: "generator",
-              content: `${ process.env.PHENOMIC_NAME } ${ process.env.PHENOMIC_VERSION }`
+              content: `${ process.env.PHENOMIC_NAME } ${ process.env.PHENOMIC_VERSION }`,
             },
             {
               property: "og:site_name",
-              content: pkg.name
+              content: pkg.name,
             },
             {
               name: "twitter:site",
-              content: `@${ pkg.twitter }`
+              content: `@${ pkg.twitter }`,
             },
             {
               name: "viewport",
-              content: "width=device-width, initial-scale=1"
+              content: "width=device-width, initial-scale=1",
             },
           ] }
           script={ [{ src: "https://cdn.polyfill.io/v2/polyfill.min.js" }] } />
 
         <style>{ "@-ms-viewport { width: device-width; }" }</style>
 
-        <GitHubCorner />
+        <a
+          className={ styles.githubCorner }
+          href={ pkg.repository }>
+          <Svg svg={ githubCorner } />
+        </a>
+
         { children }
       </div>
     )

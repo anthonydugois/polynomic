@@ -1,6 +1,4 @@
-:root {
-  --color: #182234;
-}
+@import url(app/variables.css);
 
 .typography {
   font-family: "Roboto", sans-serif;
@@ -25,26 +23,26 @@
     font-weight: 400;
 
     & code {
-      margin: 0;
       padding: .4em .6em;
       background: var(--color);
       border-radius: 2px;
       font-family: "Fira Mono", monospace;
       font-weight: 400;
-      font-size: .8em;
+      font-size: .65em;
       color: #fff;
     }
 
     & em {
       margin: 0 .25rem;
       font-size: .9em;
-      color: color(var(--color) l(+60%));
+      color: color(var(--color) l(+50%));
     }
   }
 
   & h2 {
-    margin: 2rem 0 1.5rem;
-    font-size: 1.25rem;
+    margin: 3rem 0 1.5rem;
+    font-size: 1.5rem;
+    color: color(var(--color) l(+25%));
 
     &:first-of-type {
       margin-top: 0;
@@ -52,12 +50,15 @@
   }
 
   & h3 {
-    margin: 1.5rem 0 1rem;
-    border-bottom: 6px solid color(var(--color) l(+80%));
+    margin: 2rem 0 1rem;
+    padding: .5rem;
+    background: color(var(--color) l(+80%));
+    border-radius: 2px;
     line-height: .7;
-    font-size: 1.2rem;
+    text-transform: uppercase;
+    font-size: .9rem;
     font-weight: 500;
-    color: color(var(--color) l(+35%));
+    color: color(var(--color) l(+40%));
   }
 
   & hr {
@@ -88,7 +89,7 @@
 
   & ul,
   & ol {
-    margin: 2rem 0 2.5rem;
+    margin: 1.5rem 0 3rem;
     padding: 0 2rem;
 
     & li {

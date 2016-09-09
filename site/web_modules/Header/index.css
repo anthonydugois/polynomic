@@ -1,6 +1,4 @@
-:root {
-  --color: #182234;
-}
+@import url(app/variables.css);
 
 .header {
   &Nav {
@@ -10,8 +8,13 @@
     border-bottom: 1px solid color(var(--color) l(+80%));
   }
     &Logo {
-      display: inline-block;
-      font-size: 3rem;
-      color: var(--color);
+      display: block;
+      font-size: 1.6rem;
+
+      & svg {
+        display: block;
+        height: 1em;
+        width: auto;
+      }
     }
 }

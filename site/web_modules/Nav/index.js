@@ -1,27 +1,30 @@
 import React, { Component, PropTypes } from "react"
-import { Link } from "react-router"
+import NavLink from "./NavLink"
 
 import styles from "./index.css"
 
 export default class Nav extends Component {
+  static contextTypes = {
+    metadata: PropTypes.object.isRequired,
+  };
+
   render() {
+    const { pkg } = this.context.metadata
+
     return (
       <div className={ styles.nav }>
-        <Link
-          className={ styles.navLink }
-          to="/#get-started">
-          Get started
-        </Link>
-        <Link
-          className={ styles.navLink }
-          to="/docs/">
-          Docs
-        </Link>
-        <a
-          className={ styles.navLink }
-          href="https://github.com/anthonydugois/polynomic">
-          Contribute
-        </a>
+        <NavLink to="/">
+          { "Get started" }
+        </NavLink>
+        <NavLink to="/docs/">
+          { "Docs" }
+        </NavLink>
+        <NavLink to="/docs/">
+          { "Playground" }
+        </NavLink>
+        <NavLink href={ pkg.repository }>
+          { "Contribute" }
+        </NavLink>
       </div>
     )
   }

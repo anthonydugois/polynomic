@@ -1,9 +1,10 @@
 import React, { Component, PropTypes } from "react"
 import { Link } from "react-router"
+import Svg from "react-svg-inline"
 import Container from "Container"
-import Logo from "Logo"
 import Nav from "Nav"
 
+import polynomic from "icons/polynomic.svg"
 import styles from "./index.css"
 
 export default class Header extends Component {
@@ -17,7 +18,7 @@ export default class Header extends Component {
                 className={ styles.homepageHeaderTitleLink }
                 to="/">
                 <div className={ styles.homepageHeaderTitleLogo }>
-                  <Logo />
+                  <Svg svg={ polynomic } />
                 </div>
                 <div className={ styles.homepageHeaderTitleText }>
                   Polynomic

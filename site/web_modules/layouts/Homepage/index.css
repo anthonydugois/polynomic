@@ -1,6 +1,4 @@
-:root {
-  --color: #182234;
-}
+@import url(app/variables.css);
 
 .homepage {
   &Header {
@@ -26,10 +24,16 @@
           color: var(--color);
         }
         &Logo {
-          font-size: 5rem;
+          font-size: 3.5rem;
+
+          & svg {
+            display: block;
+            height: 1em;
+            width: auto;
+          }
         }
         &Text {
-          margin-top: 1.5rem;
+          margin-top: 2rem;
           font-family: "Roboto", sans-serif;
           font-weight: 400;
           font-size: 3rem;
@@ -37,17 +41,16 @@
       }
       &Lead {
         margin: 0;
-        padding: 0;
-        margin-top: 1.5rem;
-        line-height: 1.4;
+        padding: 1.6rem 0 2rem;
         font-family: "Roboto", sans-serif;
-        font-size: 1.25rem;
+        font-size: 1.4rem;
         color: color(var(--color) l(+60%));
       }
       &Nav {
-        margin-top: 2rem;
+        margin: 0;
         padding: 2rem;
         border-top: 1px solid color(var(--color) l(+75%));
+        font-size: .85rem;
       }
   }
   &Content {

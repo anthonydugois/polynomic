@@ -1,6 +1,4 @@
-:root {
-  --color: #182234;
-}
+@import url(app/variables.css);
 
 .documentation {
   display: flex;
@@ -48,15 +46,21 @@
       &Link {
         transition: color .2s;
         text-decoration: none;
-        color: color(var(--color) l(+50%));
+        color: var(--colorLink);
+
+        &:focus,
+        &:hover {
+          color: color(var(--colorLink) l(+25%));
+        }
 
         &Active {
           composes: navLink;
           color: var(--color);
-        }
-        &:focus,
-        &:hover {
-          color: var(--color);
+
+          &:focus,
+          &:hover {
+            color: var(--color);
+          }
         }
       }
 }
