@@ -43,6 +43,7 @@
     "docs:build": "cd site && npm run build",
     "docs:clean": "rimraf docs",
     "preversion": "npm test",
+    "postversion": "git push && git push --tags",
     "prepublish": "npm test && npm run lint && npm run build",
     "predeploy": "npm run docs",
     "deploy": "gh-pages -d docs",
