@@ -1,7 +1,7 @@
 import { assert } from "chai"
-import parse from "pathstring/parse"
-import isEqual from "path/is-equal"
-import scale from "transforms/scale"
+import parse from "../../pathstring/parse"
+import isEqual from "../../path/is-equal"
+import scale from "./index"
 
 describe("scale-path", function () {
   const path = parse("M0 0L100 0Q150 150 200 200")

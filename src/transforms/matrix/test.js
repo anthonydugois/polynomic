@@ -1,7 +1,7 @@
 import { assert } from "chai"
-import parse from "pathstring/parse"
-import isEqual from "path/is-equal"
-import matrix, { multiply3x1 } from "transforms/matrix"
+import parse from "../../pathstring/parse"
+import isEqual from "../../path/is-equal"
+import matrix, { multiply3x1 } from "./index"
 
 describe("matrix-path", function () {
   it("should multiply two matrix", function () {

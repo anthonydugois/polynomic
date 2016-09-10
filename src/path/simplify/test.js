@@ -1,7 +1,7 @@
 import { assert } from "chai"
-import parse from "pathstring/parse"
-import isEqual from "path/is-equal"
-import simplify from "path/simplify"
+import parse from "../../pathstring/parse"
+import isEqual from "../is-equal"
+import simplify from "./index"
 
 describe("path/simplify", function () {
   it("should simplify the path", function () {

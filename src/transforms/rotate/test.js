@@ -1,8 +1,8 @@
 import { assert } from "chai"
-import parse from "pathstring/parse"
-import build from "pathstring/build"
-import isEqual from "path/is-equal"
-import rotate from "transforms/rotate"
+import parse from "../../pathstring/parse"
+import build from "../../pathstring/build"
+import isEqual from "../../path/is-equal"
+import rotate from "./index"
 
 describe("rotate-path", function () {
   it("should rotate the path of PI/2", function () {

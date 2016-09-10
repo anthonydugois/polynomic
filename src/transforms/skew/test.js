@@ -1,8 +1,8 @@
 import { assert } from "chai"
-import parse from "pathstring/parse"
-import build from "pathstring/build"
-import isEqual from "path/is-equal"
-import skew from "transforms/skew"
+import parse from "../../pathstring/parse"
+import build from "../../pathstring/build"
+import isEqual from "../../path/is-equal"
+import skew from "./index"
 
 describe("skew-path", function () {
   const path = parse("M0 0L100 0L100 100")

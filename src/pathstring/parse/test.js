@@ -1,6 +1,6 @@
 import { assert } from "chai"
-import * as points from "point/points"
-import parse, { getSegments } from "pathstring/parse"
+import * as points from "../../point/points"
+import parse, { getSegments } from "./index"
 
 describe("parse-pathstring", function () {
   it("should parse the code and return an array of segments", function () {

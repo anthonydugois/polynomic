@@ -1,7 +1,7 @@
 import { assert } from "chai"
-import parse from "pathstring/parse"
-import isEqual from "path/is-equal"
-import split from "path/split"
+import parse from "../../pathstring/parse"
+import isEqual from "../is-equal"
+import split from "./index"
 
 describe("split-path", function () {
   it("should split the path in three subpaths", function () {

@@ -1,5 +1,5 @@
 import { assert } from "chai"
-import isValid from "pathstring/is-valid"
+import isValid from "./index"
 
 describe("pathstring-is-valid", function () {
   describe("check valid pathstrings", function () {

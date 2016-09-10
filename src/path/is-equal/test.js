@@ -1,6 +1,6 @@
 import { assert } from "chai"
-import parse from "pathstring/parse"
-import isEqual from "path/is-equal"
+import parse from "../../pathstring/parse"
+import isEqual from "./index"
 
 describe("path-is-equal", function () {
   describe("check equal paths", function () {

@@ -1,7 +1,7 @@
 import { assert } from "chai"
-import parse from "pathstring/parse"
-import isEqual from "path/is-equal"
-import reverse from "path/reverse"
+import parse from "../../pathstring/parse"
+import isEqual from "../is-equal"
+import reverse from "./index"
 
 describe("reverse-path", function () {
   it("should reverse the path", function () {

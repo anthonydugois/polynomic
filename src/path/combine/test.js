@@ -1,7 +1,7 @@
 import { assert } from "chai"
-import parse from "pathstring/parse"
-import isEqual from "path/is-equal"
-import combine from "path/combine"
+import parse from "../../pathstring/parse"
+import isEqual from "../is-equal"
+import combine from "./index"
 
 describe("combine-path", function () {
   it("should combine compound path", function () {

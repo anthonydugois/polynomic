@@ -1,7 +1,7 @@
 import { assert } from "chai"
-import parse from "pathstring/parse"
-import isEqual from "path/is-equal"
-import translate from "transforms/translate"
+import parse from "../../pathstring/parse"
+import isEqual from "../../path/is-equal"
+import translate from "./index"
 
 describe("translate-path", function () {
   it("should translate the path of 100px on x and y", function () {

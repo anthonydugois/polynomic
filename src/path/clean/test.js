@@ -1,11 +1,7 @@
 import { assert } from "chai"
-import parse from "pathstring/parse"
-import isEqual from "path/is-equal"
-import clean, {
-  simplifyClosures,
-  makeSureFirstPointsAreM,
-  removeConsecutiveSamePoints,
-} from "path/clean"
+import parse from "../../pathstring/parse"
+import isEqual from "../is-equal"
+import clean, { simplifyClosures, makeSureFirstPointsAreM, removeConsecutiveSamePoints } from "./index"
 
 describe("clean-path", function () {
   it("should simplify the closures of the path", function () {

@@ -1,7 +1,7 @@
 import { assert } from "chai"
-import parse from "pathstring/parse"
-import isEqual from "path/is-equal"
-import join from "path/join"
+import parse from "../../pathstring/parse"
+import isEqual from "../is-equal"
+import join from "./index"
 
 describe("join-paths", function () {
   const p1 = parse("M0 0L100 0")

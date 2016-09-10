@@ -1,6 +1,6 @@
 import { assert } from "chai"
-import { M } from "point/points"
-import distance, { distanceSegment } from "point/distance"
+import { M } from "../points"
+import distance, { distanceSegment } from "./index"
 
 describe("point-distance", function () {
   it("should give the distance between two points", function () {

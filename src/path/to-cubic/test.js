@@ -1,7 +1,7 @@
 import { assert } from "chai"
-import parse from "pathstring/parse"
-import isEqual from "path/is-equal"
-import toCubic from "path/to-cubic"
+import parse from "../../pathstring/parse"
+import isEqual from "../is-equal"
+import toCubic from "./index"
 
 describe("path/to-cubics", function () {
   it("should convert points into cubic curves", function () {
