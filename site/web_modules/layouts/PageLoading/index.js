@@ -6,20 +6,17 @@ import styles from "./index.css"
 
 TopBarProgressIndicator.config({
   barColors: {
-    "0": "#fff",
-    "1.0": "#fff"
+    "0": "#295cc2",
+    "1.0": "#295cc2"
   },
-  shadowBlur: 5
+  shadowBlur: 0,
 })
 
 export default class PageLoading extends Component {
-
   render() {
     return (
       <div>
-        <Helmet
-          title={ "Loading..." }
-        />
+        <Helmet title={ "Loading..." } />
         <TopBarProgressIndicator />
         <div className={ styles.loader }>
           <div className={ styles.spinner }></div>

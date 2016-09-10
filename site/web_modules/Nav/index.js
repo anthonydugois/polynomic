@@ -14,16 +14,16 @@ export default class Nav extends Component {
     return (
       <div className={ styles.nav }>
         <NavLink to="/">
-          { "Get started" }
+          Get started
         </NavLink>
         <NavLink to="/docs/">
-          { "Docs" }
+          Docs
         </NavLink>
-        <NavLink to="/docs/">
-          { "Playground" }
+        <NavLink to="/playground/">
+          Playground
         </NavLink>
         <NavLink href={ pkg.repository }>
-          { "Contribute" }
+          Contribute
         </NavLink>
       </div>
     )
