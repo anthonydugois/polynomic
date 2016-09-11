@@ -1,6 +1,6 @@
 {
   "name": "polynomic",
-  "version": "0.0.1-0",
+  "version": "0.0.1-1",
   "description": "Advanced utilities to manipulate SVG paths",
   "main": "lib/index.js",
   "files": [
