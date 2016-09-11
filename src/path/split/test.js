@@ -3,7 +3,7 @@ import parse from "../../pathstring/parse"
 import isEqual from "../is-equal"
 import split from "./index"
 
-describe("split-path", function () {
+describe("path/split", function () {
   it("should split the path in three subpaths", function () {
     const path = parse("M0 0L100 0L100 100zM100 100L200 100L200 200zM200 200L300 200L300 300")
     const test = split(path, "z")

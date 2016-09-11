@@ -1,4 +1,6 @@
 config
+dist
+lib
 docs
 node_modules
 site

@@ -4,7 +4,7 @@ import build from "../../pathstring/build"
 import isEqual from "../../path/is-equal"
 import rotate from "./index"
 
-describe("rotate-path", function () {
+describe("transforms/rotate", function () {
   it("should rotate the path of PI/2", function () {
     const path = parse("M0 0L100 0")
     const test = build(rotate(path, Math.PI / 2))

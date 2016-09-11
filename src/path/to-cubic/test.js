@@ -3,7 +3,7 @@ import parse from "../../pathstring/parse"
 import isEqual from "../is-equal"
 import toCubic from "./index"
 
-describe("path/to-cubics", function () {
+describe("path/to-cubic", function () {
   it("should convert points into cubic curves", function () {
     const path = parse("M0 0L100 0L100 100")
     const test = toCubic(path)

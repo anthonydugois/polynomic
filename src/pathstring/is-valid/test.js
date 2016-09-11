@@ -1,7 +1,7 @@
 import { assert } from "chai"
 import isValid from "./index"
 
-describe("pathstring-is-valid", function () {
+describe("pathstring/is-valid", function () {
   describe("check valid pathstrings", function () {
     it("should check that pathstrings are valid", function () {
       assert.isTrue(isValid("M0,0"))

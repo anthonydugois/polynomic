@@ -4,7 +4,7 @@ import build from "../../pathstring/build"
 import isEqual from "../../path/is-equal"
 import skew from "./index"
 
-describe("skew-path", function () {
+describe("transforms/skew", function () {
   const path = parse("M0 0L100 0L100 100")
 
   it("should skew the path of PI/6 on x and y", function () {

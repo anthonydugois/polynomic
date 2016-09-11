@@ -3,7 +3,7 @@ import parse from "../../pathstring/parse"
 import { M } from "../points"
 import isInside from "./index"
 
-describe("point-is-inside", function () {
+describe("point/is-inside", function () {
   const path = parse("M0 0L100 0L100 100L0 100")
 
   it("should check that the point is inside the given path", function () {

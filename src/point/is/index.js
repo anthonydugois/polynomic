@@ -1,6 +1,6 @@
 import * as types from "../points/types"
 
-function is(point, code) {
+export function is(point, code) {
   return point.code.toLowerCase() === code.toLowerCase()
 }
 

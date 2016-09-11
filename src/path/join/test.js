@@ -3,7 +3,7 @@ import parse from "../../pathstring/parse"
 import isEqual from "../is-equal"
 import join from "./index"
 
-describe("join-paths", function () {
+describe("path/join", function () {
   const p1 = parse("M0 0L100 0")
   const p2 = parse("L100 100L100 200")
   const p3 = parse("M200 200h50v50")

@@ -2,7 +2,7 @@ import { assert } from "chai"
 import { m, L, Q } from "../points"
 import { isM, isQ, isZ } from "./index"
 
-describe("point-is", function () {
+describe("point/is", function () {
   it("should check that the point is M", function () {
     assert.isTrue(isM(m(0, 0)))
   })

@@ -3,7 +3,7 @@ import parse from "../../pathstring/parse"
 import isEqual from "../../path/is-equal"
 import translate from "./index"
 
-describe("translate-path", function () {
+describe("transforms/translate", function () {
   it("should translate the path of 100px on x and y", function () {
     const path = parse("M0 0L100 0Q150 150 200 200")
     const test = translate(path, 100, 100)

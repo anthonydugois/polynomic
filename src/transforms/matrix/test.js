@@ -3,7 +3,7 @@ import parse from "../../pathstring/parse"
 import isEqual from "../../path/is-equal"
 import matrix from "./index"
 
-describe("matrix-path", function () {
+describe("transforms/matrix", function () {
   it("should apply the matrix to each coordinate", function () {
     const m = [
       1, 0, 100,

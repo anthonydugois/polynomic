@@ -2,7 +2,7 @@ import { assert } from "chai"
 import parse from "../../pathstring/parse"
 import isEqual from "./index"
 
-describe("path-is-equal", function () {
+describe("path/is-equal", function () {
   describe("check equal paths", function () {
     it("should check that the paths are equal", function () {
       const test = parse("M0 0l10 10")
