@@ -1,7 +1,7 @@
 import * as types from "../points/types"
 import { isQ, isT, isC, isS } from "../is"
 
-export default function Point(code, x, y, parameters = {}) {
+export function Point(code, x, y, parameters = {}) {
   return {
     code,
     x,

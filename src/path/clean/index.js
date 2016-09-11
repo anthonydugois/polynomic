@@ -1,6 +1,6 @@
-import { m, M, z } from "../../point/points"
-import { isM, isL, isH, isV, isZ } from "../../point/is"
-import isRelative from "../../point/is-relative"
+import { z } from "../../point/points"
+import { isM, isL, isH, isV } from "../../point/is"
+import ensureMoveTo from "../ensure-move-to"
 
 /**
  * Cleans the given path
@@ -17,7 +17,7 @@ import isRelative from "../../point/is-relative"
  * ]
  */
 export default function clean(path) {
-  return simplifyClosures(makeSureFirstPointsAreM(removeConsecutiveSamePoints(path)))
+  return simplifyClosures(ensureMoveTo(removeConsecutiveSamePoints(path)))
 }
 
 /**
@@ -34,7 +34,7 @@ export default function clean(path) {
  *   { code: "z", x: 0, y: 0, parameters: {} },
  * ]
  */
-export function simplifyClosures(path) {
+function simplifyClosures(path) {
   let first
 
   return path.map((point) => {
@@ -57,37 +57,6 @@ function shouldSimplifyClosure(first, point) {
 }
 
 /**
- * Make sure that the path starts with the "m" command
- * e.g. makeSureFirstPointsAreM([
- *   { code: "L", x: 0, y: 0, parameters: {} },
- *   { code: "L", x: 100, y: 100, parameters: {} },
- * ])
- * --> [
- *   { code: "M", x: 0, y: 0, parameters: {} },
- *   { code: "L", x: 100, y: 100, parameters: {} },
- * ]
- */
-export function makeSureFirstPointsAreM(path) {
-  return path.map((point, index) => {
-    if (index === 0 && !isM(point)) {
-      return isRelative(point) ?
-        m(point.x, point.y) :
-        M(point.x, point.y)
-    }
-
-    if (index > 0 && isZ(path[index - 1]) && !isM(point)) {
-      const prev = path[index - 1]
-
-      return isRelative(point) ?
-        m(point.x, point.y, prev) :
-        M(point.x, point.y, prev)
-    }
-
-    return point
-  })
-}
-
-/**
  * Simplifies the path by removing consecutive same points
  * e.g. removeConsecutiveSamePoints([
  *   { code: "M", x: 0, y: 0, parameters: {} },
@@ -100,7 +69,7 @@ export function makeSureFirstPointsAreM(path) {
  *   { code: "L", x: 100, y: 100, parameters: {} },
  * ]
  */
-export function removeConsecutiveSamePoints(path) {
+function removeConsecutiveSamePoints(path) {
   return path.reduce(
     (acc, point, index) => {
       const prev = index > 0 && acc[acc.length - 1]

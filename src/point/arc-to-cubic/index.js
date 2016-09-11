@@ -1,4 +1,4 @@
-import Point, { C, c } from "../points"
+import { Point, C, c } from "../points"
 import isRelative from "../is-relative"
 import rotate from "../../transforms/rotate"
 

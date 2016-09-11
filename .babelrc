@@ -6,6 +6,7 @@
   "plugins": [
     "syntax-trailing-function-commas",
     "transform-object-rest-spread",
-    "transform-export-extensions"
+    "transform-export-extensions",
+    "add-module-exports"
   ]
 }

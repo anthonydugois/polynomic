@@ -1,4 +1,4 @@
-import { distanceSegment } from "../../point/distance"
+import distanceSegment from "../../point/distance-segment"
 
 export default function simplify(path, tolerance) {
   let max = 0

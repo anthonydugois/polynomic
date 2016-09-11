@@ -1,20 +1,9 @@
 import { assert } from "chai"
 import parse from "../../pathstring/parse"
 import isEqual from "../../path/is-equal"
-import matrix, { multiply3x1 } from "./index"
+import matrix from "./index"
 
 describe("matrix-path", function () {
-  it("should multiply two matrix", function () {
-    assert.deepEqual(multiply3x1(
-      [
-        1, 2, 3,
-        2, 1, 3,
-        3, 2, 1,
-      ],
-      [2, 2, 2]
-    ), [12, 12, 12])
-  })
-
   it("should apply the matrix to each coordinate", function () {
     const m = [
       1, 0, 100,

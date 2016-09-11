@@ -1,5 +1,5 @@
 import * as points from "../../point/points"
-import { getSegments } from "../parse"
+import segments from "../segments"
 
 export default function isValid(d) {
   return checkFirstM(d)
@@ -12,7 +12,7 @@ function checkFirstM(d) {
 }
 
 function checkParametersNumber(d) {
-  return getSegments(d).every(
+  return segments(d).every(
     ([code, ...parameters]) =>
       typeof points[code] === "function"
       && parameters.length >= points[code].length

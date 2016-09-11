@@ -1,6 +1,6 @@
 import { z } from "../../point/points"
 import { isZ } from "../../point/is"
-import { makeSureFirstPointsAreM } from "../clean"
+import ensureMoveTo from "../ensure-move-to"
 
 /**
  * Joins the paths and returns one global path
@@ -25,7 +25,7 @@ export default function join(paths, shouldClose = false) {
   return paths.reduce(
     (acc, path) => {
       if (shouldClose) {
-        path = makeSureFirstPointsAreM(path)
+        path = ensureMoveTo(path)
 
         return [
           ...acc,

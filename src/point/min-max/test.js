@@ -1,5 +1,5 @@
 import { assert } from "chai"
-import Point, { M } from "../points"
+import { Point, M } from "../points"
 import { min, max } from "./index"
 
 describe("point-minmax", function () {

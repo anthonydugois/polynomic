@@ -1,4 +1,4 @@
-import Point, { defaultPoint } from "../../point/points"
+import { Point, defaultPoint } from "../../point/points"
 import { isH, isV } from "../../point/is"
 import isRelative from "../../point/is-relative"
 
@@ -55,7 +55,7 @@ export default function matrix(path, m) {
   })
 }
 
-export function multiply3x1(a, b) {
+function multiply3x1(a, b) {
   const a00 = a[(0 * 3) + 0]
   const a01 = a[(0 * 3) + 1]
   const a02 = a[(0 * 3) + 2]

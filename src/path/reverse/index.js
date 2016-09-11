@@ -1,4 +1,4 @@
-import Point from "../../point/points"
+import { Point } from "../../point/points"
 import { isM, isT, isC, isS, isA, isZ } from "../../point/is"
 import isRelative from "../../point/is-relative"
 

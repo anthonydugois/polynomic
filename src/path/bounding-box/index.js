@@ -1,4 +1,4 @@
-import Point from "../../point/points"
+import { Point } from "../../point/points"
 import { isM, isZ } from "../../point/is"
 import toCubic from "../to-cubic"
 
