@@ -20,5 +20,5 @@ function checkParametersNumber(d) {
 }
 
 function noInvalidCharacters(d) {
-  return /^[mlhvqtcsaz\d\s,.-]*$/gi.test(d)
+  return /^[mlhvqtcsaze\d\s,.-]*$/gi.test(d)
 }

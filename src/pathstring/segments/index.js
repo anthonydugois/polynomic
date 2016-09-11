@@ -6,9 +6,9 @@
 export default function segments(d) {
   return d
     // remove invalid characters
-    .replace(/[^mlhvqtcsaz\d\s,.-]/gi, "")
+    .replace(/[^mlhvqtcsaze\d\s,.-]/gi, "")
     // split in segments e.g. ["M0 0", "l50 50", ...]
-    .split(/([mlhvqtcsaz][\d\s,.-]*)/i)
+    .split(/([mlhvqtcsaz][e\d\s,.-]*)/i)
     // remove empty segments
     .filter(isStringNotEmpty)
     // split segment by path values
