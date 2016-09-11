@@ -29,7 +29,7 @@ function splitSegment(segment) {
     // remove extra whitespaces
     .replace(/[\s,]+/g, " ")
     // split command and parameters
-    .split(/([mlhvqtcsaz]|-*[\d.]+)/i)
+    .split(/([mlhvqtcsaz]|-*[e\d.-]+)/i)
     // remove empty values
     .filter(isStringNotEmpty)
     // trim and parse numbers
