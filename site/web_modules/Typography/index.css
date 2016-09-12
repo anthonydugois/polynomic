@@ -99,6 +99,35 @@
     }
   }
 
+  & p,
+  & ul,
+  & ol {
+    & a {
+      position: relative;
+      text-decoration: none;
+      color: var(--colorLink);
+
+      &::after {
+        content: "";
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: var(--colorLink);
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform .2s;
+      }
+      &:focus,
+      &:hover {
+        &::after {
+          transform: scaleX(1);
+        }
+      }
+    }
+  }
+
   & strong {
     font-weight: bold;
   }

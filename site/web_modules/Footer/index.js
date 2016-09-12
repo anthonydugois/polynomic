@@ -25,7 +25,7 @@ export default class Footer extends Component {
                 src="https://ghbtns.com/github-btn.html?user=anthonydugois&repo=polynomic&type=star&count=true&size=large"
                 allowTransparency="true"
                 frameBorder="0"
-                scrolling="0"
+                scrolling="no"
                 width="111px"
                 height="30px" />
             </div>
