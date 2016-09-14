@@ -18,6 +18,7 @@
     "destination": "../docs",
     "CNAME": false
   },
+  "googleAnalyticsUA": "UA-69548325-1",
   "babel": {
     "presets": [
       "babel-preset-react",

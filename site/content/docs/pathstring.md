@@ -82,7 +82,7 @@ Checks if the given pathstring is a valid SVG path.
 
 1. Checks if the first point is a `M` ;
 2. Checks if all points have a correct number of parameters ;
-3. Checks if there are no invalid characters (the characters which match the regex `/^[mlhvqtcsaz\d\s,.-]*$/gi` are considered invalid).
+3. Checks if there are no invalid characters (the characters which match the regex `/^[mlhvqtcsaze\d\s,.-]*$/gi` are considered invalid).
 
 ### Arguments
 
