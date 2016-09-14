@@ -3,6 +3,8 @@ import Helmet from "react-helmet"
 import Svg from "react-svg-inline"
 
 import githubCorner from "icons/github-corner.svg"
+import fav16 from "icons/favicon-16x16.png"
+import fav32 from "icons/favicon-32x32.png"
 import "./index.global.css"
 import styles from "./index.css"
 
@@ -43,6 +45,17 @@ export default class Layout extends Component {
             {
               name: "viewport",
               content: "width=device-width, initial-scale=1",
+            },
+          ] }
+          link={ [
+            {
+              rel: "icon",
+              type: "image/png",
+              href: fav16,
+            }, {
+              rel: "icon",
+              type: "image/png",
+              href: fav32,
             },
           ] }
           script={ [{ src: "https://cdn.polyfill.io/v2/polyfill.min.js" }] } />
