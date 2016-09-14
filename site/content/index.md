@@ -36,4 +36,4 @@ const pathstring = Polynomic.pathstring.build(path)
 // ➜ "M75 29.289L145.711 100L75 170.711L4.289 100z"
 ```
 
-Want to go further? To see all the possibilities provided by Polynomic, please [visit the docs](/docs/) and experiment some things in [the playground](/playground/)!
+Want to go further? To see all the possibilities provided by Polynomic, please [visit the docs](/docs/) or experiment some things in [the playground](/playground/)!

@@ -9,8 +9,8 @@
     position: relative;
   }
   &Content {
-    overflow: hidden;
     flex: 1;
+    min-width: 0;
     padding: 3rem 0;
     margin-left: 4rem;
   }

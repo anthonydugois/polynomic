@@ -3,7 +3,7 @@
 .footer {
   margin-top: 4rem;
   font-family: "Fira Mono", sans-serif;
-  font-size: 1rem;
+  font-size: .9rem;
   color: var(--color);
 
   &Content {

@@ -24,12 +24,24 @@
           color: var(--color);
         }
         &Logo {
+          position: relative;
           font-size: 3.5rem;
 
           & svg {
             display: block;
             height: 1em;
             width: auto;
+          }
+          &::after {
+            content: "beta";
+            position: absolute;
+            top: 100%;
+            left: 100%;
+            line-height: 1;
+            font-family: "Roboto", sans-serif;
+            font-size: .8rem;
+            font-weight: 400;
+            color: color(var(--color) l(+50%));
           }
         }
         &Text {
