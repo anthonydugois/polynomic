@@ -1,13 +1,16 @@
-import { assert } from "chai"
 import { Point, M } from "../points"
 import { min, max } from "./index"
 
-describe("point/min-max", function () {
-  it("should give the min point", function () {
-    assert.deepEqual(min(M(0, 100), M(100, 0)), Point(null, 0, 0))
-  })
+test("should give the min point", () => {
+  const test = min(M(0, 100), M(100, 0))
+  const expected = Point(null, 0, 0)
 
-  it("should give the max point", function () {
-    assert.deepEqual(max(M(0, 100), M(100, 0)), Point(null, 100, 100))
-  })
+  expect(test).toEqual(expected)
+})
+
+test("should give the max point", () => {
+  const test = max(M(0, 100), M(100, 0))
+  const expected = Point(null, 100, 100)
+
+  expect(test).toEqual(expected)
 })

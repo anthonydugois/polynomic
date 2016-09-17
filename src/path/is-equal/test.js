@@ -1,29 +1,30 @@
-import { assert } from "chai"
 import parse from "../../pathstring/parse"
 import isEqual from "./index"
 
-describe("path/is-equal", function () {
-  describe("check equal paths", function () {
-    it("should check that the paths are equal", function () {
-      const test = parse("M0 0l10 10")
+test("should check that the paths are equal", () => {
+  const test = parse("M0 0l10 10")
+  const expected = "M0 0l10 10"
 
-      assert.isTrue(isEqual(test, "M0 0l10 10"))
-    })
+  expect(isEqual(test, expected)).toBe(true)
+})
 
-    it("should check that the pathstrings are equal", function () {
-      assert.isTrue(isEqual("M0,000l10 10", "M 0 0 l 10 , 10"))
-    })
-  })
+test("should check that the pathstrings are equal", () => {
+  const test = "M0,000l10 10"
+  const expected = "M 0 0 l 10 , 10"
 
-  describe("check non-equal paths", function () {
-    it("should check that the paths are not equal", function () {
-      const test = parse("M0 0l10 10")
+  expect(isEqual(test, expected)).toBe(true)
+})
 
-      assert.isFalse(isEqual(test, "M0 0l10 10l20 20"))
-    })
+test("should check that the paths are not equal", () => {
+  const test = parse("M0 0l10 10")
+  const expected = "M0 0l10 10l20 20"
 
-    it("should check that the pathstrings are not equal", function () {
-      assert.isFalse(isEqual("M0,0l10 10", "M 0 0 l 10 , 10l20 20"))
-    })
-  })
+  expect(isEqual(test, expected)).toBe(false)
+})
+
+test("should check that the pathstrings are not equal", () => {
+  const test = "M0,0l10 10"
+  const expected = "M 0 0 l 10 , 10l20 20"
+
+  expect(isEqual(test, expected)).toBe(false)
 })

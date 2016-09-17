@@ -1,0 +1,404 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for pathstring/build/index.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="..\..\prettify.css" />
+    <link rel="stylesheet" href="..\..\base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(..\..\sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="..\..\index.html">All files</a> / <a href="index.html">pathstring/build</a> index.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">64% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>16/25</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>3/3</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>3/3</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">64% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>16/25</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line medium'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">88x</span>
+<span class="cline-any cline-yes">88x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">37x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { defaultPoint } from "../../point/points"
+&nbsp;
+/**
+ * This object references all the functions which build pathstring segments.
+ * Every functions take the same signature (point, prev) and return a string.
+ * e.g. builder.l(
+ *   { code: "l", x: 150, y: 150, parameters: {} }, &lt;-- the point you want
+ *   { code: "m", x: 100, y: 100, parameters: {} }, &lt;-- the previous point used to compute relative coords
+ * )
+ * --&gt; "l50 50"
+ */
+const builder = {
+  m({ x, y }, prev) {
+    return `${ r(x - prev.x) } ${ r(y - prev.y) }`
+  },
+&nbsp;
+  M({ x, y }) {
+    return `${ r(x) } ${ r(y) }`
+  },
+&nbsp;
+  l({ x, y }, prev) {
+    return `${ r(x - prev.x) } ${ r(y - prev.y) }`
+  },
+&nbsp;
+  L({ x, y }) {
+    return `${ r(x) } ${ r(y) }`
+  },
+&nbsp;
+  h({ x }, prev) {
+<span class="cstat-no" title="statement not covered" >    return `${ r(x - prev.x) }`</span>
+  },
+&nbsp;
+  H({ x }) {
+<span class="cstat-no" title="statement not covered" >    return `${ r(x) }`</span>
+  },
+&nbsp;
+  v({ y }, prev) {
+<span class="cstat-no" title="statement not covered" >    return `${ r(y - prev.y) }`</span>
+  },
+&nbsp;
+  V({ y }) {
+<span class="cstat-no" title="statement not covered" >    return `${ r(y) }`</span>
+  },
+&nbsp;
+  q({ x, y, parameters }, prev) {
+<span class="cstat-no" title="statement not covered" >    return `${ r(parameters.x1 - prev.x) } ${ r(parameters.y1 - prev.y) } ${ r(x - prev.x) } ${ r(y - prev.y) }`</span>
+  },
+&nbsp;
+  Q({ x, y, parameters }) {
+    return `${ r(parameters.x1) } ${ r(parameters.y1) } ${ r(x) } ${ r(y) }`
+  },
+&nbsp;
+  t({ x, y, parameters }, prev) {
+    return `${ r(x - prev.x) } ${ r(y - prev.y) }`
+  },
+&nbsp;
+  T({ x, y, parameters }) {
+<span class="cstat-no" title="statement not covered" >    return `${ r(x) } ${ r(y) }`</span>
+  },
+&nbsp;
+  c({ x, y, parameters }, prev) {
+    return `${ r(parameters.x1 - prev.x) } ${ r(parameters.y1 - prev.y) } ${ r(parameters.x2 - prev.x) } ${ r(parameters.y2 - prev.y) } ${ r(x - prev.x) } ${ r(y - prev.y) }`
+  },
+&nbsp;
+  C({ x, y, parameters }) {
+<span class="cstat-no" title="statement not covered" >    return `${ r(parameters.x1) } ${ r(parameters.y1) } ${ r(parameters.x2) } ${ r(parameters.y2) } ${ r(x) } ${ r(y) }`</span>
+  },
+&nbsp;
+  s({ x, y, parameters }, prev) {
+    return `${ r(parameters.x2 - prev.x) } ${ r(parameters.y2 - prev.y) } ${ r(x - prev.x) } ${ r(y - prev.y) }`
+  },
+&nbsp;
+  S({ x, y, parameters }) {
+<span class="cstat-no" title="statement not covered" >    return `${ r(parameters.x2) } ${ r(parameters.y2) } ${ r(x) } ${ r(y) }`</span>
+  },
+&nbsp;
+  a({ x, y, parameters }, prev) {
+    return `${ r(parameters.rx) } ${ r(parameters.ry) } ${ r(parameters.rotation) } ${ parameters.large } ${ parameters.sweep } ${ r(x - prev.x) } ${ r(y - prev.y) }`
+  },
+&nbsp;
+  A({ x, y, parameters }) {
+<span class="cstat-no" title="statement not covered" >    return `${ r(parameters.rx) } ${ r(parameters.ry) } ${ r(parameters.rotation) } ${ parameters.large } ${ parameters.sweep } ${ r(x) } ${ r(y) }`</span>
+  },
+&nbsp;
+  z() {
+    return ""
+  },
+&nbsp;
+  Z() {
+    return ""
+  },
+}
+&nbsp;
+function r(n, precision = 3) {
+  const coef = 10 ** precision
+  return Math.round(n * coef) / coef
+}
+&nbsp;
+/**
+ * Transforms a formatted point list into pathstring
+ * e.g. [
+ *   { code: "M", x: 0, y: 0, parameters: {} },
+ *   { code: "l", x: 50, y: 50, parameters: {} },
+ *   { code: "q", x: 150, y: 150, parameters: { x1: 100, y1: 100 } },
+ * ]
+ * --&gt; "M0 0 l50 50 q50 50 100 100"
+ */
+export default function build(points) {
+  return points.reduce(
+    (acc, point, index) =&gt; `${ acc }${ point.code }${ builder[point.code](point, index &gt; 0 ? points[index - 1] : defaultPoint) }`,
+    "",
+  ).replace(/\s+/g, " ")
+}
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sat Sep 17 2016 16:01:18 GMT+0200 (Paris, Madrid (heure d’été))
+</div>
+</div>
+<script src="..\..\prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="..\..\sorter.js"></script>
+</body>
+</html>
