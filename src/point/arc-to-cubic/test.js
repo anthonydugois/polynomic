@@ -1,7 +1,7 @@
 import { M, C, A } from "../points"
 import arcToCubic from "./index"
 
-test("should convert the arc to a cubic curve", () => {
+test("should convert the arc into a cubic curve", () => {
   const prev = M(0, 0)
   const point = A(50, 50, 0, 0, 1, 0, 100)
   const test = arcToCubic(prev, point)
