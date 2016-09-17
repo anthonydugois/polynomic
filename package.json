@@ -13,17 +13,20 @@
     "babel-cli": "^6.14.0",
     "babel-core": "^6.13.2",
     "babel-eslint": "^6.1.2",
+    "babel-jest": "^15.0.0",
     "babel-loader": "^6.2.5",
     "babel-plugin-add-module-exports": "^0.2.1",
     "babel-plugin-syntax-trailing-function-commas": "^6.13.0",
     "babel-plugin-transform-export-extensions": "^6.8.0",
     "babel-plugin-transform-object-rest-spread": "^6.8.0",
+    "babel-polyfill": "^6.13.0",
     "babel-preset-es2015": "^6.13.2",
     "babel-preset-es2016": "^6.11.3",
     "chai": "^3.5.0",
     "cross-env": "^2.0.1",
     "eslint": "^3.3.1",
     "gh-pages": "^0.11.0",
+    "jest": "^15.1.1",
     "mocha": "^3.0.2",
     "path": "^0.12.7",
     "rimraf": "^2.5.4",
@@ -49,7 +52,9 @@
     "postpublish": "npm run clean",
     "predeploy": "npm run docs",
     "deploy": "gh-pages -d docs",
-    "pretest": "webpack --config ./config/webpack.config.test.babel.js --target node",
-    "test": "mocha"
+    "test": "jest"
+  },
+  "jest": {
+    "testRegex": "test\\.js$"
   }
 }
