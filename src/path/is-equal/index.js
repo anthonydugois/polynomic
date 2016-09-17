@@ -1,16 +1,18 @@
-import deepEqual from "deep-equal"
+import _isEqual from "lodash.isequal"
 import parse from "../../pathstring/parse"
 
 export default function isEqual(d1, d2) {
-  if (typeof d1 === "string" && typeof d2 === "string") {
-    return deepEqual(parse(d1), parse(d2))
-  } else if (Array.isArray(d1) && Array.isArray(d2)) {
-    return deepEqual(d1, d2)
-  } else if (typeof d1 === "string" && Array.isArray(d2)) {
-    return deepEqual(parse(d1), d2)
-  } else if (Array.isArray(d1) && typeof d2 === "string") {
-    return deepEqual(d1, parse(d2))
+  if (typeof d1 === "string") {
+    d1 = parse(d1)
+  } else if (!Array.isArray(d1)) {
+    throw new Error(`The provided parameter "${ d1 }" should be a string or an array of points.`)
   }
 
-  throw new Error("isEqual() only accepts strings and arrays as parameters.")
+  if (typeof d2 === "string") {
+    d2 = parse(d2)
+  } else if (!Array.isArray(d2)) {
+    throw new Error(`The provided parameter "${ d2 }" should be a string or an array of points.`)
+  }
+
+  return _isEqual(d1, d2)
 }
