@@ -1,7 +1,9 @@
 import fromPath from "../from-path"
+import fromLine from "../from-line"
 
 const parser = {
   path: fromPath,
+  line: fromLine,
 }
 
 export default function from(node) {
