@@ -10,8 +10,9 @@ export default function fromRect(node) {
   const y = parseFloat(node.getAttributeNS(xmlns, "y"))
   const width = parseFloat(node.getAttributeNS(xmlns, "width"))
   const height = parseFloat(node.getAttributeNS(xmlns, "height"))
-  const rx = parseFloat(node.getAttributeNS(xmlns, "rx"))
-  const ry = parseFloat(node.getAttributeNS(xmlns, "ry"))
+
+  let rx = parseFloat(node.getAttributeNS(xmlns, "rx"))
+  let ry = parseFloat(node.getAttributeNS(xmlns, "ry"))
 
   if (isNaN(rx) && isNaN(ry)) {
     const first = M(x, y)
@@ -24,6 +25,9 @@ export default function fromRect(node) {
       Z(first),
     ]
   }
+
+  rx = isNaN(rx) ? ry : rx
+  ry = isNaN(ry) ? rx : ry
 
   const first = M(x + rx, y)
 
