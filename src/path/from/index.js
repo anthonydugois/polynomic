@@ -1,11 +1,13 @@
 import fromPath from "../from-path"
 import fromLine from "../from-line"
 import fromPolyline from "../from-polyline"
+import fromPolygon from "../from-polygon"
 
 const parser = {
   path: fromPath,
   line: fromLine,
   polyline: fromPolyline,
+  polygon: fromPolygon,
 }
 
 export default function from(node) {

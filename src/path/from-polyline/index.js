@@ -17,17 +17,9 @@ export default function fromPolyline(node) {
         const x = coord
         const y = coords[index + 1]
 
-        // first point
-        if (index === 0) {
-          return [
-            ...acc,
-            M(x, y),
-          ]
-        }
-
         return [
           ...acc,
-          L(x, y),
+          index === 0 ? M(x, y) : L(x, y),
         ]
       }
 
