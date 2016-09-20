@@ -3,6 +3,7 @@ import fromLine from "../from-line"
 import fromPolyline from "../from-polyline"
 import fromPolygon from "../from-polygon"
 import fromRect from "../from-rect"
+import fromCircle from "../from-circle"
 
 const parser = {
   path: fromPath,
@@ -10,6 +11,7 @@ const parser = {
   polyline: fromPolyline,
   polygon: fromPolygon,
   rect: fromRect,
+  circle: fromCircle,
 }
 
 export default function from(node) {
