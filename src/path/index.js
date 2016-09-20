@@ -7,6 +7,14 @@ import reverse from "./reverse"
 import simplify from "./simplify"
 import split from "./split"
 import toCubic from "./to-cubic"
+import _from from "./from"
+import fromCircle from "./from-circle"
+import fromEllipse from "./from-ellipse"
+import fromLine from "./from-line"
+import fromPath from "./from-path"
+import fromPolygon from "./from-polygon"
+import fromPolyline from "./from-polyline"
+import fromRect from "./from-rect"
 
 export default {
   boundingBox,
@@ -18,4 +26,12 @@ export default {
   simplify,
   split,
   toCubic,
+  from: _from,
+  fromCircle,
+  fromEllipse,
+  fromLine,
+  fromPath,
+  fromPolygon,
+  fromPolyline,
+  fromRect,
 }
