@@ -1,6 +1,6 @@
-node_modules
-lib
-dist
-coverage
-./docs
-*.log
+/node_modules
+/lib
+/dist
+/coverage
+/docs
+/*.log
