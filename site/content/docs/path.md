@@ -301,3 +301,219 @@ Polynomic.pathstring.build(path)
 
 // ➜ "M0 0l50 50h50v50z"
 ```
+
+---
+
+## `from(node)`
+
+Gets the path from a given SVG node. The following elements are supported: `circle`, `ellipse`, `line`, `path`, `polygon`, `polyline`, `rect`.
+
+### Arguments
+
+1. `node` *SVGElement* The SVG node from which you want the path.
+
+### Returns
+
+*Array* The corresponding path.
+
+### Example
+
+```js
+// polynomic/lib/path/from
+
+node = document.querySelector("rect")
+path = Polynomic.path.from(node)
+
+Polynomic.pathstring.build(path)
+
+// ➜ "M0 0L100 0L100 100L0 100z"
+```
+
+---
+
+## `fromCircle(node)`
+
+Gets the path from a given SVG circle node.
+
+### Arguments
+
+1. `node` *SVGCircleElement* The SVG circle node from which you want the path.
+
+### Returns
+
+*Array* The corresponding path.
+
+### Example
+
+```js
+// polynomic/lib/path/from-circle
+
+node = document.querySelector("circle")
+path = Polynomic.path.fromCircle(node)
+
+Polynomic.pathstring.build(path)
+
+// ➜ "M0 50A50 50 0 0 0 100 50A50 50 0 0 0 0 50Z"
+```
+
+---
+
+## `fromEllipse(node)`
+
+Gets the path from a given SVG ellipse node.
+
+### Arguments
+
+1. `node` *SVGEllipseElement* The SVG ellipse node from which you want the path.
+
+### Returns
+
+*Array* The corresponding path.
+
+### Example
+
+```js
+// polynomic/lib/path/from-ellipse
+
+node = document.querySelector("ellipse")
+path = Polynomic.path.fromEllipse(node)
+
+Polynomic.pathstring.build(path)
+
+// ➜ "M0 50A100 50 0 0 0 200 50A100 50 0 0 0 0 50Z"
+```
+
+---
+
+## `fromLine(node)`
+
+Gets the path from a given SVG line node.
+
+### Arguments
+
+1. `node` *SVGLineElement* The SVG line node from which you want the path.
+
+### Returns
+
+*Array* The corresponding path.
+
+### Example
+
+```js
+// polynomic/lib/path/from-line
+
+node = document.querySelector("line")
+path = Polynomic.path.fromLine(node)
+
+Polynomic.pathstring.build(path)
+
+// ➜ "M0 0L100 100"
+```
+
+---
+
+## `fromPath(node)`
+
+Gets the path from a given SVG path node.
+
+### Arguments
+
+1. `node` *SVGPathElement* The SVG path node from which you want the path.
+
+### Returns
+
+*Array* The corresponding path.
+
+### Example
+
+```js
+// polynomic/lib/path/from-path
+
+node = document.querySelector("path")
+path = Polynomic.path.fromPath(node)
+
+Polynomic.pathstring.build(path)
+
+// ➜ "M0 0L100 100C150 150 250 250 300 300"
+```
+
+---
+
+## `fromPolygon(node)`
+
+Gets the path from a given SVG polygon node.
+
+### Arguments
+
+1. `node` *SVGPolygonElement* The SVG polygon node from which you want the path.
+
+### Returns
+
+*Array* The corresponding path.
+
+### Example
+
+```js
+// polynomic/lib/path/from-polygon
+
+node = document.querySelector("polygon")
+path = Polynomic.path.fromPolygon(node)
+
+Polynomic.pathstring.build(path)
+
+// ➜ "M0 0L100 100L150 -150L5e-14 -4Z"
+```
+
+---
+
+## `fromPolyline(node)`
+
+Gets the path from a given SVG polyline node.
+
+### Arguments
+
+1. `node` *SVGPolylineElement* The SVG polyline node from which you want the path.
+
+### Returns
+
+*Array* The corresponding path.
+
+### Example
+
+```js
+// polynomic/lib/path/from-polyline
+
+node = document.querySelector("polyline")
+path = Polynomic.path.fromPolyline(node)
+
+Polynomic.pathstring.build(path)
+
+// ➜ "M0 0L100 100L150 -150L5e-14 -4"
+```
+
+---
+
+## `fromRect(node)`
+
+Gets the path from a given SVG rect node.
+
+### Arguments
+
+1. `node` *SVGRectElement* The SVG rect node from which you want the path.
+
+### Returns
+
+*Array* The corresponding path.
+
+### Example
+
+```js
+// polynomic/lib/path/from-rect
+
+node = document.querySelector("rect")
+path = Polynomic.path.fromRect(node)
+
+Polynomic.pathstring.build(path)
+
+// ➜ "M0 0L100 0L100 100L0 100Z"
+```
