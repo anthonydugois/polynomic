@@ -1,4 +1,3 @@
-import { xmlns } from "../../constants"
 import { M, L, A, Z } from "../../point/points"
 
 export default function fromRect(node) {
@@ -6,13 +5,13 @@ export default function fromRect(node) {
     throw new Error("The element you provided in the `fromLine` function is not a valid SVG rect node.")
   }
 
-  const x = parseFloat(node.getAttributeNS(xmlns, "x"))
-  const y = parseFloat(node.getAttributeNS(xmlns, "y"))
-  const width = parseFloat(node.getAttributeNS(xmlns, "width"))
-  const height = parseFloat(node.getAttributeNS(xmlns, "height"))
+  const x = parseFloat(node.getAttribute("x"))
+  const y = parseFloat(node.getAttribute("y"))
+  const width = parseFloat(node.getAttribute("width"))
+  const height = parseFloat(node.getAttribute("height"))
 
-  let rx = parseFloat(node.getAttributeNS(xmlns, "rx"))
-  let ry = parseFloat(node.getAttributeNS(xmlns, "ry"))
+  let rx = parseFloat(node.getAttribute("rx"))
+  let ry = parseFloat(node.getAttribute("ry"))
 
   if (isNaN(rx) && isNaN(ry)) {
     const first = M(x, y)

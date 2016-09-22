@@ -1,4 +1,3 @@
-import { xmlns } from "../../constants"
 import { M, L, Z } from "../../point/points"
 import segments from "../../pathstring/segments"
 
@@ -7,7 +6,7 @@ export default function fromPolygon(node) {
     throw new Error("The element you provided in the `fromPolygon` function is not a valid SVG polygon node.")
   }
 
-  const points = node.getAttributeNS(xmlns, "points")
+  const points = node.getAttribute("points")
   const coords = segments(points)[0]
 
   let first

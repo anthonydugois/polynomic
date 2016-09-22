@@ -1,4 +1,3 @@
-import { xmlns } from "../../constants"
 import { M, A, Z } from "../../point/points"
 
 export default function fromCircle(node) {
@@ -6,9 +5,9 @@ export default function fromCircle(node) {
     throw new Error("The element you provided in the `fromCircle` function is not a valid SVG circle node.")
   }
 
-  const cx = parseFloat(node.getAttributeNS(xmlns, "cx"))
-  const cy = parseFloat(node.getAttributeNS(xmlns, "cy"))
-  const r = parseFloat(node.getAttributeNS(xmlns, "r"))
+  const cx = parseFloat(node.getAttribute("cx"))
+  const cy = parseFloat(node.getAttribute("cy"))
+  const r = parseFloat(node.getAttribute("r"))
 
   const first = M(cx - r, cy)
 

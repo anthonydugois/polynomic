@@ -1,4 +1,3 @@
-import { xmlns } from "../../constants"
 import { M, L } from "../../point/points"
 import segments from "../../pathstring/segments"
 
@@ -7,7 +6,7 @@ export default function fromPolyline(node) {
     throw new Error("The element you provided in the `fromPolyline` function is not a valid SVG polyline node.")
   }
 
-  const points = node.getAttributeNS(xmlns, "points")
+  const points = node.getAttribute("points")
   const coords = segments(points)[0]
 
   return coords.reduce(

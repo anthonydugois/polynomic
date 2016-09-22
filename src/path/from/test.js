@@ -1,12 +1,11 @@
-import { xmlns } from "../../constants"
 import isEqual from "../is-equal"
 import _from from "./index"
 
 test("should get the corresponding path from the SVG path node", () => {
   const path = "M0 0L100 100"
-  const node = document.createElementNS(xmlns, "path")
+  const node = document.createElement("path")
 
-  node.setAttributeNS(xmlns, "d", path)
+  node.setAttribute("d", path)
 
   const test = _from(node)
   const expected = path
@@ -15,12 +14,12 @@ test("should get the corresponding path from the SVG path node", () => {
 })
 
 test("should get the corresponding path from the SVG line node", () => {
-  const node = document.createElementNS(xmlns, "line")
+  const node = document.createElement("line")
 
-  node.setAttributeNS(xmlns, "x1", 0)
-  node.setAttributeNS(xmlns, "y1", 0)
-  node.setAttributeNS(xmlns, "x2", 100)
-  node.setAttributeNS(xmlns, "y2", 100)
+  node.setAttribute("x1", 0)
+  node.setAttribute("y1", 0)
+  node.setAttribute("x2", 100)
+  node.setAttribute("y2", 100)
 
   const test = _from(node)
   const expected = "M0 0L100 100"
@@ -29,9 +28,9 @@ test("should get the corresponding path from the SVG line node", () => {
 })
 
 test("should get the corresponding path from the SVG polyline node", () => {
-  const node = document.createElementNS(xmlns, "polyline")
+  const node = document.createElement("polyline")
 
-  node.setAttributeNS(xmlns, "points", "0 0 100,100 150-150 5e-14-4")
+  node.setAttribute("points", "0 0 100,100 150-150 5e-14-4")
 
   const test = _from(node)
   const expected = "M0 0L100 100L150 -150L5e-14 -4"
@@ -40,9 +39,9 @@ test("should get the corresponding path from the SVG polyline node", () => {
 })
 
 test("should get the corresponding path from the SVG polygon node", () => {
-  const node = document.createElementNS(xmlns, "polygon")
+  const node = document.createElement("polygon")
 
-  node.setAttributeNS(xmlns, "points", "0 0 100,100 150-150 5e-14-4")
+  node.setAttribute("points", "0 0 100,100 150-150 5e-14-4")
 
   const test = _from(node)
   const expected = "M0 0L100 100L150 -150L5e-14 -4Z"
@@ -51,12 +50,12 @@ test("should get the corresponding path from the SVG polygon node", () => {
 })
 
 test("should get the corresponding path from the SVG rect node", () => {
-  const node = document.createElementNS(xmlns, "rect")
+  const node = document.createElement("rect")
 
-  node.setAttributeNS(xmlns, "x", 0)
-  node.setAttributeNS(xmlns, "y", 0)
-  node.setAttributeNS(xmlns, "width", 100)
-  node.setAttributeNS(xmlns, "height", 100)
+  node.setAttribute("x", 0)
+  node.setAttribute("y", 0)
+  node.setAttribute("width", 100)
+  node.setAttribute("height", 100)
 
   const test = _from(node)
   const expected = "M0 0L100 0L100 100L0 100Z"
@@ -65,11 +64,11 @@ test("should get the corresponding path from the SVG rect node", () => {
 })
 
 test("should get the corresponding path from the SVG circle node", () => {
-  const node = document.createElementNS(xmlns, "circle")
+  const node = document.createElement("circle")
 
-  node.setAttributeNS(xmlns, "cx", 50)
-  node.setAttributeNS(xmlns, "cy", 50)
-  node.setAttributeNS(xmlns, "r", 50)
+  node.setAttribute("cx", 50)
+  node.setAttribute("cy", 50)
+  node.setAttribute("r", 50)
 
   const test = _from(node)
   const expected = "M0 50A50 50 0 0 0 100 50A50 50 0 0 0 0 50Z"
@@ -78,12 +77,12 @@ test("should get the corresponding path from the SVG circle node", () => {
 })
 
 test("should get the corresponding path from the SVG ellipse node", () => {
-  const node = document.createElementNS(xmlns, "ellipse")
+  const node = document.createElement("ellipse")
 
-  node.setAttributeNS(xmlns, "cx", 100)
-  node.setAttributeNS(xmlns, "cy", 50)
-  node.setAttributeNS(xmlns, "rx", 100)
-  node.setAttributeNS(xmlns, "ry", 50)
+  node.setAttribute("cx", 100)
+  node.setAttribute("cy", 50)
+  node.setAttribute("rx", 100)
+  node.setAttribute("ry", 50)
 
   const test = _from(node)
   const expected = "M0 50A100 50 0 0 0 200 50A100 50 0 0 0 0 50Z"
