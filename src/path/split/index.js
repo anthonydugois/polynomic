@@ -1,4 +1,4 @@
-export default function split(path, makeSplit, shouldKeep = false) {
+export default function split(path, makeSplit, shouldKeep = "") {
   return path.reduce(
     (acc, point, index) => {
       if (index === 0) {

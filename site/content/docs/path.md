@@ -103,14 +103,14 @@ Polynomic.pathstring.build(path)
 
 ---
 
-## `join(paths, [shouldClose = false])`
+## `join(paths, [makeJoin])`
 
 Joins the given paths.
 
 ### Arguments
 
 1. `paths` *Array* The paths you want to join.
-2. `[shouldClose = false]` *boolean* If `true`, the paths will be closed.
+2. `[makeJoin]` *Function* A function which returns a single point or an array of points used to join paths. Takes `prevPath` *Array* and `nextPath` *Array* as parameters.
 
 ### Returns
 
@@ -123,36 +123,39 @@ Joins the given paths.
 
 path = Polynomic.path.join([
   Polynomic.pathstring.parse("M0 0L100 0"),
-  Polynomic.pathstring.parse("L100 100L100 200"),
+  Polynomic.pathstring.parse("M100 100L100 200"),
   Polynomic.pathstring.parse("M200 200h50v50"),
 ])
 
 Polynomic.pathstring.build(path)
 
-// ➜ "M0 0L100 0 L100 100L100 200 M200 200h50v50"
+// ➜ "M0 0L100 0 M100 100L100 200 M200 200h50v50"
 
-path = Polynomic.path.join([
-  Polynomic.pathstring.parse("M0 0L100 0"),
-  Polynomic.pathstring.parse("L100 100L100 200"),
-  Polynomic.pathstring.parse("M200 200h50v50"),
-], true)
+path = Polynomic.path.join(
+  [
+    Polynomic.pathstring.parse("M0 0L100 0"),
+    Polynomic.pathstring.parse("M100 100L100 200"),
+    Polynomic.pathstring.parse("M200 200h50v50"),
+  ],
+  (prevPath) => Polynomic.point.z(prevPath[0]),
+)
 
 Polynomic.pathstring.build(path)
 
-// ➜ "M0 0L100 0z M100 100L100 200z M200 200h50v50z"
+// ➜ "M0 0L100 0z M100 100L100 200z M200 200h50v50"
 ```
 
 ---
 
-## `split(path, separators, [shouldKeep = false])`
+## `split(path, makeSplit, [shouldKeep = ""])`
 
 Splits the given path into an array of subpaths.
 
 ### Arguments
 
 1. `path` *Array* The path you want to split.
-2. `separators` *Array | string* The point codes which splits the path.
-3. `[shouldKeep = false]` *boolean* If `true`, keeps the separators in the path.
+2. `makeSplit` *Function | string | Array* The point(s) which split the path. If a function is given, it takes `point` *Object* and `index` *number* as parameters and it should return a boolean.
+3. `[shouldKeep = ""]` *string: "before" | "after"* If `"before"`, keeps the point(s) on the previous path. If `"after"`, keeps the point(s) on the next path.
 
 ### Returns
 
@@ -163,10 +166,8 @@ Splits the given path into an array of subpaths.
 ```js
 // polynomic/lib/path/split
 
-path = Polynomic.pathstring.parse("M0 0L100 0L100 100zM100 100L200 100L200 200zM200 200L300 200L300 300")
-separators = ["z", "Z"]
-
-subpaths = Polynomic.path.split(path, separators)
+path = Polynomic.pathstring.parse("M0 0L100 0L100 100z M100 100L200 100L200 200z M200 200L300 200L300 300")
+subpaths = Polynomic.path.split(path, "z")
 
 [
   Polynomic.pathstring.build(subpaths[0]),
@@ -175,10 +176,44 @@ subpaths = Polynomic.path.split(path, separators)
 ]
 
 // ➜ [
-  "M0 0L100 0L100 100",
-  "M100 100L200 100L200 200",
-  "M200 200L300 200L300 300",
+//   "M0 0L100 0L100 100",
+//   "M100 100L200 100L200 200",
+//   "M200 200L300 200L300 300",
+// ]
+
+path = Polynomic.pathstring.parse("M0 0L100 0L100 100Z M100 100L200 100L200 200z M200 200L300 200L300 300")
+subpaths = Polynomic.path.split(path, ["z", "Z"], "before")
+
+[
+  Polynomic.pathstring.build(subpaths[0]),
+  Polynomic.pathstring.build(subpaths[1]),
+  Polynomic.pathstring.build(subpaths[2]),
 ]
+
+// ➜ [
+//   "M0 0L100 0L100 100Z",
+//   "M100 100L200 100L200 200z",
+//   "M200 200L300 200L300 300",
+// ]
+
+path = Polynomic.pathstring.parse("M0 0L100 0L100 100Z M100 100L200 100L200 200z M200 200L300 200L300 300")
+subpaths = Polynomic.path.split(
+  path,
+  (point) => Polynomic.point.isM(point),
+  "after",
+)
+
+[
+  Polynomic.pathstring.build(subpaths[0]),
+  Polynomic.pathstring.build(subpaths[1]),
+  Polynomic.pathstring.build(subpaths[2]),
+]
+
+// ➜ [
+//   "M0 0L100 0L100 100Z",
+//   "M100 100L200 100L200 200z",
+//   "M200 200L300 200L300 300",
+// ]
 ```
 
 ---
