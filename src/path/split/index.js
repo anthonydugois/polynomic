@@ -1,14 +1,45 @@
-export default function split(path, separators, shouldKeep = false) {
-  if (!Array.isArray(separators)) {
-    separators = [separators]
-  }
-
+export default function split(path, makeSplit, shouldKeep = false) {
   return path.reduce(
     (acc, point, index) => {
-      if (separators.includes(point.code) || index === 0) {
+      if (index === 0) {
         return [
           ...acc,
-          (shouldKeep || index === 0) ? [point] : [],
+          [point],
+        ]
+      }
+
+      let shouldSplit = false
+
+      if (typeof makeSplit === "function") {
+        shouldSplit = makeSplit(point, index)
+      } else if (typeof makeSplit === "string") {
+        shouldSplit = point.code === makeSplit
+      } else if (Array.isArray(makeSplit)) {
+        shouldSplit = makeSplit.includes(point.code)
+      }
+
+      if (shouldSplit) {
+        if (shouldKeep === "before") {
+          const lastPath = [
+            ...acc[acc.length - 1],
+            point,
+          ]
+
+          return [
+            ...acc.slice(0, acc.length - 1),
+            lastPath,
+            [],
+          ]
+        } else if (shouldKeep === "after") {
+          return [
+            ...acc,
+            [point],
+          ]
+        }
+
+        return [
+          ...acc,
+          [],
         ]
       }
 

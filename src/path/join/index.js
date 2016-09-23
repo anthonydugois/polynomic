@@ -2,39 +2,29 @@ import { z } from "../../point/points"
 import { isZ } from "../../point/is"
 import ensureMoveTo from "../ensure-move-to"
 
-/**
- * Joins the paths and returns one global path
- * e.g. join([
- *   { code: "M", x: 0, y: 0, parameters: {} },
- *   { code: "L", x: 100, y: 100, parameters: {} },
- * ],
- * [
- *   { code: "L", x: 100, y: 100, parameters: {} },
- *   { code: "L", x: 200, y: 200, parameters: {} },
- * ], true)
- * --> [
- *   { code: "M", x: 0, y: 0, parameters: {} },
- *   { code: "L", x: 100, y: 100, parameters: {} },
- *   { code: "z", x: 0, y: 0, parameters: {} },
- *   { code: "M", x: 100, y: 100, parameters: {} },
- *   { code: "L", x: 200, y: 200, parameters: {} },
- *   { code: "z", x: 100, y: 100, parameters: {} },
- * ]
- */
-export default function join(paths, shouldClose = false) {
-  return paths.reduce(
-    (acc, path) => {
-      if (shouldClose) {
-        path = ensureMoveTo(path)
+function defaultMakeJoin() {
+  return []
+}
 
+export default function join(paths, makeJoin = defaultMakeJoin) {
+  return paths.reduce(
+    (acc, path, index) => {
+      if (index >= paths.length - 1) {
         return [
           ...acc,
           ...path,
-          ...!isZ(path[path.length - 1]) && [z(path[0])],
         ]
       }
 
-      return [...acc, ...path]
+      const prevPath = path
+      const nextPath = paths[index + 1]
+      const segment = makeJoin(prevPath, nextPath)
+
+      return [
+        ...acc,
+        ...path,
+        ...Array.isArray(segment) ? segment : [segment],
+      ]
     },
     [],
   )
