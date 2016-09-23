@@ -32,12 +32,12 @@ export default function fromRect(node) {
 
   return [
     first,
-    L(x + width - rx, y),
+    L((x + width) - rx, y),
     A(rx, ry, 0, 0, 1, x + width, y + ry),
-    L(x + width, y + height - ry),
-    A(rx, ry, 0, 0, 1, x + width - rx, y + height),
+    L(x + width, (y + height) - ry),
+    A(rx, ry, 0, 0, 1, (x + width) - rx, y + height),
     L(x + rx, y + height),
-    A(rx, ry, 0, 0, 1, x, y + height - ry),
+    A(rx, ry, 0, 0, 1, x, (y + height) - ry),
     L(x, y + ry),
     A(rx, ry, 0, 0, 1, x + rx, y),
     Z(first),
