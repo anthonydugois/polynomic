@@ -1,57 +1,41 @@
-export default function split(path, makeSplit, shouldKeep = "") {
+function addToLastPath(paths, point) {
+  const lastPathIndex = paths.length - 1
+  const lastPath = paths[lastPathIndex]
+
+  return [
+    ...paths.slice(0, lastPathIndex),
+    [...lastPath, point],
+  ]
+}
+
+function addNewPath(paths) {
+  return [
+    ...paths,
+    [],
+  ]
+}
+
+export default function split(path, shouldSplit, shouldKeep = "") {
   return path.reduce(
-    (acc, point, index) => {
+    (paths, point, index) => {
       if (index === 0) {
-        return [
-          ...acc,
-          [point],
-        ]
+        return addToLastPath(addNewPath(paths), point)
       }
 
-      let shouldSplit = false
+      if (shouldSplit(point, index)) {
+        switch (shouldKeep) {
+        case "before":
+          return addNewPath(addToLastPath(paths, point))
 
-      if (typeof makeSplit === "function") {
-        shouldSplit = makeSplit(point, index)
-      } else if (typeof makeSplit === "string") {
-        shouldSplit = point.code === makeSplit
-      } else if (Array.isArray(makeSplit)) {
-        shouldSplit = makeSplit.includes(point.code)
-      }
+        case "after":
+          return addToLastPath(addNewPath(paths), point)
 
-      if (shouldSplit) {
-        if (shouldKeep === "before") {
-          const lastPath = [
-            ...acc[acc.length - 1],
-            point,
-          ]
-
-          return [
-            ...acc.slice(0, acc.length - 1),
-            lastPath,
-            [],
-          ]
-        } else if (shouldKeep === "after") {
-          return [
-            ...acc,
-            [point],
-          ]
+        default:
+          return addNewPath(paths)
         }
-
-        return [
-          ...acc,
-          [],
-        ]
       }
 
-      const subpath = [
-        ...acc[acc.length - 1],
-        point,
-      ]
-
-      return [
-        ...acc.slice(0, acc.length - 1),
-        subpath,
-      ]
+      return addToLastPath(paths, point)
     },
     [],
   )

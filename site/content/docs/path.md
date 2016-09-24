@@ -103,14 +103,14 @@ Polynomic.pathstring.build(path)
 
 ---
 
-## `join(paths, [makeJoin])`
+## `join(paths, [makeJoin = () => []])`
 
 Joins the given paths.
 
 ### Arguments
 
 1. `paths` *Array* The paths you want to join.
-2. `[makeJoin]` *Function* A function which returns a single point or an array of points used to join paths. Takes `prevPath` *Array* and `nextPath` *Array* as parameters.
+2. `[makeJoin = () => []]` *Function* A function which returns a single point or an array of points used to join paths. Takes `prevPath` *Array* and `nextPath` *Array* as parameters.
 
 ### Returns
 
@@ -131,14 +131,14 @@ Polynomic.pathstring.build(path)
 
 // ➜ "M0 0L100 0 M100 100L100 200 M200 200h50v50"
 
-path = Polynomic.path.join(
-  [
-    Polynomic.pathstring.parse("M0 0L100 0"),
-    Polynomic.pathstring.parse("M100 100L100 200"),
-    Polynomic.pathstring.parse("M200 200h50v50"),
-  ],
-  (prevPath) => Polynomic.point.z(prevPath[0]),
-)
+makeJoin = (prevPath) => Polynomic.point.z(prevPath[0])
+paths = [
+  Polynomic.pathstring.parse("M0 0L100 0"),
+  Polynomic.pathstring.parse("M100 100L100 200"),
+  Polynomic.pathstring.parse("M200 200h50v50"),
+]
+
+path = Polynomic.path.join(paths, makeJoin)
 
 Polynomic.pathstring.build(path)
 
@@ -147,15 +147,15 @@ Polynomic.pathstring.build(path)
 
 ---
 
-## `split(path, makeSplit, [shouldKeep = ""])`
+## `split(path, shouldSplit, [shouldKeep = ""])`
 
 Splits the given path into an array of subpaths.
 
 ### Arguments
 
 1. `path` *Array* The path you want to split.
-2. `makeSplit` *Function | string | Array* The point(s) which split the path. If a function is given, it takes `point` *Object* and `index` *number* as parameters and it should return a boolean.
-3. `[shouldKeep = ""]` *string: "before" | "after"* If `"before"`, keeps the point(s) on the previous path. If `"after"`, keeps the point(s) on the next path.
+2. `shouldSplit` *Function* Each point matching the condition will trigger a split. It takes `point` *Object* and `index` *number* as parameters and returns a boolean.
+3. `[shouldKeep = ""]` *"before" | "after"* If `"before"` is provided, keeps the point(s) on the previous path. If `"after"`, keeps the point(s) on the next path. Else removes the point(s).
 
 ### Returns
 
@@ -166,8 +166,10 @@ Splits the given path into an array of subpaths.
 ```js
 // polynomic/lib/path/split
 
-path = Polynomic.pathstring.parse("M0 0L100 0L100 100z M100 100L200 100L200 200z M200 200L300 200L300 300")
-subpaths = Polynomic.path.split(path, "z")
+path = Polynomic.pathstring.parse("M0 0L100 100Z M100 100L200 200z M200 200L300 300")
+shouldSplit = (point) => Polynomic.point.isM(point)
+
+subpaths = Polynomic.path.split(path, shouldSplit, "after")
 
 [
   Polynomic.pathstring.build(subpaths[0]),
@@ -176,43 +178,9 @@ subpaths = Polynomic.path.split(path, "z")
 ]
 
 // ➜ [
-//   "M0 0L100 0L100 100",
-//   "M100 100L200 100L200 200",
-//   "M200 200L300 200L300 300",
-// ]
-
-path = Polynomic.pathstring.parse("M0 0L100 0L100 100Z M100 100L200 100L200 200z M200 200L300 200L300 300")
-subpaths = Polynomic.path.split(path, ["z", "Z"], "before")
-
-[
-  Polynomic.pathstring.build(subpaths[0]),
-  Polynomic.pathstring.build(subpaths[1]),
-  Polynomic.pathstring.build(subpaths[2]),
-]
-
-// ➜ [
-//   "M0 0L100 0L100 100Z",
-//   "M100 100L200 100L200 200z",
-//   "M200 200L300 200L300 300",
-// ]
-
-path = Polynomic.pathstring.parse("M0 0L100 0L100 100Z M100 100L200 100L200 200z M200 200L300 200L300 300")
-subpaths = Polynomic.path.split(
-  path,
-  (point) => Polynomic.point.isM(point),
-  "after",
-)
-
-[
-  Polynomic.pathstring.build(subpaths[0]),
-  Polynomic.pathstring.build(subpaths[1]),
-  Polynomic.pathstring.build(subpaths[2]),
-]
-
-// ➜ [
-//   "M0 0L100 0L100 100Z",
-//   "M100 100L200 100L200 200z",
-//   "M200 200L300 200L300 300",
+//   "M0 0L100 100Z",
+//   "M100 100L200 200z",
+//   "M200 200L300 300",
 // ]
 ```
 
@@ -225,7 +193,7 @@ Simplifies the given path using the Ramer-Douglas-Peucker algorithm.
 ### Arguments
 
 1. `path` *Array* The path you want to simplify.
-2. `tolerance` *number* The maximum distance between original and simplified curve.
+2. `tolerance` *number* The maximum distance between the original curve and the simplified curve.
 
 ### Returns
 

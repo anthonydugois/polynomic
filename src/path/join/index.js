@@ -1,12 +1,4 @@
-import { z } from "../../point/points"
-import { isZ } from "../../point/is"
-import ensureMoveTo from "../ensure-move-to"
-
-function defaultMakeJoin() {
-  return []
-}
-
-export default function join(paths, makeJoin = defaultMakeJoin) {
+export default function join(paths, makeJoin = () => []) {
   return paths.reduce(
     (acc, path, index) => {
       if (index >= paths.length - 1) {
