@@ -1,19 +1,28 @@
-export default function isInside(point, path) {
-  let inside = false
+/* @flow */
 
-  for (let i = 0, j = path.length - 1 ; i < path.length ; i++) {
-    const current = path[i]
-    const previous = path[j]
-    const slope = (previous.y - current.y) / (previous.x - current.x)
-    const isVerticallyBetween = ((current.y > point.y) !== (previous.y > point.y))
-    const isHorizontallyBefore = point.x < current.x + ((point.y - current.y) / slope)
+import type { PointT } from "../../types/Point"
+import type { PathT } from "../../types/Path"
 
-    if (isVerticallyBetween && isHorizontallyBefore) {
-      inside = !inside
-    }
+export default function isInside(
+  point: PointT,
+  path: PathT
+): boolean {
+  return path.reduce(
+    (acc: boolean, current: PointT, index: number) => {
+      const previous: PointT = index === 0 ? path[path.length - 1] : path[index - 1]
+      const isVerticallyBetween: boolean = ((current.y > point.y) !== (previous.y > point.y))
+      const isHorizontallyBefore: boolean = point.x < current.x + ((point.y - current.y) / slope(current, previous))
 
-    j = i
-  }
+      if (isVerticallyBetween && isHorizontallyBefore) {
+        return !acc
+      }
 
-  return inside
+      return acc
+    },
+    false
+  )
+}
+
+function slope(point: PointT, previous: PointT): number {
+  return (previous.y - point.y) / (previous.x - point.x)
 }
