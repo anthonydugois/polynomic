@@ -43,7 +43,10 @@
     "no-invalid-regexp": 1,
     "no-iterator": 1,
     "no-label-var": 1,
-    "no-labels": [1, { "allowLoop": false, "allowSwitch": false }],
+    "no-labels": [1, {
+      "allowLoop": false,
+      "allowSwitch": false
+    }],
     "no-lone-blocks": 1,
     "no-mixed-operators": [1, {
       "groups": [
