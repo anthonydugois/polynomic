@@ -1,39 +1,25 @@
+/* @flow */
+
+import type { PointCodeT } from "../../types/Point"
+import type { PathT } from "../../types/Path"
+
 import * as points from "../../point/points"
 import { isM } from "../../point/is"
 import segments from "../segments"
 
-/**
- * Transforms a pathstring in a formatted point list
- * and converts relative positions into absolute positions.
- * e.g. parse("M0 0 l50 50 q100 100 150 150 z")
- * --> [
- *   { code: "M", x: 0, y: 0, parameters: {} },
- *   { code: "l", x: 50, y: 50, parameters: {} },
- *   { code: "q", x: 200, y: 200, parameters: { x1: 150, y1: 150 } },
- *   { code: "z", x: 0, y: 0, parameters: {} },
- * ]
- */
-export default function parse(d) {
+export default function parse(d: string): PathT {
   return buildPointList(segments(d))
 }
 
-/**
- * Transforms an array of segments in a formatted point list
- * and converts relative positions into absolute positions.
- * e.g. buildPointList([["M", 0, 0], ["l", 50, 50], ["q", 100, 100, 150, 150], ["z"]])
- * --> [
- *   { code: "M", x: 0, y: 0, parameters: {} },
- *   { code: "l", x: 50, y: 50, parameters: {} },
- *   { code: "q", x: 200, y: 200, parameters: { x1: 150, y1: 150 } },
- *   { code: "z", x: 0, y: 0, parameters: {} },
- * ]
- */
-function buildPointList(segments) {
+function buildPointList(segments: Array<Array<string | number>>): PathT {
   let firstPoint
 
   return segments.reduce(
-    (acc, [code, ...parameters]) => {
-      const p = points[code]
+    (
+      acc: PathT,
+      [code, ...parameters],
+    ): PathT => {
+      const point: Function = points[code]
       let pointList, prev
 
       if (acc.length > 0) {
@@ -44,34 +30,40 @@ function buildPointList(segments) {
         firstPoint = prev
       }
 
-      if (p.length > 0) {
-        pointList = chunks(parameters, p.length)
-        pointList = pointList.map((chunk) => prev = p(...chunk, prev))
+      if (point.length > 0) {
+        pointList = chunks(parameters, point.length)
+        pointList = pointList.map((chunk) => prev = point(...chunk, prev))
       } else {
-        pointList = [p(firstPoint)]
+        pointList = [point(firstPoint)]
       }
 
-      return [...acc, ...pointList]
+      return [
+        ...acc,
+        ...pointList,
+      ]
     },
     [],
   )
 }
 
-/**
- * Cuts the given array every n values
- * e.g. chunks([0, 1, 2, 0, 1, 2, 0, 1, 2], 3)
- * --> [[0, 1, 2], [0, 1, 2], [0, 1, 2]]
- */
-function chunks(array, n) {
-  const tmp = []
+function chunks(
+  array: Array<any>,
+  n: number,
+): Array<Array<any>> {
+  return array.reduce(
+    (
+      acc: Array<Array<any>>,
+      value: any,
+      index: number,
+    ): Array<Array<any>> => {
+      if (index % n === 0) {
+        acc.push([value])
+      } else {
+        acc[acc.length - 1].push(value)
+      }
 
-  for (let i = 0, j = array.length ; i < j ; i += n) {
-    const chunk = array.slice(i, i + n)
-
-    if (chunk.length === n) {
-      tmp.push(chunk)
-    }
-  }
-
-  return tmp
+      return acc
+    },
+    [],
+  )
 }

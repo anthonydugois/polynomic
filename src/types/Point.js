@@ -1,12 +1,5 @@
 /* @flow */
 
-export type PointT = {
-  code: PointCodeT,
-  x: number,
-  y: number,
-  parameters: PointParamsT,
-}
-
 export type PointCodeT =
   | ""
   | "m"
@@ -40,4 +33,11 @@ export type PointParamsT = {
   rotation?: number,
   large?: 0 | 1,
   sweep?: 0 | 1,
+}
+
+export type PointT = {
+  code: PointCodeT,
+  x: number,
+  y: number,
+  parameters: PointParamsT,
 }

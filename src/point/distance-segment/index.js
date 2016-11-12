@@ -1,6 +1,7 @@
 /* @flow */
 
 import type { PointT } from "../../types/Point"
+
 import { Point } from "../points"
 import squareDistance from "../square-distance"
 

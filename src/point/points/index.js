@@ -1,9 +1,9 @@
 /* @flow */
 
 import type {
-  PointCodeT,
   PointT,
   PointParamsT,
+  PointCodeT,
 } from "../../types/Point"
 
 import * as types from "../points/types"

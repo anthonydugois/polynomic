@@ -1,6 +1,7 @@
 /* @flow */
 
 import type { PointT } from "../../types/Point"
+
 import * as types from "../points/types"
 
 export function is(
