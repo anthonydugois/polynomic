@@ -8,7 +8,7 @@ import squareDistance from "../square-distance"
 export default function distanceSegment(
   p1: PointT,
   p2: PointT,
-  p3: PointT
+  p3: PointT,
 ): number {
   return Math.sqrt(squareDistanceSegment(p1, p2, p3))
 }
@@ -16,7 +16,7 @@ export default function distanceSegment(
 function squareDistanceSegment(
   p1: PointT,
   p2: PointT,
-  p3: PointT
+  p3: PointT,
 ): number {
   const segment: number = squareDistance(p2, p3)
 

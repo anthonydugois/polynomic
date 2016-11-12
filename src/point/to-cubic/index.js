@@ -10,7 +10,7 @@ import arcToCubic from "../arc-to-cubic"
 
 export default function toCubic(
   prev: PointT,
-  point: PointT
+  point: PointT,
 ): PointT | PathT {
   switch (true) {
   case isL(point):

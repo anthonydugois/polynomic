@@ -5,10 +5,14 @@ import type { PathT } from "../../types/Path"
 
 export default function isInside(
   point: PointT,
-  path: PathT
+  path: PathT,
 ): boolean {
   return path.reduce(
-    (acc: boolean, current: PointT, index: number) => {
+    (
+      acc: boolean,
+      current: PointT,
+      index: number,
+    ): boolean => {
       const previous: PointT = index === 0 ?
         path[path.length - 1] :
         path[index - 1]
@@ -27,13 +31,13 @@ export default function isInside(
 
       return acc
     },
-    false
+    false,
   )
 }
 
 function slope(
   point: PointT,
-  previous: PointT
+  previous: PointT,
 ): number {
   return (previous.y - point.y) / (previous.x - point.x)
 }
