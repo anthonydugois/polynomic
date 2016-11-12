@@ -22,8 +22,8 @@ export default function build(
         return acc
       }
 
-      const fn = points[point.code]
-      const prev = index > 0 ?
+      const fn: Function = points[point.code]
+      const prev: PointT = index > 0 ?
         path[index - 1] :
         defaultPoint
 

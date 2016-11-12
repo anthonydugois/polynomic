@@ -7,11 +7,15 @@ import * as points from "../../point/points"
 import { isM } from "../../point/is"
 import segments from "../segments"
 
-export default function parse(d: string): PathT {
-  return buildPointList(segments(d))
+export default function parse(
+  d: string,
+): PathT {
+  return path(segments(d))
 }
 
-function buildPointList(segments: Array<Array<string | number>>): PathT {
+function path(
+  segments: Array<Array<string | number>>,
+): PathT {
   let firstPoint
 
   return segments.reduce(
@@ -19,7 +23,7 @@ function buildPointList(segments: Array<Array<string | number>>): PathT {
       acc: PathT,
       [code, ...parameters],
     ): PathT => {
-      const point: Function = points[code]
+      const fn: Function = points[code]
       let pointList, prev
 
       if (acc.length > 0) {
@@ -30,11 +34,11 @@ function buildPointList(segments: Array<Array<string | number>>): PathT {
         firstPoint = prev
       }
 
-      if (point.length > 0) {
-        pointList = chunks(parameters, point.length)
-        pointList = pointList.map((chunk) => prev = point(...chunk, prev))
+      if (fn.length > 0) {
+        pointList = chunks(parameters, fn.length)
+        pointList = pointList.map((chunk) => prev = fn(...chunk, prev))
       } else {
-        pointList = [point(firstPoint)]
+        pointList = [fn(firstPoint)]
       }
 
       return [
