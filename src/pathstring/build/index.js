@@ -5,6 +5,7 @@ import type { PathT } from "../../types/Path"
 
 import { defaultPoint } from "../../point/points"
 import * as points from "../points"
+import format from "../../utils/format"
 
 export default function build(
   path: PathT,
@@ -25,11 +26,11 @@ export default function build(
         path[index - 1] :
         defaultPoint
 
-      return `
+      return format`
         ${ acc }
         ${ fn(point, prev, precision) }
       `
     },
     '',
-  ).replace(/\s+/g, ' ')
+  )
 }
