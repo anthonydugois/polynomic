@@ -5,11 +5,12 @@ import type { PathT } from "../../types/Path"
 
 import { defaultPoint } from "../../point/points"
 import * as points from "../points"
+import { defaultPrecision } from "../../utils/round"
 import format from "../../utils/format"
 
 export default function build(
   path: PathT,
-  precision: number,
+  precision: number = defaultPrecision,
 ): string {
   return path.reduce(
     (

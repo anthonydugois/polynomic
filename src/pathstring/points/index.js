@@ -5,13 +5,13 @@ import type { PointT } from "../../types/Point"
 
 import { defaultPoint } from "../../point/points"
 import * as types from "../../point/points/types"
-import round from "../../utils/round"
+import round, { defaultPrecision } from "../../utils/round"
 import format from "../../utils/format"
 
 export function m(
   point: PointT,
   prev: PointT = defaultPoint,
-  precision: number,
+  precision: number = defaultPrecision,
 ): string {
   return format`
     ${ types.m }
@@ -23,7 +23,7 @@ export function m(
 export function M(
   point: PointT,
   prev: PointT = defaultPoint,
-  precision: number,
+  precision: number = defaultPrecision,
 ): string {
   return format`
     ${ types.M }
@@ -35,7 +35,7 @@ export function M(
 export function l(
   point: PointT,
   prev: PointT = defaultPoint,
-  precision: number,
+  precision: number = defaultPrecision,
 ): string {
   return format`
     ${ types.l }
@@ -47,7 +47,7 @@ export function l(
 export function L(
   point: PointT,
   prev: PointT = defaultPoint,
-  precision: number,
+  precision: number = defaultPrecision,
 ): string {
   return format`
     ${ types.L }
@@ -59,7 +59,7 @@ export function L(
 export function h(
   point: PointT,
   prev: PointT = defaultPoint,
-  precision: number,
+  precision: number = defaultPrecision,
 ): string {
   return format`
     ${ types.h }
@@ -70,7 +70,7 @@ export function h(
 export function H(
   point: PointT,
   prev: PointT = defaultPoint,
-  precision: number,
+  precision: number = defaultPrecision,
 ): string {
   return format`
     ${ types.H }
@@ -81,7 +81,7 @@ export function H(
 export function v(
   point: PointT,
   prev: PointT = defaultPoint,
-  precision: number,
+  precision: number = defaultPrecision,
 ): string {
   return format`
     ${ types.v }
@@ -92,7 +92,7 @@ export function v(
 export function V(
   point: PointT,
   prev: PointT = defaultPoint,
-  precision: number,
+  precision: number = defaultPrecision,
 ): string {
   return format`
     ${ types.V }
@@ -103,7 +103,7 @@ export function V(
 export function q(
   point: PointT,
   prev: PointT = defaultPoint,
-  precision: number,
+  precision: number = defaultPrecision,
 ): string {
   return format`
     ${ types.q }
@@ -125,7 +125,7 @@ export function q(
 export function Q(
   point: PointT,
   prev: PointT = defaultPoint,
-  precision: number,
+  precision: number = defaultPrecision,
 ): string {
   return format`
     ${ types.Q }
@@ -147,7 +147,7 @@ export function Q(
 export function t(
   point: PointT,
   prev: PointT = defaultPoint,
-  precision: number,
+  precision: number = defaultPrecision,
 ): string {
   return format`
     ${ types.t }
@@ -159,7 +159,7 @@ export function t(
 export function T(
   point: PointT,
   prev: PointT = defaultPoint,
-  precision: number,
+  precision: number = defaultPrecision,
 ): string {
   return format`
     ${ types.T }
@@ -171,7 +171,7 @@ export function T(
 export function c(
   point: PointT,
   prev: PointT = defaultPoint,
-  precision: number,
+  precision: number = defaultPrecision,
 ): string {
   return format`
     ${ types.c }
@@ -203,7 +203,7 @@ export function c(
 export function C(
   point: PointT,
   prev: PointT = defaultPoint,
-  precision: number,
+  precision: number = defaultPrecision,
 ): string {
   return format`
     ${ types.C }
@@ -235,7 +235,7 @@ export function C(
 export function s(
   point: PointT,
   prev: PointT = defaultPoint,
-  precision: number,
+  precision: number = defaultPrecision,
 ): string {
   return format`
     ${ types.s }
@@ -257,7 +257,7 @@ export function s(
 export function S(
   point: PointT,
   prev: PointT = defaultPoint,
-  precision: number,
+  precision: number = defaultPrecision,
 ): string {
   return format`
     ${ types.S }
@@ -279,7 +279,7 @@ export function S(
 export function a(
   point: PointT,
   prev: PointT = defaultPoint,
-  precision: number,
+  precision: number = defaultPrecision,
 ): string {
   return format`
     ${ types.a }
@@ -316,7 +316,7 @@ export function a(
 export function A(
   point: PointT,
   prev: PointT = defaultPoint,
-  precision: number,
+  precision: number = defaultPrecision,
 ): string {
   return format`
     ${ types.A }
