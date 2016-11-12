@@ -1,8 +1,17 @@
+/* @flow */
+
+import type { PathT } from "../../types/Path"
+
 import matrixOrigin from "../matrix-origin"
 import { parseDeg, degToRad } from "../../utils"
 
-export default function rotate(path, theta, x = 0, y = 0) {
-  if (typeof theta === "string") {
+export default function rotate(
+  path: PathT,
+  theta: string | number,
+  x: string | number = 0,
+  y: string | number = 0,
+): PathT {
+  if (typeof theta === 'string') {
     theta = degToRad(parseDeg(theta))
   }
 
