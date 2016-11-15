@@ -1,92 +1,58 @@
 /* @flow */
 
-import type { PointT, PointParamsT } from "../../types/Point"
 import type { PathT } from "../../types/Path"
+import type { CoordsT } from "../../types/Coords"
+import type { Matrix4x4T } from "../../types/Matrix"
 
-import { Point, defaultPoint } from "../../point/points"
-import { isH, isV } from "../../point/is"
-import isRelative from "../../point/is-relative"
+import { transformPath, transformOrigin, makeMatrix } from "../transform"
 
-export default function matrix(
-  path: PathT,
-  m: Array<number>,
-): PathT {
-  let lastComputedPoint: PointT = defaultPoint
+export function matrix3d(
+  m11: number,
+  m12: number,
+  m13: number,
+  m14: number,
+  m21: number,
+  m22: number,
+  m23: number,
+  m24: number,
+  m31: number,
+  m32: number,
+  m33: number,
+  m34: number,
+  m41: number,
+  m42: number,
+  m43: number,
+  m44: number,
+): Function {
+  const mat: Matrix4x4T = makeMatrix(
+    m11, m12, m13, m14,
+    m21, m22, m23, m24,
+    m31, m32, m33, m34,
+    m41, m42, m43, m44,
+  )
 
-  return path.map((point: PointT, index: number): PointT => {
-    const [x, y] = multiply3x1(m, [
-      point.x,
-      point.y,
-      1,
-    ])
-
-    let code = point.code
-
-    if (
-      (isH(point) && y !== lastComputedPoint.y)
-      || (isV(point) && x !== lastComputedPoint.x)
-    ) {
-      code = isRelative(point) ? 'l' : 'L'
-    }
-
-    let x1, y1, x2, y2
-
-    if (
-      typeof point.parameters.x1 !== 'undefined'
-      && typeof point.parameters.y1 !== 'undefined'
-    ) {
-      [x1, y1] = multiply3x1(m, [
-        point.parameters.x1,
-        point.parameters.y1,
-        1,
-      ])
-    }
-
-    if (
-      typeof point.parameters.x2 !== 'undefined'
-      && typeof point.parameters.y2 !== 'undefined'
-    ) {
-      [x2, y2] = multiply3x1(m, [
-        point.parameters.x2,
-        point.parameters.y2,
-        1,
-      ])
-    }
-
-    const parameters: PointParamsT = {
-      ...point.parameters,
-      ...(typeof x1 !== 'undefined' ? { x1 } : {}),
-      ...(typeof y1 !== 'undefined' ? { y1 } : {}),
-      ...(typeof x2 !== 'undefined' ? { x2 } : {}),
-      ...(typeof y2 !== 'undefined' ? { y2 } : {}),
-    }
-
-    lastComputedPoint = Point(code, x, y, parameters)
-
-    return lastComputedPoint
-  })
+  return (
+    path: PathT,
+    indices: Array<number> = [],
+    origin: CoordsT = { x: 0, y: 0, z: 0 },
+  ): PathT => transformOrigin(
+    transformPath(mat, indices),
+    origin,
+  )(path)
 }
 
-function multiply3x1(
-  a: Array<number>,
-  b: Array<number>,
-): Array<number> {
-  const a00: number = a[(0 * 3) + 0]
-  const a01: number = a[(0 * 3) + 1]
-  const a02: number = a[(0 * 3) + 2]
-  const a10: number = a[(1 * 3) + 0]
-  const a11: number = a[(1 * 3) + 1]
-  const a12: number = a[(1 * 3) + 2]
-  const a20: number = a[(2 * 3) + 0]
-  const a21: number = a[(2 * 3) + 1]
-  const a22: number = a[(2 * 3) + 2]
-  const b0: number = b[0]
-  const b1: number = b[1]
-  const b2: number = b[2]
-
-  return [
-    (a00 * b0) + (a01 * b1) + (a02 * b2),
-    (a10 * b0) + (a11 * b1) + (a12 * b2),
-    (a20 * b0) + (a21 * b1) + (a22 * b2),
-  ]
+export function matrix(
+  a: number,
+  b: number,
+  c: number,
+  d: number,
+  e: number,
+  f: number,
+): Function {
+  return matrix3d(
+    a, b, 0, 0,
+    c, d, 0, 0,
+    0, 0, 1, 0,
+    e, f, 0, 1,
+  )
 }

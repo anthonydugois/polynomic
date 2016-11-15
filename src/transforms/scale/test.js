@@ -1,4 +1,22 @@
+import {
+  scale3d,
+  scale,
+  scaleX,
+  scaleY,
+  scaleZ,
+} from "./index"
+
 import parse from "../../pathstring/parse"
+import isEqual from "../../path/is-equal"
+
+test('should return a function', () => {
+  const test = typeof scale3d(0, 0, 0)
+  const expected = 'function'
+
+  expect(test).toBe(expected)
+})
+
+/*import parse from "../../pathstring/parse"
 import isEqual from "../../path/is-equal"
 import scale from "./index"
 
@@ -24,4 +42,4 @@ test("should scale x0.5 the path on y", () => {
   const expected = "M0 0L100 0Q150 75 200 100"
 
   expect(isEqual(test, expected)).toBe(true)
-})
+})*/

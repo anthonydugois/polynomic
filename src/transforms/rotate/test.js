@@ -1,4 +1,22 @@
+import {
+  rotate3d,
+  rotate,
+  rotateX,
+  rotateY,
+  rotateZ,
+} from "./index"
+
 import parse from "../../pathstring/parse"
+import isEqual from "../../path/is-equal"
+
+test('should return a function', () => {
+  const test = typeof rotate3d(0, 0, 1, 0)
+  const expected = 'function'
+
+  expect(test).toBe(expected)
+})
+
+/*import parse from "../../pathstring/parse"
 import build from "../../pathstring/build"
 import isEqual from "../../path/is-equal"
 import rotate from "./index"
@@ -25,4 +43,4 @@ test("should rotate the path of PI/2 with a set origin", () => {
   const expected = "M50 -50L50 50"
 
   expect(isEqual(test, expected)).toBe(true)
-})
+})*/

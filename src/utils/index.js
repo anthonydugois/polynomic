@@ -1,7 +1,11 @@
+/* @flow */
+
+import type { PathT } from "../types/Path"
+import type { CoordsT } from "../types/Coords"
+
 import boundingBox from "../path/bounding-box"
 
-// alias for relative positions (%)
-const POSITIONS = {
+const positions = {
   left: 0,
   right: 100,
   top: 0,
@@ -9,44 +13,111 @@ const POSITIONS = {
   center: 50,
 }
 
-function relativeToAbsoluteX(x, bbox) {
+function relativeToAbsoluteX(
+  x: string,
+  bbox,
+): number {
   x = x.toLowerCase()
-  x = Object.keys(POSITIONS).indexOf(x) > -1 ? POSITIONS[x] : parseRelative(x)
 
-  return bbox.x + ((bbox.width * x) / 100)
+  const X: number = Object.keys(positions).includes(x) ?
+    positions[x] :
+    parseRelative(x)
+
+  return bbox.x + ((bbox.width * X) / 100)
 }
 
-function relativeToAbsoluteY(y, bbox) {
+function relativeToAbsoluteY(
+  y: string,
+  bbox,
+): number {
   y = y.toLowerCase()
-  y = Object.keys(POSITIONS).indexOf(y) > -1 ? POSITIONS[y] : parseRelative(y)
 
-  return bbox.y + ((bbox.height * y) / 100)
+  const Y: number = Object.keys(positions).includes(y) ?
+    positions[y] :
+    parseRelative(y)
+
+  return bbox.y + ((bbox.height * Y) / 100)
 }
 
-function parseRelative(str) {
-  return parseFloat(str.replace("%", ""))
+function parseRelative(
+  str: string,
+): number {
+  return parseFloat(str.replace('%', ''))
 }
 
-export function absoluteCoords(path, x, y) {
-  if (typeof x === "string" || typeof y === "string") {
+export function absoluteCoords(
+  path: PathT,
+  x: number | string,
+  y: number | string,
+): { x: number, y: number } {
+  if (typeof x === 'string' || typeof y === 'string') {
     const bbox = boundingBox(path)
 
-    if (typeof x === "string") {
-      x = relativeToAbsoluteX(x, bbox)
-    }
-
-    if (typeof y === "string") {
-      y = relativeToAbsoluteY(y, bbox)
+    return {
+      x: typeof x === 'string' ?
+        relativeToAbsoluteX(x, bbox) :
+        x,
+      y: typeof y === 'string' ?
+        relativeToAbsoluteY(y, bbox) :
+        y,
     }
   }
 
   return { x, y }
 }
 
-export function parseDeg(str) {
-  return parseFloat(str.replace("deg", ""))
+function parseAngle(
+  alpha: string,
+  unit: string = 'deg',
+): number {
+  return parseFloat(alpha.replace(unit, ''))
 }
 
-export function degToRad(deg) {
+function degToRad(
+  deg: number,
+): number {
   return (Math.PI / 180) * deg
+}
+
+function gradToRad(
+  grad: number,
+): number {
+  return (Math.PI / 200) * grad
+}
+
+function turnToRad(
+  turn: number,
+): number {
+  return (2 * Math.PI) * turn
+}
+
+function convertAngle(
+  alpha: string,
+): number {
+  alpha = alpha.trim()
+
+  switch (true) {
+  case alpha.endsWith('deg'):
+    return degToRad(parseAngle(alpha, 'deg'))
+
+  case alpha.endsWith('rad'):
+    return parseAngle(alpha, 'rad')
+
+  case alpha.endsWith('grad'):
+    return gradToRad(parseAngle(alpha, 'grad'))
+
+  case alpha.endsWith('turn'):
+    return turnToRad(parseAngle(alpha, 'turn'))
+
+  default:
+    return parseFloat(alpha)
+  }
+}
+
+export function angle(
+  alpha: number | string,
+): number {
+  return typeof alpha === 'string' ?
+    convertAngle(alpha) :
+    alpha
 }
