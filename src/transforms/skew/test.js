@@ -7,13 +7,6 @@ import {
 import parse from "../../pathstring/parse"
 import isEqual from "../../path/is-equal"
 
-test('should return a function', () => {
-  const test = typeof skew(0, 0)
-  const expected = 'function'
-
-  expect(test).toBe(expected)
-})
-
 /*import parse from "../../pathstring/parse"
 import build from "../../pathstring/build"
 import isEqual from "../../path/is-equal"

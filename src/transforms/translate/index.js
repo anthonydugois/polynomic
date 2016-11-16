@@ -1,34 +1,35 @@
 /* @flow */
 
-import type { PathT } from "../../types/Path"
-import type { CoordsT } from "../../types/Coords"
+import type { PathBoundingBoxT } from "../../types/Path"
 import type { Matrix4x4T } from "../../types/Matrix"
 
-import { transformPath, makeMatrix } from "../transform"
-import { absoluteCoords } from "../../utils"
+import {
+  relativeToAbsoluteX,
+  relativeToAbsoluteY,
+} from "../../utils"
 
 export function translate3d(
   tx: number | string,
   ty: number | string = 0,
   tz: number = 0,
 ): Function {
-  const matrix: Matrix4x4T = makeMatrix(
-    1, 0, 0, 0,
-    0, 1, 0, 0,
-    0, 0, 1, 0,
-    0, 0, tz, 1,
-  )
-
   return (
-    path: PathT,
-    indices: Array<number> = [],
-  ): PathT => {
-    const { x, y }: { x: number, y: number } = absoluteCoords(path, tx, ty)
+    bbox: PathBoundingBoxT,
+  ): Matrix4x4T => {
+    const x: number = typeof tx === 'string' ?
+      relativeToAbsoluteX(tx, bbox) :
+      tx
 
-    matrix[3] = x
-    matrix[7] = y
+    const y: number = typeof ty === 'string' ?
+      relativeToAbsoluteY(ty, bbox) :
+      ty
 
-    return transformPath(matrix, indices)(path)
+    return [
+      1, 0, 0, x,
+      0, 1, 0, y,
+      0, 0, 1, tz,
+      0, 0, 0, 1,
+    ]
   }
 }
 

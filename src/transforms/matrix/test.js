@@ -6,13 +6,6 @@ import {
 import parse from "../../pathstring/parse"
 import isEqual from "../../path/is-equal"
 
-test('should return a function', () => {
-  const test = typeof matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)
-  const expected = 'function'
-
-  expect(test).toBe(expected)
-})
-
 /*import parse from "../../pathstring/parse"
 import isEqual from "../../path/is-equal"
 import translate from "./index"

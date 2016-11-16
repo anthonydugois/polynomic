@@ -9,13 +9,6 @@ import {
 import parse from "../../pathstring/parse"
 import isEqual from "../../path/is-equal"
 
-test('should return a function', () => {
-  const test = typeof rotate3d(0, 0, 1, 0)
-  const expected = 'function'
-
-  expect(test).toBe(expected)
-})
-
 /*import parse from "../../pathstring/parse"
 import build from "../../pathstring/build"
 import isEqual from "../../path/is-equal"

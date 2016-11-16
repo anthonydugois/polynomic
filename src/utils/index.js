@@ -1,6 +1,6 @@
 /* @flow */
 
-import type { PathT } from "../types/Path"
+import type { PathT, PathBoundingBoxT } from "../types/Path"
 import type { CoordsT } from "../types/Coords"
 
 import boundingBox from "../path/bounding-box"
@@ -13,9 +13,9 @@ const positions = {
   center: 50,
 }
 
-function relativeToAbsoluteX(
+export function relativeToAbsoluteX(
   x: string,
-  bbox,
+  bbox: PathBoundingBoxT,
 ): number {
   x = x.toLowerCase()
 
@@ -26,9 +26,9 @@ function relativeToAbsoluteX(
   return bbox.x + ((bbox.width * X) / 100)
 }
 
-function relativeToAbsoluteY(
+export function relativeToAbsoluteY(
   y: string,
-  bbox,
+  bbox: PathBoundingBoxT,
 ): number {
   y = y.toLowerCase()
 

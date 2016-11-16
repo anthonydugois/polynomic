@@ -1,166 +1,167 @@
 /* @flow */
 
 import type { PointT, PointCodeT, PointParamsT } from "../../types/Point"
-import type { PathT } from "../../types/Path"
+import type { PathT, PathBoundingBoxT } from "../../types/Path"
 import type { CoordsT } from "../../types/Coords"
 import type { Matrix4x4T, Matrix1x4T } from "../../types/Matrix"
 
+import boundingBox from "../../path/bounding-box"
+import { translate3d } from "../translate"
 import { Point, defaultPoint } from "../../point/points"
 import { isH, isV } from "../../point/is"
 import isRelative from "../../point/is-relative"
-import { translate3d } from "../translate"
-import { absoluteCoords } from "../../utils"
+
+export const identity: Matrix4x4T = [
+  1, 0, 0, 0,
+  0, 1, 0, 0,
+  0, 0, 1, 0,
+  0, 0, 0, 1,
+]
 
 export function transform(
-  ...funcs: Array<Function>
+  ...matrices: Array<Function | Matrix4x4T>
 ): Function {
   return (
     path: PathT,
     indices: Array<number> = [],
-    origin: CoordsT = { x: 0, y: 0, z: 0 },
-  ): PathT => funcs.reduce(
-    (
-      acc: PathT,
-      fn: Function,
-    ) => fn(acc, indices, origin),
-    path,
-  )
-}
-
-export function transformPath(
-  matrix: Matrix4x4T,
-  indices: Array<number> = [],
-): Function {
-  return (
-    path: PathT,
+    origin: CoordsT = { x: 0, y: 0 },
   ): PathT => {
-    let prev: PointT = defaultPoint
-
-    return path.map(
+    const bbox: PathBoundingBoxT = boundingBox(path)
+    const matrix: Matrix4x4T = matrices.reduce(
       (
-        point: PointT,
-        index: number,
-      ): PointT => {
-        if (indices.length > 0 && !indices.includes(index)) {
-          return prev = point
-        }
+        acc: Matrix4x4T,
+        matrix: Function | Matrix4x4T,
+      ): Matrix4x4T => {
+        const m: Matrix4x4T = typeof matrix === 'function' ?
+          matrix(transformBoundingBox(bbox, acc)) :
+          matrix
 
-        const [x, y]: Matrix1x4T = multiplyVector(
-          matrix,
-          makeVector(point.x, point.y, 0, 1),
-        )
-
-        const shouldConvertH: boolean = isH(point) && y !== prev.y
-        const shouldConvertV: boolean = isV(point) && x !== prev.x
-        const shouldConvertCode: boolean = shouldConvertH || shouldConvertV
-
-        const code: PointCodeT = shouldConvertCode ?
-          (isRelative(point) ? 'l' : 'L') :
-          point.code
-
-        const anchors: PointParamsT = {}
-
-        if (
-          typeof point.parameters.x1 !== 'undefined'
-          && typeof point.parameters.y1 !== 'undefined'
-        ) {
-          const [x1, y1]: Matrix1x4T = multiplyVector(
-            matrix,
-            makeVector(point.parameters.x1, point.parameters.y1, 0, 1),
-          )
-
-          anchors.x1 = x1
-          anchors.y1 = y1
-        }
-
-        if (
-          typeof point.parameters.x2 !== 'undefined'
-          && typeof point.parameters.y2 !== 'undefined'
-        ) {
-          const [x2, y2]: Matrix1x4T = multiplyVector(
-            matrix,
-            makeVector(point.parameters.x2, point.parameters.y2, 0, 1),
-          )
-
-          anchors.x2 = x2
-          anchors.y2 = y2
-        }
-
-        return prev = Point(code, x, y, {
-          ...point.parameters,
-          ...anchors,
-        })
-      }
+        return multiply(acc, m)
+      },
+      identity,
     )
+
+    return transformOrigin(path, matrix, indices, origin)
   }
 }
 
 export function transformOrigin(
-  transforms: Function,
-  origin: CoordsT = { x: 0, y: 0, z: 0 },
-): Function {
-  const shouldCompute = origin.x !== 0
+  path: PathT,
+  matrix: Matrix4x4T,
+  indices: Array<number> = [],
+  origin: CoordsT = { x: 0, y: 0 },
+): PathT {
+  const shouldTransformOrigin: boolean = origin.x !== 0
     || origin.y !== 0
     || (typeof origin.z !== 'undefined' && origin.z !== 0)
 
-  if (shouldCompute) {
-    return (
-      path: PathT,
-    ): PathT => {
-      const { x, y }: { x: number, y: number } = absoluteCoords(path, origin.x, origin.y)
-      const z: number = typeof origin.z !== 'undefined' ?
-        origin.z :
-        0
+  if (shouldTransformOrigin) {
+    const positive: Matrix4x4T = translate3d(
+      origin.x,
+      origin.y,
+      typeof origin.z !== 'undefined' ? origin.z : 0,
+    )(boundingBox(path))
 
-      return transform(
-        translate3d(-x, -y, -z),
-        transforms,
-        translate3d(x, y, z),
-      )(path)
-    }
+    const negative: Matrix4x4T = positive.slice()
+
+    negative[3] = -negative[3]
+    negative[7] = -negative[7]
+    negative[11] = -negative[11]
+
+    const translated = transformPath(path, negative, indices)
+    const transformed = transformPath(translated, matrix, indices)
+
+    return transformPath(transformed, positive, indices)
   }
 
-  return (path: PathT): PathT => path
+  return transformPath(path, matrix, indices)
 }
 
-export function makeMatrix(
-  m11: number,
-  m12: number,
-  m13: number,
-  m14: number,
-  m21: number,
-  m22: number,
-  m23: number,
-  m24: number,
-  m31: number,
-  m32: number,
-  m33: number,
-  m34: number,
-  m41: number,
-  m42: number,
-  m43: number,
-  m44: number,
-): Matrix4x4T {
-  return [
-    m11, m21, m31, m41,
-    m12, m22, m32, m42,
-    m13, m23, m33, m43,
-    m14, m24, m34, m44,
-  ]
+export function transformPath(
+  path: PathT,
+  matrix: Matrix4x4T,
+  indices: Array<number> = [],
+): PathT {
+  let prev: PointT = defaultPoint
+
+  return path.map(
+    (
+      point: PointT,
+      index: number,
+    ): PointT => {
+      if (indices.length > 0 && !indices.includes(index)) {
+        return prev = point
+      }
+
+      const [x, y]: Matrix1x4T = multiplyVector(
+        matrix,
+        [point.x, point.y, 0, 1],
+      )
+
+      const shouldConvertH: boolean = isH(point) && y !== prev.y
+      const shouldConvertV: boolean = isV(point) && x !== prev.x
+      const shouldConvertCode: boolean = shouldConvertH || shouldConvertV
+
+      const code: PointCodeT = shouldConvertCode ?
+        (isRelative(point) ? 'l' : 'L') :
+        point.code
+
+      const anchors: PointParamsT = {}
+
+      if (
+        typeof point.parameters.x1 !== 'undefined'
+        && typeof point.parameters.y1 !== 'undefined'
+      ) {
+        const [x1, y1]: Matrix1x4T = multiplyVector(
+          matrix,
+          [point.parameters.x1, point.parameters.y1, 0, 1],
+        )
+
+        anchors.x1 = x1
+        anchors.y1 = y1
+      }
+
+      if (
+        typeof point.parameters.x2 !== 'undefined'
+        && typeof point.parameters.y2 !== 'undefined'
+      ) {
+        const [x2, y2]: Matrix1x4T = multiplyVector(
+          matrix,
+          [point.parameters.x2, point.parameters.y2, 0, 1],
+        )
+
+        anchors.x2 = x2
+        anchors.y2 = y2
+      }
+
+      return prev = Point(code, x, y, {
+        ...point.parameters,
+        ...anchors,
+      })
+    }
+  )
 }
 
-export function makeVector(
-  m11: number,
-  m12: number,
-  m13: number,
-  m14: number,
-): Matrix1x4T {
-  return [
-    m11,
-    m12,
-    m13,
-    m14,
-  ]
+export function transformBoundingBox(
+  bbox: PathBoundingBoxT,
+  matrix: Matrix4x4T,
+): PathBoundingBoxT {
+  const [x0, y0]: Matrix1x4T = multiplyVector(
+    matrix,
+    [bbox.x, bbox.y, 0, 1],
+  )
+
+  const [x1, y1]: Matrix1x4T = multiplyVector(
+    matrix,
+    [bbox.x + bbox.width, bbox.y + bbox.height, 0, 1],
+  )
+
+  return {
+    x: x0,
+    y: y0,
+    width: x1 - x0,
+    height: y1 - y0,
+  }
 }
 
 export function multiply(

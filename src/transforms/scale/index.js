@@ -1,35 +1,24 @@
-import type { PathT } from "../../types/Path"
-import type { CoordsT } from "../../types/Coords"
-import type { Matrix4x4T } from "../../types/Matrix"
+/* @flow */
 
-import { transformPath, transformOrigin, makeMatrix } from "../transform"
+import type { Matrix4x4T } from "../../types/Matrix"
 
 export function scale3d(
   sx: number,
   sy: number,
   sz: number,
-): Function {
-  const matrix: Matrix4x4T = makeMatrix(
+): Matrix4x4T {
+  return [
     sx, 0, 0, 0,
     0, sy, 0, 0,
     0, 0, sz, 0,
     0, 0, 0, 1,
-  )
-
-  return (
-    path: PathT,
-    indices: Array<number> = [],
-    origin: CoordsT = { x: 0, y: 0, z: 0 },
-  ): PathT => transformOrigin(
-    transformPath(matrix, indices),
-    origin,
-  )(path)
+  ]
 }
 
 export function scale(
   sx: number,
   sy: number,
-): Function {
+): Matrix4x4T {
   if (typeof sy === 'undefined') {
     sy = sx
   }
@@ -39,18 +28,18 @@ export function scale(
 
 export function scaleX(
   sx: number,
-): Function {
+): Matrix4x4T {
   return scale3d(sx, 1, 1)
 }
 
 export function scaleY(
   sy: number,
-): Function {
+): Matrix4x4T {
   return scale3d(1, sy, 1)
 }
 
 export function scaleZ(
   sz: number,
-): Function {
+): Matrix4x4T {
   return scale3d(1, 1, sz)
 }
