@@ -1,3 +1,5 @@
+import { transform } from "../transform"
+
 import {
   skew,
   skewX,
@@ -7,31 +9,32 @@ import {
 import parse from "../../pathstring/parse"
 import isEqual from "../../path/is-equal"
 
-/*import parse from "../../pathstring/parse"
-import build from "../../pathstring/build"
-import isEqual from "../../path/is-equal"
-import skew from "./index"
+test('should apply a skew transform on the path', () => {
+  const path = parse('M0 0L100 0L100 100')
+  const a = Math.PI / 6
 
-test("should skew the path of PI/6 on x and y", () => {
-  const path = parse("M0 0L100 0L100 100")
-  const test = build(skew(path, Math.PI / 6, Math.PI / 6))
-  const expected = "M0 0L100 57.735L157.735 157.735"
+  const test = transform(skew(a, a))(path)
+  const expected = 'M0 0L100 57.735026918962575L157.73502691896257 157.73502691896257'
 
   expect(isEqual(test, expected)).toBe(true)
 })
 
-test("should skew the path of PI/6 on x", () => {
-  const path = parse("M0 0L100 0L100 100")
-  const test = build(skew(path, Math.PI / 6, 0))
-  const expected = "M0 0L100 0L157.735 100"
+test('should apply a skewX transform on the path', () => {
+  const path = parse('M0 0L100 0L100 100')
+  const a = Math.PI / 6
+
+  const test = transform(skewX(a))(path)
+  const expected = 'M0 0L100 0L157.73502691896257 100'
 
   expect(isEqual(test, expected)).toBe(true)
 })
 
-test("should skew the path of PI/6 on y", () => {
-  const path = parse("M0 0L100 0L100 100")
-  const test = build(skew(path, 0, Math.PI / 6))
-  const expected = "M0 0L100 57.735L100 157.735"
+test('should apply a skewY transform on the path', () => {
+  const path = parse('M0 0L100 0L100 100')
+  const a = Math.PI / 6
+
+  const test = transform(skewY(Math.PI / 6))(path)
+  const expected = 'M0 0L100 57.735026918962575L100 157.73502691896257'
 
   expect(isEqual(test, expected)).toBe(true)
-})*/
+})

@@ -1,3 +1,5 @@
+import { transform } from "../transform"
+
 import {
   scale3d,
   scale,
@@ -9,30 +11,47 @@ import {
 import parse from "../../pathstring/parse"
 import isEqual from "../../path/is-equal"
 
-/*import parse from "../../pathstring/parse"
-import isEqual from "../../path/is-equal"
-import scale from "./index"
+test('should apply a scale3d transform on the path', () => {
+  const path = parse('M0 0L100 0Q150 150 200 200')
 
-test("should scale x2 the path on x and y", () => {
-  const path = parse("M0 0L100 0Q150 150 200 200")
-  const test = scale(path, 2, 2)
-  const expected = "M0 0L200 0Q300 300 400 400"
+  const test = transform(scale3d(2, 2, 0))(path)
+  const expected = 'M0 0L200 0Q300 300 400 400'
 
   expect(isEqual(test, expected)).toBe(true)
 })
 
-test("should scale x0.5 the path on x", () => {
-  const path = parse("M0 0L100 0Q150 150 200 200")
-  const test = scale(path, .5, 1)
-  const expected = "M0 0L50 0Q75 150 100 200"
+test('should apply a scale transform on the path', () => {
+  const path = parse('M0 0L100 0Q150 150 200 200')
+
+  const test = transform(scale(2, 2))(path)
+  const expected = 'M0 0L200 0Q300 300 400 400'
 
   expect(isEqual(test, expected)).toBe(true)
 })
 
-test("should scale x0.5 the path on y", () => {
-  const path = parse("M0 0L100 0Q150 150 200 200")
-  const test = scale(path, 1, .5)
-  const expected = "M0 0L100 0Q150 75 200 100"
+test('should apply a scaleX transform on the path', () => {
+  const path = parse('M0 0L100 0Q150 150 200 200')
+
+  const test = transform(scaleX(.5))(path)
+  const expected = 'M0 0L50 0Q75 150 100 200'
 
   expect(isEqual(test, expected)).toBe(true)
-})*/
+})
+
+test('should apply a scaleY transform on the path', () => {
+  const path = parse('M0 0L100 0Q150 150 200 200')
+
+  const test = transform(scaleY(.5))(path)
+  const expected = 'M0 0L100 0Q150 75 200 100'
+
+  expect(isEqual(test, expected)).toBe(true)
+})
+
+test('should apply a scaleZ transform on the path', () => {
+  const path = parse('M0 0L100 0Q150 150 200 200')
+
+  const test = transform(scaleZ(1))(path)
+  const expected = 'M0 0L100 0Q150 150 200 200'
+
+  expect(isEqual(test, expected)).toBe(true)
+})
