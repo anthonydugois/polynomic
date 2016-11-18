@@ -61,10 +61,13 @@ test('should apply a translateY transform on the path', () => {
 })
 
 test('should apply a translateZ transform on the path', () => {
-  const path = parse('M0 0L100 100Q150 150 200 200')
+  const path = parse('M0 0h100v100h-100z')
 
-  const test = transform(translateZ(0))(path)
-  const expected = 'M0 0L100 100Q150 150 200 200'
+  const test = transform(
+    perspective(200),
+    translateZ(100),
+  )(path)
+  const expected = 'M0 0h200v200h-200z'
 
   expect(isEqual(test, expected)).toBe(true)
 })

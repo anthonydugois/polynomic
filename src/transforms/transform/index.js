@@ -1,7 +1,7 @@
 /* @flow */
 
 import type { PointT, PointCodeT, PointParamsT } from "../../types/Point"
-import type { PathT, PathBoundingBoxT } from "../../types/Path"
+import type { PathT, PathBoundingBoxT, PathTransformOptionsT } from "../../types/Path"
 import type { CoordsT } from "../../types/Coords"
 import type { Matrix4x4T, Matrix1x4T } from "../../types/Matrix"
 
@@ -18,22 +18,31 @@ export const identity: Matrix4x4T = [
   0, 0, 0, 1,
 ]
 
+export function defaultTransformOptions(
+  options: {} = {},
+): PathTransformOptionsT {
+  return {
+    indices: [],
+    transformOrigin: { x: 0, y: 0 },
+    ...options,
+  }
+}
+
 export function transform(
   ...matrices: Array<Function | Matrix4x4T>
 ): Function {
   return (
     path: PathT,
-    indices: Array<number> = [],
-    origin: CoordsT = { x: 0, y: 0 },
+    transformOptions: {} = {},
   ): PathT => {
-    const bbox: PathBoundingBoxT = boundingBox(path)
+    const opt: PathTransformOptionsT = defaultTransformOptions(transformOptions)
     const matrix: Matrix4x4T = matrices.reduce(
       (
         acc: Matrix4x4T,
         matrix: Function | Matrix4x4T,
       ): Matrix4x4T => {
         const m: Matrix4x4T = typeof matrix === 'function' ?
-          matrix(transformBoundingBox(bbox, acc)) :
+          matrix(transformBoundingBox(boundingBox(path), acc)) :
           matrix
 
         return multiply(acc, m)
@@ -41,56 +50,64 @@ export function transform(
       identity,
     )
 
-    return transformOrigin(path, matrix, indices, origin)
+    return transformPath(path, matrix, opt)
   }
-}
-
-export function transformOrigin(
-  path: PathT,
-  matrix: Matrix4x4T,
-  indices: Array<number> = [],
-  origin: CoordsT = { x: 0, y: 0 },
-): PathT {
-  const shouldTransformOrigin: boolean = origin.x !== 0
-    || origin.y !== 0
-    || (typeof origin.z !== 'undefined' && origin.z !== 0)
-
-  if (shouldTransformOrigin) {
-    const positive: Matrix4x4T = translate3d(
-      origin.x,
-      origin.y,
-      typeof origin.z !== 'undefined' ? origin.z : 0,
-    )(boundingBox(path))
-
-    const negative: Matrix4x4T = positive.slice()
-
-    negative[3] = -negative[3]
-    negative[7] = -negative[7]
-    negative[11] = -negative[11]
-
-    const translated = transformPath(path, negative, indices)
-    const transformed = transformPath(translated, matrix, indices)
-
-    return transformPath(transformed, positive, indices)
-  }
-
-  return transformPath(path, matrix, indices)
 }
 
 export function transformPath(
   path: PathT,
   matrix: Matrix4x4T,
-  indices: Array<number> = [],
+  transformOptions: {} = {},
 ): PathT {
-  let prev: PointT = defaultPoint
+  const opt: PathTransformOptionsT = defaultTransformOptions(transformOptions)
+  const shouldTransformOrigin: boolean = opt.transformOrigin.x !== 0
+    || opt.transformOrigin.y !== 0
+    || (typeof opt.transformOrigin.z !== 'undefined'
+      && opt.transformOrigin.z !== 0)
 
-  return path.map(
+  if (shouldTransformOrigin) {
+    const forward: Matrix4x4T = translate3d(
+      opt.transformOrigin.x,
+      opt.transformOrigin.y,
+      typeof opt.transformOrigin.z !== 'undefined' ?
+        opt.transformOrigin.z :
+        0,
+    )(boundingBox(path))
+
+    const back: Matrix4x4T = forward.slice()
+
+    back[3] = -back[3]
+    back[7] = -back[7]
+    back[11] = -back[11]
+
+    const translatedBack: PathT = applyMatrix(path, back, opt)
+    const transformed: PathT = applyMatrix(translatedBack, matrix, opt)
+    const translatedForward: PathT = applyMatrix(transformed, forward, opt)
+
+    return translatedForward
+  }
+
+  return applyMatrix(path, matrix, opt)
+}
+
+export function applyMatrix(
+  path: PathT,
+  matrix: Matrix4x4T,
+  transformOptions: {} = {},
+): PathT {
+  const opt: PathTransformOptionsT = defaultTransformOptions(transformOptions)
+
+  return path.reduce(
     (
+      acc: PathT,
       point: PointT,
       index: number,
-    ): PointT => {
-      if (indices.length > 0 && !indices.includes(index)) {
-        return prev = point
+    ): PathT => {
+      if (opt.indices.length > 0 && !opt.indices.includes(index)) {
+        return [
+          ...acc,
+          point,
+        ]
       }
 
       const [_x, _y, , w]: Matrix1x4T = multiplyVector(
@@ -98,11 +115,15 @@ export function transformPath(
         [point.x, point.y, 0, 1],
       )
 
+      if (w <= 0) {
+        return acc
+      }
+
       const x: number = _x / w
       const y: number = _y / w
 
-      const shouldConvertH: boolean = isH(point) && y !== prev.y
-      const shouldConvertV: boolean = isV(point) && x !== prev.x
+      const shouldConvertH: boolean = isH(point) && y !== acc[acc.length - 1].y
+      const shouldConvertV: boolean = isV(point) && x !== acc[acc.length - 1].x
       const shouldConvertCode: boolean = shouldConvertH || shouldConvertV
 
       const code: PointCodeT = shouldConvertCode ?
@@ -137,11 +158,15 @@ export function transformPath(
         anchors.y2 = y2 / w2
       }
 
-      return prev = Point(code, x, y, {
-        ...point.parameters,
-        ...anchors,
-      })
-    }
+      return [
+        ...acc,
+        Point(code, x, y, {
+          ...point.parameters,
+          ...anchors,
+        }),
+      ]
+    },
+    [],
   )
 }
 

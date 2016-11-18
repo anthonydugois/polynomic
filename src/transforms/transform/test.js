@@ -1,7 +1,7 @@
 import {
   transform,
   transformPath,
-  transformOrigin,
+  applyMatrix,
   multiply,
   multiplyVector,
 } from "./index"
@@ -29,7 +29,7 @@ test('should apply the matrix on the path', () => {
     0, 0, 0, 1,
   ]
 
-  const test = transformPath(path, matrix)
+  const test = applyMatrix(path, matrix)
   const expected = 'M100 100L200 200Q250 250 300 300'
 
   expect(isEqual(test, expected)).toBe(true)
@@ -43,9 +43,8 @@ test('should apply the transform with a modified origin', () => {
     0, 0, 1, 0,
     0, 0, 0, 1,
   ]
-  const origin = { x: 50, y: 50 }
 
-  const test = transformOrigin(path, matrix, [], origin)
+  const test = transformPath(path, matrix, { transformOrigin: { x: 50, y: 50 }})
   const expected = 'M-50-50h200v200h-200z'
 
   expect(isEqual(test, expected)).toBe(true)
@@ -59,9 +58,8 @@ test('should apply the transform with a modified relative origin', () => {
     0, 0, 1, 0,
     0, 0, 0, 1,
   ]
-  const origin = { x: '50%', y: '50%' }
 
-  const test = transformOrigin(path, matrix, [], origin)
+  const test = transformPath(path, matrix, { transformOrigin: { x: 50, y: 50 }})
   const expected = 'M-50-50h200v200h-200z'
 
   expect(isEqual(test, expected)).toBe(true)
