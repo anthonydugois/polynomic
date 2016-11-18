@@ -93,10 +93,13 @@ export function transformPath(
         return prev = point
       }
 
-      const [x, y]: Matrix1x4T = multiplyVector(
+      const [_x, _y, , w]: Matrix1x4T = multiplyVector(
         matrix,
         [point.x, point.y, 0, 1],
       )
+
+      const x: number = _x / w
+      const y: number = _y / w
 
       const shouldConvertH: boolean = isH(point) && y !== prev.y
       const shouldConvertV: boolean = isV(point) && x !== prev.x
@@ -112,26 +115,26 @@ export function transformPath(
         typeof point.parameters.x1 !== 'undefined'
         && typeof point.parameters.y1 !== 'undefined'
       ) {
-        const [x1, y1]: Matrix1x4T = multiplyVector(
+        const [x1, y1, , w1]: Matrix1x4T = multiplyVector(
           matrix,
           [point.parameters.x1, point.parameters.y1, 0, 1],
         )
 
-        anchors.x1 = x1
-        anchors.y1 = y1
+        anchors.x1 = x1 / w1
+        anchors.y1 = y1 / w1
       }
 
       if (
         typeof point.parameters.x2 !== 'undefined'
         && typeof point.parameters.y2 !== 'undefined'
       ) {
-        const [x2, y2]: Matrix1x4T = multiplyVector(
+        const [x2, y2, , w2]: Matrix1x4T = multiplyVector(
           matrix,
           [point.parameters.x2, point.parameters.y2, 0, 1],
         )
 
-        anchors.x2 = x2
-        anchors.y2 = y2
+        anchors.x2 = x2 / w2
+        anchors.y2 = y2 / w2
       }
 
       return prev = Point(code, x, y, {

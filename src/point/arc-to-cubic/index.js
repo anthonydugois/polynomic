@@ -1,5 +1,6 @@
 import { Point, C, c } from "../points"
 import isRelative from "../is-relative"
+import { transformPath } from "../../transforms/transform"
 import { rotate } from "../../transforms/rotate"
 
 export default function arcToCubic(prev, point, center = null) {
@@ -23,8 +24,8 @@ export default function arcToCubic(prev, point, center = null) {
     f2 = center[3]
   } else {
     const rotation = rotate(-angle)
-    const _prev = rotation([prev])[0]
-    const _point = rotation([point])[0]
+    const _prev = transformPath([prev], rotation)[0]
+    const _point = transformPath([point], rotation)[0]
 
     x1 = _prev.x
     y1 = _prev.y
@@ -116,5 +117,5 @@ export default function arcToCubic(prev, point, center = null) {
     return [cubic, ...partial]
   }
 
-  return rotate(angle)([cubic, ...partial])
+  return transformPath([cubic, ...partial], rotate(angle))
 }

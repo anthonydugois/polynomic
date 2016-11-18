@@ -1,4 +1,5 @@
 import { transform } from "../transform"
+import { perspective } from "../perspective"
 
 import {
   translate3d,
@@ -12,10 +13,13 @@ import parse from "../../pathstring/parse"
 import isEqual from "../../path/is-equal"
 
 test('should apply a translate3d transform on the path', () => {
-  const path = parse('M0 0L100 100Q150 150 200 200')
+  const path = parse('M0 0L100 0L100 100L0 100z')
 
-  const test = transform(translate3d(100, 100, 0))(path)
-  const expected = 'M100 100L200 200Q250 250 300 300'
+  const test = transform(
+    perspective(200),
+    translate3d(100, 100, 100),
+  )(path)
+  const expected = 'M200 200L400 200L400 400L200 400z'
 
   expect(isEqual(test, expected)).toBe(true)
 })
