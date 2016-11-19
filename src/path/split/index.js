@@ -1,42 +1,59 @@
-function addToLastPath(paths, point) {
-  const lastPathIndex = paths.length - 1
-  const lastPath = paths[lastPathIndex]
+/* @flow */
 
-  return [
-    ...paths.slice(0, lastPathIndex),
-    [...lastPath, point],
-  ]
-}
+import type { PointT } from "../../types/Point"
+import type { PathT } from "../../types/Path"
 
-function addNewPath(paths) {
-  return [
-    ...paths,
-    [],
-  ]
-}
-
-export default function split(path, shouldSplit, shouldKeep = "") {
+export default function split(
+  path: PathT,
+  shouldSplit: Function,
+  shouldKeep: '' | 'before' | 'after' = '',
+): Array<PathT> {
   return path.reduce(
-    (paths, point, index) => {
-      if (index === 0) {
-        return addToLastPath(addNewPath(paths), point)
-      }
-
-      if (shouldSplit(point, index)) {
+    (
+      paths: Array<PathT>,
+      current: PointT,
+      index: number,
+    ): Array<PathT> => {
+      if (index > 0 && shouldSplit(current, index)) {
         switch (shouldKeep) {
-        case "before":
-          return addNewPath(addToLastPath(paths, point))
+        case 'before':
+          return addNewPath(addToLastPath(paths, current))
 
-        case "after":
-          return addToLastPath(addNewPath(paths), point)
+        case 'after':
+          return addToLastPath(addNewPath(paths), current)
 
         default:
           return addNewPath(paths)
         }
       }
 
-      return addToLastPath(paths, point)
+      return addToLastPath(paths, current)
     },
-    [],
+    [[]],
   )
+}
+
+function addToLastPath(
+  paths: Array<PathT>,
+  point: PointT,
+): Array<PathT> {
+  const lastPathIndex: number = paths.length - 1
+  const lastPath: PathT = paths[lastPathIndex]
+
+  return [
+    ...paths.slice(0, lastPathIndex),
+    [
+      ...lastPath,
+      point,
+    ],
+  ]
+}
+
+function addNewPath(
+  paths: Array<PathT>,
+): Array<PathT> {
+  return [
+    ...paths,
+    [],
+  ]
 }

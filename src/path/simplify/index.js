@@ -1,26 +1,28 @@
+/* @flow */
+
+import type { PointT } from "../../types/Point"
+import type { PathT } from "../../types/Path"
+
 import distanceSegment from "../../point/distance-segment"
 
-export default function simplify(path, tolerance) {
-  let max = 0
-  let index = 0
+type DistanceT = {
+  index: number,
+  distance: number,
+}
 
-  for (let i = 1, len = path.length ; i < len - 1 ; i++) {
-    const point = path[i]
-    const distance = distanceSegment(point, path[0], path[path.length - 1])
+export default function simplify(
+  path: PathT,
+  tolerance: number,
+): PathT {
+  const { index, distance }: DistanceT = getMaxDistance(path)
 
-    if (distance > max) {
-      index = i
-      max = distance
-    }
-  }
-
-  if (max >= tolerance) {
-    const res1 = simplify(path.slice(0, index + 1), tolerance)
-    const res2 = simplify(path.slice(index, path.length), tolerance)
+  if (distance >= tolerance) {
+    const path1: PathT = simplify(path.slice(0, index + 1), tolerance)
+    const path2: PathT = simplify(path.slice(index, path.length), tolerance)
 
     return [
-      ...res1.slice(0, res1.length - 1),
-      ...res2,
+      ...path1.slice(0, path1.length - 1),
+      ...path2,
     ]
   }
 
@@ -28,4 +30,31 @@ export default function simplify(path, tolerance) {
     path[0],
     path[path.length - 1],
   ]
+}
+
+function getMaxDistance(
+  path: PathT,
+): DistanceT {
+  const first: PointT = path[0]
+  const last: PointT = path[path.length - 1]
+
+  return path.reduce(
+    (
+      acc: DistanceT,
+      current: PointT,
+      index: number,
+    ): DistanceT => {
+      const distance: number = distanceSegment(current, first, last)
+
+      if (distance > acc.distance) {
+        return { index, distance }
+      }
+
+      return acc
+    },
+    {
+      index: 0,
+      distance: 0,
+    },
+  )
 }

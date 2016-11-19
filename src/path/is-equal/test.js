@@ -16,8 +16,8 @@ test("should check that the pathstrings are equal", () => {
 })
 
 test("should check that the paths are not equal", () => {
-  const test = parse("M0 0l10 10")
-  const expected = "M0 0l10 10l20 20"
+  const test = parse("M0 0q10 10 20 20")
+  const expected = "M0 0q15 10 20 20"
 
   expect(isEqual(test, expected)).toBe(false)
 })

@@ -1,18 +1,75 @@
-import _isEqual from "lodash.isequal"
+/* @flow */
+
+import type { PointT, PointParamsT } from "../../types/Point"
+import type { PathT } from "../../types/Path"
+
 import parse from "../../pathstring/parse"
+import round, { defaultPrecision } from "../../utils/round"
 
-export default function isEqual(d1, d2) {
-  if (typeof d1 === "string") {
-    d1 = parse(d1)
-  } else if (!Array.isArray(d1)) {
-    throw new Error(`The provided parameter "${ d1 }" should be a string or an array of points.`)
+export default function isEqual(
+  d1: string | PathT,
+  d2: string | PathT,
+  precision: number = defaultPrecision,
+): boolean {
+  const path1: PathT = typeof d1 === 'string' ?
+    parse(d1) :
+    d1
+
+  const path2: PathT = typeof d2 === 'string' ?
+    parse(d2) :
+    d2
+
+  if (path1.length !== path2.length) {
+    return false
   }
 
-  if (typeof d2 === "string") {
-    d2 = parse(d2)
-  } else if (!Array.isArray(d2)) {
-    throw new Error(`The provided parameter "${ d2 }" should be a string or an array of points.`)
-  }
+  return path1.every((
+    point: PointT,
+    index: number,
+  ): boolean => isPointEqual(
+    point,
+    path2[index],
+    precision,
+  ))
+}
 
-  return _isEqual(d1, d2)
+export function isPointEqual(
+  point1: PointT,
+  point2: PointT,
+  precision: number = defaultPrecision,
+): boolean {
+  return point1.code === point2.code
+    && round(point1.x, precision) === round(point2.x, precision)
+    && round(point1.y, precision) === round(point2.y, precision)
+    && areParametersEqual(point1.parameters, point2.parameters)
+}
+
+export function areParametersEqual(
+  parameters1: PointParamsT,
+  parameters2: PointParamsT,
+  precision: number = defaultPrecision,
+): boolean {
+  return Object.keys(parameters1).every((
+    key: string,
+  ): boolean => isParameterEqual(
+    parameters1[key],
+    parameters2[key],
+    precision,
+  ))
+}
+
+export function isParameterEqual(
+  parameter1: any,
+  parameter2: any,
+  precision: number = defaultPrecision,
+): boolean {
+  const p1 = typeof parameter1 === 'number' ?
+    round(parameter1, precision) :
+    parameter1
+
+  const p2 = typeof parameter2 === 'number' ?
+    round(parameter2, precision) :
+    parameter2
+
+  return p1 === p2
 }

@@ -1,21 +1,34 @@
-export default function join(paths, makeJoin = () => []) {
+/* @flow */
+
+import type { PointT } from "../../types/Point"
+import type { PathT } from "../../types/Path"
+
+export default function join(
+  paths: Array<PathT>,
+  makeJoin: Function = () => [],
+): PathT {
   return paths.reduce(
-    (acc, path, index) => {
-      if (index >= paths.length - 1) {
+    (
+      acc: PathT,
+      path: PathT,
+      index: number,
+    ): PathT => {
+      if (index < paths.length - 1) {
+        const prevPath: PathT = path
+        const nextPath: PathT = paths[index + 1]
+        const segment: PointT | PathT = makeJoin(prevPath, nextPath)
+        const segments: PathT = Array.isArray(segment) ? segment : [segment]
+
         return [
           ...acc,
           ...path,
+          ...segments,
         ]
       }
-
-      const prevPath = path
-      const nextPath = paths[index + 1]
-      const segment = makeJoin(prevPath, nextPath)
 
       return [
         ...acc,
         ...path,
-        ...Array.isArray(segment) ? segment : [segment],
       ]
     },
     [],

@@ -11,7 +11,7 @@ test("should reverse the path", () => {
 })
 
 test("should reverse the reversed path and give the exact initial path", () => {
-  const path = parse("M0 0 L100 0 L100 100")
+  const path = parse("M0 0 L100 0z M50 50 L100 100")
   const reversed = reverse(path)
   const test = reverse(reversed)
   const expected = path

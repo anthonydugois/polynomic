@@ -1,67 +1,87 @@
+/* @flow */
+
+import type { PointT, PointCodeT, PointParamsT } from "../../types/Point"
+import type { PathT } from "../../types/Path"
+
 import { point } from "../../point/points"
 import { isM, isT, isC, isS, isA, isZ } from "../../point/is"
 import isRelative from "../../point/is-relative"
 
-export default function reverse(path) {
-  const reversed = []
-  let firstPointIndex
+export default function reverse(
+  path: PathT,
+): PathT {
+  let lastMIndex: number =  0
 
-  for (let i = 0, len = path.length ; i < len ; i++) {
-    let insert = reversed.length
-    let current = path[i]
+  return path.reduce(
+    (
+      acc: PathT,
+      current: PointT,
+      index: number,
+    ): PathT => {
+      if (isM(current)) {
+        lastMIndex = index
+      }
 
-    if (isM(current)) {
-      firstPointIndex = i
-    }
+      const after: PointT = index < path.length - 1 && !isZ(path[index + 1]) ?
+        path[index + 1] :
+        path[lastMIndex]
 
-    let next = i < len - 1 && !isZ(path[i + 1]) ?
-      path[i + 1] :
-      path[firstPointIndex]
+      const close: boolean = isZ(current)
+      const next: PointT = close ? current : after
+      const insert: number = close ? acc.length - lastMIndex : 0
+      const { x, y }: PointT = close ? path[index - 1] : current
 
-    if (isZ(current)) {
-      insert = firstPointIndex
-      next = current
-      current = path[i - 1]
-    }
+      const code: PointCodeT = absoluteCode(next)
+      const parameters: PointParamsT = reverseParameters(next)
 
-    let code = next.code
-    let parameters = next.parameters
+      acc.splice(insert, 0, point(code, x, y, parameters))
 
-    if (isT(next)) {
-      code = isRelative(next) ? "q" : "Q"
-    }
-
-    if (isS(next)) {
-      code = isRelative(next) ? "c" : "C"
-    }
-
-    if (isC(next) || isS(next)) {
-      parameters = reverseAnchors(parameters)
-    }
-
-    if (isA(next)) {
-      parameters = reverseArc(parameters)
-    }
-
-    reversed.splice(insert, 0, point(code, current.x, current.y, parameters))
-  }
-
-  return reversed.reverse()
+      return acc
+    },
+    [],
+  )
 }
 
-function reverseAnchors(parameters) {
-  return {
-    ...parameters,
-    x1: parameters.x2,
-    y1: parameters.y2,
-    x2: parameters.x1,
-    y2: parameters.y1,
+function absoluteCode(
+  current: PointT,
+): PointCodeT {
+  const relative: boolean = isRelative(current)
+
+  switch (true) {
+  case isT(current):
+    return relative ? 'q' : 'Q'
+
+  case isS(current):
+    return relative ? 'c' : 'C'
+
+  default:
+    return current.code
   }
 }
 
-function reverseArc(parameters) {
-  return {
-    ...parameters,
-    sweep: parameters.sweep ^ 1,
+function reverseParameters(
+  current: PointT,
+): PointParamsT {
+  switch (true) {
+  case isC(current):
+  case isS(current):
+    return {
+      ...current.parameters,
+      x1: current.parameters.x2,
+      y1: current.parameters.y2,
+      x2: current.parameters.x1,
+      y2: current.parameters.y1,
+    }
+
+  case isA(current):
+    return {
+      ...current.parameters,
+      sweep: typeof current.parameters.sweep !== 'undefined' ?
+        (current.parameters.sweep === 0 ? 1 : 0) :
+        0,
+    }
+
+  default:
+    return current.parameters
   }
 }
