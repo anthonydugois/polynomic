@@ -17,12 +17,8 @@ export function scale3d(
 
 export function scale(
   sx: number,
-  sy: number,
+  sy: number = sx,
 ): Matrix4x4T {
-  if (typeof sy === 'undefined') {
-    sy = sx
-  }
-
   return scale3d(sx, sy, 1)
 }
 

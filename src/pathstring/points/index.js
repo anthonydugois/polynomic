@@ -9,344 +9,344 @@ import round, { defaultPrecision } from "../../utils/round"
 import format from "../../utils/format"
 
 export function m(
-  point: PointT,
-  prev: PointT = defaultPoint,
+  current: PointT,
+  previous: PointT = defaultPoint,
   precision: number = defaultPrecision,
 ): string {
   return format`
     ${ types.m }
-    ${ round(point.x - prev.x, precision) }
-    ${ round(point.y - prev.y, precision) }
+    ${ round(current.x - previous.x, precision) }
+    ${ round(current.y - previous.y, precision) }
   `
 }
 
 export function M(
-  point: PointT,
-  prev: PointT = defaultPoint,
+  current: PointT,
+  previous: PointT = defaultPoint,
   precision: number = defaultPrecision,
 ): string {
   return format`
     ${ types.M }
-    ${ round(point.x, precision) }
-    ${ round(point.y, precision) }
+    ${ round(current.x, precision) }
+    ${ round(current.y, precision) }
   `
 }
 
 export function l(
-  point: PointT,
-  prev: PointT = defaultPoint,
+  current: PointT,
+  previous: PointT = defaultPoint,
   precision: number = defaultPrecision,
 ): string {
   return format`
     ${ types.l }
-    ${ round(point.x - prev.x, precision) }
-    ${ round(point.y - prev.y, precision) }
+    ${ round(current.x - previous.x, precision) }
+    ${ round(current.y - previous.y, precision) }
   `
 }
 
 export function L(
-  point: PointT,
-  prev: PointT = defaultPoint,
+  current: PointT,
+  previous: PointT = defaultPoint,
   precision: number = defaultPrecision,
 ): string {
   return format`
     ${ types.L }
-    ${ round(point.x, precision) }
-    ${ round(point.y, precision) }
+    ${ round(current.x, precision) }
+    ${ round(current.y, precision) }
   `
 }
 
 export function h(
-  point: PointT,
-  prev: PointT = defaultPoint,
+  current: PointT,
+  previous: PointT = defaultPoint,
   precision: number = defaultPrecision,
 ): string {
   return format`
     ${ types.h }
-    ${ round(point.x - prev.x, precision) }
+    ${ round(current.x - previous.x, precision) }
   `
 }
 
 export function H(
-  point: PointT,
-  prev: PointT = defaultPoint,
+  current: PointT,
+  previous: PointT = defaultPoint,
   precision: number = defaultPrecision,
 ): string {
   return format`
     ${ types.H }
-    ${ round(point.x, precision) }
+    ${ round(current.x, precision) }
   `
 }
 
 export function v(
-  point: PointT,
-  prev: PointT = defaultPoint,
+  current: PointT,
+  previous: PointT = defaultPoint,
   precision: number = defaultPrecision,
 ): string {
   return format`
     ${ types.v }
-    ${ round(point.y - prev.y, precision) }
+    ${ round(current.y - previous.y, precision) }
   `
 }
 
 export function V(
-  point: PointT,
-  prev: PointT = defaultPoint,
+  current: PointT,
+  previous: PointT = defaultPoint,
   precision: number = defaultPrecision,
 ): string {
   return format`
     ${ types.V }
-    ${ round(point.y, precision) }
+    ${ round(current.y, precision) }
   `
 }
 
 export function q(
-  point: PointT,
-  prev: PointT = defaultPoint,
+  current: PointT,
+  previous: PointT = defaultPoint,
   precision: number = defaultPrecision,
 ): string {
   return format`
     ${ types.q }
     ${
-      typeof point.parameters.x1 !== 'undefined' ?
-        round(point.parameters.x1 - prev.x, precision) :
-        round((point.x - prev.x) / 2, precision)
+      typeof current.parameters.x1 !== 'undefined' ?
+        round(current.parameters.x1 - previous.x, precision) :
+        round((current.x - previous.x) / 2, precision)
     }
     ${
-      typeof point.parameters.y1 !== 'undefined' ?
-        round(point.parameters.y1 - prev.y, precision) :
-        round((point.y - prev.y) / 2, precision)
+      typeof current.parameters.y1 !== 'undefined' ?
+        round(current.parameters.y1 - previous.y, precision) :
+        round((current.y - previous.y) / 2, precision)
     }
-    ${ round(point.x - prev.x, precision) }
-    ${ round(point.y - prev.y, precision) }
+    ${ round(current.x - previous.x, precision) }
+    ${ round(current.y - previous.y, precision) }
   `
 }
 
 export function Q(
-  point: PointT,
-  prev: PointT = defaultPoint,
+  current: PointT,
+  previous: PointT = defaultPoint,
   precision: number = defaultPrecision,
 ): string {
   return format`
     ${ types.Q }
     ${
-      typeof point.parameters.x1 !== 'undefined' ?
-        round(point.parameters.x1, precision) :
-        round(prev.x + ((point.x - prev.x) / 2), precision)
+      typeof current.parameters.x1 !== 'undefined' ?
+        round(current.parameters.x1, precision) :
+        round(previous.x + ((current.x - previous.x) / 2), precision)
     }
     ${
-      typeof point.parameters.y1 !== 'undefined' ?
-        round(point.parameters.y1, precision) :
-        round(prev.y + ((point.y - prev.y) / 2), precision)
+      typeof current.parameters.y1 !== 'undefined' ?
+        round(current.parameters.y1, precision) :
+        round(previous.y + ((current.y - previous.y) / 2), precision)
     }
-    ${ round(point.x, precision) }
-    ${ round(point.y, precision) }
+    ${ round(current.x, precision) }
+    ${ round(current.y, precision) }
   `
 }
 
 export function t(
-  point: PointT,
-  prev: PointT = defaultPoint,
+  current: PointT,
+  previous: PointT = defaultPoint,
   precision: number = defaultPrecision,
 ): string {
   return format`
     ${ types.t }
-    ${ round(point.x - prev.x, precision) }
-    ${ round(point.y - prev.y, precision) }
+    ${ round(current.x - previous.x, precision) }
+    ${ round(current.y - previous.y, precision) }
   `
 }
 
 export function T(
-  point: PointT,
-  prev: PointT = defaultPoint,
+  current: PointT,
+  previous: PointT = defaultPoint,
   precision: number = defaultPrecision,
 ): string {
   return format`
     ${ types.T }
-    ${ round(point.x, precision) }
-    ${ round(point.y, precision) }
+    ${ round(current.x, precision) }
+    ${ round(current.y, precision) }
   `
 }
 
 export function c(
-  point: PointT,
-  prev: PointT = defaultPoint,
+  current: PointT,
+  previous: PointT = defaultPoint,
   precision: number = defaultPrecision,
 ): string {
   return format`
     ${ types.c }
     ${
-      typeof point.parameters.x1 !== 'undefined' ?
-        round(point.parameters.x1 - prev.x, precision) :
+      typeof current.parameters.x1 !== 'undefined' ?
+        round(current.parameters.x1 - previous.x, precision) :
         0
     }
     ${
-      typeof point.parameters.y1 !== 'undefined' ?
-        round(point.parameters.y1 - prev.y, precision) :
+      typeof current.parameters.y1 !== 'undefined' ?
+        round(current.parameters.y1 - previous.y, precision) :
         0
     }
     ${
-      typeof point.parameters.x2 !== 'undefined' ?
-        round(point.parameters.x2 - prev.x, precision) :
-        round(point.x - prev.x, precision)
+      typeof current.parameters.x2 !== 'undefined' ?
+        round(current.parameters.x2 - previous.x, precision) :
+        round(current.x - previous.x, precision)
     }
     ${
-      typeof point.parameters.y2 !== 'undefined' ?
-        round(point.parameters.y2 - prev.y, precision) :
-        round(point.y - prev.y, precision)
+      typeof current.parameters.y2 !== 'undefined' ?
+        round(current.parameters.y2 - previous.y, precision) :
+        round(current.y - previous.y, precision)
     }
-    ${ round(point.x - prev.x, precision) }
-    ${ round(point.y - prev.y, precision) }
+    ${ round(current.x - previous.x, precision) }
+    ${ round(current.y - previous.y, precision) }
   `
 }
 
 export function C(
-  point: PointT,
-  prev: PointT = defaultPoint,
+  current: PointT,
+  previous: PointT = defaultPoint,
   precision: number = defaultPrecision,
 ): string {
   return format`
     ${ types.C }
     ${
-      typeof point.parameters.x1 !== 'undefined' ?
-        round(point.parameters.x1, precision) :
-        round(prev.x, precision)
+      typeof current.parameters.x1 !== 'undefined' ?
+        round(current.parameters.x1, precision) :
+        round(previous.x, precision)
     }
     ${
-      typeof point.parameters.y1 !== 'undefined' ?
-        round(point.parameters.y1, precision) :
-        round(prev.y, precision)
+      typeof current.parameters.y1 !== 'undefined' ?
+        round(current.parameters.y1, precision) :
+        round(previous.y, precision)
     }
     ${
-      typeof point.parameters.x2 !== 'undefined' ?
-        round(point.parameters.x2, precision) :
-        round(point.x, precision)
+      typeof current.parameters.x2 !== 'undefined' ?
+        round(current.parameters.x2, precision) :
+        round(current.x, precision)
     }
     ${
-      typeof point.parameters.y2 !== 'undefined' ?
-        round(point.parameters.y2, precision) :
-        round(point.y, precision)
+      typeof current.parameters.y2 !== 'undefined' ?
+        round(current.parameters.y2, precision) :
+        round(current.y, precision)
     }
-    ${ round(point.x, precision) }
-    ${ round(point.y, precision) }
+    ${ round(current.x, precision) }
+    ${ round(current.y, precision) }
   `
 }
 
 export function s(
-  point: PointT,
-  prev: PointT = defaultPoint,
+  current: PointT,
+  previous: PointT = defaultPoint,
   precision: number = defaultPrecision,
 ): string {
   return format`
     ${ types.s }
     ${
-      typeof point.parameters.x2 !== 'undefined' ?
-        round(point.parameters.x2 - prev.x, precision) :
-        round(point.x - prev.x, precision)
+      typeof current.parameters.x2 !== 'undefined' ?
+        round(current.parameters.x2 - previous.x, precision) :
+        round(current.x - previous.x, precision)
     }
     ${
-      typeof point.parameters.y2 !== 'undefined' ?
-        round(point.parameters.y2 - prev.y, precision) :
-        round(point.y - prev.y, precision)
+      typeof current.parameters.y2 !== 'undefined' ?
+        round(current.parameters.y2 - previous.y, precision) :
+        round(current.y - previous.y, precision)
     }
-    ${ round(point.x - prev.x, precision) }
-    ${ round(point.y - prev.y, precision) }
+    ${ round(current.x - previous.x, precision) }
+    ${ round(current.y - previous.y, precision) }
   `
 }
 
 export function S(
-  point: PointT,
-  prev: PointT = defaultPoint,
+  current: PointT,
+  previous: PointT = defaultPoint,
   precision: number = defaultPrecision,
 ): string {
   return format`
     ${ types.S }
     ${
-      typeof point.parameters.x2 !== 'undefined' ?
-        round(point.parameters.x2, precision) :
-        round(point.x, precision)
+      typeof current.parameters.x2 !== 'undefined' ?
+        round(current.parameters.x2, precision) :
+        round(current.x, precision)
     }
     ${
-      typeof point.parameters.y2 !== 'undefined' ?
-        round(point.parameters.y2, precision) :
-        round(point.y, precision)
+      typeof current.parameters.y2 !== 'undefined' ?
+        round(current.parameters.y2, precision) :
+        round(current.y, precision)
     }
-    ${ round(point.x, precision) }
-    ${ round(point.y, precision) }
+    ${ round(current.x, precision) }
+    ${ round(current.y, precision) }
   `
 }
 
 export function a(
-  point: PointT,
-  prev: PointT = defaultPoint,
+  current: PointT,
+  previous: PointT = defaultPoint,
   precision: number = defaultPrecision,
 ): string {
   return format`
     ${ types.a }
     ${
-      typeof point.parameters.rx !== 'undefined' ?
-        round(point.parameters.rx, precision) :
+      typeof current.parameters.rx !== 'undefined' ?
+        round(current.parameters.rx, precision) :
         0
     }
     ${
-      typeof point.parameters.ry !== 'undefined' ?
-        round(point.parameters.ry, precision) :
+      typeof current.parameters.ry !== 'undefined' ?
+        round(current.parameters.ry, precision) :
         0
     }
     ${
-      typeof point.parameters.rotation !== 'undefined' ?
-        round(point.parameters.rotation, precision) :
+      typeof current.parameters.rotation !== 'undefined' ?
+        round(current.parameters.rotation, precision) :
         0
     }
     ${
-      typeof point.parameters.large !== 'undefined' ?
-        point.parameters.large :
+      typeof current.parameters.large !== 'undefined' ?
+        current.parameters.large :
         0
     }
     ${
-      typeof point.parameters.sweep !== 'undefined' ?
-        point.parameters.sweep :
+      typeof current.parameters.sweep !== 'undefined' ?
+        current.parameters.sweep :
         0
     }
-    ${ round(point.x - prev.x, precision) }
-    ${ round(point.y - prev.y, precision) }
+    ${ round(current.x - previous.x, precision) }
+    ${ round(current.y - previous.y, precision) }
   `
 }
 
 export function A(
-  point: PointT,
-  prev: PointT = defaultPoint,
+  current: PointT,
+  previous: PointT = defaultPoint,
   precision: number = defaultPrecision,
 ): string {
   return format`
     ${ types.A }
     ${
-      typeof point.parameters.rx !== 'undefined' ?
-        round(point.parameters.rx, precision) :
+      typeof current.parameters.rx !== 'undefined' ?
+        round(current.parameters.rx, precision) :
         0
     }
     ${
-      typeof point.parameters.ry !== 'undefined' ?
-        round(point.parameters.ry, precision) :
+      typeof current.parameters.ry !== 'undefined' ?
+        round(current.parameters.ry, precision) :
         0
     }
     ${
-      typeof point.parameters.rotation !== 'undefined' ?
-        round(point.parameters.rotation, precision) :
+      typeof current.parameters.rotation !== 'undefined' ?
+        round(current.parameters.rotation, precision) :
         0
     }
     ${
-      typeof point.parameters.large !== 'undefined' ?
-        point.parameters.large :
+      typeof current.parameters.large !== 'undefined' ?
+        current.parameters.large :
         0
     }
     ${
-      typeof point.parameters.sweep !== 'undefined' ?
-        point.parameters.sweep :
+      typeof current.parameters.sweep !== 'undefined' ?
+        current.parameters.sweep :
         0
     }
-    ${ round(point.x, precision) }
-    ${ round(point.y, precision) }
+    ${ round(current.x, precision) }
+    ${ round(current.y, precision) }
   `
 }
 

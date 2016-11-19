@@ -6,10 +6,17 @@ import { C, c } from "../points"
 import isRelative from "../is-relative"
 
 export default function lineToCubic(
-  prev: PointT,
-  point: PointT,
+  previous: PointT,
+  current: PointT,
 ): PointT {
-  const cubic: Function = isRelative(point) ? c : C
+  const cubic: Function = isRelative(current) ? c : C
 
-  return cubic(prev.x, prev.y, point.x, point.y, point.x, point.y)
+  return cubic(
+    previous.x,
+    previous.y,
+    current.x,
+    current.y,
+    current.x,
+    current.y,
+  )
 }

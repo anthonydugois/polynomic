@@ -15,21 +15,21 @@ export default function build(
   return path.reduce(
     (
       acc: string,
-      point: PointT,
+      current: PointT,
       index: number,
     ): string => {
-      if (point.code === '') {
+      if (current.code === '') {
         return acc
       }
 
-      const fn: Function = points[point.code]
-      const prev: PointT = index > 0 ?
+      const fn: Function = points[current.code]
+      const previous: PointT = index > 0 ?
         path[index - 1] :
         defaultPoint
 
       return format`
         ${ acc }
-        ${ fn(point, prev, precision) }
+        ${ fn(current, previous, precision) }
       `
     },
     '',

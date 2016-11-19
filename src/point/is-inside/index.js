@@ -22,7 +22,8 @@ export default function isInside(
       const isVerticallyBetween: boolean = isVerticallyBefore !== isVerticallyAfter
 
       const diff: number = point.y - current.y
-      const position: number = current.x + (diff / slope(current, previous))
+      const slope: number = (previous.y - current.y) / (previous.x - current.x)
+      const position: number = current.x + (diff / slope)
       const isHorizontallyBefore: boolean = point.x < position
 
       if (isVerticallyBetween && isHorizontallyBefore) {
@@ -33,11 +34,4 @@ export default function isInside(
     },
     false,
   )
-}
-
-function slope(
-  point: PointT,
-  previous: PointT,
-): number {
-  return (previous.y - point.y) / (previous.x - point.x)
 }

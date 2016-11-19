@@ -1,4 +1,4 @@
-import { Point } from "../../point/points"
+import { point } from "../../point/points"
 import { isM, isZ } from "../../point/is"
 import toCubic from "../to-cubic"
 
@@ -8,14 +8,14 @@ export default function boundingBox(rawPath) {
   const y = []
 
   for (let i = 0 ; i < path.length ; i++) {
-    const point = path[i]
-    const prev = i > 0 && path[i - 1]
+    const current = path[i]
+    const previous = i > 0 && path[i - 1]
 
-    if (isM(point) || isZ(point)) {
-      x.push(point.x)
-      y.push(point.y)
+    if (isM(current) || isZ(current)) {
+      x.push(current.x)
+      y.push(current.y)
     } else {
-      const { xMin, xMax, yMin, yMax } = cubicBoundingBox(prev, point)
+      const { xMin, xMax, yMin, yMax } = cubicBoundingBox(previous, current)
 
       x.push(xMin, xMax)
       y.push(yMin, yMax)
@@ -35,11 +35,11 @@ export default function boundingBox(rawPath) {
   }
 }
 
-function cubicBoundingBox(prev, point) {
-  const p0 = Point(null, prev.x, prev.y)
-  const p1 = Point(null, point.parameters.x1, point.parameters.y1)
-  const p2 = Point(null, point.parameters.x2, point.parameters.y2)
-  const p3 = Point(null, point.x, point.y)
+function cubicBoundingBox(previous, current) {
+  const p0 = point(null, previous.x, previous.y)
+  const p1 = point(null, current.parameters.x1, current.parameters.y1)
+  const p2 = point(null, current.parameters.x2, current.parameters.y2)
+  const p3 = point(null, current.x, current.y)
 
   const x = getMinMax(p0.x, p1.x, p2.x, p3.x)
   const y = getMinMax(p0.y, p1.y, p2.y, p3.y)

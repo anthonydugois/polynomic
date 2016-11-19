@@ -16,7 +16,7 @@ export default function parse(
 function path(
   segments: Array<Array<string | number>>,
 ): PathT {
-  let firstPoint
+  let first
 
   return segments.reduce(
     (
@@ -24,21 +24,21 @@ function path(
       [code, ...parameters],
     ): PathT => {
       const fn: Function = points[code]
-      let pointList, prev
+      let pointList, previous
 
       if (acc.length > 0) {
-        prev = acc[acc.length - 1]
+        previous = acc[acc.length - 1]
       }
 
-      if (prev && isM(prev)) {
-        firstPoint = prev
+      if (previous && isM(previous)) {
+        first = previous
       }
 
       if (fn.length > 0) {
         pointList = chunks(parameters, fn.length)
-        pointList = pointList.map((chunk) => prev = fn(...chunk, prev))
+        pointList = pointList.map((chunk) => previous = fn(...chunk, previous))
       } else {
-        pointList = [fn(firstPoint)]
+        pointList = [fn(first)]
       }
 
       return [

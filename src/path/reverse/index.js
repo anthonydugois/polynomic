@@ -1,4 +1,4 @@
-import { Point } from "../../point/points"
+import { point } from "../../point/points"
 import { isM, isT, isC, isS, isA, isZ } from "../../point/is"
 import isRelative from "../../point/is-relative"
 
@@ -8,9 +8,9 @@ export default function reverse(path) {
 
   for (let i = 0, len = path.length ; i < len ; i++) {
     let insert = reversed.length
-    let point = path[i]
+    let current = path[i]
 
-    if (isM(point)) {
+    if (isM(current)) {
       firstPointIndex = i
     }
 
@@ -18,10 +18,10 @@ export default function reverse(path) {
       path[i + 1] :
       path[firstPointIndex]
 
-    if (isZ(point)) {
+    if (isZ(current)) {
       insert = firstPointIndex
-      next = point
-      point = path[i - 1]
+      next = current
+      current = path[i - 1]
     }
 
     let code = next.code
@@ -43,7 +43,7 @@ export default function reverse(path) {
       parameters = reverseArc(parameters)
     }
 
-    reversed.splice(insert, 0, Point(code, point.x, point.y, parameters))
+    reversed.splice(insert, 0, point(code, current.x, current.y, parameters))
   }
 
   return reversed.reverse()

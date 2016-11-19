@@ -5,68 +5,68 @@ import type { PointT } from "../../types/Point"
 import * as types from "../points/types"
 
 export function is(
-  point: PointT,
+  current: PointT,
   code: string,
 ): boolean {
-  return point.code.toLowerCase() === code.toLowerCase()
+  return current.code.toLowerCase() === code.toLowerCase()
 }
 
 export function isM(
-  point: PointT,
+  current: PointT,
 ): boolean {
-  return is(point, types.M)
+  return is(current, types.M)
 }
 
 export function isL(
-  point: PointT,
+  current: PointT,
 ): boolean {
-  return is(point, types.L)
+  return is(current, types.L)
 }
 
 export function isH(
-  point: PointT,
+  current: PointT,
 ): boolean {
-  return is(point, types.H)
+  return is(current, types.H)
 }
 
 export function isV(
-  point: PointT,
+  current: PointT,
 ): boolean {
-  return is(point, types.V)
+  return is(current, types.V)
 }
 
 export function isQ(
-  point: PointT,
+  current: PointT,
 ): boolean {
-  return is(point, types.Q)
+  return is(current, types.Q)
 }
 
 export function isT(
-  point: PointT,
+  current: PointT,
 ): boolean {
-  return is(point, types.T)
+  return is(current, types.T)
 }
 
 export function isC(
-  point: PointT,
+  current: PointT,
 ): boolean {
-  return is(point, types.C)
+  return is(current, types.C)
 }
 
 export function isS(
-  point: PointT,
+  current: PointT,
 ): boolean {
-  return is(point, types.S)
+  return is(current, types.S)
 }
 
 export function isA(
-  point: PointT,
+  current: PointT,
 ): boolean {
-  return is(point, types.A)
+  return is(current, types.A)
 }
 
 export function isZ(
-  point: PointT,
+  current: PointT,
 ): boolean {
-  return is(point, types.Z)
+  return is(current, types.Z)
 }

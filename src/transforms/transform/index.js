@@ -7,7 +7,7 @@ import type { Matrix4x4T, Matrix1x4T } from "../../types/Matrix"
 
 import boundingBox from "../../path/bounding-box"
 import { translate3d } from "../translate"
-import { Point, defaultPoint } from "../../point/points"
+import { point, defaultPoint } from "../../point/points"
 import { isH, isV } from "../../point/is"
 import isRelative from "../../point/is-relative"
 
@@ -100,19 +100,19 @@ export function applyMatrix(
   return path.reduce(
     (
       acc: PathT,
-      point: PointT,
+      current: PointT,
       index: number,
     ): PathT => {
       if (opt.indices.length > 0 && !opt.indices.includes(index)) {
         return [
           ...acc,
-          point,
+          current,
         ]
       }
 
       const [_x, _y, , w]: Matrix1x4T = multiplyVector(
         matrix,
-        [point.x, point.y, 0, 1],
+        [current.x, current.y, 0, 1],
       )
 
       if (w <= 0) {
@@ -122,23 +122,23 @@ export function applyMatrix(
       const x: number = _x / w
       const y: number = _y / w
 
-      const shouldConvertH: boolean = isH(point) && y !== acc[acc.length - 1].y
-      const shouldConvertV: boolean = isV(point) && x !== acc[acc.length - 1].x
+      const shouldConvertH: boolean = isH(current) && y !== acc[acc.length - 1].y
+      const shouldConvertV: boolean = isV(current) && x !== acc[acc.length - 1].x
       const shouldConvertCode: boolean = shouldConvertH || shouldConvertV
 
       const code: PointCodeT = shouldConvertCode ?
-        (isRelative(point) ? 'l' : 'L') :
-        point.code
+        (isRelative(current) ? 'l' : 'L') :
+        current.code
 
       const anchors: PointParamsT = {}
 
       if (
-        typeof point.parameters.x1 !== 'undefined'
-        && typeof point.parameters.y1 !== 'undefined'
+        typeof current.parameters.x1 !== 'undefined'
+        && typeof current.parameters.y1 !== 'undefined'
       ) {
         const [x1, y1, , w1]: Matrix1x4T = multiplyVector(
           matrix,
-          [point.parameters.x1, point.parameters.y1, 0, 1],
+          [current.parameters.x1, current.parameters.y1, 0, 1],
         )
 
         anchors.x1 = x1 / w1
@@ -146,12 +146,12 @@ export function applyMatrix(
       }
 
       if (
-        typeof point.parameters.x2 !== 'undefined'
-        && typeof point.parameters.y2 !== 'undefined'
+        typeof current.parameters.x2 !== 'undefined'
+        && typeof current.parameters.y2 !== 'undefined'
       ) {
         const [x2, y2, , w2]: Matrix1x4T = multiplyVector(
           matrix,
-          [point.parameters.x2, point.parameters.y2, 0, 1],
+          [current.parameters.x2, current.parameters.y2, 0, 1],
         )
 
         anchors.x2 = x2 / w2
@@ -160,8 +160,8 @@ export function applyMatrix(
 
       return [
         ...acc,
-        Point(code, x, y, {
-          ...point.parameters,
+        point(code, x, y, {
+          ...current.parameters,
           ...anchors,
         }),
       ]

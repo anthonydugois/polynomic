@@ -1,21 +1,21 @@
-import { Point, C, c } from "../points"
+import { point, C, c } from "../points"
 import isRelative from "../is-relative"
 import { transform } from "../../transforms/transform"
 import { rotate } from "../../transforms/rotate"
 
-export default function arcToCubic(prev, point, center = null) {
+export default function arcToCubic(previous, current, center = null) {
   let partial = []
   let cx, cy, f1, f2
 
-  let x1 = prev.x
-  let y1 = prev.y
-  let x2 = point.x
-  let y2 = point.y
-  let rx = point.parameters.rx
-  let ry = point.parameters.ry
+  let x1 = previous.x
+  let y1 = previous.y
+  let x2 = current.x
+  let y2 = current.y
+  let rx = current.parameters.rx
+  let ry = current.parameters.ry
 
   const pi2_3 = (2 * Math.PI) / 3
-  const angle = (Math.PI / 180) * point.parameters.rotation
+  const angle = (Math.PI / 180) * current.parameters.rotation
 
   if (center) {
     cx = center[0]
@@ -24,13 +24,13 @@ export default function arcToCubic(prev, point, center = null) {
     f2 = center[3]
   } else {
     const rotation = rotate(-angle)
-    const _prev = transform(rotation)([prev])[0]
-    const _point = transform(rotation)([point])[0]
+    const _previous = transform(rotation)([previous])[0]
+    const _current = transform(rotation)([current])[0]
 
-    x1 = _prev.x
-    y1 = _prev.y
-    x2 = _point.x
-    y2 = _point.y
+    x1 = _previous.x
+    y1 = _previous.y
+    x2 = _current.x
+    y2 = _current.y
 
     const x = (x1 - x2) / 2
     const y = (y1 - y2) / 2
@@ -50,7 +50,7 @@ export default function arcToCubic(prev, point, center = null) {
     sqRx = rx ** 2
     sqRy = ry ** 2
 
-    const sign = point.parameters.large === point.parameters.sweep ? -1 : 1
+    const sign = current.parameters.large === current.parameters.sweep ? -1 : 1
     const k = sign * Math.sqrt(Math.abs(((sqRx * sqRy) - (sqRx * sqY) - (sqRy * sqX)) / ((sqRx * sqY) + (sqRy * sqX))))
 
     cx = ((k * rx * y) / ry) + ((x1 + x2) / 2)
@@ -75,26 +75,26 @@ export default function arcToCubic(prev, point, center = null) {
       f2 += 2 * Math.PI
     }
 
-    if (point.parameters.sweep === 1 && f1 > f2) {
+    if (current.parameters.sweep === 1 && f1 > f2) {
       f1 -= 2 * Math.PI
     }
 
-    if (point.parameters.sweep === 0 && f2 > f1) {
+    if (current.parameters.sweep === 0 && f2 > f1) {
       f2 -= 2 * Math.PI
     }
   }
 
   if (Math.abs(f2 - f1) > pi2_3) {
     const _f2 = f2
-    const _point = Point(point.code, x2, y2, point.parameters)
+    const _current = point(current.code, x2, y2, current.parameters)
 
-    f2 = f1 + (pi2_3 * (point.parameters.sweep === 1 && f2 > f1 ? 1 : -1))
+    f2 = f1 + (pi2_3 * (current.parameters.sweep === 1 && f2 > f1 ? 1 : -1))
     x2 = cx + (rx * Math.cos(f2))
     y2 = cy + (ry * Math.sin(f2))
 
-    const _prev = Point(prev.code, x2, y2, prev.parameters)
+    const _previous = point(previous.code, x2, y2, previous.parameters)
 
-    partial = arcToCubic(_prev, _point, [cx, cy, f2, _f2])
+    partial = arcToCubic(_previous, _current, [cx, cy, f2, _f2])
   }
 
   const t = Math.tan((f2 - f1) / 4)
@@ -109,7 +109,7 @@ export default function arcToCubic(prev, point, center = null) {
   p2[0] = (2 * p1[0]) - p2[0]
   p2[1] = (2 * p1[1]) - p2[1]
 
-  const cubic = isRelative(point) ?
+  const cubic = isRelative(current) ?
     c(p2[0], p2[1], p3[0], p3[1], p4[0], p4[1]) :
     C(p2[0], p2[1], p3[0], p3[1], p4[0], p4[1])
 

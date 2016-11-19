@@ -3,8 +3,6 @@
 import type { PathT, PathBoundingBoxT } from "../types/Path"
 import type { CoordsT } from "../types/Coords"
 
-import boundingBox from "../path/bounding-box"
-
 const positions = {
   left: 0,
   right: 100,
@@ -17,11 +15,10 @@ export function relativeToAbsoluteX(
   x: string,
   bbox: PathBoundingBoxT,
 ): number {
-  x = x.toLowerCase()
-
-  const X: number = Object.keys(positions).includes(x) ?
-    positions[x] :
-    parseRelative(x)
+  const _x: string = x.toLowerCase()
+  const X: number = Object.keys(positions).includes(_x) ?
+    positions[_x] :
+    parseRelative(_x)
 
   return bbox.x + ((bbox.width * X) / 100)
 }
@@ -30,11 +27,10 @@ export function relativeToAbsoluteY(
   y: string,
   bbox: PathBoundingBoxT,
 ): number {
-  y = y.toLowerCase()
-
-  const Y: number = Object.keys(positions).includes(y) ?
-    positions[y] :
-    parseRelative(y)
+  const _y: string = y.toLowerCase()
+  const Y: number = Object.keys(positions).includes(_y) ?
+    positions[_y] :
+    parseRelative(_y)
 
   return bbox.y + ((bbox.height * Y) / 100)
 }
@@ -43,27 +39,6 @@ function parseRelative(
   str: string,
 ): number {
   return parseFloat(str.replace('%', ''))
-}
-
-export function absoluteCoords(
-  path: PathT,
-  x: number | string,
-  y: number | string,
-): { x: number, y: number } {
-  if (typeof x === 'string' || typeof y === 'string') {
-    const bbox = boundingBox(path)
-
-    return {
-      x: typeof x === 'string' ?
-        relativeToAbsoluteX(x, bbox) :
-        x,
-      y: typeof y === 'string' ?
-        relativeToAbsoluteY(y, bbox) :
-        y,
-    }
-  }
-
-  return { x, y }
 }
 
 function parseAngle(

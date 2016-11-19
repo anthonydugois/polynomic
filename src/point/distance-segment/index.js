@@ -2,7 +2,7 @@
 
 import type { PointT } from "../../types/Point"
 
-import { Point } from "../points"
+import { point } from "../points"
 import squareDistance from "../square-distance"
 
 export default function distanceSegment(
@@ -25,7 +25,7 @@ function squareDistanceSegment(
   }
 
   const t: number = Math.max(0, Math.min(1, (((p1.x - p2.x) * (p3.x - p2.x)) + ((p1.y - p2.y) * (p3.y - p2.y))) / segment))
-  const p4: PointT = Point("", p2.x + (t * (p3.x - p2.x)), p2.y + (t * (p3.y - p2.y)))
+  const p4: PointT = point("", p2.x + (t * (p3.x - p2.x)), p2.y + (t * (p3.y - p2.y)))
 
   return squareDistance(p1, p4)
 }

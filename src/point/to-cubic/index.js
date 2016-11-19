@@ -9,23 +9,23 @@ import quadraticToCubic from "../quadratic-to-cubic"
 import arcToCubic from "../arc-to-cubic"
 
 export default function toCubic(
-  prev: PointT,
-  point: PointT,
+  previous: PointT,
+  current: PointT,
 ): PointT | PathT {
   switch (true) {
-  case isL(point):
-  case isH(point):
-  case isV(point):
-    return lineToCubic(prev, point)
+  case isL(current):
+  case isH(current):
+  case isV(current):
+    return lineToCubic(previous, current)
 
-  case isQ(point):
-  case isT(point):
-    return quadraticToCubic(prev, point)
+  case isQ(current):
+  case isT(current):
+    return quadraticToCubic(previous, current)
 
-  case isA(point):
-    return arcToCubic(prev, point)
+  case isA(current):
+    return arcToCubic(previous, current)
 
   default:
-    return point
+    return current
   }
 }
