@@ -2,7 +2,7 @@
 
 import type { PointT } from "../../types/Point"
 
-import { C, c } from "../points"
+import { point } from "../points"
 import isRelative from "../is-relative"
 
 export default function quadraticToCubic(
@@ -25,7 +25,10 @@ export default function quadraticToCubic(
     ((1 / 3) * current.y) + ((2 / 3) * current.parameters.y1) :
     current.y
 
-  const cubic: Function = isRelative(current) ? c : C
-
-  return cubic(x1, y1, x2, y2, current.x, current.y)
+  return point(
+    isRelative(current) ? 'c' : 'C',
+    current.x,
+    current.y,
+    { x1, y1, x2, y2 },
+  )
 }

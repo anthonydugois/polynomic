@@ -1,6 +1,6 @@
 /* @flow */
 
-import type { PointCodeT } from "../../types/Point"
+import type { PointT, PointCodeT } from "../../types/Point"
 import type { PathT } from "../../types/Path"
 
 import * as points from "../../point/points"
@@ -10,41 +10,37 @@ import segments from "../segments"
 export default function parse(
   d: string,
 ): PathT {
-  return path(segments(d))
-}
+  let lastM: PointT
 
-function path(
-  segments: Array<Array<string | number>>,
-): PathT {
-  let first
-
-  return segments.reduce(
+  return segments(d).reduce(
     (
       acc: PathT,
-      [code, ...parameters],
+      segment: Array<string | number>,
     ): PathT => {
-      const fn: Function = points[code]
-      let pointList, previous
+      let previous: PointT  = acc.length > 0 ?
+        acc[acc.length - 1] :
+        points.defaultPoint
 
-      if (acc.length > 0) {
-        previous = acc[acc.length - 1]
+      if (isM(previous)) {
+        lastM = previous
       }
 
-      if (previous && isM(previous)) {
-        first = previous
-      }
+      const [code, ...parameters]: Array<string | number> = segment
+      const pointFactory: Function = points[code]
 
-      if (fn.length > 0) {
-        pointList = chunks(parameters, fn.length)
-        pointList = pointList.map((chunk) => previous = fn(...chunk, previous))
+      if (pointFactory.length > 0) {
+        const path: PathT = chunks(parameters, pointFactory.length).map(
+          (chunk) => previous = pointFactory(...chunk)(previous)
+        )
+
+        acc.push(...path)
       } else {
-        pointList = [fn(first)]
+        const point: PointT = pointFactory()(lastM)
+
+        acc.push(point)
       }
 
-      return [
-        ...acc,
-        ...pointList,
-      ]
+      return acc
     },
     [],
   )

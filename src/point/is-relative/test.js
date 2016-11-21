@@ -2,9 +2,15 @@ import { m, M } from "../points"
 import isRelative from "./index"
 
 test("should check that the command `m` is relative", () => {
-  expect(isRelative(m(0, 0))).toBe(true)
+  const point = m(0, 0)()
+  const test = isRelative(point)
+
+  expect(test).toBe(true)
 })
 
 test("should check that the command `M` is absolute", () => {
-  expect(isRelative(M(0, 0))).toBe(false)
+  const point = M(0, 0)()
+  const test = isRelative(point)
+
+  expect(test).toBe(false)
 })

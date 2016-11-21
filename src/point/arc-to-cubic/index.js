@@ -1,4 +1,4 @@
-import { point, C, c } from "../points"
+import { point } from "../points"
 import isRelative from "../is-relative"
 import { transform } from "../../transforms/transform"
 import { rotate } from "../../transforms/rotate"
@@ -109,13 +109,28 @@ export default function arcToCubic(previous, current, center = null) {
   p2[0] = (2 * p1[0]) - p2[0]
   p2[1] = (2 * p1[1]) - p2[1]
 
-  const cubic = isRelative(current) ?
-    c(p2[0], p2[1], p3[0], p3[1], p4[0], p4[1]) :
-    C(p2[0], p2[1], p3[0], p3[1], p4[0], p4[1])
+  const x = p4[0]
+  const y = p4[1]
+  const x1 = p2[0]
+  const y1 = p2[1]
+  const x2 = p3[0]
+  const y2 = p3[1]
+
+  const cubic = point(
+    isRelative(current) ? 'c' : 'C',
+    x,
+    y,
+    { x1, y1, x2, y2 },
+  )
+
+  const path = [
+    cubic,
+    ...partial,
+  ]
 
   if (center) {
-    return [cubic, ...partial]
+    return path
   }
 
-  return transform(rotate(angle))([cubic, ...partial])
+  return transform(rotate(angle))(path)
 }

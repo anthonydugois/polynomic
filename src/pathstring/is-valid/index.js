@@ -21,15 +21,15 @@ export function hasCorrectNumberOfParameters(
   d: string,
 ): boolean {
   return segments(d).every(([code, ...parameters]) => {
-    const fn: Function = points[code]
+    const pointFactory: Function = points[code]
 
-    return typeof fn === 'function'
-      && parameters.length >= fn.length
+    return typeof pointFactory === 'function'
+      && parameters.length >= pointFactory.length
   })
 }
 
 export function noInvalidCharacters(
   d: string,
 ): boolean {
-  return /^[mlhvqtcsaze\d\s,.-]*$/gi.test(d)
+  return /^[mlhvqtcsaze\d\s,.+-]*$/gi.test(d)
 }
