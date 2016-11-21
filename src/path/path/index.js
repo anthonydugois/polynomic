@@ -4,7 +4,7 @@ import type { PointT } from "../../types/Point"
 import type { PathT } from "../../types/Path"
 
 import { defaultPoint } from "../../point/points"
-import { isM } from "../../point/is"
+import { isM, isZ } from "../../point/is"
 
 export function path(
   ...points: Array<Function>
@@ -24,10 +24,12 @@ export function path(
         lastM = previous
       }
 
-      if (point.length > 0) {
-        acc.push(point(previous))
-      } else {
+      const p: PointT = point(previous)
+
+      if (isZ(p)) {
         acc.push(point(lastM))
+      } else {
+        acc.push(p)
       }
 
       return acc

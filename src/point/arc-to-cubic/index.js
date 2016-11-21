@@ -109,18 +109,11 @@ export default function arcToCubic(previous, current, center = null) {
   p2[0] = (2 * p1[0]) - p2[0]
   p2[1] = (2 * p1[1]) - p2[1]
 
-  const x = p4[0]
-  const y = p4[1]
-  const x1 = p2[0]
-  const y1 = p2[1]
-  const x2 = p3[0]
-  const y2 = p3[1]
-
   const cubic = point(
     isRelative(current) ? 'c' : 'C',
-    x,
-    y,
-    { x1, y1, x2, y2 },
+    p4[0],
+    p4[1],
+    { x1: p2[0], y1: p2[1], x2: p3[0], y2: p3[1] },
   )
 
   const path = [
