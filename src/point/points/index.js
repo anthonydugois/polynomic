@@ -49,7 +49,9 @@ export function l(
   dx: number,
   dy: number,
 ): Function {
-  return function l(prev: PointT = defaultPoint): PointT {
+  return function l(
+    prev: PointT = defaultPoint,
+  ): PointT {
     return point(types.l, prev.x + dx, prev.y + dy)
   }
 }
@@ -66,7 +68,9 @@ export function L(
 export function h(
   dx: number,
 ): Function {
-  return function h(prev: PointT = defaultPoint): PointT {
+  return function h(
+    prev: PointT = defaultPoint,
+  ): PointT {
     return point(types.h, prev.x + dx, prev.y)
   }
 }
@@ -74,7 +78,9 @@ export function h(
 export function H(
   x: number,
 ): Function {
-  return function H(prev: PointT = defaultPoint): PointT {
+  return function H(
+    prev: PointT = defaultPoint,
+  ): PointT {
     return point(types.H, x, prev.y)
   }
 }
@@ -82,7 +88,9 @@ export function H(
 export function v(
   dy: number,
 ): Function {
-  return function v(prev: PointT = defaultPoint): PointT {
+  return function v(
+    prev: PointT = defaultPoint,
+  ): PointT {
     return point(types.v, prev.x, prev.y + dy)
   }
 }
@@ -90,7 +98,9 @@ export function v(
 export function V(
   y: number,
 ): Function {
-  return function V(prev: PointT = defaultPoint): PointT {
+  return function V(
+    prev: PointT = defaultPoint,
+  ): PointT {
     return point(types.V, prev.x, y)
   }
 }
@@ -101,7 +111,9 @@ export function q(
   dx: number,
   dy: number,
 ): Function {
-  return function q(prev: PointT = defaultPoint): PointT {
+  return function q(
+    prev: PointT = defaultPoint,
+  ): PointT {
     return point(types.q, prev.x + dx, prev.y + dy, {
       x1: prev.x + dx1,
       y1: prev.y + dy1,
@@ -127,19 +139,19 @@ export function t(
   dx: number,
   dy: number,
 ): Function {
-  return function t(prev: PointT = defaultPoint): PointT {
-    const parameters: PointParamsT = {
-      x1: prev.x,
-      y1: prev.y,
-    }
+  return function t(
+    prev: PointT = defaultPoint,
+  ): PointT {
+    const parameters: PointParamsT = { x1: prev.x, y1: prev.y }
 
-    if (
-      (isQ(prev) || isT(prev))
-      && typeof prev.parameters.x1 !== 'undefined'
-      && typeof prev.parameters.y1 !== 'undefined'
-    ) {
-      parameters.x1 = (2 * prev.x) - prev.parameters.x1
-      parameters.y1 = (2 * prev.y) - prev.parameters.y1
+    if (isQ(prev) || isT(prev)) {
+      parameters.x1 = typeof prev.parameters.x1 !== 'undefined' ?
+        (2 * prev.x) - prev.parameters.x1 :
+        parameters.x1
+
+      parameters.y1 = typeof prev.parameters.y1 !== 'undefined' ?
+        (2 * prev.y) - prev.parameters.y1 :
+        parameters.y1
     }
 
     return point(types.t, prev.x + dx, prev.y + dy, parameters)
@@ -150,19 +162,19 @@ export function T(
   x: number,
   y: number,
 ): Function {
-  return function T(prev: PointT = defaultPoint): PointT {
-    const parameters: PointParamsT = {
-      x1: prev.x,
-      y1: prev.y,
-    }
+  return function T(
+    prev: PointT = defaultPoint,
+  ): PointT {
+    const parameters: PointParamsT = { x1: prev.x, y1: prev.y }
 
-    if (
-      (isQ(prev) || isT(prev))
-      && typeof prev.parameters.x1 !== 'undefined'
-      && typeof prev.parameters.y1 !== 'undefined'
-    ) {
-      parameters.x1 = (2 * prev.x) - prev.parameters.x1
-      parameters.y1 = (2 * prev.y) - prev.parameters.y1
+    if (isQ(prev) || isT(prev)) {
+      parameters.x1 = typeof prev.parameters.x1 !== 'undefined' ?
+        (2 * prev.x) - prev.parameters.x1 :
+        parameters.x1
+
+      parameters.y1 = typeof prev.parameters.y1 !== 'undefined' ?
+        (2 * prev.y) - prev.parameters.y1 :
+        parameters.y1
     }
 
     return point(types.T, x, y, parameters)
@@ -177,7 +189,9 @@ export function c(
   dx: number,
   dy: number,
 ): Function {
-  return function c(prev: PointT = defaultPoint): PointT {
+  return function c(
+    prev: PointT = defaultPoint,
+  ): PointT {
     return point(types.c, prev.x + dx, prev.y + dy, {
       x1: prev.x + dx1,
       y1: prev.y + dy1,
@@ -211,7 +225,9 @@ export function s(
   dx: number,
   dy: number,
 ): Function {
-  return function s(prev: PointT = defaultPoint): PointT {
+  return function s(
+    prev: PointT = defaultPoint,
+  ): PointT {
     const parameters: PointParamsT = {
       x1: prev.x,
       y1: prev.y,
@@ -219,13 +235,14 @@ export function s(
       y2: prev.y + dy2,
     }
 
-    if (
-      (isC(prev) || isS(prev))
-      && typeof prev.parameters.x2 !== 'undefined'
-      && typeof prev.parameters.y2 !== 'undefined'
-    ) {
-      parameters.x1 = (2 * prev.x) - prev.parameters.x2
-      parameters.y1 = (2 * prev.y) - prev.parameters.y2
+    if (isC(prev) || isS(prev)) {
+      parameters.x1 = typeof prev.parameters.x2 !== 'undefined' ?
+        (2 * prev.x) - prev.parameters.x2 :
+        parameters.x1
+
+      parameters.y1 = typeof prev.parameters.y2 !== 'undefined' ?
+        (2 * prev.y) - prev.parameters.y2 :
+        parameters.y1
     }
 
     return point(types.s, prev.x + dx, prev.y + dy, parameters)
@@ -238,7 +255,9 @@ export function S(
   x: number,
   y: number,
 ): Function {
-  return function S(prev: PointT = defaultPoint): PointT {
+  return function S(
+    prev: PointT = defaultPoint,
+  ): PointT {
     const parameters: PointParamsT = {
       x1: prev.x,
       y1: prev.y,
@@ -246,13 +265,14 @@ export function S(
       y2,
     }
 
-    if (
-      (isC(prev) || isS(prev))
-      && typeof prev.parameters.x2 !== 'undefined'
-      && typeof prev.parameters.y2 !== 'undefined'
-    ) {
-      parameters.x1 = (2 * prev.x) - prev.parameters.x2
-      parameters.y1 = (2 * prev.y) - prev.parameters.y2
+    if (isC(prev) || isS(prev)) {
+      parameters.x1 = typeof prev.parameters.x2 !== 'undefined' ?
+        (2 * prev.x) - prev.parameters.x2 :
+        parameters.x1
+
+      parameters.y1 = typeof prev.parameters.y2 !== 'undefined' ?
+        (2 * prev.y) - prev.parameters.y2 :
+        parameters.y1
     }
 
     return point(types.S, x, y, parameters)
@@ -268,7 +288,9 @@ export function a(
   dx: number,
   dy: number,
 ): Function {
-  return function a(prev: PointT = defaultPoint): PointT {
+  return function a(
+    prev: PointT = defaultPoint,
+  ): PointT {
     return point(types.a, prev.x + dx, prev.y + dy, {
       rx,
       ry,
@@ -300,13 +322,17 @@ export function A(
 }
 
 export function z(): Function {
-  return function z(related: PointT = defaultPoint): PointT {
+  return function z(
+    related: PointT = defaultPoint,
+  ): PointT {
     return point(types.z, related.x, related.y)
   }
 }
 
 export function Z(): Function {
-  return function Z(related: PointT = defaultPoint): PointT {
+  return function Z(
+    related: PointT = defaultPoint,
+  ): PointT {
     return point(types.Z, related.x, related.y)
   }
 }

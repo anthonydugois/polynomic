@@ -8,8 +8,8 @@ test("should check that the point is M", () => {
   expect(test).toBe(true)
 })
 
-test("should check that the point is Q", () => {
-  const point = Q(20, 20, 0, 0)()
+test("should check that the point factory is Q", () => {
+  const point = Q(20, 20, 0, 0)
   const test = isQ(point)
 
   expect(test).toBe(true)
@@ -17,6 +17,13 @@ test("should check that the point is Q", () => {
 
 test("should check that the point is not Z", () => {
   const point = L(0, 0)()
+  const test = isZ(point)
+
+  expect(test).toBe(false)
+})
+
+test("should check that the point factory is not Z", () => {
+  const point = L(0, 0)
   const test = isZ(point)
 
   expect(test).toBe(false)

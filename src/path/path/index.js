@@ -7,30 +7,36 @@ import { defaultPoint } from "../../point/points"
 import { isM, isZ } from "../../point/is"
 
 export function path(
-  ...points: Array<Function>
+  ...pointFactories: Array<PointT | Function>
 ): PathT {
-  let lastM: PointT
+  let lastM: PointT = defaultPoint
 
-  return points.reduce(
+  return pointFactories.reduce(
     (
       acc: PathT,
-      point: Function,
+      pointFactory: PointT | Function,
     ): PathT => {
-      const previous: PointT = acc.length > 0 ?
-        acc[acc.length - 1] :
-        defaultPoint
+      let point: PointT = defaultPoint
 
-      if (isM(previous)) {
-        lastM = previous
-      }
-
-      const p: PointT = point(previous)
-
-      if (isZ(p)) {
-        acc.push(point(lastM))
+      if (typeof pointFactory !== 'function') {
+        point = pointFactory
       } else {
-        acc.push(p)
+        const previous: PointT = acc.length > 0 ?
+          acc[acc.length - 1] :
+          defaultPoint
+
+        if (isZ(pointFactory)) {
+          point = pointFactory(lastM)
+        } else {
+          point = pointFactory(previous)
+        }
       }
+
+      if (isM(point)) {
+        lastM = point
+      }
+
+      acc.push(point)
 
       return acc
     },
