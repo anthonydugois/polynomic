@@ -1,20 +1,20 @@
 import { path } from "../../path/path"
-import * as points from "../../point/points"
+import { M, m, l, Q, t, C, s, z } from "../../point/points"
 import parse from "./index"
 
 test('should parse the code and return a path', () => {
   const test = parse('M0 0l50 50 20 -20Q 30, 30, 60, 60t20 20C80 80 60,60 5 5s -5 6 2,2 zm 50 50z')
   const expected = path(
-    points.M(0, 0),
-    points.l(50, 50),
-    points.l(20, -20),
-    points.Q(30, 30, 60, 60),
-    points.t(20, 20),
-    points.C(80, 80, 60, 60, 5, 5),
-    points.s(-5, 6, 2, 2),
-    points.z(),
-    points.m(50, 50),
-    points.z(),
+    M(0, 0),
+    l(50, 50),
+    l(20, -20),
+    Q(30, 30, 60, 60),
+    t(20, 20),
+    C(80, 80, 60, 60, 5, 5),
+    s(-5, 6, 2, 2),
+    z(),
+    m(50, 50),
+    z(),
   )
 
   expect(test).toEqual(expected)

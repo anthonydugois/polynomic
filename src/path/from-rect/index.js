@@ -1,9 +1,9 @@
 /* @flow */
 
-import type { PointT } from "../../types/Point"
 import type { PathT } from "../../types/Path"
 import type { RectT } from "../../types/Rect"
 
+import { path } from "../path"
 import { M, L, A, Z } from "../../point/points"
 
 export default function fromRect(
@@ -46,26 +46,20 @@ export default function fromRect(
     || _ry === 0
 
   if (noRadius) {
-    const first: PointT = M(x, y)
-    const last: PointT = Z(first)
-
-    return [
-      first,
+    return path(
+      M(x, y),
       L(x + width, y),
       L(x + width, y + height),
       L(x, y + height),
-      last,
-    ]
+      Z(),
+    )
   }
 
   const rx: number = isNaN(_rx) ? _ry : _rx
   const ry: number = isNaN(_ry) ? _rx : _ry
 
-  const first: PointT = M(x + rx, y)
-  const last: PointT = Z(first)
-
-  return [
-    first,
+  return path(
+    M(x + rx, y),
     L((x + width) - rx, y),
     A(rx, ry, 0, 0, 1, x + width, y + ry),
     L(x + width, (y + height) - ry),
@@ -74,6 +68,6 @@ export default function fromRect(
     A(rx, ry, 0, 0, 1, x, (y + height) - ry),
     L(x, y + ry),
     A(rx, ry, 0, 0, 1, x + rx, y),
-    last,
-  ]
+    Z(),
+  )
 }

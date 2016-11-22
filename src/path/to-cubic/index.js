@@ -15,17 +15,13 @@ export default function toCubic(
       current: PointT,
       index: number,
     ): PathT => {
-      const previous: PointT = index > 0 ?
-        path[index - 1] :
-        defaultPoint
-
+      const previous: PointT = index > 0 ? path[index - 1] : defaultPoint
       const cubic: PointT | PathT = pointToCubic(previous, current)
       const points: PathT = Array.isArray(cubic) ? cubic : [cubic]
 
-      return [
-        ...acc,
-        ...points,
-      ]
+      acc.push(...points)
+
+      return acc
     },
     [],
   )

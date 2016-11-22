@@ -20,13 +20,13 @@ test("should join the paths and close them", () => {
   const p2 = parse("L100 100L100 200")
   const p3 = parse("M200 200h50v50")
   const makeJoin = (prevPath, nextPath) => {
-    const firstPrev = prevPath[0]
-    const lastPrev = prevPath[prevPath.length - 1]
-    const firstNext = nextPath[0]
+    const first = prevPath[0]
+    const previous = prevPath[prevPath.length - 1]
+    const next = nextPath[0]
 
     return [
-      ...!isZ(lastPrev) && [z(firstPrev)],
-      ...!isM(firstNext) && [M(firstNext.x, firstNext.y)],
+      ...!isZ(previous) && [z()(first)],
+      ...!isM(next) && [M(next.x, next.y)()],
     ]
   }
 

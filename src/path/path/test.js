@@ -1,5 +1,5 @@
 import { path } from "./index"
-import { M, l, z } from "../../point/points"
+import { M, L, l, z } from "../../point/points"
 
 test('should return an array of points', () => {
   const test = path(
@@ -20,7 +20,7 @@ test('should return an array of points', () => {
   expect(test).toEqual(expected)
 })
 
-test('should accept functions and points', () => {
+test('should accept functions or points', () => {
   const test = path(
     M(0, 0)(),
     l(50, 50),

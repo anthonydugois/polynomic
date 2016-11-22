@@ -10,7 +10,7 @@ import isRelative from "../../point/is-relative"
 export default function reverse(
   path: PathT,
 ): PathT {
-  let lastMIndex: number =  0
+  let lastMIndex: number = 0
 
   return path.reduce(
     (

@@ -1,43 +1,66 @@
-import { z } from "../../point/points"
+/* @flow */
+
+import type { PointT } from "../../types/Point"
+import type { PathT } from "../../types/Path"
+
+import { z, defaultPoint } from "../../point/points"
 import { isM, isL, isH, isV } from "../../point/is"
 import ensureMoveTo from "../ensure-move-to"
 
-export default function clean(path) {
+export default function clean(
+  path: PathT,
+): PathT {
   return simplifyClosures(ensureMoveTo(removeConsecutiveSamePoints(path)))
 }
 
-function simplifyClosures(path) {
-  let first
+function simplifyClosures(
+  path: PathT,
+): PathT {
+  let lastM: PointT = defaultPoint
 
-  return path.map((point) => {
-    if (isM(point)) {
-      first = point
-    }
-
-    if (shouldSimplifyClosure(first, point)) {
-      return z(first)
-    }
-
-    return point
-  })
-}
-
-function shouldSimplifyClosure(first, point) {
-  return (isL(point) || isH(point) || isV(point))
-    && first.x === point.x
-    && first.y === point.y
-}
-
-function removeConsecutiveSamePoints(path) {
-  return path.reduce(
-    (acc, point, index) => {
-      const prev = index > 0 && acc[acc.length - 1]
-
-      if (prev && prev.x === point.x && prev.y === point.y) {
-        return acc
+  return path.map(
+    (
+      current: PointT,
+    ): PointT => {
+      if (isM(current)) {
+        lastM = current
       }
 
-      return [...acc, point]
+      const isLine: boolean = isL(current) || isH(current) || isV(current)
+      const shouldClose: boolean = isLine
+        && lastM.x === current.x
+        && lastM.y === current.y
+
+      if (shouldClose) {
+        return z()(lastM)
+      }
+
+      return current
+    }
+  )
+}
+
+function removeConsecutiveSamePoints(
+  path: PathT,
+): PathT {
+  return path.reduce(
+    (
+      acc: PathT,
+      current: PointT,
+      index: number,
+    ) => {
+      const previous: PointT = index > 0 ?
+        acc[acc.length - 1] :
+        defaultPoint
+
+      const sameCoordinates: boolean = previous.x === current.x
+        && previous.y === current.y
+
+      if (index === 0 || !sameCoordinates) {
+        acc.push(current)
+      }
+
+      return acc
     },
     [],
   )

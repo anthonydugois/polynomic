@@ -3,7 +3,11 @@
 import type { PointT } from "../../types/Point"
 
 export default function isRelative(
-  point: PointT,
+  current: PointT | Function,
 ): boolean {
-  return point.code.toLowerCase() === point.code
+  const type: string = typeof current === 'function' ?
+    current.name :
+    current.code
+
+  return type.toLowerCase() === type
 }

@@ -47,7 +47,8 @@ function getMaxDistance(
       const distance: number = distanceSegment(current, first, last)
 
       if (distance > acc.distance) {
-        return { index, distance }
+        acc.index = index
+        acc.distance = distance
       }
 
       return acc

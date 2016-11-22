@@ -10,50 +10,31 @@ export default function split(
 ): Array<PathT> {
   return path.reduce(
     (
-      paths: Array<PathT>,
+      acc: Array<PathT>,
       current: PointT,
       index: number,
     ): Array<PathT> => {
       if (index > 0 && shouldSplit(current, index)) {
         switch (shouldKeep) {
         case 'before':
-          return addNewPath(addToLastPath(paths, current))
+          acc[acc.length - 1].push(current)
+          acc.push([])
+          break
 
         case 'after':
-          return addToLastPath(addNewPath(paths), current)
+          acc.push([current])
+          break
 
         default:
-          return addNewPath(paths)
+          acc.push([])
+          break
         }
+      } else {
+        acc[acc.length - 1].push(current)
       }
 
-      return addToLastPath(paths, current)
+      return acc
     },
     [[]],
   )
-}
-
-function addToLastPath(
-  paths: Array<PathT>,
-  point: PointT,
-): Array<PathT> {
-  const lastPathIndex: number = paths.length - 1
-  const lastPath: PathT = paths[lastPathIndex]
-
-  return [
-    ...paths.slice(0, lastPathIndex),
-    [
-      ...lastPath,
-      point,
-    ],
-  ]
-}
-
-function addNewPath(
-  paths: Array<PathT>,
-): Array<PathT> {
-  return [
-    ...paths,
-    [],
-  ]
 }

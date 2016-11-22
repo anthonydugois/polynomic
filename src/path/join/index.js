@@ -19,17 +19,13 @@ export default function join(
         const segment: PointT | PathT = makeJoin(prevPath, nextPath)
         const segments: PathT = Array.isArray(segment) ? segment : [segment]
 
-        return [
-          ...acc,
-          ...path,
-          ...segments,
-        ]
+        acc.push(...path)
+        acc.push(...segments)
+      } else {
+        acc.push(...path)
       }
 
-      return [
-        ...acc,
-        ...path,
-      ]
+      return acc
     },
     [],
   )

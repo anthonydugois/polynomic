@@ -1,49 +1,37 @@
-import { l, L, z, Z } from "../../point/points"
+/* @flow */
+
+import type { PointT } from "../../types/Point"
+import type { PathT } from "../../types/Path"
+
+import { point, z, Z } from "../../point/points"
 import { isM, isZ } from "../../point/is"
 import isRelative from "../../point/is-relative"
 
-/**
- * Combines the subpaths by removing "zM" commands
- * e.g. combine([
- *   { code: "M", x: 0, y: 0, parameters: {} },
- *   { code: "L", x: 100, y: 100, parameters: {} },
- *   { code: "z", x: 0, y: 0, parameters: {} },
- *   { code: "M", x: 100, y: 100, parameters: {} },
- *   { code: "L", x: 200, y: 200, parameters: {} },
- * ])
- * --> [
- *   { code: "M", x: 0, y: 0, parameters: {} },
- *   { code: "L", x: 100, y: 100, parameters: {} },
- *   { code: "L", x: 100, y: 100, parameters: {} },
- *   { code: "L", x: 200, y: 200, parameters: {} },
- * ]
- */
-export default function combine(path) {
+export default function combine(
+  path: PathT,
+): PathT {
   return path.reduce(
-    (acc, point, index) => {
-      if (index > 0 && isM(point)) {
-        return [
-          ...acc,
-          isRelative(point) ?
-            l(point.x, point.y) :
-            L(point.x, point.y),
-        ]
+    (
+      acc: PathT,
+      current: PointT,
+      index: number,
+    ): PathT => {
+      if (index > 0 && isM(current)) {
+        acc.push(point(
+          isRelative(current) ? 'l' : 'L',
+          current.x,
+          current.y,
+        ))
+      } else if (!isZ(current)) {
+        acc.push(current)
+      } else if (index === path.length - 1) {
+        const first: PointT = path[0]
+        const close: Function = isRelative(current) ? z() : Z()
+
+        acc.push(close(first))
       }
 
-      if (isZ(point)) {
-        if (index === path.length - 1) {
-          return [
-            ...acc,
-            isRelative(point) ?
-              z(path[0]) :
-              Z(path[0]),
-          ]
-        }
-
-        return acc
-      }
-
-      return [...acc, point]
+      return acc
     },
     [],
   )

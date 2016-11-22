@@ -20,12 +20,14 @@ export function isFirstPointM(
 export function hasCorrectNumberOfParameters(
   d: string,
 ): boolean {
-  return segments(d).every(([code, ...parameters]) => {
-    const pointFactory: Function = points[code]
-
-    return typeof pointFactory === 'function'
-      && parameters.length >= pointFactory.length
-  })
+  return segments(d).every(
+    (
+      [code, ...parameters]: Array<string | number>,
+    ): boolean => {
+      return typeof points[code] === 'function'
+        && parameters.length >= points[code].length
+    }
+  )
 }
 
 export function noInvalidCharacters(
