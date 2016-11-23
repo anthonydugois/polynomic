@@ -1,5 +1,5 @@
-import { transform } from "../transform"
-import { perspective } from "../perspective"
+import { transform } from '../transform'
+import { perspective } from '../perspective'
 
 import {
   rotate3d,
@@ -7,10 +7,10 @@ import {
   rotateX,
   rotateY,
   rotateZ,
-} from "./index"
+} from './index'
 
-import parse from "../../pathstring/parse"
-import isEqual from "../../path/is-equal"
+import parse from '../../pathstring/parse'
+import isEqual from '../../path/is-equal'
 
 test('should apply a rotate3d transform on the path', () => {
   const path = parse('M0 0L100 0')

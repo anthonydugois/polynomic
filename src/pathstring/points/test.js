@@ -1,5 +1,5 @@
-import * as points from "../../point/points"
-import * as build from "./index"
+import * as points from '../../point/points'
+import * as build from './index'
 
 test('should build a m point as string', () => {
   const point = points.m(50, 50)()

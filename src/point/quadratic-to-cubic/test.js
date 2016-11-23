@@ -1,7 +1,7 @@
-import { M, Q, C } from "../points"
-import quadraticToCubic from "./index"
+import { M, Q, C } from '../points'
+import quadraticToCubic from './index'
 
-test("should convert the quadratic curve into a cubic curve", () => {
+test('should convert the quadratic curve into a cubic curve', () => {
   const previous = M(0, 0)()
   const point = Q(75, 25, 100, 100)()
   const test = quadraticToCubic(previous, point)

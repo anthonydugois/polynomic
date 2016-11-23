@@ -1,8 +1,8 @@
 /* @flow */
 
-import type { PointT } from "../../types/Point"
+import type { PointT } from '../../types/Point'
 
-import { point } from "../points"
+import { point } from '../points'
 
 export function min(
   p1: PointT,

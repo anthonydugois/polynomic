@@ -1,10 +1,10 @@
 /* @flow */
 
-import type { PathT } from "../../types/Path"
-import type { LineT } from "../../types/Line"
+import type { PathT } from '../../types/Path'
+import type { LineT } from '../../types/Line'
 
-import { path } from "../path"
-import { M, L } from "../../point/points"
+import { path } from '../path'
+import { M, L } from '../../point/points'
 
 export default function fromLine(
   line: LineT | HTMLElement,

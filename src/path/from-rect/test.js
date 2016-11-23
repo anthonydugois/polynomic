@@ -1,5 +1,5 @@
-import isEqual from "../is-equal"
-import fromRect from "./index"
+import isEqual from '../is-equal'
+import fromRect from './index'
 
 test('should get the corresponding path from the SVG rect node', () => {
   const node = document.createElement('rect')

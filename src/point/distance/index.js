@@ -1,8 +1,8 @@
 /* @flow */
 
-import type { PointT } from "../../types/Point"
+import type { PointT } from '../../types/Point'
 
-import squareDistance from "../square-distance"
+import squareDistance from '../square-distance'
 
 export default function distance(
   p1: PointT,

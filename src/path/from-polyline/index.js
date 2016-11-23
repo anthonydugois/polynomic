@@ -1,9 +1,9 @@
 /* @flow */
 
-import type { PathT } from "../../types/Path"
+import type { PathT } from '../../types/Path'
 
-import { M, L } from "../../point/points"
-import segments from "../../pathstring/segments"
+import { M, L } from '../../point/points'
+import segments from '../../pathstring/segments'
 
 export default function fromPolyline(
   polyline: HTMLElement,

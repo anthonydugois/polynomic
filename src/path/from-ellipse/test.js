@@ -1,5 +1,5 @@
-import isEqual from "../is-equal"
-import fromEllipse from "./index"
+import isEqual from '../is-equal'
+import fromEllipse from './index'
 
 test('should get the corresponding path from the SVG ellipse node', () => {
   const node = document.createElement('ellipse')

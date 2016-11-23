@@ -1,10 +1,10 @@
 /* @flow */
 
-import type { PointT, PointParamsT } from "../../types/Point"
-import type { PathT } from "../../types/Path"
+import type { PointT, PointParamsT } from '../../types/Point'
+import type { PathT } from '../../types/Path'
 
-import parse from "../../pathstring/parse"
-import round, { defaultPrecision } from "../../utils/round"
+import parse from '../../pathstring/parse'
+import round, { defaultPrecision } from '../../utils/round'
 
 export default function isEqual(
   d1: string | PathT,

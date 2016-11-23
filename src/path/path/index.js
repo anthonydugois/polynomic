@@ -1,10 +1,10 @@
 /* @flow */
 
-import type { PointT } from "../../types/Point"
-import type { PathT } from "../../types/Path"
+import type { PointT } from '../../types/Point'
+import type { PathT } from '../../types/Path'
 
-import { defaultPoint } from "../../point/points"
-import { isM, isZ } from "../../point/is"
+import { defaultPoint } from '../../point/points'
+import { isM, isZ } from '../../point/is'
 
 export function path(
   ...pointFactories: Array<PointT | Function>

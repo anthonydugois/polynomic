@@ -1,10 +1,10 @@
 /* @flow */
 
-import type { PathT } from "../../types/Path"
-import type { EllipseT } from "../../types/Ellipse"
+import type { PathT } from '../../types/Path'
+import type { EllipseT } from '../../types/Ellipse'
 
-import { path } from "../path"
-import { M, A, Z } from "../../point/points"
+import { path } from '../path'
+import { M, A, Z } from '../../point/points'
 
 export default function fromEllipse(
   ellipse: EllipseT | HTMLElement,

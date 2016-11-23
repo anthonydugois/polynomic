@@ -1,10 +1,10 @@
 /* @flow */
 
-import type { PointT } from "../../types/Point"
-import type { PathT } from "../../types/Path"
+import type { PointT } from '../../types/Point'
+import type { PathT } from '../../types/Path'
 
-import { defaultPoint } from "../../point/points"
-import pointToCubic from "../../point/to-cubic"
+import { defaultPoint } from '../../point/points'
+import pointToCubic from '../../point/to-cubic'
 
 export default function toCubic(
   path: PathT,

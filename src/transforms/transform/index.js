@@ -1,15 +1,15 @@
 /* @flow */
 
-import type { PointT, PointCodeT, PointParamsT } from "../../types/Point"
-import type { PathT, PathBoundingBoxT, PathTransformOptionsT } from "../../types/Path"
-import type { CoordsT } from "../../types/Coords"
-import type { Matrix4x4T, Matrix1x4T } from "../../types/Matrix"
+import type { PointT, PointCodeT, PointParamsT } from '../../types/Point'
+import type { PathT, PathBoundingBoxT, PathTransformOptionsT } from '../../types/Path'
+import type { CoordsT } from '../../types/Coords'
+import type { Matrix4x4T, Matrix1x4T } from '../../types/Matrix'
 
-import boundingBox from "../../path/bounding-box"
-import { translate3d } from "../translate"
-import { point, defaultPoint } from "../../point/points"
-import { isH, isV } from "../../point/is"
-import isRelative from "../../point/is-relative"
+import boundingBox from '../../path/bounding-box'
+import { translate3d } from '../translate'
+import { point, defaultPoint } from '../../point/points'
+import { isH, isV } from '../../point/is'
+import isRelative from '../../point/is-relative'
 
 export const identity: Matrix4x4T = [
   1, 0, 0, 0,

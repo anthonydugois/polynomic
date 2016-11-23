@@ -1,6 +1,6 @@
 /* @flow */
 
-import type { Matrix4x4T } from "../../types/Matrix"
+import type { Matrix4x4T } from '../../types/Matrix'
 
 export function perspective(
   d: number,

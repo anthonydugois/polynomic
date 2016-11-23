@@ -1,8 +1,8 @@
 /* @flow */
 
-import type { Matrix4x4T } from "../../types/Matrix"
+import type { Matrix4x4T } from '../../types/Matrix'
 
-import { angle } from "../../utils"
+import { angle } from '../../utils'
 
 export function skew(
   alpha: number | string,

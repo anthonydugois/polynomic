@@ -1,9 +1,9 @@
 /* @flow */
 
-import type { PointT } from "../../types/Point"
+import type { PointT } from '../../types/Point'
 
-import { point } from "../points"
-import squareDistance from "../square-distance"
+import { point } from '../points'
+import squareDistance from '../square-distance'
 
 export default function distanceSegment(
   p1: PointT,

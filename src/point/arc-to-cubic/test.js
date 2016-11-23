@@ -1,8 +1,8 @@
-import { path } from "../../path/path"
-import { M, C, A } from "../points"
-import arcToCubic from "./index"
+import { path } from '../../path/path'
+import { M, C, A } from '../points'
+import arcToCubic from './index'
 
-test("should convert the arc into a cubic curve", () => {
+test('should convert the arc into a cubic curve', () => {
   const previous = M(0, 0)()
   const point = A(50, 50, 0, 0, 1, 0, 100)()
 

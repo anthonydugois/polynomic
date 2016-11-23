@@ -1,6 +1,6 @@
-import segments from "./index"
+import segments from './index'
 
-test("should parse the code and return an array of segments", () => {
+test('should parse the code and return an array of segments', () => {
   const test = segments('M0 0h+2.01e-14l50 50 20 -20Q 30, 30, 60, 60t20 20C80 80 60,60 5 5s -5 6 2,2 zm 50 50z')
   const expected = [
     ['M', 0, 0],

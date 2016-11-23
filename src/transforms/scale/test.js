@@ -1,4 +1,4 @@
-import { transform } from "../transform"
+import { transform } from '../transform'
 
 import {
   scale3d,
@@ -6,10 +6,10 @@ import {
   scaleX,
   scaleY,
   scaleZ,
-} from "./index"
+} from './index'
 
-import parse from "../../pathstring/parse"
-import isEqual from "../../path/is-equal"
+import parse from '../../pathstring/parse'
+import isEqual from '../../path/is-equal'
 
 test('should apply a scale3d transform on the path', () => {
   const path = parse('M0 0L100 0Q150 150 200 200')

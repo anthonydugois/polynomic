@@ -1,5 +1,5 @@
-import isEqual from "../is-equal"
-import fromPolyline from "./index"
+import isEqual from '../is-equal'
+import fromPolyline from './index'
 
 test('should get the corresponding path from the SVG polyline node', () => {
   const node = document.createElement('polyline')

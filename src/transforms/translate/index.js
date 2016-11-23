@@ -1,12 +1,12 @@
 /* @flow */
 
-import type { PathBoundingBoxT } from "../../types/Path"
-import type { Matrix4x4T } from "../../types/Matrix"
+import type { PathBoundingBoxT } from '../../types/Path'
+import type { Matrix4x4T } from '../../types/Matrix'
 
 import {
   relativeToAbsoluteX,
   relativeToAbsoluteY,
-} from "../../utils"
+} from '../../utils'
 
 export function translate3d(
   tx: number | string,

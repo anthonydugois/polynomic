@@ -1,10 +1,10 @@
 /* @flow */
 
-import type { PathT } from "../../types/Path"
-import type { CircleT } from "../../types/Circle"
+import type { PathT } from '../../types/Path'
+import type { CircleT } from '../../types/Circle'
 
-import { path } from "../path"
-import { M, A, Z } from "../../point/points"
+import { path } from '../path'
+import { M, A, Z } from '../../point/points'
 
 export default function fromCircle(
   circle: CircleT | HTMLElement,

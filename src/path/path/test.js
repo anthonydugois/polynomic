@@ -1,5 +1,5 @@
-import { path } from "./index"
-import { M, L, l, z } from "../../point/points"
+import { path } from './index'
+import { M, L, l, z } from '../../point/points'
 
 test('should return an array of points', () => {
   const test = path(

@@ -1,12 +1,12 @@
 /* @flow */
 
-import type { PointT } from "../../types/Point"
-import type { PathT } from "../../types/Path"
+import type { PointT } from '../../types/Point'
+import type { PathT } from '../../types/Path'
 
-import { defaultPoint } from "../../point/points"
-import * as points from "../points"
-import { defaultPrecision } from "../../utils/round"
-import format from "../../utils/format"
+import { defaultPoint } from '../../point/points'
+import * as points from '../points'
+import { defaultPrecision } from '../../utils/round'
+import format from '../../utils/format'
 
 export default function build(
   path: PathT,

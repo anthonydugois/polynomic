@@ -1,11 +1,11 @@
 /* @flow */
 
-import type { PointT } from "../../types/Point"
-import type { PathT } from "../../types/Path"
+import type { PointT } from '../../types/Point'
+import type { PathT } from '../../types/Path'
 
-import { z, defaultPoint } from "../../point/points"
-import { isM, isL, isH, isV } from "../../point/is"
-import ensureMoveTo from "../ensure-move-to"
+import { z, defaultPoint } from '../../point/points'
+import { isM, isL, isH, isV } from '../../point/is'
+import ensureMoveTo from '../ensure-move-to'
 
 export default function clean(
   path: PathT,

@@ -1,8 +1,8 @@
 /* @flow */
 
-import type { PointT } from "../../types/Point"
+import type { PointT } from '../../types/Point'
 
-import * as types from "../points/types"
+import * as types from '../points/types'
 
 export function is(
   current: PointT | Function,

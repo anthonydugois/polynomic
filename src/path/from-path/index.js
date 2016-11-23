@@ -1,8 +1,8 @@
 /* @flow */
 
-import type { PathT } from "../../types/Path"
+import type { PathT } from '../../types/Path'
 
-import parse from "../../pathstring/parse"
+import parse from '../../pathstring/parse'
 
 export default function fromPath(
   path: HTMLElement,

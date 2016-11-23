@@ -1,9 +1,9 @@
 /* @flow */
 
-import type { PointT } from "../../types/Point"
-import type { PathT } from "../../types/Path"
+import type { PointT } from '../../types/Point'
+import type { PathT } from '../../types/Path'
 
-import distanceSegment from "../../point/distance-segment"
+import distanceSegment from '../../point/distance-segment'
 
 type DistanceT = {
   index: number,

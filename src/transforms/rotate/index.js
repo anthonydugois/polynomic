@@ -1,9 +1,9 @@
 /* @flow */
 
-import type { Matrix4x4T } from "../../types/Matrix"
+import type { Matrix4x4T } from '../../types/Matrix'
 
-import { identity } from "../transform"
-import { angle } from "../../utils"
+import { identity } from '../transform'
+import { angle } from '../../utils'
 
 export function rotate3d(
   x: number,

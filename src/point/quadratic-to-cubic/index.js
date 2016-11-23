@@ -1,9 +1,9 @@
 /* @flow */
 
-import type { PointT } from "../../types/Point"
+import type { PointT } from '../../types/Point'
 
-import { point } from "../points"
-import isRelative from "../is-relative"
+import { point } from '../points'
+import isRelative from '../is-relative'
 
 export default function quadraticToCubic(
   previous: PointT,

@@ -4,10 +4,10 @@ import type {
   PointT,
   PointParamsT,
   PointCodeT,
-} from "../../types/Point"
+} from '../../types/Point'
 
-import * as types from "../points/types"
-import { isQ, isT, isC, isS } from "../is"
+import * as types from '../points/types'
+import { isQ, isT, isC, isS } from '../is'
 
 export const defaultPoint: PointT = point('', 0, 0)
 

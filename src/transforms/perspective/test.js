@@ -1,5 +1,5 @@
-import { transform } from "../transform"
-import { perspective } from "./index"
+import { transform } from '../transform'
+import { perspective } from './index'
 
 test('should return a perspective transformation matrix', () => {
   const test = perspective(100)

@@ -1,7 +1,7 @@
 /* @flow */
 
-import type { PathT, PathBoundingBoxT } from "../types/Path"
-import type { CoordsT } from "../types/Coords"
+import type { PathT, PathBoundingBoxT } from '../types/Path'
+import type { CoordsT } from '../types/Coords'
 
 const positions = {
   left: 0,

@@ -1,27 +1,27 @@
 /* @flow */
 
 export type PointCodeT =
-  | ""
-  | "m"
-  | "M"
-  | "l"
-  | "L"
-  | "h"
-  | "H"
-  | "v"
-  | "V"
-  | "q"
-  | "Q"
-  | "t"
-  | "T"
-  | "c"
-  | "C"
-  | "s"
-  | "S"
-  | "a"
-  | "A"
-  | "z"
-  | "Z"
+  | ''
+  | 'm'
+  | 'M'
+  | 'l'
+  | 'L'
+  | 'h'
+  | 'H'
+  | 'v'
+  | 'V'
+  | 'q'
+  | 'Q'
+  | 't'
+  | 'T'
+  | 'c'
+  | 'C'
+  | 's'
+  | 'S'
+  | 'a'
+  | 'A'
+  | 'z'
+  | 'Z'
 
 export type PointParamsT = {
   x1?: number,

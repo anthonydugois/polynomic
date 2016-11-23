@@ -1,11 +1,11 @@
 /* @flow */
 
-import type { PointT, PointCodeT } from "../../types/Point"
-import type { PathT } from "../../types/Path"
+import type { PointT, PointCodeT } from '../../types/Point'
+import type { PathT } from '../../types/Path'
 
-import * as points from "../../point/points"
-import { isM } from "../../point/is"
-import segments from "../segments"
+import * as points from '../../point/points'
+import { isM } from '../../point/is'
+import segments from '../segments'
 
 export default function parse(
   d: string,

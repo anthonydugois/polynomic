@@ -1,7 +1,7 @@
-import { M, L, H, V, Q, T, C, A } from "../points"
-import toCubic from "./index"
+import { M, L, H, V, Q, T, C, A } from '../points'
+import toCubic from './index'
 
-test("should convert the line into a cubic curve", () => {
+test('should convert the line into a cubic curve', () => {
   const prev = M(0, 0)()
   const point = L(100, 0)()
   const test = toCubic(prev, point)
@@ -10,7 +10,7 @@ test("should convert the line into a cubic curve", () => {
   expect(test).toEqual(expected)
 })
 
-test("should convert the horizontal line into a cubic curve", () => {
+test('should convert the horizontal line into a cubic curve', () => {
   const prev = M(0, 0)()
   const point = H(100)(prev)
   const test = toCubic(prev, point)
@@ -19,7 +19,7 @@ test("should convert the horizontal line into a cubic curve", () => {
   expect(test).toEqual(expected)
 })
 
-test("should convert the vertical line into a cubic curve", () => {
+test('should convert the vertical line into a cubic curve', () => {
   const prev = M(0, 0)()
   const point = V(100)(prev)
   const test = toCubic(prev, point)
@@ -28,7 +28,7 @@ test("should convert the vertical line into a cubic curve", () => {
   expect(test).toEqual(expected)
 })
 
-test("should convert the quadratic curve into a cubic curve", () => {
+test('should convert the quadratic curve into a cubic curve', () => {
   const prev = M(0, 0)()
   const point = Q(75, 25, 100, 100)()
   const test = toCubic(prev, point)
@@ -37,7 +37,7 @@ test("should convert the quadratic curve into a cubic curve", () => {
   expect(test).toEqual(expected)
 })
 
-test("should convert the computed quadratic curve into a cubic curve", () => {
+test('should convert the computed quadratic curve into a cubic curve', () => {
   const prev = M(0, 0)()
   const point = T(200, 0)(Q(0, 100, 100, 100)())
   const test = toCubic(prev, point)
@@ -46,7 +46,7 @@ test("should convert the computed quadratic curve into a cubic curve", () => {
   expect(test).toEqual(expected)
 })
 
-test("should convert the arc into a cubic curve", () => {
+test('should convert the arc into a cubic curve', () => {
   const prev = M(0, 0)()
   const point = A(50, 50, 0, 0, 1, 0, 100)()
   const test = toCubic(prev, point)
@@ -58,7 +58,7 @@ test("should convert the arc into a cubic curve", () => {
   expect(test).toEqual(expected)
 })
 
-test("should return the exact same point if it's already a cubic curve", () => {
+test('should return the exact same point if it is already a cubic curve', () => {
   const prev = M(0, 0)()
   const point = C(25, 25, 25, 75, 0, 100)()
   const test = toCubic(prev, point)

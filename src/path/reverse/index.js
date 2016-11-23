@@ -1,11 +1,11 @@
 /* @flow */
 
-import type { PointT, PointCodeT, PointParamsT } from "../../types/Point"
-import type { PathT } from "../../types/Path"
+import type { PointT, PointCodeT, PointParamsT } from '../../types/Point'
+import type { PathT } from '../../types/Path'
 
-import { point } from "../../point/points"
-import { isM, isT, isC, isS, isA, isZ } from "../../point/is"
-import isRelative from "../../point/is-relative"
+import { point } from '../../point/points'
+import { isM, isT, isC, isS, isA, isZ } from '../../point/is'
+import isRelative from '../../point/is-relative'
 
 export default function reverse(
   path: PathT,

@@ -1,10 +1,10 @@
 /* @flow */
 
-import type { PathT } from "../../types/Path"
-import type { RectT } from "../../types/Rect"
+import type { PathT } from '../../types/Path'
+import type { RectT } from '../../types/Rect'
 
-import { path } from "../path"
-import { M, L, A, Z } from "../../point/points"
+import { path } from '../path'
+import { M, L, A, Z } from '../../point/points'
 
 export default function fromRect(
   rect: RectT | HTMLElement,
