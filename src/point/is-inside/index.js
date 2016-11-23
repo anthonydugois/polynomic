@@ -3,7 +3,7 @@
 import type { PointT } from '../../types/Point'
 import type { PathT } from '../../types/Path'
 
-export default function isInside(
+export function isInside(
   point: PointT,
   path: PathT,
 ): boolean {

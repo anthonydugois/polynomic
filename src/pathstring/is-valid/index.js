@@ -1,9 +1,9 @@
 /* @flow */
 
 import * as points from '../../point/points'
-import segments from '../segments'
+import { segments } from '../segments'
 
-export default function isValid(
+export function isValid(
   d: string,
 ): boolean {
   return isFirstPointM(d)

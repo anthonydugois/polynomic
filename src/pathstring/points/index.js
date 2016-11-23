@@ -5,8 +5,8 @@ import type { PointT } from '../../types/Point'
 
 import { defaultPoint } from '../../point/points'
 import * as types from '../../point/points/types'
-import round, { defaultPrecision } from '../../utils/round'
-import format from '../../utils/format'
+import { round, defaultPrecision } from '../../utils/round'
+import { format } from '../../utils/format'
 
 export function m(
   current: PointT,

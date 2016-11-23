@@ -1,5 +1,5 @@
 import { M, L, C } from '../points'
-import lineToCubic from './index'
+import { lineToCubic } from './index'
 
 test('should convert the line into a cubic curve', () => {
   const previous = M(0, 0)()

@@ -5,9 +5,9 @@ import type { PathT } from '../../types/Path'
 
 import { point, z, Z } from '../../point/points'
 import { isM, isZ } from '../../point/is'
-import isRelative from '../../point/is-relative'
+import { isRelative } from '../../point/is-relative'
 
-export default function combine(
+export function combine(
   path: PathT,
 ): PathT {
   return path.reduce(

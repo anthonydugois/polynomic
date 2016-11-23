@@ -1,5 +1,5 @@
-import isEqual from '../is-equal'
-import fromCircle from './index'
+import { isEqual } from '../is-equal'
+import { fromCircle } from './index'
 
 test('should get the corresponding path from the SVG circle node', () => {
   const node = document.createElement('circle')

@@ -5,9 +5,9 @@ import type { PathT } from '../../types/Path'
 
 import { m, M } from '../../point/points'
 import { isM, isZ } from '../../point/is'
-import isRelative from '../../point/is-relative'
+import { isRelative } from '../../point/is-relative'
 
-export default function ensureMoveTo(
+export function ensureMoveTo(
   path: PathT,
 ): PathT {
   return path.map(

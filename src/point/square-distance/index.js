@@ -2,7 +2,7 @@
 
 import type { PointT } from '../../types/Point'
 
-export default function squareDistance(
+export function squareDistance(
   p1: PointT,
   p2: PointT,
 ): number {

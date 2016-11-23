@@ -1,6 +1,6 @@
-import parse from '../../pathstring/parse'
-import isEqual from '../is-equal'
-import simplify from './index'
+import { parse } from '../../pathstring/parse'
+import { isEqual } from '../is-equal'
+import { simplify } from './index'
 
 test('should simplify the path', () => {
   const path = parse('M0 0 L50 0 L100 5')

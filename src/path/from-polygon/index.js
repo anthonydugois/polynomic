@@ -3,9 +3,9 @@
 import type { PathT } from '../../types/Path'
 
 import { M, L, Z } from '../../point/points'
-import segments from '../../pathstring/segments'
+import { segments } from '../../pathstring/segments'
 
-export default function fromPolygon(
+export function fromPolygon(
   polygon: HTMLElement,
 ): PathT {
   if (polygon instanceof HTMLElement && polygon.nodeName.toLowerCase() !== 'polygon') {

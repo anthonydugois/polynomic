@@ -1,5 +1,5 @@
-import parse from '../../pathstring/parse'
-import isEqual from './index'
+import { parse } from '../../pathstring/parse'
+import { isEqual } from './index'
 
 test('should check that the paths are equal', () => {
   const test = parse('M0 0l10 10')

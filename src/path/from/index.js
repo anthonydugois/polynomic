@@ -2,13 +2,13 @@
 
 import type { PathT } from '../../types/Path'
 
-import fromPath from '../from-path'
-import fromLine from '../from-line'
-import fromPolyline from '../from-polyline'
-import fromPolygon from '../from-polygon'
-import fromRect from '../from-rect'
-import fromCircle from '../from-circle'
-import fromEllipse from '../from-ellipse'
+import { fromPath } from '../from-path'
+import { fromLine } from '../from-line'
+import { fromPolyline } from '../from-polyline'
+import { fromPolygon } from '../from-polygon'
+import { fromRect } from '../from-rect'
+import { fromCircle } from '../from-circle'
+import { fromEllipse } from '../from-ellipse'
 
 const parser = {
   path: fromPath,
@@ -20,7 +20,7 @@ const parser = {
   ellipse: fromEllipse,
 }
 
-export default function from(
+export function from(
   node: HTMLElement,
 ): PathT {
   const name: string = node.nodeName.toLowerCase()

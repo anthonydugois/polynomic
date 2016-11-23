@@ -6,7 +6,7 @@ import type { EllipseT } from '../../types/Ellipse'
 import { path } from '../path'
 import { M, A, Z } from '../../point/points'
 
-export default function fromEllipse(
+export function fromEllipse(
   ellipse: EllipseT | HTMLElement,
 ): PathT {
   if (ellipse instanceof HTMLElement && ellipse.nodeName.toLowerCase() !== 'ellipse') {

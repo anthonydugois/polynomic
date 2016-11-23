@@ -3,7 +3,7 @@
 import type { PointT } from '../../types/Point'
 import type { PathT } from '../../types/Path'
 
-export default function join(
+export function join(
   paths: Array<PathT>,
   makeJoin: Function = () => [],
 ): PathT {

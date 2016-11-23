@@ -1,6 +1,6 @@
-import parse from '../../pathstring/parse'
+import { parse } from '../../pathstring/parse'
 import { point } from '../points'
-import isInside from './index'
+import { isInside } from './index'
 
 test('should check that the point is inside the given path', () => {
   const path = parse('M0 0L100 0L100 100L0 100')

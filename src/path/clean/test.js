@@ -1,6 +1,6 @@
-import parse from '../../pathstring/parse'
-import isEqual from '../is-equal'
-import clean from './index'
+import { parse } from '../../pathstring/parse'
+import { isEqual } from '../is-equal'
+import { clean } from './index'
 
 test('should clean the invalid path', () => {
   const path = parse('L0 0l50 50l0 0h50v50 L0 0')

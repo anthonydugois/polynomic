@@ -3,9 +3,9 @@
 import type { PointT } from '../../types/Point'
 
 import { point } from '../points'
-import isRelative from '../is-relative'
+import { isRelative } from '../is-relative'
 
-export default function lineToCubic(
+export function lineToCubic(
   previous: PointT,
   current: PointT,
 ): PointT {

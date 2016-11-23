@@ -5,9 +5,9 @@ import type { PathT } from '../../types/Path'
 
 import { z, defaultPoint } from '../../point/points'
 import { isM, isL, isH, isV } from '../../point/is'
-import ensureMoveTo from '../ensure-move-to'
+import { ensureMoveTo } from '../ensure-move-to'
 
-export default function clean(
+export function clean(
   path: PathT,
 ): PathT {
   return simplifyClosures(ensureMoveTo(removeConsecutiveSamePoints(path)))

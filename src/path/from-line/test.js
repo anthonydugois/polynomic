@@ -1,5 +1,5 @@
-import isEqual from '../is-equal'
-import fromLine from './index'
+import { isEqual } from '../is-equal'
+import { fromLine } from './index'
 
 test('should get the corresponding path from the SVG line node', () => {
   const node = document.createElement('line')

@@ -6,9 +6,9 @@ import type { PathT } from '../../types/Path'
 import { defaultPoint } from '../../point/points'
 import * as points from '../points'
 import { defaultPrecision } from '../../utils/round'
-import format from '../../utils/format'
+import { format } from '../../utils/format'
 
-export default function build(
+export function build(
   path: PathT,
   precision: number = defaultPrecision,
 ): string {

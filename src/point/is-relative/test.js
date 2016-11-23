@@ -1,5 +1,5 @@
 import { m, M } from '../points'
-import isRelative from './index'
+import { isRelative } from './index'
 
 test('should check that the point factory is relative', () => {
   const point = m(0, 0)

@@ -8,8 +8,8 @@ import {
 
 import { translate } from '../translate'
 import { scale } from '../scale'
-import parse from '../../pathstring/parse'
-import isEqual from '../../path/is-equal'
+import { parse } from '../../pathstring/parse'
+import { isEqual } from '../../path/is-equal'
 
 test('should return a function and apply the transform on the path', () => {
   const path = parse('M0 0L100 100Q150 150 200 200')

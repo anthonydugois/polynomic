@@ -6,7 +6,7 @@ import type { RectT } from '../../types/Rect'
 import { path } from '../path'
 import { M, L, A, Z } from '../../point/points'
 
-export default function fromRect(
+export function fromRect(
   rect: RectT | HTMLElement,
 ): PathT {
   if (rect instanceof HTMLElement && rect.nodeName.toLowerCase() !== 'rect') {

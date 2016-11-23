@@ -6,7 +6,7 @@ import type { RectT } from '../../types/Rect'
 
 import { point } from '../../point/points'
 import { isM, isZ } from '../../point/is'
-import toCubic from '../to-cubic'
+import { toCubic } from '../to-cubic'
 
 type BoundingBoxT = {
   xMin: number,
@@ -15,7 +15,7 @@ type BoundingBoxT = {
   yMax: number,
 }
 
-export default function boundingBox(
+export function boundingBox(
   path: PathT,
 ): RectT {
   const first: PointT = path[0]

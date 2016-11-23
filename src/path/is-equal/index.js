@@ -3,10 +3,10 @@
 import type { PointT, PointParamsT } from '../../types/Point'
 import type { PathT } from '../../types/Path'
 
-import parse from '../../pathstring/parse'
-import round, { defaultPrecision } from '../../utils/round'
+import { parse } from '../../pathstring/parse'
+import { round, defaultPrecision } from '../../utils/round'
 
-export default function isEqual(
+export function isEqual(
   d1: string | PathT,
   d2: string | PathT,
   precision: number = defaultPrecision,

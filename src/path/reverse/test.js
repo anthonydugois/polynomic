@@ -1,6 +1,6 @@
-import parse from '../../pathstring/parse'
-import isEqual from '../is-equal'
-import reverse from './index'
+import { parse } from '../../pathstring/parse'
+import { isEqual } from '../is-equal'
+import { reverse } from './index'
 
 test('should reverse the path', () => {
   const path = parse('M 0 0 H 100 Q 150 0 150 100 T 200 150 T 250 200 V 200 A 50 50 0 0 1 250 250 V 350 H 350 C 400 350 400 450 400 550 S 400 700 300 700 z M 500 350 L 450 250 V 100 H 600 L 650 250 T 655 250 S 20 20 20 20 z')

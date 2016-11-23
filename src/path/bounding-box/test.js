@@ -1,5 +1,5 @@
-import parse from '../../pathstring/parse'
-import boundingBox from './index'
+import { parse } from '../../pathstring/parse'
+import { boundingBox } from './index'
 
 test('should give the bounding box of the path', () => {
   const path = parse('M 200 150 L 300 200 C 300 300 400 300 400 200')

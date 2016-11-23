@@ -6,7 +6,7 @@ import type { LineT } from '../../types/Line'
 import { path } from '../path'
 import { M, L } from '../../point/points'
 
-export default function fromLine(
+export function fromLine(
   line: LineT | HTMLElement,
 ): PathT {
   if (line instanceof HTMLElement && line.nodeName.toLowerCase() !== 'line') {

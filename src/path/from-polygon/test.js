@@ -1,5 +1,5 @@
-import isEqual from '../is-equal'
-import fromPolygon from './index'
+import { isEqual } from '../is-equal'
+import { fromPolygon } from './index'
 
 test('should get the corresponding path from the SVG polygon node', () => {
   const node = document.createElement('polygon')

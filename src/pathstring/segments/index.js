@@ -1,6 +1,6 @@
 /* @flow */
 
-export default function segments(
+export function segments(
   d: string,
 ): Array<Array<string | number>> {
   return d

@@ -1,4 +1,4 @@
-import isValid from './index'
+import { isValid } from './index'
 
 test('should check that pathstrings are valid', () => {
   expect(isValid('M0,0')).toBe(true)

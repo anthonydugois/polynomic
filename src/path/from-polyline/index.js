@@ -3,9 +3,9 @@
 import type { PathT } from '../../types/Path'
 
 import { M, L } from '../../point/points'
-import segments from '../../pathstring/segments'
+import { segments } from '../../pathstring/segments'
 
-export default function fromPolyline(
+export function fromPolyline(
   polyline: HTMLElement,
 ): PathT {
   if (polyline instanceof HTMLElement && polyline.nodeName.toLowerCase() !== 'polyline') {

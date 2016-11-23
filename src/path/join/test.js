@@ -1,8 +1,8 @@
-import parse from '../../pathstring/parse'
+import { parse } from '../../pathstring/parse'
 import { M, z } from '../../point/points'
 import { isM, isZ } from '../../point/is'
-import isEqual from '../is-equal'
-import join from './index'
+import { isEqual } from '../is-equal'
+import { join } from './index'
 
 test('should join the paths', () => {
   const p1 = parse('M0 0L100 0')

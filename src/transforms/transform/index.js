@@ -5,11 +5,11 @@ import type { PathT, PathTransformOptionsT } from '../../types/Path'
 import type { RectT } from '../../types/Rect'
 import type { Matrix4T, Vector4T } from '../../types/Matrix'
 
-import boundingBox from '../../path/bounding-box'
+import { boundingBox } from '../../path/bounding-box'
 import { translate3d } from '../translate'
 import { point, defaultPoint } from '../../point/points'
 import { isH, isV } from '../../point/is'
-import isRelative from '../../point/is-relative'
+import { isRelative } from '../../point/is-relative'
 
 export const identity: Matrix4T = [
   1, 0, 0, 0,

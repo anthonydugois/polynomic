@@ -5,9 +5,9 @@ import type { PathT } from '../../types/Path'
 
 import * as points from '../../point/points'
 import { isM } from '../../point/is'
-import segments from '../segments'
+import { segments } from '../segments'
 
-export default function parse(
+export function parse(
   d: string,
 ): PathT {
   let lastM: PointT

@@ -3,9 +3,9 @@
 import type { PointT } from '../../types/Point'
 
 import { point } from '../points'
-import squareDistance from '../square-distance'
+import { squareDistance } from '../square-distance'
 
-export default function distanceSegment(
+export function distanceSegment(
   p1: PointT,
   p2: PointT,
   p3: PointT,

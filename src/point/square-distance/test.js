@@ -1,5 +1,5 @@
 import { point } from '../points'
-import squareDistance from './index'
+import { squareDistance } from './index'
 
 test('should give the square distance between two points', () => {
   const test = squareDistance(

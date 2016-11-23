@@ -2,9 +2,9 @@
 
 import type { PathT } from '../../types/Path'
 
-import parse from '../../pathstring/parse'
+import { parse } from '../../pathstring/parse'
 
-export default function fromPath(
+export function fromPath(
   path: HTMLElement,
 ): PathT {
   if (path instanceof HTMLElement && path.nodeName.toLowerCase() !== 'path') {

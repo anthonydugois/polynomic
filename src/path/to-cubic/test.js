@@ -1,6 +1,6 @@
-import parse from '../../pathstring/parse'
-import isEqual from '../is-equal'
-import toCubic from './index'
+import { parse } from '../../pathstring/parse'
+import { isEqual } from '../is-equal'
+import { toCubic } from './index'
 
 test('should convert points into cubic curves', () => {
   const path = parse('M0 0L100 0L100 100')

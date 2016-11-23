@@ -1,7 +1,7 @@
-import parse from '../../pathstring/parse'
+import { parse } from '../../pathstring/parse'
 import { isM, isZ } from '../../point/is'
-import isEqual from '../is-equal'
-import split from './index'
+import { isEqual } from '../is-equal'
+import { split } from './index'
 
 test('should split the path and keep points on the previous path', () => {
   const path = parse('M0 0L100 0L100 100zM100 100L200 100L200 200zM200 200L300 200L300 300')

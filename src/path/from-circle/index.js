@@ -6,7 +6,7 @@ import type { CircleT } from '../../types/Circle'
 import { path } from '../path'
 import { M, A, Z } from '../../point/points'
 
-export default function fromCircle(
+export function fromCircle(
   circle: CircleT | HTMLElement,
 ): PathT {
   if (circle instanceof HTMLElement && circle.nodeName.toLowerCase() !== 'circle') {

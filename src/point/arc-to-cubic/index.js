@@ -1,9 +1,9 @@
 import { point } from '../points'
-import isRelative from '../is-relative'
+import { isRelative } from '../is-relative'
 import { transform } from '../../transforms/transform'
 import { rotate } from '../../transforms/rotate'
 
-export default function arcToCubic(previous, current, center = null) {
+export function arcToCubic(previous, current, center = null) {
   let partial = []
   let cx, cy, f1, f2
 

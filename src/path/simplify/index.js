@@ -3,14 +3,14 @@
 import type { PointT } from '../../types/Point'
 import type { PathT } from '../../types/Path'
 
-import distanceSegment from '../../point/distance-segment'
+import { distanceSegment } from '../../point/distance-segment'
 
 type DistanceT = {
   index: number,
   distance: number,
 }
 
-export default function simplify(
+export function simplify(
   path: PathT,
   tolerance: number,
 ): PathT {

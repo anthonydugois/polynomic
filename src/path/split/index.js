@@ -3,7 +3,7 @@
 import type { PointT } from '../../types/Point'
 import type { PathT } from '../../types/Path'
 
-export default function split(
+export function split(
   path: PathT,
   shouldSplit: Function,
   shouldKeep: '' | 'before' | 'after' = '',

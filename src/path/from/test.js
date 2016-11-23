@@ -1,5 +1,5 @@
-import isEqual from '../is-equal'
-import _from from './index'
+import { isEqual } from '../is-equal'
+import { from } from './index'
 
 test('should get the corresponding path from the SVG path node', () => {
   const path = 'M0 0L100 100'
@@ -7,7 +7,7 @@ test('should get the corresponding path from the SVG path node', () => {
 
   node.setAttribute('d', path)
 
-  const test = _from(node)
+  const test = from(node)
   const expected = path
 
   expect(isEqual(test, expected)).toBe(true)
@@ -21,7 +21,7 @@ test('should get the corresponding path from the SVG line node', () => {
   node.setAttribute('x2', 100)
   node.setAttribute('y2', 100)
 
-  const test = _from(node)
+  const test = from(node)
   const expected = 'M0 0L100 100'
 
   expect(isEqual(test, expected)).toBe(true)
@@ -32,7 +32,7 @@ test('should get the corresponding path from the SVG polyline node', () => {
 
   node.setAttribute('points', '0 0 100,100 150-150 5e-14-4')
 
-  const test = _from(node)
+  const test = from(node)
   const expected = 'M0 0L100 100L150 -150L5e-14 -4'
 
   expect(isEqual(test, expected)).toBe(true)
@@ -43,7 +43,7 @@ test('should get the corresponding path from the SVG polygon node', () => {
 
   node.setAttribute('points', '0 0 100,100 150-150 5e-14-4')
 
-  const test = _from(node)
+  const test = from(node)
   const expected = 'M0 0L100 100L150 -150L5e-14 -4Z'
 
   expect(isEqual(test, expected)).toBe(true)
@@ -57,7 +57,7 @@ test('should get the corresponding path from the SVG rect node', () => {
   node.setAttribute('width', 100)
   node.setAttribute('height', 100)
 
-  const test = _from(node)
+  const test = from(node)
   const expected = 'M0 0L100 0L100 100L0 100Z'
 
   expect(isEqual(test, expected)).toBe(true)
@@ -70,7 +70,7 @@ test('should get the corresponding path from the SVG circle node', () => {
   node.setAttribute('cy', 50)
   node.setAttribute('r', 50)
 
-  const test = _from(node)
+  const test = from(node)
   const expected = 'M0 50A50 50 0 0 0 100 50A50 50 0 0 0 0 50Z'
 
   expect(isEqual(test, expected)).toBe(true)
@@ -84,7 +84,7 @@ test('should get the corresponding path from the SVG ellipse node', () => {
   node.setAttribute('rx', 100)
   node.setAttribute('ry', 50)
 
-  const test = _from(node)
+  const test = from(node)
   const expected = 'M0 50A100 50 0 0 0 200 50A100 50 0 0 0 0 50Z'
 
   expect(isEqual(test, expected)).toBe(true)

@@ -2,7 +2,7 @@
 
 import type { PointT } from '../../types/Point'
 
-export default function isRelative(
+export function isRelative(
   current: PointT | Function,
 ): boolean {
   const type: string = typeof current === 'function' ?
