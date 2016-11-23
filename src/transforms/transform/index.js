@@ -1,8 +1,8 @@
 /* @flow */
 
 import type { PointT, PointCodeT, PointParamsT } from '../../types/Point'
-import type { PathT, PathBoundingBoxT, PathTransformOptionsT } from '../../types/Path'
-import type { CoordsT } from '../../types/Coords'
+import type { PathT, PathTransformOptionsT } from '../../types/Path'
+import type { RectT } from '../../types/Rect'
 import type { Matrix4x4T, Matrix1x4T } from '../../types/Matrix'
 
 import boundingBox from '../../path/bounding-box'
@@ -171,9 +171,9 @@ export function applyMatrix(
 }
 
 export function transformBoundingBox(
-  bbox: PathBoundingBoxT,
+  bbox: RectT,
   matrix: Matrix4x4T,
-): PathBoundingBoxT {
+): RectT {
   const [x0, y0]: Matrix1x4T = multiplyVector(
     matrix,
     [bbox.x, bbox.y, 0, 1],

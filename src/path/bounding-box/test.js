@@ -2,13 +2,14 @@ import parse from '../../pathstring/parse'
 import boundingBox from './index'
 
 test('should give the bounding box of the path', () => {
-  const path = parse('M0 0h100v100h-100z')
+  const path = parse('M 200 150 L 300 200 C 300 300 400 300 400 200')
+
   const test = boundingBox(path)
   const expected = {
-    x: 0,
-    y: 0,
-    width: 100,
-    height: 100,
+    x: 200,
+    y: 150,
+    width: 200,
+    height: 125,
   }
 
   expect(test).toEqual(expected)

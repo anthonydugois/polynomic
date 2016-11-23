@@ -1,12 +1,9 @@
 /* @flow */
 
-import type { PathBoundingBoxT } from '../../types/Path'
+import type { RectT } from '../../types/Rect'
 import type { Matrix4x4T } from '../../types/Matrix'
 
-import {
-  relativeToAbsoluteX,
-  relativeToAbsoluteY,
-} from '../../utils'
+import { absoluteX, absoluteY } from '../../utils/absolute'
 
 export function translate3d(
   tx: number | string,
@@ -14,14 +11,14 @@ export function translate3d(
   tz: number = 0,
 ): Function {
   return (
-    bbox: PathBoundingBoxT,
+    bbox: RectT,
   ): Matrix4x4T => {
     const x: number = typeof tx === 'string' ?
-      relativeToAbsoluteX(tx, bbox) :
+      absoluteX(tx, bbox) :
       tx
 
     const y: number = typeof ty === 'string' ?
-      relativeToAbsoluteY(ty, bbox) :
+      absoluteY(ty, bbox) :
       ty
 
     return [

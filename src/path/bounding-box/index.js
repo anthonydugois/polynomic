@@ -1,48 +1,104 @@
+/* @flow */
+
+import type { PointT } from '../../types/Point'
+import type { PathT } from '../../types/Path'
+import type { RectT } from '../../types/Rect'
+
 import { point } from '../../point/points'
 import { isM, isZ } from '../../point/is'
 import toCubic from '../to-cubic'
 
-export default function boundingBox(rawPath) {
-  const path = toCubic(rawPath)
-  const x = []
-  const y = []
+type BoundingBoxT = {
+  xMin: number,
+  xMax: number,
+  yMin: number,
+  yMax: number,
+}
 
-  for (let i = 0 ; i < path.length ; i++) {
-    const current = path[i]
-    const previous = i > 0 && path[i - 1]
+export default function boundingBox(
+  path: PathT,
+): RectT {
+  const first: PointT = path[0]
+  const bbox: BoundingBoxT = toCubic(path).reduce(
+    (
+      acc: BoundingBoxT,
+      current: PointT,
+      index: number,
+      cubicPath: PathT,
+    ): BoundingBoxT => {
+      if (isM(current) || isZ(current)) {
+        acc.xMin = Math.min(acc.xMin, current.x)
+        acc.xMax = Math.max(acc.xMax, current.x)
+        acc.yMin = Math.min(acc.yMin, current.y)
+        acc.yMax = Math.max(acc.yMax, current.y)
+      } else {
+        const bbox: BoundingBoxT = cubicBoundingBox(
+          cubicPath[index - 1],
+          current,
+        )
 
-    if (isM(current) || isZ(current)) {
-      x.push(current.x)
-      y.push(current.y)
-    } else {
-      const { xMin, xMax, yMin, yMax } = cubicBoundingBox(previous, current)
+        acc.xMin = Math.min(acc.xMin, bbox.xMin)
+        acc.xMax = Math.max(acc.xMax, bbox.xMax)
+        acc.yMin = Math.min(acc.yMin, bbox.yMin)
+        acc.yMax = Math.max(acc.yMax, bbox.yMax)
+      }
 
-      x.push(xMin, xMax)
-      y.push(yMin, yMax)
-    }
-  }
-
-  const xMin = Math.min(...x)
-  const xMax = Math.max(...x)
-  const yMin = Math.min(...y)
-  const yMax = Math.max(...y)
+      return acc
+    },
+    {
+      xMin: first.x,
+      xMax: first.x,
+      yMin: first.y,
+      yMax: first.y,
+    },
+  )
 
   return {
-    x: xMin,
-    y: yMin,
-    width: xMax - xMin,
-    height: yMax - yMin,
+    x: bbox.xMin,
+    y: bbox.yMin,
+    width: bbox.xMax - bbox.xMin,
+    height: bbox.yMax - bbox.yMin,
   }
 }
 
-function cubicBoundingBox(previous, current) {
-  const p0 = point(null, previous.x, previous.y)
-  const p1 = point(null, current.parameters.x1, current.parameters.y1)
-  const p2 = point(null, current.parameters.x2, current.parameters.y2)
-  const p3 = point(null, current.x, current.y)
+function cubicBoundingBox(
+  previous: PointT,
+  current: PointT,
+): BoundingBoxT {
+  const p0: PointT = point(
+    '',
+    previous.x,
+    previous.y,
+  )
 
-  const x = getMinMax(p0.x, p1.x, p2.x, p3.x)
-  const y = getMinMax(p0.y, p1.y, p2.y, p3.y)
+  const p1: PointT = point(
+    '',
+    typeof current.parameters.x1 !== 'undefined' ?
+      current.parameters.x1 :
+      0,
+    typeof current.parameters.y1 !== 'undefined' ?
+      current.parameters.y1 :
+      0,
+  )
+
+  const p2: PointT = point(
+    '',
+    typeof current.parameters.x2 !== 'undefined' ?
+      current.parameters.x2 :
+      0,
+    typeof current.parameters.y2 !== 'undefined' ?
+      current.parameters.y2 :
+      0,
+  )
+
+  const p3: PointT = point(
+    '',
+    current.x,
+    current.y,
+  )
+
+  const x: { min: number, max: number } = getMinMax(p0.x, p1.x, p2.x, p3.x)
+  const y: { min: number, max: number } = getMinMax(p0.y, p1.y, p2.y, p3.y)
 
   return {
     xMin: x.min,
@@ -52,57 +108,57 @@ function cubicBoundingBox(previous, current) {
   }
 }
 
-function getMinMax(p0, p1, p2, p3) {
-  const a = ((3 * p3) - (9 * p2)) + ((9 * p1) - (3 * p0))
-  const b = ((6 * p0) - (12 * p1)) + (6 * p2)
-  const c = (3 * p1) - (3 * p0)
-  const d = (b ** 2) - (4 * a * c)
+function getMinMax(
+  p0: number,
+  p1: number,
+  p2: number,
+  p3: number,
+): { min: number, max: number } {
+  const a: number = ((3 * p3) - (9 * p2)) + ((9 * p1) - (3 * p0))
+  const b: number = ((6 * p0) - (12 * p1)) + (6 * p2)
+  const c: number = (3 * p1) - (3 * p0)
+  const delta: number = (b ** 2) - (4 * a * c)
 
-  let min = p0
-  let max = p0
+  let min: number = Math.min(p0, p3)
+  let max: number = Math.max(p0, p3)
 
-  if (p3 < min) {
-    min = p3
-  }
+  if (a === 0) {
+    if (b !== 0) {
+      const t: number = -c / b
+      const p: number = bezier(p0, p1, p2, p3, t)
 
-  if (p3 > max) {
-    max = p3
-  }
-
-  if (d >= 0) {
-    const t1 = (-b + Math.sqrt(d)) / (2 * a)
+      min = Math.min(min, p)
+      max = Math.max(max, p)
+    }
+  } else if (delta >= 0) {
+    const t1: number = (-b + Math.sqrt(delta)) / (2 * a)
+    const t2: number = (-b - Math.sqrt(delta)) / (2 * a)
 
     if (t1 > 0 && t1 < 1) {
-      const p = cubic(p0, p1, p2, p3, t1)
+      const p: number = bezier(p0, p1, p2, p3, t1)
 
-      if (p < min) {
-        min = p
-      }
-
-      if (p > max) {
-        max = p
-      }
+      min = Math.min(min, p)
+      max = Math.max(max, p)
     }
 
-    const t2 = (-b - Math.sqrt(d)) / (2 * a)
-
     if (t2 > 0 && t2 < 1) {
-      const p = cubic(p0, p1, p2, p3, t2)
+      const p: number = bezier(p0, p1, p2, p3, t2)
 
-      if (p < min) {
-        min = p
-      }
-
-      if (p > max) {
-        max = p
-      }
+      min = Math.min(min, p)
+      max = Math.max(max, p)
     }
   }
 
   return { min, max }
 }
 
-function cubic(p0, p1, p2, p3, t) {
+function bezier(
+  p0: number,
+  p1: number,
+  p2: number,
+  p3: number,
+  t: number,
+): number {
   return (p0 * ((1 - t) ** 3))
     + (p1 * 3 * t * ((1 - t) ** 2))
     + (p2 * 3 * (t ** 2) * (1 - t))

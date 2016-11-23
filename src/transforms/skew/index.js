@@ -2,7 +2,7 @@
 
 import type { Matrix4x4T } from '../../types/Matrix'
 
-import { angle } from '../../utils'
+import { angle } from '../../utils/angle'
 
 export function skew(
   alpha: number | string,
