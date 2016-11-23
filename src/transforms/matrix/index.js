@@ -1,6 +1,6 @@
 /* @flow */
 
-import type { Matrix4x4T } from '../../types/Matrix'
+import type { Matrix4T } from '../../types/Matrix'
 
 export function matrix3d(
   m11: number,
@@ -19,7 +19,7 @@ export function matrix3d(
   m42: number,
   m43: number,
   m44: number,
-): Matrix4x4T {
+): Matrix4T {
   return [
     m11, m21, m31, m41,
     m12, m22, m32, m42,
@@ -35,7 +35,7 @@ export function matrix(
   d: number,
   e: number,
   f: number,
-): Matrix4x4T {
+): Matrix4T {
   return matrix3d(
     a, b, 0, 0,
     c, d, 0, 0,

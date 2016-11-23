@@ -3,7 +3,7 @@
 import type { PointT, PointCodeT, PointParamsT } from '../../types/Point'
 import type { PathT, PathTransformOptionsT } from '../../types/Path'
 import type { RectT } from '../../types/Rect'
-import type { Matrix4x4T, Matrix1x4T } from '../../types/Matrix'
+import type { Matrix4T, Vector4T } from '../../types/Matrix'
 
 import boundingBox from '../../path/bounding-box'
 import { translate3d } from '../translate'
@@ -11,7 +11,7 @@ import { point, defaultPoint } from '../../point/points'
 import { isH, isV } from '../../point/is'
 import isRelative from '../../point/is-relative'
 
-export const identity: Matrix4x4T = [
+export const identity: Matrix4T = [
   1, 0, 0, 0,
   0, 1, 0, 0,
   0, 0, 1, 0,
@@ -29,19 +29,19 @@ export function defaultTransformOptions(
 }
 
 export function transform(
-  ...matrices: Array<Function | Matrix4x4T>
+  ...matrices: Array<Function | Matrix4T>
 ): Function {
   return (
     path: PathT,
     transformOptions: {} = {},
   ): PathT => {
     const opt: PathTransformOptionsT = defaultTransformOptions(transformOptions)
-    const matrix: Matrix4x4T = matrices.reduce(
+    const matrix: Matrix4T = matrices.reduce(
       (
-        acc: Matrix4x4T,
-        matrix: Function | Matrix4x4T,
-      ): Matrix4x4T => {
-        const m: Matrix4x4T = typeof matrix === 'function' ?
+        acc: Matrix4T,
+        matrix: Function | Matrix4T,
+      ): Matrix4T => {
+        const m: Matrix4T = typeof matrix === 'function' ?
           matrix(transformBoundingBox(boundingBox(path), acc)) :
           matrix
 
@@ -56,7 +56,7 @@ export function transform(
 
 export function transformPath(
   path: PathT,
-  matrix: Matrix4x4T,
+  matrix: Matrix4T,
   transformOptions: {} = {},
 ): PathT {
   const opt: PathTransformOptionsT = defaultTransformOptions(transformOptions)
@@ -66,7 +66,7 @@ export function transformPath(
       && opt.transformOrigin.z !== 0)
 
   if (shouldTransformOrigin) {
-    const forward: Matrix4x4T = translate3d(
+    const forward: Matrix4T = translate3d(
       opt.transformOrigin.x,
       opt.transformOrigin.y,
       typeof opt.transformOrigin.z !== 'undefined' ?
@@ -74,7 +74,7 @@ export function transformPath(
         0,
     )(boundingBox(path))
 
-    const back: Matrix4x4T = forward.slice()
+    const back: Matrix4T = forward.slice()
 
     back[3] = -back[3]
     back[7] = -back[7]
@@ -92,7 +92,7 @@ export function transformPath(
 
 export function applyMatrix(
   path: PathT,
-  matrix: Matrix4x4T,
+  matrix: Matrix4T,
   transformOptions: {} = {},
 ): PathT {
   const opt: PathTransformOptionsT = defaultTransformOptions(transformOptions)
@@ -110,7 +110,7 @@ export function applyMatrix(
         ]
       }
 
-      const [_x, _y, , w]: Matrix1x4T = multiplyVector(
+      const [_x, _y, , w]: Vector4T = multiplyVector(
         matrix,
         [current.x, current.y, 0, 1],
       )
@@ -136,7 +136,7 @@ export function applyMatrix(
         typeof current.parameters.x1 !== 'undefined'
         && typeof current.parameters.y1 !== 'undefined'
       ) {
-        const [x1, y1, , w1]: Matrix1x4T = multiplyVector(
+        const [x1, y1, , w1]: Vector4T = multiplyVector(
           matrix,
           [current.parameters.x1, current.parameters.y1, 0, 1],
         )
@@ -149,7 +149,7 @@ export function applyMatrix(
         typeof current.parameters.x2 !== 'undefined'
         && typeof current.parameters.y2 !== 'undefined'
       ) {
-        const [x2, y2, , w2]: Matrix1x4T = multiplyVector(
+        const [x2, y2, , w2]: Vector4T = multiplyVector(
           matrix,
           [current.parameters.x2, current.parameters.y2, 0, 1],
         )
@@ -172,14 +172,14 @@ export function applyMatrix(
 
 export function transformBoundingBox(
   bbox: RectT,
-  matrix: Matrix4x4T,
+  matrix: Matrix4T,
 ): RectT {
-  const [x0, y0]: Matrix1x4T = multiplyVector(
+  const [x0, y0]: Vector4T = multiplyVector(
     matrix,
     [bbox.x, bbox.y, 0, 1],
   )
 
-  const [x1, y1]: Matrix1x4T = multiplyVector(
+  const [x1, y1]: Vector4T = multiplyVector(
     matrix,
     [bbox.x + bbox.width, bbox.y + bbox.height, 0, 1],
   )
@@ -193,9 +193,9 @@ export function transformBoundingBox(
 }
 
 export function multiply(
-  a: Matrix4x4T,
-  b: Matrix4x4T,
-): Matrix4x4T {
+  a: Matrix4T,
+  b: Matrix4T,
+): Matrix4T {
   return [
     (a[0] * b[0]) + (a[1] * b[4]) + (a[2] * b[8]) + (a[3] * b[12]),
     (a[0] * b[1]) + (a[1] * b[5]) + (a[2] * b[9]) + (a[3] * b[13]),
@@ -220,9 +220,9 @@ export function multiply(
 }
 
 export function multiplyVector(
-  a: Matrix4x4T,
-  b: Matrix1x4T,
-): Matrix1x4T {
+  a: Matrix4T,
+  b: Vector4T,
+): Vector4T {
   return [
     (a[0] * b[0]) + (a[1] * b[1]) + (a[2] * b[2]) + (a[3] * b[3]),
     (a[4] * b[0]) + (a[5] * b[1]) + (a[6] * b[2]) + (a[7] * b[3]),

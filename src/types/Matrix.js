@@ -1,13 +1,13 @@
 /* @flow */
 
-export type Matrix4x4T = [
+export type Matrix4T = [
   number, number, number, number,
   number, number, number, number,
   number, number, number, number,
   number, number, number, number,
 ]
 
-export type Matrix1x4T = [
+export type Vector4T = [
   number,
   number,
   number,

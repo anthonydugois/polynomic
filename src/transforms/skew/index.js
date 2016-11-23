@@ -1,13 +1,13 @@
 /* @flow */
 
-import type { Matrix4x4T } from '../../types/Matrix'
+import type { Matrix4T } from '../../types/Matrix'
 
 import { angle } from '../../utils/angle'
 
 export function skew(
   alpha: number | string,
   beta: number | string = 0,
-): Matrix4x4T {
+): Matrix4T {
   return [
     1, Math.tan(angle(alpha)), 0, 0,
     Math.tan(angle(beta)), 1, 0, 0,
@@ -18,12 +18,12 @@ export function skew(
 
 export function skewX(
   alpha: number | string,
-): Matrix4x4T {
+): Matrix4T {
   return skew(alpha, 0)
 }
 
 export function skewY(
   beta: number | string,
-): Matrix4x4T {
+): Matrix4T {
   return skew(0, beta)
 }

@@ -1,6 +1,6 @@
 /* @flow */
 
-import type { Matrix4x4T } from '../../types/Matrix'
+import type { Matrix4T } from '../../types/Matrix'
 
 import { identity } from '../transform'
 import { angle } from '../../utils/angle'
@@ -10,7 +10,7 @@ export function rotate3d(
   y: number,
   z: number,
   alpha: number | string,
-): Matrix4x4T {
+): Matrix4T {
   if (x === 0 && y === 0 && z === 0) {
     return identity
   }
@@ -42,24 +42,24 @@ export function rotate3d(
 
 export function rotate(
   alpha: number | string,
-): Matrix4x4T {
+): Matrix4T {
   return rotateZ(alpha)
 }
 
 export function rotateX(
   alpha: number | string,
-): Matrix4x4T {
+): Matrix4T {
   return rotate3d(1, 0, 0, alpha)
 }
 
 export function rotateY(
   alpha: number | string,
-): Matrix4x4T {
+): Matrix4T {
   return rotate3d(0, 1, 0, alpha)
 }
 
 export function rotateZ(
   alpha: number | string,
-): Matrix4x4T {
+): Matrix4T {
   return rotate3d(0, 0, 1, alpha)
 }

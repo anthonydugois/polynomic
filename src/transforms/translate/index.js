@@ -1,7 +1,7 @@
 /* @flow */
 
 import type { RectT } from '../../types/Rect'
-import type { Matrix4x4T } from '../../types/Matrix'
+import type { Matrix4T } from '../../types/Matrix'
 
 import { absoluteX, absoluteY } from '../../utils/absolute'
 
@@ -12,7 +12,7 @@ export function translate3d(
 ): Function {
   return (
     bbox: RectT,
-  ): Matrix4x4T => {
+  ): Matrix4T => {
     const x: number = typeof tx === 'string' ?
       absoluteX(tx, bbox) :
       tx
