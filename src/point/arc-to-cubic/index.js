@@ -1,6 +1,6 @@
-import { point } from '../points'
+import { point } from '../index'
 import { isRelative } from '../is-relative'
-import { transform } from '../../transforms/transform'
+import { transform } from '../../transforms'
 import { rotate } from '../../transforms/rotate'
 
 export function arcToCubic(previous, current, center = null) {

@@ -1,5 +1,5 @@
 import { parse } from '../../pathstring/parse'
-import { point } from '../points'
+import { point } from '../index'
 import { isInside } from './index'
 
 test('should check that the point is inside the given path', () => {

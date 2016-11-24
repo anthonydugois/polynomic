@@ -1,4 +1,4 @@
-import { point } from '../points'
+import { point } from '../index'
 import { min, max } from './index'
 
 test('should give the min point', () => {

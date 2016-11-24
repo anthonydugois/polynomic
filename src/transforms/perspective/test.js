@@ -1,4 +1,4 @@
-import { transform } from '../transform'
+import { transform } from '../index'
 import { perspective } from './index'
 
 test('should return a perspective transformation matrix', () => {

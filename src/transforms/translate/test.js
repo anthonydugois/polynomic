@@ -1,4 +1,4 @@
-import { transform } from '../transform'
+import { transform } from '../index'
 import { perspective } from '../perspective'
 
 import {

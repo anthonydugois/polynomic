@@ -2,7 +2,7 @@
 
 import type { Matrix4T } from '../../types'
 
-import { identity } from '../transform'
+import { identity } from '../index'
 import { angle } from '../../utils/angle'
 
 export function rotate3d(

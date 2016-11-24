@@ -2,7 +2,7 @@
 
 import type { PointT } from '../../types'
 
-import * as types from '../points/types'
+import * as codes from '../codes'
 
 export function is(
   current: PointT | Function,
@@ -18,59 +18,59 @@ export function is(
 export function isM(
   current: PointT | Function,
 ): boolean {
-  return is(current, types.M)
+  return is(current, codes.M)
 }
 
 export function isL(
   current: PointT | Function,
 ): boolean {
-  return is(current, types.L)
+  return is(current, codes.L)
 }
 
 export function isH(
   current: PointT | Function,
 ): boolean {
-  return is(current, types.H)
+  return is(current, codes.H)
 }
 
 export function isV(
   current: PointT | Function,
 ): boolean {
-  return is(current, types.V)
+  return is(current, codes.V)
 }
 
 export function isQ(
   current: PointT | Function,
 ): boolean {
-  return is(current, types.Q)
+  return is(current, codes.Q)
 }
 
 export function isT(
   current: PointT | Function,
 ): boolean {
-  return is(current, types.T)
+  return is(current, codes.T)
 }
 
 export function isC(
   current: PointT | Function,
 ): boolean {
-  return is(current, types.C)
+  return is(current, codes.C)
 }
 
 export function isS(
   current: PointT | Function,
 ): boolean {
-  return is(current, types.S)
+  return is(current, codes.S)
 }
 
 export function isA(
   current: PointT | Function,
 ): boolean {
-  return is(current, types.A)
+  return is(current, codes.A)
 }
 
 export function isZ(
   current: PointT | Function,
 ): boolean {
-  return is(current, types.Z)
+  return is(current, codes.Z)
 }

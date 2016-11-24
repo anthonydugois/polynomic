@@ -1,4 +1,4 @@
-import { M, Q, C } from '../points'
+import { M, Q, C } from '../index'
 import { quadraticToCubic } from './index'
 
 test('should convert the quadratic curve into a cubic curve', () => {

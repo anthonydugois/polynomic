@@ -2,9 +2,9 @@
 
 import type { PointCodeT, PointT, PathT } from '../../types'
 
-import * as points from '../../point/points'
+import * as points from '../../point'
 import { isM } from '../../point/is'
-import { segments } from '../segments'
+import { segments } from '../parse-segments'
 
 export function parse(
   d: string,

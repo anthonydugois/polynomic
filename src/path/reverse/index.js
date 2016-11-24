@@ -7,7 +7,7 @@ import type {
   PathT,
 } from '../../types'
 
-import { point } from '../../point/points'
+import { point } from '../../point'
 import { isM, isT, isC, isS, isA, isZ } from '../../point/is'
 import { isRelative } from '../../point/is-relative'
 

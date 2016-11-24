@@ -2,7 +2,7 @@
 
 import type { PointT } from '../../types'
 
-import { point } from '../points'
+import { point } from '../index'
 import { isRelative } from '../is-relative'
 
 export function quadraticToCubic(

@@ -1,4 +1,4 @@
-import { point } from '../points'
+import { point } from '../index'
 import { distanceSegment } from './index'
 
 test('should give the distance between a point and a segment', () => {

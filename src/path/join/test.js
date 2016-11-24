@@ -1,5 +1,5 @@
 import { parse } from '../../pathstring/parse'
-import { M, z } from '../../point/points'
+import { M, z } from '../../point'
 import { isM, isZ } from '../../point/is'
 import { isEqual } from '../is-equal'
 import { join } from './index'

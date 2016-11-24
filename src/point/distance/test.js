@@ -1,4 +1,4 @@
-import { point } from '../points'
+import { point } from '../index'
 import { distance } from './index'
 
 test('should give the distance between two points', () => {

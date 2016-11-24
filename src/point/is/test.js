@@ -1,4 +1,4 @@
-import { m, L, Q } from '../points'
+import { m, L, Q } from '../index'
 import { isM, isQ, isZ } from './index'
 
 test('should check that the point is M', () => {

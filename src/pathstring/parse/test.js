@@ -1,5 +1,5 @@
-import { path } from '../../path/path'
-import { M, m, l, Q, t, C, s, z } from '../../point/points'
+import { path } from '../../path'
+import { M, m, l, Q, t, C, s, z } from '../../point'
 import { parse } from './index'
 
 test('should parse the code and return a path', () => {

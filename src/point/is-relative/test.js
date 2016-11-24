@@ -1,4 +1,4 @@
-import { m, M } from '../points'
+import { m, M } from '../index'
 import { isRelative } from './index'
 
 test('should check that the point factory is relative', () => {

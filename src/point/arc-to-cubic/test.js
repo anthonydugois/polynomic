@@ -1,5 +1,5 @@
-import { path } from '../../path/path'
-import { M, C, A } from '../points'
+import { path } from '../../path'
+import { M, C, A } from '../index'
 import { arcToCubic } from './index'
 
 test('should convert the arc into a cubic curve', () => {
