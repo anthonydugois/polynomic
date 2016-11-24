@@ -1,9 +1,15 @@
 // @flow
 
-import type { PointT, PointCodeT, PointParamsT } from '../../types/Point'
-import type { PathT, PathTransformOptionsT } from '../../types/Path'
-import type { RectT } from '../../types/Rect'
-import type { Matrix4T, Vector4T } from '../../types/Matrix'
+import type {
+  Matrix4T,
+  Vector4T,
+  PointT,
+  PointCodeT,
+  PointParamsT,
+  PathT,
+  PathTransformOptionsT,
+  RectT,
+} from '../../types'
 
 import { boundingBox } from '../../path/bounding-box'
 import { translate3d } from '../translate'

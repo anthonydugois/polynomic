@@ -1,6 +1,6 @@
 // @flow
 
-import type { PointT } from '../../types/Point'
+import type { PointT } from '../../types'
 
 import { point } from '../points'
 

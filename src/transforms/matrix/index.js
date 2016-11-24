@@ -1,6 +1,6 @@
 // @flow
 
-import type { Matrix4T } from '../../types/Matrix'
+import type { Matrix4T } from '../../types'
 
 export function matrix3d(
   m11: number,

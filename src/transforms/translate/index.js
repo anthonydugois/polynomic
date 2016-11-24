@@ -1,7 +1,6 @@
 // @flow
 
-import type { RectT } from '../../types/Rect'
-import type { Matrix4T } from '../../types/Matrix'
+import type { Matrix4T, RectT } from '../../types'
 
 import { absoluteX, absoluteY } from '../../utils/absolute'
 

@@ -1,6 +1,6 @@
 // @flow
 
-import type { Matrix4T } from '../../types/Matrix'
+import type { Matrix4T } from '../../types'
 
 import { identity } from '../transform'
 import { angle } from '../../utils/angle'

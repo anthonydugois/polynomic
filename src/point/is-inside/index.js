@@ -1,7 +1,6 @@
 // @flow
 
-import type { PointT } from '../../types/Point'
-import type { PathT } from '../../types/Path'
+import type { PointT, PathT } from '../../types'
 
 export function isInside(
   point: PointT,

@@ -1,7 +1,6 @@
 // @flow
 
-import type { PointT } from '../../types/Point'
-import type { PathT } from '../../types/Path'
+import type { PointT, PathT } from '../../types'
 
 import { isL, isH, isV, isQ, isT, isA } from '../is'
 import { lineToCubic } from '../line-to-cubic'

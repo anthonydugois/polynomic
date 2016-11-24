@@ -1,7 +1,6 @@
 // @flow
 
-import type { PointT, PointParamsT } from '../../types/Point'
-import type { PathT } from '../../types/Path'
+import type { PointParamsT, PointT, PathT } from '../../types'
 
 import { parse } from '../../pathstring/parse'
 import { round, defaultPrecision } from '../../utils/round'

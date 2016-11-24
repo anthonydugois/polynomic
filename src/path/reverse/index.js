@@ -1,7 +1,11 @@
 // @flow
 
-import type { PointT, PointCodeT, PointParamsT } from '../../types/Point'
-import type { PathT } from '../../types/Path'
+import type {
+  PointCodeT,
+  PointParamsT,
+  PointT,
+  PathT,
+} from '../../types'
 
 import { point } from '../../point/points'
 import { isM, isT, isC, isS, isA, isZ } from '../../point/is'

@@ -1,11 +1,10 @@
 // @flow
 
-import type { PointT } from '../../types/Point'
-import type { PathT } from '../../types/Path'
+import type { PointT, PathT } from '../../types'
 
-import { z, defaultPoint } from '../../point/points'
-import { isM, isL, isH, isV } from '../../point/is'
-import { ensureMoveTo } from '../ensure-move-to'
+import { m, M, z, defaultPoint } from '../../point/points'
+import { isM, isL, isH, isV, isZ } from '../../point/is'
+import { isRelative } from '../../point/is-relative'
 
 export function clean(
   path: PathT,
@@ -33,6 +32,29 @@ function simplifyClosures(
 
       if (shouldClose) {
         return z()(lastM)
+      }
+
+      return current
+    }
+  )
+}
+
+function ensureMoveTo(
+  path: PathT,
+): PathT {
+  return path.map(
+    (
+      current: PointT,
+      index: number,
+    ): PointT => {
+      const move: Function = isRelative(current) ? m : M
+
+      if (index === 0 && !isM(current)) {
+        return move(current.x, current.y)()
+      }
+
+      if (index > 0 && isZ(path[index - 1]) && !isM(current)) {
+        return move(current.x, current.y)(path[index - 1])
       }
 
       return current

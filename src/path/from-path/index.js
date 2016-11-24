@@ -1,6 +1,6 @@
 // @flow
 
-import type { PathT } from '../../types/Path'
+import type { PathT } from '../../types'
 
 import { parse } from '../../pathstring/parse'
 

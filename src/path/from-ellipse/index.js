@@ -1,7 +1,6 @@
 // @flow
 
-import type { PathT } from '../../types/Path'
-import type { EllipseT } from '../../types/Ellipse'
+import type { PathT, EllipseT } from '../../types'
 
 import { path } from '../path'
 import { M, A, Z } from '../../point/points'

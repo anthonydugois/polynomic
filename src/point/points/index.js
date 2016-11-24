@@ -4,7 +4,7 @@ import type {
   PointT,
   PointParamsT,
   PointCodeT,
-} from '../../types/Point'
+} from '../../types'
 
 import * as types from '../points/types'
 import { isQ, isT, isC, isS } from '../is'

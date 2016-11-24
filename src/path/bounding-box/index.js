@@ -1,8 +1,6 @@
 // @flow
 
-import type { PointT } from '../../types/Point'
-import type { PathT } from '../../types/Path'
-import type { RectT } from '../../types/Rect'
+import type { PointT, PathT, RectT } from '../../types'
 
 import { point } from '../../point/points'
 import { isM, isZ } from '../../point/is'

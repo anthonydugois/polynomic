@@ -1,6 +1,6 @@
 // @flow
 
-import type { RectT } from '../types/Rect'
+import type { RectT } from '../types'
 
 const positions = {
   left: 0,
