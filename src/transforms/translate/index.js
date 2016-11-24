@@ -1,4 +1,4 @@
-/* @flow */
+// @flow
 
 import type { RectT } from '../../types/Rect'
 import type { Matrix4T } from '../../types/Matrix'

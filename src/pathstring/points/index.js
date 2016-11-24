@@ -1,5 +1,5 @@
 
-/* @flow */
+// @flow
 
 import type { PointT } from '../../types/Point'
 

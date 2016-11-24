@@ -1,4 +1,4 @@
-/* @flow */
+// @flow
 
 export type Matrix4T = [
   number, number, number, number,

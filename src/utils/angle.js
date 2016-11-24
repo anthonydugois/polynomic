@@ -1,4 +1,4 @@
-/* @flow */
+// @flow
 
 export function angle(
   alpha: number | string,

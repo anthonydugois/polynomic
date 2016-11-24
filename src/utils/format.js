@@ -1,4 +1,4 @@
-/* @flow */
+// @flow
 
 export function format(
   strings: Array<string>,

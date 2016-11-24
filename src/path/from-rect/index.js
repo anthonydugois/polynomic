@@ -1,4 +1,4 @@
-/* @flow */
+// @flow
 
 import type { PathT } from '../../types/Path'
 import type { RectT } from '../../types/Rect'

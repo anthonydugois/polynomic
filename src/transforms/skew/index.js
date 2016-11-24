@@ -1,4 +1,4 @@
-/* @flow */
+// @flow
 
 import type { Matrix4T } from '../../types/Matrix'
 

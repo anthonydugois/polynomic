@@ -1,4 +1,4 @@
-/* @flow */
+// @flow
 
 import type { PointT, PointCodeT } from '../../types/Point'
 import type { PathT } from '../../types/Path'

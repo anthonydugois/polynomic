@@ -1,4 +1,4 @@
-/* @flow */
+// @flow
 
 import type { PointT } from './Point'
 import type { CoordsT } from './Coords'

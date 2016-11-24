@@ -1,4 +1,4 @@
-/* @flow */
+// @flow
 
 export type LineT = {
   x1: number,

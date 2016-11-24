@@ -1,4 +1,4 @@
-/* @flow */
+// @flow
 
 export const defaultPrecision: number = 3
 

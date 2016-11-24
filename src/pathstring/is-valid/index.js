@@ -1,4 +1,4 @@
-/* @flow */
+// @flow
 
 import * as points from '../../point/points'
 import { segments } from '../segments'
