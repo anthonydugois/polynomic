@@ -1,7 +1,7 @@
 // @flow
 
 import * as points from '../../point'
-import { segments } from '../parse-segments'
+import { parseSegments } from '../parse-segments'
 
 export function isValid(
   d: string,
@@ -20,7 +20,7 @@ export function isFirstPointM(
 export function hasCorrectNumberOfParameters(
   d: string,
 ): boolean {
-  return segments(d).every(
+  return parseSegments(d).every(
     (
       [code, ...parameters]: Array<string | number>,
     ): boolean => {

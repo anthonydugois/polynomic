@@ -4,7 +4,7 @@ import type { PointT, PathT, RectT } from '../../types'
 
 import { point } from '../../point'
 import { isM, isZ } from '../../point/is'
-import { toCubic } from '../../effects/to-cubics'
+import { toCubics } from '../../effects/to-cubics'
 
 type BoundingBoxT = {
   xMin: number,
@@ -17,7 +17,7 @@ export function boundingBox(
   path: PathT,
 ): RectT {
   const first: PointT = path[0]
-  const bbox: BoundingBoxT = toCubic(path).reduce(
+  const bbox: BoundingBoxT = toCubics(path).reduce(
     (
       acc: BoundingBoxT,
       current: PointT,

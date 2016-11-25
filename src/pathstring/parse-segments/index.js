@@ -1,6 +1,6 @@
 // @flow
 
-export function segments(
+export function parseSegments(
   d: string,
 ): Array<Array<string | number>> {
   return d

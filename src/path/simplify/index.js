@@ -2,7 +2,7 @@
 
 import type { PointT, PathT } from '../../types'
 
-import { distanceSegment } from '../../point/distance-segment'
+import { distanceToLine } from '../../point/distance-to-line'
 
 type DistanceT = {
   index: number,
@@ -43,7 +43,7 @@ function getMaxDistance(
       current: PointT,
       index: number,
     ): DistanceT => {
-      const distance: number = distanceSegment(current, first, last)
+      const distance: number = distanceToLine(current, first, last)
 
       if (distance > acc.distance) {
         acc.index = index

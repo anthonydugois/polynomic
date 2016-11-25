@@ -3,7 +3,7 @@
 import type { PathT } from '../../types'
 
 import { M, L, Z } from '../../point'
-import { segments } from '../../pathstring/parse-segments'
+import { parseSegments } from '../../pathstring/parse-segments'
 
 export function fromPolygon(
   polygon: HTMLElement,
@@ -13,7 +13,7 @@ export function fromPolygon(
   }
 
   const points: string = polygon.getAttribute('points')
-  const coords: Array<string | number> = segments(points)[0]
+  const coords: Array<string | number> = parseSegments(points)[0]
 
   return coords.reduce(
     (

@@ -4,14 +4,14 @@ import type { PointCodeT, PointT, PathT } from '../../types'
 
 import * as points from '../../point'
 import { isM } from '../../point/is'
-import { segments } from '../parse-segments'
+import { parseSegments } from '../parse-segments'
 
 export function parse(
   d: string,
 ): PathT {
-  let lastM: PointT
+  let lastM: PointT = points.defaultPoint
 
-  return segments(d).reduce(
+  return parseSegments(d).reduce(
     (
       acc: PathT,
       segment: Array<string | number>,

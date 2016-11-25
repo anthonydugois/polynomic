@@ -3,7 +3,7 @@
 import type { PathT } from '../../types'
 
 import { M, L } from '../../point'
-import { segments } from '../../pathstring/parse-segments'
+import { parseSegments } from '../../pathstring/parse-segments'
 
 export function fromPolyline(
   polyline: HTMLElement,
@@ -13,7 +13,7 @@ export function fromPolyline(
   }
 
   const points: string = polyline.getAttribute('points')
-  const coords: Array<string | number> = segments(points)[0]
+  const coords: Array<string | number> = parseSegments(points)[0]
 
   return coords.reduce(
     (
