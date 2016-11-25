@@ -31,26 +31,26 @@ function convertAngle(
   }
 }
 
-function parseAngle(
+export function parseAngle(
   alpha: string,
   unit: string = 'deg',
 ): number {
   return parseFloat(alpha.replace(unit, ''))
 }
 
-function degToRad(
+export function degToRad(
   deg: number,
 ): number {
   return (Math.PI / 180) * deg
 }
 
-function gradToRad(
+export function gradToRad(
   grad: number,
 ): number {
   return (Math.PI / 200) * grad
 }
 
-function turnToRad(
+export function turnToRad(
   turn: number,
 ): number {
   return (2 * Math.PI) * turn
