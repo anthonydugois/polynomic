@@ -3,8 +3,7 @@
 import type { PointT, PathT } from '../../types'
 
 import { point, z, Z } from '../../point'
-import { isM, isZ } from '../../point/is'
-import { isRelative } from '../../point/is-relative'
+import { isM, isZ, isRelative } from '../../point/is'
 
 export function combine(
   path: PathT,

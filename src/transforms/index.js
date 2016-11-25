@@ -14,8 +14,7 @@ import type {
 import { boundingBox } from '../properties/bounding-box'
 import { translate3d } from './translate'
 import { point, defaultPoint } from '../point'
-import { isH, isV } from '../point/is'
-import { isRelative } from '../point/is-relative'
+import { isH, isV, isRelative } from '../point/is'
 
 export const identity: Matrix4T = [
   1, 0, 0, 0,

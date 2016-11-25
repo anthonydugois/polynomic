@@ -8,8 +8,7 @@ import type {
 } from '../../types'
 
 import { point } from '../../point'
-import { isM, isT, isC, isS, isA, isZ } from '../../point/is'
-import { isRelative } from '../../point/is-relative'
+import { isM, isT, isC, isS, isA, isZ, isRelative } from '../../point/is'
 
 export function reverse(
   path: PathT,
