@@ -1,53 +1,121 @@
 // @flow
 
-import type { PointT, PointParamsT, CoordsT } from '../../types'
+import type { CoordsT, Vector4T } from '../../types'
 
-import { degToRad } from '../../utils/angle'
+import { angle } from '../vector'
 
-// this function follows the implementation described
-// in https://www.w3.org/TR/SVG/implnote.html#ArcConversionEndpointToCenter
-export function center(
-  from : PointT | Function,
-  to : PointT | Function,
+function rotatedCenter(
+  x1 : number,
+  y1 : number,
+  rx : number,
+  ry : number,
+  rotation : number,
+  large : 0 | 1,
+  sweep : 0 | 1,
+  x2 : number,
+  y2 : number,
 ) : CoordsT {
-  const p1 : PointT = typeof from === 'function' ? from() : from
-  const p2 : PointT = typeof to === 'function' ? to(p1) : to
+  const _x : number = (Math.cos(rotation) * (x1 - x2) / 2)
+    + (Math.sin(rotation) * (y1 - y2) / 2)
+  const _y : number = (Math.cos(rotation) * (y1 - y2) / 2)
+    - (Math.sin(rotation) * (x1 - x2) / 2)
 
-  const {
-    rx = 0,
-    ry = 0,
-    rotation = 0,
-    large = 0,
-    sweep = 0,
-  } : PointParamsT = p2.parameters
+  const _x2 : number = _x ** 2
+  const _y2 : number = _y ** 2
+  const rx2 : number = rx ** 2
+  const ry2 : number = ry ** 2
 
+  const n : number = (rx2 * ry2) - (rx2 * _y2) - (ry2 * _x2)
+  const d : number = (rx2 * _y2) + (ry2 * _x2)
+
+  const sign : -1 | 1 = large === sweep ? -1 : 1
+  const coef : number = sign * Math.sqrt(n / d)
+
+  return {
+    x: coef * ((rx * _y) / ry),
+    y: coef * ((-ry * _x) / rx),
+  }
+}
+
+export function center(
+  x1 : number,
+  y1 : number,
+  rx : number,
+  ry : number,
+  rotation : number,
+  large : 0 | 1,
+  sweep : 0 | 1,
+  x2 : number,
+  y2 : number,
+) : CoordsT {
   if (rx === 0 || ry === 0) {
     return {
-      x: (p2.x - p1.x) / 2,
-      y: (p2.y - p1.y) / 2,
+      x: (x2 - x1) / 2,
+      y: (y2 - y1) / 2,
     }
   }
 
-  const theta : number = degToRad(rotation)
-  const c : number = Math.cos(theta)
-  const s : number = Math.sin(theta)
-  const sign : -1 | 1 = large === sweep ? -1 : 1
-
-  const _x : number = (c * (p1.x - p2.x) / 2) + (s * (p1.y - p2.y) / 2)
-  const _y : number = (c * (p1.y - p2.y) / 2) - (s * (p1.x - p2.x) / 2)
-
-  const n : number = ((rx ** 2) * (ry ** 2))
-    - ((rx ** 2) * (_y ** 2))
-    - ((ry ** 2) * (_x ** 2))
-  const d : number = ((rx ** 2) * (_y ** 2))
-    + ((ry ** 2) * (_x ** 2))
-  const coef : number = sign * Math.sqrt(n / d)
-
-  const _cx : number = coef * ((rx * _y) / ry)
-  const _cy : number = coef * ((-ry * _x) / rx)
+  const c : CoordsT = rotatedCenter(
+    x1, y1,
+    rx, ry, rotation, large, sweep,
+    x2, y2,
+  )
+  const cx : number = parseFloat(c.x)
+  const cy : number = parseFloat(c.y)
 
   return {
-    x: ((c * _cx) - (s * _cy)) + ((p1.x + p2.x) / 2),
-    y: ((s * _cx) + (c * _cy)) + ((p1.y + p2.y) / 2),
+    x: ((Math.cos(rotation) * cx) - (Math.sin(rotation) * cy))
+      + ((x1 + x2) / 2),
+    y: ((Math.sin(rotation) * cx) + (Math.cos(rotation) * cy))
+      + ((y1 + y2) / 2),
   }
+}
+
+export function angles(
+  x1 : number,
+  y1 : number,
+  rx : number,
+  ry : number,
+  rotation : number,
+  large : 0 | 1,
+  sweep : 0 | 1,
+  x2 : number,
+  y2 : number,
+) : { start : number, delta : number } {
+  if (rx === 0 || ry === 0) {
+    return {
+      start: 0,
+      delta: 0,
+    }
+  }
+
+  const c : CoordsT = rotatedCenter(
+    x1, y1,
+    rx, ry, rotation, large, sweep,
+    x2, y2,
+  )
+
+  const cx : number = parseFloat(c.x)
+  const cy : number = parseFloat(c.y)
+  const x : number = (Math.cos(rotation) * (x1 - x2) / 2)
+    + (Math.sin(rotation) * (y1 - y2) / 2)
+  const y : number = (Math.cos(rotation) * (y1 - y2) / 2)
+    - (Math.sin(rotation) * (x1 - x2) / 2)
+
+  const v1 : Vector4T = [1, 0, 0, 1]
+  const v2 : Vector4T = [(x - cx) / rx, (y - cy) / ry, 0, 1]
+  const v3 : Vector4T = [(-x - cx) / rx, (-y - cy) / ry, 0, 1]
+
+  const start : number = angle(v1, v2)
+  let delta : number = angle(v2, v3) % (2 * Math.PI)
+
+  if (sweep === 0 && delta > 0) {
+    delta -= (2 * Math.PI)
+  }
+
+  if (sweep !== 0 && delta < 0) {
+    delta += (2 * Math.PI)
+  }
+
+  return { start, delta }
 }
