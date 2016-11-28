@@ -292,11 +292,11 @@ export function a(
     prev: PointT = defaultPoint,
   ): PointT {
     return point(codes.a, prev.x + dx, prev.y + dy, {
-      rx,
-      ry,
-      rotation,
-      large,
-      sweep,
+      rx: Math.abs(rx),
+      ry: Math.abs(ry),
+      rotation: rotation % 360,
+      large: large === 0 ? 0 : 1,
+      sweep: sweep === 0 ? 0 : 1,
     })
   }
 }
@@ -312,11 +312,11 @@ export function A(
 ): Function {
   return function A(): PointT {
     return point(codes.A, x, y, {
-      rx,
-      ry,
-      rotation,
-      large,
-      sweep,
+      rx: Math.abs(rx),
+      ry: Math.abs(ry),
+      rotation: rotation % 360,
+      large: large === 0 ? 0 : 1,
+      sweep: sweep === 0 ? 0 : 1,
     })
   }
 }
