@@ -31,14 +31,22 @@ test('should find the center of the rotated ellipse', () => {
 
 test('should find the angles of the points on the ellipse', () => {
   const test = angles(150, 0, 150, 100, 0, 1, 0, 300, 100)
-  const expected = { start: -Math.PI / 2, delta: -3 / 2 * Math.PI }
+  const expected = {
+    start: -Math.PI / 2,
+    end: -0,
+    delta: -3 / 2 * Math.PI,
+  }
 
   expect(test).toEqual(expected)
 })
 
 test('should find the angles of the points on the sweeped ellipse', () => {
   const test = angles(150, 0, 150, 100, 0, 1, 1, 300, 100)
-  const expected = { start: Math.PI, delta: 3 / 2 * Math.PI }
+  const expected = {
+    start: Math.PI,
+    end: Math.PI / 2,
+    delta: 3 / 2 * Math.PI,
+  }
 
   expect(test).toEqual(expected)
 })

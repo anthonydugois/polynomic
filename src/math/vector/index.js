@@ -15,11 +15,25 @@ export function dot(
   return (u[0] * v[0]) + (u[1] * v[1]) + (u[2] * v[2])
 }
 
+export function cross(
+  u : Vector4T,
+  v : Vector4T,
+) : Vector4T {
+  return [
+    (u[1] * v[2]) - (u[2] * v[1]),
+    (u[2] * v[0]) - (u[0] * v[2]),
+    (u[0] * v[1]) - (u[1] * v[0]),
+    1,
+  ]
+}
+
 export function angle(
   u : Vector4T,
   v : Vector4T,
 ) : number {
-  const sign : -1 | 1 = (u[0] * v[1]) - (u[1] * v[0]) < 0 ? -1 : 1
+  const c : Vector4T = cross(u, v)
+  const sign : -1 | 1 = c[2] < 0 ? -1 : 1
+
   const _uv : number = dot(u, v)
   const _u : number = length(u)
   const _v : number = length(v)

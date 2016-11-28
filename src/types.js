@@ -1,9 +1,15 @@
 // @flow
 
 export type CoordsT = {
-  x: number | string,
-  y: number | string,
-  z?: number,
+  x : number | string,
+  y : number | string,
+  z ?: number,
+}
+
+export type AnglesT = {
+  start : number,
+  end : number,
+  delta : number,
 }
 
 export type Matrix4T = [
@@ -44,56 +50,56 @@ export type PointCodeT =
   | 'Z'
 
 export type PointParamsT = {
-  x1?: number,
-  y1?: number,
-  x2?: number,
-  y2?: number,
-  rx?: number,
-  ry?: number,
-  rotation?: number,
-  large?: 0 | 1,
-  sweep?: 0 | 1,
+  x1 ?: number,
+  y1 ?: number,
+  x2 ?: number,
+  y2 ?: number,
+  rx ?: number,
+  ry ?: number,
+  rotation ?: number,
+  large ?: 0 | 1,
+  sweep ?: 0 | 1,
 }
 
 export type PointT = {
-  code: PointCodeT,
-  x: number,
-  y: number,
-  parameters: PointParamsT,
+  code : PointCodeT,
+  x : number,
+  y : number,
+  parameters : PointParamsT,
 }
 
 export type PathT = Array<PointT>
 
 export type PathTransformOptionsT = {
-  indices: Array<number>,
-  transformOrigin: CoordsT,
+  indices : Array<number>,
+  transformOrigin : CoordsT,
 }
 
 export type LineT = {
-  x1: number,
-  y1: number,
-  x2: number,
-  y2: number,
+  x1 : number,
+  y1 : number,
+  x2 : number,
+  y2 : number,
 }
 
 export type RectT = {
-  x: number,
-  y: number,
-  width: number,
-  height: number,
-  rx?: number,
-  ry?: number,
+  x : number,
+  y : number,
+  width : number,
+  height : number,
+  rx ?: number,
+  ry ?: number,
 }
 
 export type CircleT = {
-  cx: number,
-  cy: number,
-  r: number,
+  cx : number,
+  cy : number,
+  r : number,
 }
 
 export type EllipseT = {
-  cx: number,
-  cy: number,
-  rx: number,
-  ry: number,
+  cx : number,
+  cy : number,
+  rx : number,
+  ry : number,
 }
