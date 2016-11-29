@@ -1,37 +1,43 @@
 import { linear, quadratic, cubic, arc } from './index'
 
 test('should return the point located at the provided offset on the line', () => {
-  const t = 0.5
-
-  const test = linear(0, 0, 100, 0)(t)
+  const test = linear(0, 0, 100, 0)(0.5)
   const expected = { x: 50, y: 0 }
 
   expect(test).toEqual(expected)
 })
 
 test('should return the point located at the provided offset on the quadratic curve', () => {
-  const t = 0.5
-
-  const test = quadratic(0, 0, 50, 50, 100, 0)(t)
+  const test = quadratic(0, 0, 50, 50, 100, 0)(0.5)
   const expected = { x: 50, y: 25 }
 
   expect(test).toEqual(expected)
 })
 
 test('should return the point located at the provided offset on the cubic curve', () => {
-  const t = 0.5
-
-  const test = cubic(0, 0, 0, 50, 100, 50, 100, 0)(t)
+  const test = cubic(0, 0, 0, 50, 100, 50, 100, 0)(0.5)
   const expected = { x: 50, y: 37.5 }
 
   expect(test).toEqual(expected)
 })
 
-/*test('should return the point located at the provided offset on the arc', () => {
-  const t = 0.5
-
-  const test = arc(0, 0, 50, 100, 0, 1, 0, 50, 0)(t)
-  const expected = { x: 50, y: 37.5 }
+test('should return the point located at the provided offset on the arc', () => {
+  const test = arc(0, 0, 100, 50, 0, 1, 0, 200, 0)(0.5)
+  const expected = { x: 100, y: 50 }
 
   expect(test).toEqual(expected)
-})*/
+})
+
+test('should return the point located at the provided offset on the sweeped arc', () => {
+  const test = arc(100, 0, 50, 150, 0, 1, 1, 100, 300)(0.5)
+  const expected = { x: 150, y: 150 }
+
+  expect(test).toEqual(expected)
+})
+
+test('should return the point located at the provided offset on the rotated arc', () => {
+  const test = arc(100, 0, 50, 150, Math.PI / 2, 1, 1, 100, 300)(0.5)
+  const expected = { x: 550, y: 149.99999999999997 }
+
+  expect(test).toEqual(expected)
+})
