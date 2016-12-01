@@ -3,6 +3,7 @@
 import type {
   Matrix4T,
   Vector4T,
+  AbsoluteCoordsT,
   PointT,
   PointCodeT,
   PointParamsT,
@@ -15,6 +16,7 @@ import { boundingBox } from '../properties/bounding-box'
 import { translate3d } from './translate'
 import { point, defaultPoint } from '../point'
 import { isH, isV, isRelative } from '../point/is'
+import { absoluteCoords } from '../utils/absolute'
 
 export const identity: Matrix4T = [
   1, 0, 0, 0,
@@ -23,7 +25,7 @@ export const identity: Matrix4T = [
   0, 0, 0, 1,
 ]
 
-export function defaultTransformOptions(
+export function transformOptions(
   options: {} = {},
 ): PathTransformOptionsT {
   return {
@@ -38,9 +40,10 @@ export function transform(
 ): Function {
   return (
     path: PathT,
-    transformOptions: {} = {},
+    options: {} = {},
   ): PathT => {
-    const opt: PathTransformOptionsT = defaultTransformOptions(transformOptions)
+    const opt: PathTransformOptionsT = transformOptions(options)
+
     const matrix: Matrix4T = matrices.reduce(
       (
         acc: Matrix4T,
@@ -62,31 +65,23 @@ export function transform(
 export function transformPath(
   path: PathT,
   matrix: Matrix4T,
-  transformOptions: {} = {},
+  options: {} = {},
 ): PathT {
-  const opt: PathTransformOptionsT = defaultTransformOptions(transformOptions)
-  const shouldTransformOrigin: boolean = opt.transformOrigin.x !== 0
+  const opt: PathTransformOptionsT = transformOptions(options)
+
+  if (
+    opt.transformOrigin.x !== 0
     || opt.transformOrigin.y !== 0
-    || (typeof opt.transformOrigin.z !== 'undefined'
-      && opt.transformOrigin.z !== 0)
+    || (typeof opt.transformOrigin.z !== 'undefined' && opt.transformOrigin.z !== 0)
+  ) {
+    const bbox : RectT = boundingBox(path)
+    const origin : AbsoluteCoordsT = absoluteCoords(opt.transformOrigin, bbox)
 
-  if (shouldTransformOrigin) {
-    const forward: Matrix4T = translate3d(
-      opt.transformOrigin.x,
-      opt.transformOrigin.y,
-      typeof opt.transformOrigin.z !== 'undefined' ?
-        opt.transformOrigin.z :
-        0,
-    )(boundingBox(path))
+    const forward: Matrix4T = translate3d(origin.x, origin.y, origin.z)(bbox)
+    const backward: Matrix4T = translate3d(-origin.x, -origin.y, -origin.z)(bbox)
 
-    const back: Matrix4T = forward.slice()
-
-    back[3] = -back[3]
-    back[7] = -back[7]
-    back[11] = -back[11]
-
-    const translatedBack: PathT = applyMatrix(path, back, opt)
-    const transformed: PathT = applyMatrix(translatedBack, matrix, opt)
+    const translatedBackward: PathT = applyMatrix(path, backward, opt)
+    const transformed: PathT = applyMatrix(translatedBackward, matrix, opt)
     const translatedForward: PathT = applyMatrix(transformed, forward, opt)
 
     return translatedForward
@@ -98,9 +93,9 @@ export function transformPath(
 export function applyMatrix(
   path: PathT,
   matrix: Matrix4T,
-  transformOptions: {} = {},
+  options: {} = {},
 ): PathT {
-  const opt: PathTransformOptionsT = defaultTransformOptions(transformOptions)
+  const opt: PathTransformOptionsT = transformOptions(options)
 
   return path.reduce(
     (

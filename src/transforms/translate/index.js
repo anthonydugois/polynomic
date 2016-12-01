@@ -1,8 +1,13 @@
 // @flow
 
-import type { Matrix4T, RectT } from '../../types'
+import type {
+  Matrix4T,
+  CoordsT,
+  AbsoluteCoordsT,
+  RectT,
+} from '../../types'
 
-import { absoluteX, absoluteY } from '../../utils/absolute'
+import { absoluteCoords } from '../../utils/absolute'
 
 export function translate3d(
   tx: number | string,
@@ -12,18 +17,13 @@ export function translate3d(
   return (
     bbox: RectT,
   ): Matrix4T => {
-    const x: number = typeof tx === 'string' ?
-      absoluteX(tx, bbox) :
-      tx
-
-    const y: number = typeof ty === 'string' ?
-      absoluteY(ty, bbox) :
-      ty
+    const coords : CoordsT = { x: tx, y: ty, z: tz }
+    const { x, y, z } : AbsoluteCoordsT = absoluteCoords(coords, bbox)
 
     return [
       1, 0, 0, x,
       0, 1, 0, y,
-      0, 0, 1, tz,
+      0, 0, 1, z,
       0, 0, 0, 1,
     ]
   }

@@ -6,6 +6,12 @@ export type CoordsT = {
   z ?: number,
 }
 
+export type AbsoluteCoordsT = {
+  x : number,
+  y : number,
+  z : number,
+}
+
 export type AnglesT = {
   start : number,
   end : number,

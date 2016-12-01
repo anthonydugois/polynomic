@@ -1,6 +1,10 @@
 // @flow
 
-import type { RectT } from '../types'
+import type {
+  CoordsT,
+  AbsoluteCoordsT,
+  RectT,
+} from '../types'
 
 const positions = {
   left: 0,
@@ -10,7 +14,24 @@ const positions = {
   center: 50,
 }
 
-export function absoluteX(
+export function absoluteCoords(
+  coords: CoordsT,
+  bbox: RectT,
+) : AbsoluteCoordsT {
+  return {
+    x: typeof coords.x === 'string' ?
+      absoluteX(coords.x, bbox) :
+      coords.x,
+    y: typeof coords.y === 'string' ?
+      absoluteY(coords.y, bbox) :
+      coords.y,
+    z: typeof coords.z === 'undefined' ?
+      0 :
+      coords.z,
+  }
+}
+
+function absoluteX(
   x: string,
   bbox: RectT,
 ): number {
@@ -22,7 +43,7 @@ export function absoluteX(
   return bbox.x + ((bbox.width * X) / 100)
 }
 
-export function absoluteY(
+function absoluteY(
   y: string,
   bbox: RectT,
 ): number {
