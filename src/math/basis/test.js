@@ -1,4 +1,9 @@
-import { linear, quadratic, cubic, arc } from './index'
+import {
+  linear,
+  quadratic,
+  cubic,
+  arc,
+} from './index'
 
 test('should return the point located at the provided offset on the line', () => {
   const test = linear(0, 0, 100, 0)(0.5)
@@ -28,8 +33,15 @@ test('should return the point located at the provided offset on the arc', () => 
   expect(test).toEqual(expected)
 })
 
-test('should return the point located at the provided offset on the sweeped arc', () => {
+test('should return the point located at the provided offset on the inversed arc', () => {
   const test = arc(100, 0, 50, 150, 0, 1, 1, 100, 300)(0.5)
+  const expected = { x: 150, y: 150 }
+
+  expect(test).toEqual(expected)
+})
+
+test('should return the point located at the provided offset on the line', () => {
+  const test = arc(0, 0, 0, 0, 0, 1, 1, 300, 300)(0.5)
   const expected = { x: 150, y: 150 }
 
   expect(test).toEqual(expected)

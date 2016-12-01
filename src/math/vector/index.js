@@ -2,6 +2,15 @@
 
 import type { Vector4T } from '../../types'
 
+export function vec4(
+  v1 : number = 0,
+  v2 : number = v1,
+  v3 : number = v1,
+  v4 : number = v1,
+) : Vector4T {
+  return [v1, v2, v3, v4]
+}
+
 export function length(
   v : Vector4T,
 ) : number {
@@ -19,12 +28,12 @@ export function cross(
   u : Vector4T,
   v : Vector4T,
 ) : Vector4T {
-  return [
+  return vec4(
     (u[1] * v[2]) - (u[2] * v[1]),
     (u[2] * v[0]) - (u[0] * v[2]),
     (u[0] * v[1]) - (u[1] * v[0]),
     1,
-  ]
+  )
 }
 
 export function angle(

@@ -1,14 +1,22 @@
 // @flow
 
-import type { CoordsT, AnglesT, ArcParamsT } from '../../types'
+import type {
+  CoordsT,
+  AnglesT,
+  ArcParamsT,
+} from '../../types'
 
-import { center, correctedArcParameters, angles } from '../trigonometry'
+import {
+  arcParameters,
+  center,
+  angles,
+} from '../arc'
 
 export function linear(
   x1 : number,
   y1 : number,
-  x2 : number,
-  y2 : number,
+  x2 : number = x1,
+  y2 : number = y1,
 ) : Function {
   return function linear(
     t : number,
@@ -25,10 +33,10 @@ export function linear(
 export function quadratic(
   x1 : number,
   y1 : number,
-  x2 : number,
-  y2 : number,
-  x3 : number,
-  y3 : number,
+  x2 : number = x1,
+  y2 : number = y1,
+  x3 : number = x1,
+  y3 : number = y1,
 ) : Function {
   return function quadratic(
     t : number,
@@ -47,12 +55,12 @@ export function quadratic(
 export function cubic(
   x1 : number,
   y1 : number,
-  x2 : number,
-  y2 : number,
-  x3 : number,
-  y3 : number,
-  x4 : number,
-  y4 : number,
+  x2 : number = x1,
+  y2 : number = y1,
+  x3 : number = x1,
+  y3 : number = y1,
+  x4 : number = x1,
+  y4 : number = y1,
 ) : Function {
   return function cubic(
     t : number,
@@ -73,19 +81,38 @@ export function cubic(
 export function arc(
   x1 : number,
   y1 : number,
-  _rx : number,
-  _ry : number,
-  _phi : number,
-  _large : 0 | 1,
-  _sweep : 0 | 1,
-  x2 : number,
-  y2 : number,
+  _rx : number = 0,
+  _ry : number = 0,
+  _phi : number = 0,
+  _large : number = 0,
+  _sweep : number = 0,
+  x2 : number = x1,
+  y2 : number = y1,
 ) : Function {
-  const { rx, ry, phi } : ArcParamsT = correctedArcParameters(x1, y1, _rx, _ry, _phi, _large, _sweep, x2, y2)
-  const { x, y } : CoordsT = center(x1, y1, _rx, _ry, _phi, _large, _sweep, x2, y2)
+  if (_rx === 0 || _ry === 0) {
+    return linear(x1, y1, x2, y2)
+  }
+
+  const { rx, ry, phi } : ArcParamsT = arcParameters(
+    x1, y1,
+    _rx, _ry, _phi, _large, _sweep,
+    x2, y2,
+  )
+
+  const { start, delta } : AnglesT = angles(
+    x1, y1,
+    _rx, _ry, _phi, _large, _sweep,
+    x2, y2,
+  )
+
+  const { x, y } : CoordsT = center(
+    x1, y1,
+    _rx, _ry, _phi, _large, _sweep,
+    x2, y2,
+  )
+
   const cx = parseFloat(x)
   const cy = parseFloat(y)
-  const { start, delta } : AnglesT = angles(x1, y1, _rx, _ry, _phi, _large, _sweep, x2, y2)
 
   return function arc(
     t : number,
@@ -93,8 +120,12 @@ export function arc(
     const theta : number = start + (t * delta)
 
     return {
-      x: cx + (rx * Math.cos(theta) * Math.cos(phi)) - (ry * Math.sin(theta) * Math.sin(phi)),
-      y: cy + (rx * Math.cos(theta) * Math.sin(phi)) + (ry * Math.sin(theta) * Math.cos(phi)),
+      x: cx
+        + (rx * Math.cos(theta) * Math.cos(phi))
+        - (ry * Math.sin(theta) * Math.sin(phi)),
+      y: cy
+        + (rx * Math.cos(theta) * Math.sin(phi))
+        + (ry * Math.sin(theta) * Math.cos(phi)),
     }
   }
 }
