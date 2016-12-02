@@ -2,6 +2,8 @@
 
 import type { Matrix4T } from '../../types'
 
+import { mat, multiply } from '../../math/matrix'
+
 export function matrix3d(
   m11: number,
   m12: number,
@@ -19,13 +21,21 @@ export function matrix3d(
   m42: number,
   m43: number,
   m44: number,
-): Matrix4T {
-  return [
-    m11, m21, m31, m41,
-    m12, m22, m32, m42,
-    m13, m23, m33, m43,
-    m14, m24, m34, m44,
-  ]
+): Function {
+  return (
+    matrix : Matrix4T,
+  ) : Matrix4T => {
+    const matrixMatrix : Matrix4T = mat(
+      m11, m12, m13, m14,
+      m21, m22, m23, m24,
+      m31, m32, m33, m34,
+      m41, m42, m43, m44,
+    )
+
+    return typeof matrix !== 'undefined' ?
+      multiply(matrix, matrixMatrix) :
+      matrixMatrix
+  }
 }
 
 export function matrix(
@@ -35,7 +45,7 @@ export function matrix(
   d: number,
   e: number,
   f: number,
-): Matrix4T {
+): Function {
   return matrix3d(
     a, b, 0, 0,
     c, d, 0, 0,

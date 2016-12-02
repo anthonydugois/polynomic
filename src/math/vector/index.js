@@ -2,7 +2,7 @@
 
 import type { Vector4T } from '../../types'
 
-export function vec4(
+export function vec(
   v1 : number = 0,
   v2 : number = v1,
   v3 : number = v1,
@@ -28,7 +28,7 @@ export function cross(
   u : Vector4T,
   v : Vector4T,
 ) : Vector4T {
-  return vec4(
+  return vec(
     (u[1] * v[2]) - (u[2] * v[1]),
     (u[2] * v[0]) - (u[0] * v[2]),
     (u[0] * v[1]) - (u[1] * v[0]),

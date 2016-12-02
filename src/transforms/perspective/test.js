@@ -1,14 +1,14 @@
-import { transform } from '../index'
 import { perspective } from './index'
+import { mat } from '../../math/matrix'
 
 test('should return a perspective transformation matrix', () => {
-  const test = perspective(100)
-  const expected = [
+  const test = perspective(100)()
+  const expected = mat(
     1, 0, 0, 0,
     0, 1, 0, 0,
-    0, 0, 1, 0,
-    0, 0, -1 / 100, 1,
-  ]
+    0, 0, 1, -1 / 100,
+    0, 0, 0, 1,
+  )
 
   expect(test).toEqual(expected)
 })

@@ -7,7 +7,7 @@ import type {
   ArcParamsT,
 } from '../../types'
 
-import { vec4, angle } from '../vector'
+import { vec, angle } from '../vector'
 
 export function makeMod(
   m : number,
@@ -173,9 +173,9 @@ export function angles(
   const cx : number = parseFloat(n.x)
   const cy : number = parseFloat(n.y)
 
-  const v1 : Vector4T = vec4(1, 0, 0, 1)
-  const v2 : Vector4T = vec4((x - cx) / rx, (y - cy) / ry, 0, 1)
-  const v3 : Vector4T = vec4((-x - cx) / rx, (-y - cy) / ry, 0, 1)
+  const v1 : Vector4T = vec(1, 0, 0, 1)
+  const v2 : Vector4T = vec((x - cx) / rx, (y - cy) / ry, 0, 1)
+  const v3 : Vector4T = vec((-x - cx) / rx, (-y - cy) / ry, 0, 1)
 
   const start : number = mod2PI(angle(v1, v2))
   const _delta : number = mod2PI(angle(v2, v3))

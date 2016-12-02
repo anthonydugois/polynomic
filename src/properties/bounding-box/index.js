@@ -2,7 +2,7 @@
 
 import type { PointT, PathT, RectT } from '../../types'
 
-import { point } from '../../point'
+import { point, defaultPoint } from '../../point'
 import { isM, isZ } from '../../point/is'
 import { toCubics } from '../../effects/to-cubics'
 
@@ -31,7 +31,7 @@ export function boundingBox(
         acc.yMax = Math.max(acc.yMax, current.y)
       } else {
         const bbox: BoundingBoxT = cubicBoundingBox(
-          cubicPath[index - 1],
+          cubicPath.length > 1 ? cubicPath[index - 1] : defaultPoint,
           current,
         )
 

@@ -2,40 +2,50 @@
 
 import type { Matrix4T } from '../../types'
 
+import { mat, multiply } from '../../math/matrix'
+
 export function scale3d(
   sx: number,
   sy: number,
   sz: number,
-): Matrix4T {
-  return [
-    sx, 0, 0, 0,
-    0, sy, 0, 0,
-    0, 0, sz, 0,
-    0, 0, 0, 1,
-  ]
+): Function {
+  return (
+    matrix : Matrix4T,
+  ) : Matrix4T => {
+    const scaleMatrix : Matrix4T = mat(
+      sx, 0, 0, 0,
+      0, sy, 0, 0,
+      0, 0, sz, 0,
+      0, 0, 0, 1,
+    )
+
+    return typeof matrix !== 'undefined' ?
+      multiply(matrix, scaleMatrix) :
+      scaleMatrix
+  }
 }
 
 export function scale(
   sx: number,
   sy: number = sx,
-): Matrix4T {
+): Function {
   return scale3d(sx, sy, 1)
 }
 
 export function scaleX(
   sx: number,
-): Matrix4T {
+): Function {
   return scale3d(sx, 1, 1)
 }
 
 export function scaleY(
   sy: number,
-): Matrix4T {
+): Function {
   return scale3d(1, sy, 1)
 }
 
 export function scaleZ(
   sz: number,
-): Matrix4T {
+): Function {
   return scale3d(1, 1, sz)
 }

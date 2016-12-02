@@ -7,25 +7,30 @@ import type {
   RectT,
 } from '../../types'
 
+import { mat, multiply } from '../../math/matrix'
 import { absoluteCoords } from '../../utils/absolute'
 
 export function translate3d(
-  tx: number | string,
-  ty: number | string = 0,
-  tz: number = 0,
-): Function {
+  tx : number | string,
+  ty : number | string = 0,
+  tz : number = 0,
+) : Function {
   return (
-    bbox: RectT,
-  ): Matrix4T => {
+    matrix : Matrix4T,
+    bbox : RectT,
+  ) : Matrix4T => {
     const coords : CoordsT = { x: tx, y: ty, z: tz }
     const { x, y, z } : AbsoluteCoordsT = absoluteCoords(coords, bbox)
+    const translateMatrix : Matrix4T = mat(
+      1, 0, 0, 0,
+      0, 1, 0, 0,
+      0, 0, 1, 0,
+      x, y, z, 1,
+    )
 
-    return [
-      1, 0, 0, x,
-      0, 1, 0, y,
-      0, 0, 1, z,
-      0, 0, 0, 1,
-    ]
+    return typeof matrix !== 'undefined' ?
+      multiply(matrix, translateMatrix) :
+      translateMatrix
   }
 }
 

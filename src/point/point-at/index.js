@@ -7,7 +7,7 @@ import {
   quadratic,
   cubic,
   arc,
-} from '../../math/basis'
+} from '../../math/parametric'
 
 import { isL, isH, isV, isQ, isT, isC, isS, isA } from '../is'
 import { degToRad } from '../../utils/angle'
