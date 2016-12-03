@@ -8,6 +8,7 @@ import type {
 
 import * as codes from './codes'
 import { isQ, isT, isC, isS } from './is'
+import { mod360, flag } from '../math/arc'
 
 export const defaultPoint: PointT = point('', 0, 0)
 
@@ -283,8 +284,8 @@ export function a(
   rx: number,
   ry: number,
   rotation: number,
-  large: 0 | 1,
-  sweep: 0 | 1,
+  large: number,
+  sweep: number,
   dx: number,
   dy: number,
 ): Function {
@@ -294,9 +295,9 @@ export function a(
     return point(codes.a, prev.x + dx, prev.y + dy, {
       rx: Math.abs(rx),
       ry: Math.abs(ry),
-      rotation: rotation % 360,
-      large: large === 0 ? 0 : 1,
-      sweep: sweep === 0 ? 0 : 1,
+      rotation: mod360(rotation),
+      large: flag(large),
+      sweep: flag(sweep),
     })
   }
 }
@@ -305,8 +306,8 @@ export function A(
   rx: number,
   ry: number,
   rotation: number,
-  large: 0 | 1,
-  sweep: 0 | 1,
+  large: number,
+  sweep: number,
   x: number,
   y: number,
 ): Function {
@@ -314,9 +315,9 @@ export function A(
     return point(codes.A, x, y, {
       rx: Math.abs(rx),
       ry: Math.abs(ry),
-      rotation: rotation % 360,
-      large: large === 0 ? 0 : 1,
-      sweep: sweep === 0 ? 0 : 1,
+      rotation: mod360(rotation),
+      large: flag(large),
+      sweep: flag(sweep),
     })
   }
 }
