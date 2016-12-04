@@ -1,27 +1,37 @@
 // @flow
 
-import type { PointT, PathT, RectT } from '../../types'
+import type {
+  PointT,
+  PathT,
+  RectT,
+} from '../../types'
 
 import { point } from '../../primitives/point'
 import { rect } from '../../primitives/rect'
-import { boundingBox as pointBoundingBox } from '../../point/bounding-box'
+import { boundingBox as _boundingBox } from '../../point/bounding-box'
 
 export function boundingBox(
   path: PathT,
 ): RectT {
-  return path.reduce(
+  const bb : Array<RectT> = path.reduce(
     (
-      acc : RectT,
+      acc : Array<RectT>,
       current : PointT,
       index : number,
-    ) : RectT => {
-      const bbox : RectT = pointBoundingBox(
-        current,
-        index > 0 ? path[index - 1] : point(),
-      )
+    ) : Array<RectT> => {
+      if (index > 0) {
+        acc.push(_boundingBox(current, path[index - 1]))
+      }
 
       return acc
     },
-    rect(),
+    [],
   )
+
+  const x : number = Math.min(...bb.map(({ x }) => x))
+  const y : number = Math.min(...bb.map(({ y }) => y))
+  const width : number = Math.max(...bb.map(({ x, width }) => x + width)) - x
+  const height : number = Math.max(...bb.map(({ y, height }) => y + height)) - y
+
+  return rect(x, y, width, height)
 }

@@ -15,7 +15,7 @@ export function rect(
     y,
     width,
     height,
-    rx,
-    ry,
+    ...rx !== 0 ? { rx } : {},
+    ...ry !== 0 ? { ry } : {},
   }
 }

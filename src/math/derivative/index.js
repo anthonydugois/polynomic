@@ -119,7 +119,7 @@ function dCubicComponent(
   c4 : number = c1,
 ) : Array<number> {
   const a: number = ((3 * c4) - (9 * c3)) + ((9 * c2) - (3 * c1))
-  const b: number = ((6 * c1) - (12 * c2)) + (6 * c3)
+  const b: number = ((6 * c3) - (12 * c2)) + (6 * c1)
   const c: number = (3 * c2) - (3 * c1)
   const delta: number = (b ** 2) - (4 * a * c)
 
