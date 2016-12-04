@@ -16,6 +16,13 @@ test('should return the bounding box of the quadratic curve', () => {
   expect(test).toEqual(expected)
 })
 
+test('should return the bounding box of the quadratic curve', () => {
+  const test = boundingBox(Q(0, 0, 150, 50)(), M(50, 150)())
+  const expected = rect(37.5, 37.5, 112.5, 112.5)
+
+  expect(test).toEqual(expected)
+})
+
 test('should return the bounding box of the cubic curve', () => {
   const test = boundingBox(C(0, 200, 100, 200, 100, 0)(), M(0, 0)())
   const expected = rect(0, 0, 100, 150)
