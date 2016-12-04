@@ -10,13 +10,6 @@ test('should return the bounding box of the line', () => {
 })
 
 test('should return the bounding box of the quadratic curve', () => {
-  const test = boundingBox(Q(50, 100, 100, 0)(), M(0, 0)())
-  const expected = rect(0, 0, 100, 50)
-
-  expect(test).toEqual(expected)
-})
-
-test('should return the bounding box of the quadratic curve', () => {
   const test = boundingBox(Q(0, 0, 150, 50)(), M(50, 150)())
   const expected = rect(37.5, 37.5, 112.5, 112.5)
 
@@ -33,6 +26,13 @@ test('should return the bounding box of the cubic curve', () => {
 test('should return the bounding box of the arc', () => {
   const test = boundingBox(A(50, 150, 0, 1, 0, 100, 0)(), M(0, 0)())
   const expected = rect(0, 0, 100, 150)
+
+  expect(test).toEqual(expected)
+})
+
+test('should return the bounding box of the rotated arc', () => {
+  const test = boundingBox(A(50, 100, 100, 1, 0, 150, 50)(), M(50, 50)())
+  const expected = rect(22.087515821014122, 49.999999999999986, 197.72554036286925, 96.7430315813779)
 
   expect(test).toEqual(expected)
 })

@@ -3,7 +3,7 @@
 import type { CoordsT, ArcParamsT, AnglesT } from '../../types'
 
 import { normalize } from '../../utils/normalize'
-import { arcParameters, angles } from '../arc'
+import { angles } from '../arc'
 import * as parametric from '../parametric'
 
 export function linearExtremums(
@@ -57,40 +57,35 @@ export function cubicExtremums(
 export function arcExtremums(
   x1 : number,
   y1 : number,
-  _rx : number = 0,
-  _ry : number = 0,
-  _phi : number = 0,
-  _large : number = 0,
-  _sweep : number = 0,
+  rx : number = 0,
+  ry : number = 0,
+  phi : number = 0,
+  large : number = 0,
+  sweep : number = 0,
   x2 : number = x1,
   y2 : number = y1,
 ) : Array<CoordsT> {
-  const { rx, ry, phi, large, sweep } : ArcParamsT = arcParameters(
-    x1, y1,
-    _rx, _ry, _phi, _large, _sweep,
-    x2, y2,
-  )
-
   const { start, end } : AnglesT = angles(
     x1, y1,
     rx, ry, phi, large, sweep,
     x2, y2,
   )
 
-  const min : number = Math.min(start, end)
-  const max : number = Math.max(start, end)
-
   const angleX : Function = dArcComponentX(rx, ry, phi)
   const angleY : Function = dArcComponentY(rx, ry, phi)
 
-  const tXMax : number = normalize(angleX(0), min, max)
-  const tXMin : number = normalize(angleX(1), min, max)
-  const tYMax : number = normalize(angleY(0), min, max)
-  const tYMin : number = normalize(angleY(1), min, max)
-
   return extremums(
     parametric.arc(x1, y1, rx, ry, phi, large, sweep, x2, y2),
-    [0, 1, tXMax, tXMin, tYMax, tYMin],
+    [
+      0,
+      1,
+      normalize(angleX(0), start, end),
+      normalize(angleX(1), start, end),
+      normalize(angleX(-1), start, end),
+      normalize(angleY(0), start, end),
+      normalize(angleY(1), start, end),
+      normalize(angleY(-1), start, end),
+    ],
   )
 }
 
