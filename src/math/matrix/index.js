@@ -1,6 +1,6 @@
 // @flow
 
-import type { Matrix4T, Vector4T } from '../../types'
+import type { MatrixT, VectorT } from '../../types'
 
 import { vec } from '../vector'
 
@@ -21,7 +21,7 @@ export function mat(
   m42: number = m11,
   m43: number = m11,
   m44: number = m11,
-) : Matrix4T {
+) : MatrixT {
   return [
     m11, m21, m31, m41,
     m12, m22, m32, m42,
@@ -30,7 +30,7 @@ export function mat(
   ]
 }
 
-export function identity() : Matrix4T {
+export function identity() : MatrixT {
   return mat(
     1, 0, 0, 0,
     0, 1, 0, 0,
@@ -40,9 +40,9 @@ export function identity() : Matrix4T {
 }
 
 export function multiply(
-  a: Matrix4T,
-  b: Matrix4T,
-): Matrix4T {
+  a: MatrixT,
+  b: MatrixT,
+): MatrixT {
   return mat(
     (a[0] * b[0]) + (a[1] * b[4]) + (a[2] * b[8]) + (a[3] * b[12]),
     (a[4] * b[0]) + (a[5] * b[4]) + (a[6] * b[8]) + (a[7] * b[12]),
@@ -67,9 +67,9 @@ export function multiply(
 }
 
 export function multiplyVec(
-  a: Matrix4T,
-  b: Vector4T,
-): Vector4T {
+  a: MatrixT,
+  b: VectorT,
+): VectorT {
   return vec(
     (a[0] * b[0]) + (a[1] * b[1]) + (a[2] * b[2]) + (a[3] * b[3]),
     (a[4] * b[0]) + (a[5] * b[1]) + (a[6] * b[2]) + (a[7] * b[3]),

@@ -1,6 +1,6 @@
 // @flow
 
-import type { Matrix4T } from '../../types'
+import type { MatrixT } from '../../types'
 
 import { identity, mat, multiply } from '../../math/matrix'
 import { angle } from '../../utils/angle'
@@ -12,8 +12,8 @@ export function rotate3d(
   alpha: number | string,
 ): Function {
   return (
-    matrix : Matrix4T,
-  ) : Matrix4T => {
+    matrix : MatrixT,
+  ) : MatrixT => {
     if (x === 0 && y === 0 && z === 0) {
       return typeof matrix !== 'undefined' ? matrix : identity()
     }
@@ -35,7 +35,7 @@ export function rotate3d(
     const m21: number = 2 * ((y * z * sq) + (x * sc))
     const m22: number = 1 - (2 * ((x ** 2) + (y ** 2)) * sq)
 
-    const rotateMatrix : Matrix4T = mat(
+    const rotateMatrix : MatrixT = mat(
       m00, m10, m20, 0,
       m01, m11, m21, 0,
       m02, m12, m22, 0,

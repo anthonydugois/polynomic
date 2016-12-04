@@ -1,6 +1,6 @@
 // @flow
 
-import type { Matrix4T } from '../../types'
+import type { MatrixT } from '../../types'
 
 import { mat, multiply } from '../../math/matrix'
 
@@ -10,9 +10,9 @@ export function scale3d(
   sz: number,
 ): Function {
   return (
-    matrix : Matrix4T,
-  ) : Matrix4T => {
-    const scaleMatrix : Matrix4T = mat(
+    matrix : MatrixT,
+  ) : MatrixT => {
+    const scaleMatrix : MatrixT = mat(
       sx, 0, 0, 0,
       0, sy, 0, 0,
       0, 0, sz, 0,

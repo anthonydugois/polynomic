@@ -3,7 +3,7 @@
 import type {
   CoordsT,
   AnglesT,
-  Vector4T,
+  VectorT,
   ArcParamsT,
 } from '../../types'
 
@@ -173,9 +173,9 @@ export function angles(
   const cx : number = parseFloat(n.x)
   const cy : number = parseFloat(n.y)
 
-  const v1 : Vector4T = vec(1, 0, 0, 1)
-  const v2 : Vector4T = vec((x - cx) / rx, (y - cy) / ry, 0, 1)
-  const v3 : Vector4T = vec((-x - cx) / rx, (-y - cy) / ry, 0, 1)
+  const v1 : VectorT = vec(1, 0, 0, 1)
+  const v2 : VectorT = vec((x - cx) / rx, (y - cy) / ry, 0, 1)
+  const v3 : VectorT = vec((-x - cx) / rx, (-y - cy) / ry, 0, 1)
 
   const start : number = mod2PI(angle(v1, v2))
   const _delta : number = mod2PI(angle(v2, v3))

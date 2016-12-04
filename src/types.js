@@ -18,14 +18,14 @@ export type AnglesT = {
   delta : number,
 }
 
-export type Matrix4T = [
+export type MatrixT = [
   number, number, number, number,
   number, number, number, number,
   number, number, number, number,
   number, number, number, number,
 ]
 
-export type Vector4T = [
+export type VectorT = [
   number,
   number,
   number,

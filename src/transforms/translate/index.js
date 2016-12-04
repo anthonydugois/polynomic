@@ -1,7 +1,7 @@
 // @flow
 
 import type {
-  Matrix4T,
+  MatrixT,
   CoordsT,
   AbsoluteCoordsT,
   RectT,
@@ -16,12 +16,12 @@ export function translate3d(
   tz : number = 0,
 ) : Function {
   return (
-    matrix : Matrix4T,
+    matrix : MatrixT,
     bbox : RectT,
-  ) : Matrix4T => {
+  ) : MatrixT => {
     const coords : CoordsT = { x: tx, y: ty, z: tz }
     const { x, y, z } : AbsoluteCoordsT = absoluteCoords(coords, bbox)
-    const translateMatrix : Matrix4T = mat(
+    const translateMatrix : MatrixT = mat(
       1, 0, 0, 0,
       0, 1, 0, 0,
       0, 0, 1, 0,

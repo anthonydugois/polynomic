@@ -1,6 +1,6 @@
 // @flow
 
-import type { Matrix4T } from '../../types'
+import type { MatrixT } from '../../types'
 
 import { mat, multiply } from '../../math/matrix'
 import { angle } from '../../utils/angle'
@@ -10,9 +10,9 @@ export function skew(
   beta: number | string = 0,
 ): Function {
   return (
-    matrix : Matrix4T,
-  ) : Matrix4T => {
-    const skewMatrix : Matrix4T = mat(
+    matrix : MatrixT,
+  ) : MatrixT => {
+    const skewMatrix : MatrixT = mat(
       1, Math.tan(angle(beta)), 0, 0,
       Math.tan(angle(alpha)), 1, 0, 0,
       0, 0, 1, 0,
