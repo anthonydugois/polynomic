@@ -29,15 +29,15 @@ export function flag(
 }
 
 export function arcParameters(
-  x1 : number,
-  y1 : number,
-  _rx : number,
-  _ry : number,
-  _phi : number,
-  _large : number,
-  _sweep : number,
-  x2 : number,
-  y2 : number,
+  x1 : number = 0,
+  y1 : number = 0,
+  _rx : number = 0,
+  _ry : number = 0,
+  _phi : number = 0,
+  _large : number = 0,
+  _sweep : number = 0,
+  x2 : number = 0,
+  y2 : number = 0,
 ) : ArcParamsT {
   const phi : number = mod2PI(_phi)
   const large : 0 | 1 = flag(_large)
@@ -52,13 +52,13 @@ export function arcParameters(
 }
 
 function radii(
-  x1 : number,
-  y1 : number,
-  _rx : number,
-  _ry : number,
-  phi : number,
-  x2 : number,
-  y2 : number,
+  x1 : number = 0,
+  y1 : number = 0,
+  _rx : number = 0,
+  _ry : number = 0,
+  phi : number = 0,
+  x2 : number = 0,
+  y2 : number = 0,
 ) : { rx : number, ry : number } {
   if (_rx === 0 || _ry === 0) {
     return {
@@ -84,15 +84,15 @@ function radii(
 }
 
 export function center(
-  x1 : number,
-  y1 : number,
-  _rx : number,
-  _ry : number,
-  _phi : number,
-  _large : number,
-  _sweep : number,
-  x2 : number,
-  y2 : number,
+  x1 : number = 0,
+  y1 : number = 0,
+  _rx : number = 0,
+  _ry : number = 0,
+  _phi : number = 0,
+  _large : number = 0,
+  _sweep : number = 0,
+  x2 : number = 0,
+  y2 : number = 0,
 ) : CoordsT {
   const {
     rx,
@@ -129,15 +129,15 @@ export function center(
 }
 
 export function angles(
-  x1 : number,
-  y1 : number,
-  _rx : number,
-  _ry : number,
-  _phi : number,
-  _large : number,
-  _sweep : number,
-  x2 : number,
-  y2 : number,
+  x1 : number = 0,
+  y1 : number = 0,
+  _rx : number = 0,
+  _ry : number = 0,
+  _phi : number = 0,
+  _large : number = 0,
+  _sweep : number = 0,
+  x2 : number = 0,
+  y2 : number = 0,
 ) : AnglesT {
   const {
     rx,
