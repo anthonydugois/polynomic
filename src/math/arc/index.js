@@ -3,6 +3,7 @@
 import type {
   CoordsT,
   AnglesT,
+  RadiiT,
   VectorT,
   ArcParamsT,
 } from '../../types'
@@ -20,6 +21,8 @@ export function makeMod(
 }
 
 export const mod2PI = makeMod(2 * Math.PI)
+export const modPI = makeMod(Math.PI)
+export const modPI2 = makeMod(Math.PI / 2)
 export const mod360 = makeMod(360)
 
 export function flag(
@@ -44,42 +47,76 @@ export function arcParameters(
   const sweep : 0 | 1 = flag(_sweep)
 
   return {
-    ...radii(x1, y1, _rx, _ry, phi, x2, y2),
+    ...correctRadii(x1, y1, _rx, _ry, phi, x2, y2),
     phi,
     large,
     sweep,
   }
 }
 
-function radii(
-  x1 : number = 0,
-  y1 : number = 0,
-  _rx : number = 0,
-  _ry : number = 0,
+export function foci(
+  cx : number = 0,
+  cy : number = 0,
+  rx : number = 0,
+  ry : number = 0,
   phi : number = 0,
-  x2 : number = 0,
-  y2 : number = 0,
-) : { rx : number, ry : number } {
-  if (_rx === 0 || _ry === 0) {
+) : [CoordsT, CoordsT] {
+  const major : number = Math.max(rx, ry)
+  const minor : number = Math.min(rx, ry)
+  const f : number = Math.sqrt(Math.abs((major ** 2) - (minor ** 2)))
+  const theta : number = major === rx ? phi : phi + (Math.PI / 2)
+
+  return [
+    {
+      x: cx - (f * Math.cos(theta)),
+      y: cy - (f * Math.sin(theta)),
+    },
+    {
+      x: cx + (f * Math.cos(theta)),
+      y: cy + (f * Math.sin(theta)),
+    },
+  ]
+}
+
+export function radii(
+  x : number = 0,
+  y : number = 0,
+  f1x : number = 0,
+  f1y : number = 0,
+  f2x : number = 0,
+  f2y : number = 0,
+  phi : number = 0,
+) : RadiiT {
+  const f : number = Math.sqrt(((f1x - f2x) ** 2) + ((f1y - f2y) ** 2))
+  const a : number = Math.sqrt(((f1x - x) ** 2) + ((f1y - y) ** 2))
+  const b : number = Math.sqrt(((f2x - x) ** 2) + ((f2y - y) ** 2))
+
+  const major : number = (a + b) / 2
+  const minor : number = Math.sqrt(((a + b) ** 2) - (f ** 2)) / 2
+
+  const _f1x : number = (Math.cos(-phi) * f1x) - (Math.sin(-phi) * f1y)
+  const _f1y : number = (Math.cos(-phi) * f1y) + (Math.sin(-phi) * f1x)
+
+  const _f2x : number = (Math.cos(-phi) * f2x) - (Math.sin(-phi) * f2y)
+  const _f2y : number = (Math.cos(-phi) * f2y) + (Math.sin(-phi) * f2x)
+
+  if (_f1x === _f2x) {
     return {
-      rx: 0,
-      ry: 0,
+      rx: minor,
+      ry: major,
     }
   }
 
-  const x_2 : number = ((x1 - x2) / 2)
-  const y_2 : number = ((y1 - y2) / 2)
-  const x : number = (Math.cos(phi) * x_2) + (Math.sin(phi) * y_2)
-  const y : number = (Math.cos(phi) * y_2) - (Math.sin(phi) * x_2)
-
-  const prx : number = Math.abs(_rx)
-  const pry : number = Math.abs(_ry)
-  const coef : number = ((x ** 2) / (prx ** 2)) + ((y ** 2) / (pry ** 2))
-  const root : number = Math.sqrt(coef)
+  if (_f1y === _f2y) {
+    return {
+      rx: major,
+      ry: minor,
+    }
+  }
 
   return {
-    rx: root > 1 ? root * prx : prx,
-    ry: root > 1 ? root * pry : pry,
+    rx: 0,
+    ry: 0,
   }
 }
 
@@ -183,6 +220,38 @@ export function angles(
   const end : number = mod2PI(start + delta)
 
   return { start, end, delta }
+}
+
+function correctRadii(
+  x1 : number = 0,
+  y1 : number = 0,
+  _rx : number = 0,
+  _ry : number = 0,
+  phi : number = 0,
+  x2 : number = 0,
+  y2 : number = 0,
+) : { rx : number, ry : number } {
+  if (_rx === 0 || _ry === 0) {
+    return {
+      rx: 0,
+      ry: 0,
+    }
+  }
+
+  const x_2 : number = ((x1 - x2) / 2)
+  const y_2 : number = ((y1 - y2) / 2)
+  const x : number = (Math.cos(phi) * x_2) + (Math.sin(phi) * y_2)
+  const y : number = (Math.cos(phi) * y_2) - (Math.sin(phi) * x_2)
+
+  const prx : number = Math.abs(_rx)
+  const pry : number = Math.abs(_ry)
+  const coef : number = ((x ** 2) / (prx ** 2)) + ((y ** 2) / (pry ** 2))
+  const root : number = Math.sqrt(coef)
+
+  return {
+    rx: root > 1 ? root * prx : prx,
+    ry: root > 1 ? root * pry : pry,
+  }
 }
 
 function normalizedCenter(

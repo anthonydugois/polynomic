@@ -2,9 +2,13 @@ import {
   makeMod,
   flag,
   arcParameters,
+  radii,
+  foci,
   center,
   angles,
 } from './index'
+
+import { M, A } from '../../point'
 
 test('should make a function that returns the mod of a number', () => {
   const test = typeof makeMod(3)
@@ -32,6 +36,26 @@ test('should normalize a number to have the flag 1', () => {
   const expected = 1
 
   expect(test).toBe(expected)
+})
+
+test('should return the radii of the ellipse', () => {
+  const test = radii(0, 0, 17.810131526976186, -12.824951741986723, 140.2846186661351, 109.64953539717217, Math.PI / 4)
+  const expected = {
+    rx: 100,
+    ry: 50,
+  }
+
+  expect(test).toEqual(expected)
+})
+
+test('should return the foci of the ellipse', () => {
+  const test = foci(79.04737509655564, 48.412291827592725, 100, 50, Math.PI / 4)
+  const expected = [
+    { x: 17.810131526976186, y: -12.824951741986723 },
+    { x: 140.2846186661351, y: 109.64953539717217 },
+  ]
+
+  expect(test).toEqual(expected)
 })
 
 test('should find the center of the ellipse', () => {

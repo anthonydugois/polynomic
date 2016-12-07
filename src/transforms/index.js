@@ -135,37 +135,42 @@ export function applyMatrix(
           (isRelative(current) ? 'l' : 'L') :
           current.code
 
-        const anchors : PointParamsT = {}
+        const parameters : PointParamsT = {}
 
         if (
           typeof current.parameters.x1 !== 'undefined'
           && typeof current.parameters.y1 !== 'undefined'
         ) {
-          const [x1, y1, , w1] : VectorT = multiplyVec(
+          const [x1, y1, , w] : VectorT = multiplyVec(
             matrix,
             vec(current.parameters.x1, current.parameters.y1, 0, 1),
           )
 
-          anchors.x1 = x1 / w1
-          anchors.y1 = y1 / w1
+          parameters.x1 = x1 / w
+          parameters.y1 = y1 / w
         }
 
         if (
           typeof current.parameters.x2 !== 'undefined'
           && typeof current.parameters.y2 !== 'undefined'
         ) {
-          const [x2, y2, , w2] : VectorT = multiplyVec(
+          const [x2, y2, , w] : VectorT = multiplyVec(
             matrix,
             vec(current.parameters.x2, current.parameters.y2, 0, 1),
           )
 
-          anchors.x2 = x2 / w2
-          anchors.y2 = y2 / w2
+          parameters.x2 = x2 / w
+          parameters.y2 = y2 / w
         }
+
+        if (
+          typeof current.parameters.rx !== 'undefined'
+          && typeof current.parameters.ry !== 'undefined'
+        ) {}
 
         acc.push(point(code, x, y, {
           ...current.parameters,
-          ...anchors,
+          ...parameters,
         }))
       }
 

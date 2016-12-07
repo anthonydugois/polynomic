@@ -9,6 +9,14 @@ import { scale } from './scale'
 import { parse } from '../pathstring/parse'
 import { isEqual } from '../path/is-equal'
 
+test('should apply the transform on the arc', () => {
+  const path = parse('M0 0A50 100 0 1 0 100 0')
+
+  const test = transform(scale(1, 2))(path)
+
+  console.log(test)
+})
+
 test('should return a function and apply the transform on the path', () => {
   const path = parse('M0 0L100 100Q150 150 200 200')
 
@@ -57,7 +65,7 @@ test('should apply the transform with a modified relative origin', () => {
     0, 0, 0, 1,
   ]
 
-  const test = transformPath(path, matrix, { transformOrigin: { x: 50, y: 50 }})
+  const test = transformPath(path, matrix, { transformOrigin: { x: '50%', y: '50%' }})
   const expected = 'M-50-50h200v200h-200z'
 
   expect(isEqual(test, expected)).toBe(true)

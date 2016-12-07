@@ -110,6 +110,11 @@ export type EllipseT = {
   ry : number,
 }
 
+export type RadiiT = {
+  rx : number,
+  ry : number,
+}
+
 export type ArcParamsT = {
   rx : number,
   ry : number,
