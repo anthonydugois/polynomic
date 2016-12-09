@@ -38,6 +38,35 @@ test('should return a 4x4 identity matrix', () => {
   expect(test).toEqual(expected)
 })
 
+test('should return the determinant of the matrix', () => {
+  const test = det(mat(
+    3, 4, 0, 0,
+    3, 2, 0, 0,
+    0, 0, 1, 0,
+    4, 5, 0, 1,
+  ))
+  const expected = -6
+
+  expect(test).toBe(expected)
+})
+
+test('should return the inverse of the matrix', () => {
+  const test = inverse(mat(
+    3, 4, 0, 0,
+    3, 2, 0, 0,
+    0, 0, 1, 0,
+    4, 5, 0, 1,
+  ))
+  const expected = mat(
+    -1 / 3, 2 / 3, -0, -0,
+    1 / 2, -1 / 2, -0, -0,
+    -0, -0, 1, -0,
+    -7 / 6, -1 / 6, -0, 1,
+  )
+
+  expect(test).toEqual(expected)
+})
+
 test('should multiply two 4x4 matrices', () => {
   const m1 = mat(
     2, 0, 0, 0,
