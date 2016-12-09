@@ -32,7 +32,7 @@ test('should return the bounding box of the arc', () => {
 
 test('should return the bounding box of the rotated arc', () => {
   const test = boundingBox(A(50, 100, 100, 1, 0, 150, 50)(), M(50, 50)())
-  const expected = rect(22.087515821014122, 49.999999999999986, 197.72554036286925, 96.7430315813779)
+  const expected = rect(22.087515821014094, 49.99999999999999, 197.7255403628692, 96.74303158137789)
 
   expect(test).toEqual(expected)
 })

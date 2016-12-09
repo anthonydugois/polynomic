@@ -1,6 +1,10 @@
 // @flow
 
-import type { CoordsT, PointT, RectT, ArcParamsT, AnglesT } from '../../types'
+import type {
+  CoordsT,
+  PointT,
+  RectT,
+} from '../../types'
 
 import { degToRad } from '../../utils/angle'
 import { isQ, isT, isC, isS, isA } from '../is'

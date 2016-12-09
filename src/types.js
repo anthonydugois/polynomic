@@ -110,6 +110,30 @@ export type EllipseT = {
   ry : number,
 }
 
+export type EllipseParameterizationT = {
+  cx : number,
+  cy : number,
+  rx : number,
+  ry : number,
+  phi : number,
+}
+
+export type CenterParameterizationT = {
+  cx : number,
+  cy : number,
+  start : number,
+  end : number,
+}
+
+export type EndpointParameterizationT = {
+  x1 : number,
+  y1 : number,
+  x2 : number,
+  y2 : number,
+  large : 0 | 1,
+  sweep : 0 | 1,
+}
+
 export type RadiiT = {
   rx : number,
   ry : number,

@@ -1,9 +1,12 @@
 // @flow
 
-import type { CoordsT, ArcParamsT, AnglesT } from '../../types'
+import type {
+  CoordsT,
+  CenterParameterizationT,
+} from '../../types'
 
 import { normalize } from '../../utils/normalize'
-import { angles } from '../arc'
+import { endpointToCenter } from '../arc'
 import * as parametric from '../parametric'
 
 export function linearExtremums(
@@ -12,9 +15,9 @@ export function linearExtremums(
   x2 : number = x1,
   y2 : number = y1,
 ) : Array<CoordsT> {
-  return extremums(
-    parametric.linear(x1, y1, x2, y2),
-    [0, 1],
+  return extremums(parametric.linear(x1, y1, x2, y2))(
+    0,
+    1,
   )
 }
 
@@ -29,9 +32,11 @@ export function quadraticExtremums(
   const tx : number = dQuadraticComponent(x1, x2, x3)
   const ty : number = dQuadraticComponent(y1, y2, y3)
 
-  return extremums(
-    parametric.quadratic(x1, y1, x2, y2, x3, y3),
-    [0, 1, tx, ty],
+  return extremums(parametric.quadratic(x1, y1, x2, y2, x3, y3))(
+    0,
+    1,
+    tx,
+    ty,
   )
 }
 
@@ -48,9 +53,11 @@ export function cubicExtremums(
   const tx : Array<number> = dCubicComponent(x1, x2, x3, x4)
   const ty : Array<number> = dCubicComponent(y1, y2, y3, y4)
 
-  return extremums(
-    parametric.cubic(x1, y1, x2, y2, x3, y3, x4, y4),
-    [0, 1, ...tx, ...ty],
+  return extremums(parametric.cubic(x1, y1, x2, y2, x3, y3, x4, y4))(
+    0,
+    1,
+    ...tx,
+    ...ty,
   )
 }
 
@@ -60,12 +67,12 @@ export function arcExtremums(
   rx : number = 0,
   ry : number = 0,
   phi : number = 0,
-  large : number = 0,
-  sweep : number = 0,
+  large : 0 | 1 = 0,
+  sweep : 0 | 1 = 0,
   x2 : number = x1,
   y2 : number = y1,
 ) : Array<CoordsT> {
-  const { start, end } : AnglesT = angles(
+  const { start, end } : CenterParameterizationT = endpointToCenter(
     x1, y1,
     rx, ry, phi, large, sweep,
     x2, y2,
@@ -74,26 +81,24 @@ export function arcExtremums(
   const angleX : Function = dArcComponentX(rx, ry, phi)
   const angleY : Function = dArcComponentY(rx, ry, phi)
 
-  return extremums(
-    parametric.arc(x1, y1, rx, ry, phi, large, sweep, x2, y2),
-    [
-      0,
-      1,
-      normalize(angleX(0), start, end),
-      normalize(angleX(1), start, end),
-      normalize(angleX(-1), start, end),
-      normalize(angleY(0), start, end),
-      normalize(angleY(1), start, end),
-      normalize(angleY(-1), start, end),
-    ],
+  return extremums(parametric.arc(x1, y1, rx, ry, phi, large, sweep, x2, y2))(
+    0,
+    1,
+    normalize(angleX(0), start, end),
+    normalize(angleX(1), start, end),
+    normalize(angleX(-1), start, end),
+    normalize(angleY(0), start, end),
+    normalize(angleY(1), start, end),
+    normalize(angleY(-1), start, end),
   )
 }
 
 function extremums(
   f : Function,
-  inputs : Array<number>,
-) : Array<CoordsT> {
-  return inputs.filter((t) => t >= 0 && t <= 1).map((t) => f(t))
+) : Function {
+  return (
+    ...inputs : Array<number>
+  ) : Array<CoordsT> => inputs.filter((t) => t >= 0 && t <= 1).map((t) => f(t))
 }
 
 function dQuadraticComponent(

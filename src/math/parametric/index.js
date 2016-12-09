@@ -2,15 +2,11 @@
 
 import type {
   CoordsT,
-  AnglesT,
-  ArcParamsT,
+  RadiiT,
+  CenterParameterizationT,
 } from '../../types'
 
-import {
-  arcParameters,
-  center,
-  angles,
-} from '../arc'
+import { endpointToCenter, correctRadii } from '../arc'
 
 export function linear(
   x1 : number,
@@ -81,51 +77,37 @@ export function cubic(
 export function arc(
   x1 : number,
   y1 : number,
-  _rx : number = 0,
-  _ry : number = 0,
-  _phi : number = 0,
-  _large : number = 0,
-  _sweep : number = 0,
+  rx : number = 0,
+  ry : number = 0,
+  phi : number = 0,
+  large : 0 | 1 = 0,
+  sweep : 0 | 1 = 0,
   x2 : number = x1,
   y2 : number = y1,
 ) : Function {
-  if (_rx === 0 || _ry === 0) {
+  if (rx === 0 || ry === 0) {
     return linear(x1, y1, x2, y2)
   }
 
-  const { rx, ry, phi } : ArcParamsT = arcParameters(
+  const r : RadiiT = correctRadii(x1, y1, rx, ry, phi, x2, y2)
+  const center : CenterParameterizationT = endpointToCenter(
     x1, y1,
-    _rx, _ry, _phi, _large, _sweep,
+    rx, ry, phi, large, sweep,
     x2, y2,
   )
-
-  const { start, delta } : AnglesT = angles(
-    x1, y1,
-    _rx, _ry, _phi, _large, _sweep,
-    x2, y2,
-  )
-
-  const { x, y } : CoordsT = center(
-    x1, y1,
-    _rx, _ry, _phi, _large, _sweep,
-    x2, y2,
-  )
-
-  const cx = parseFloat(x)
-  const cy = parseFloat(y)
 
   return function arc(
     t : number,
   ) : CoordsT {
-    const theta : number = start + (t * delta)
+    const theta : number = center.start + (t * (center.end - center.start))
 
     return {
-      x: cx
-        + (rx * Math.cos(theta) * Math.cos(phi))
-        - (ry * Math.sin(theta) * Math.sin(phi)),
-      y: cy
-        + (rx * Math.cos(theta) * Math.sin(phi))
-        + (ry * Math.sin(theta) * Math.cos(phi)),
+      x: center.cx
+        + (r.rx * Math.cos(theta) * Math.cos(phi))
+        - (r.ry * Math.sin(theta) * Math.sin(phi)),
+      y: center.cy
+        + (r.rx * Math.cos(theta) * Math.sin(phi))
+        + (r.ry * Math.sin(theta) * Math.cos(phi)),
     }
   }
 }

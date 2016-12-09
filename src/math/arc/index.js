@@ -2,13 +2,14 @@
 
 import type {
   CoordsT,
-  AnglesT,
   RadiiT,
-  VectorT,
-  ArcParamsT,
+  MatrixT,
+  CenterParameterizationT,
+  EndpointParameterizationT,
+  EllipseParameterizationT,
 } from '../../types'
 
-import { vec, angle } from '../vector'
+import { mat, inverse } from '../matrix'
 
 export function makeMod(
   m : number,
@@ -31,26 +32,162 @@ export function flag(
   return f === 0 ? 0 : 1
 }
 
-export function arcParameters(
-  x1 : number = 0,
-  y1 : number = 0,
-  _rx : number = 0,
-  _ry : number = 0,
-  _phi : number = 0,
-  _large : number = 0,
-  _sweep : number = 0,
-  x2 : number = 0,
-  y2 : number = 0,
-) : ArcParamsT {
-  const phi : number = mod2PI(_phi)
-  const large : 0 | 1 = flag(_large)
-  const sweep : 0 | 1 = flag(_sweep)
+export function centerToEndpoint(
+  cx : number = 0,
+  cy : number = 0,
+  rx : number = 0,
+  ry : number = 0,
+  phi : number = 0,
+  start : number = 0,
+  end : number = 0,
+) : EndpointParameterizationT {
+  return {
+    x1: cx + (rx * Math.cos(start) * Math.cos(phi)) - (ry * Math.sin(start) * Math.sin(phi)),
+    y1: cy + (ry * Math.sin(start) * Math.cos(phi)) + (rx * Math.cos(start) * Math.sin(phi)),
+    x2: cx + (rx * Math.cos(end) * Math.cos(phi)) - (ry * Math.sin(end) * Math.sin(phi)),
+    y2: cy + (ry * Math.sin(end) * Math.cos(phi)) + (rx * Math.cos(end) * Math.sin(phi)),
+    large: Math.abs(end - start) > Math.PI ? 1 : 0,
+    sweep: end - start > 0 ? 1 : 0,
+  }
+}
+
+export function endpointToCenter(
+  x1 : number,
+  y1 : number,
+  rx : number = 0,
+  ry : number = 0,
+  phi : number = 0,
+  large : 0 | 1,
+  sweep : 0 | 1,
+  x2 : number,
+  y2 : number,
+) : CenterParameterizationT {
+  const r : RadiiT = correctRadii(x1, y1, rx, ry, phi, x2, y2)
+  const fl : 0 | 1 = flag(large)
+  const fs : 0 | 1 = flag(sweep)
+
+  const _x1 : number = ((x1 * Math.cos(phi)) + (y1 * Math.sin(phi))) / r.rx
+  const _y1 : number = ((y1 * Math.cos(phi)) - (x1 * Math.sin(phi))) / r.ry
+  const _x2 : number = ((x2 * Math.cos(phi)) + (y2 * Math.sin(phi))) / r.rx
+  const _y2 : number = ((y2 * Math.cos(phi)) - (x2 * Math.sin(phi))) / r.ry
+
+  const dx : number = _x1 - _x2
+  const dy : number = _y1 - _y2
+  const xm : number = (_x1 + _x2) / 2
+  const ym : number = (_y1 + _y2) / 2
+  const d : number = Math.sqrt((1 / ((dx ** 2) + (dy ** 2))) - (1 / 4))
+
+  const _cx1 : number = xm + (d * dy)
+  const _cy1 : number = ym - (d * dx)
+  const _cx2 : number = xm - (d * dy)
+  const _cy2 : number = ym + (d * dx)
+
+  const _cx : number = fl === fs ? _cx2 : _cx1
+  const _cy : number = fl === fs ? _cy2 : _cy1
+
+  const cx : number = (r.rx * _cx * Math.cos(phi))
+    - (r.ry * _cy * Math.sin(phi))
+  const cy : number = (r.rx * _cx * Math.sin(phi))
+    + (r.ry * _cy * Math.cos(phi))
+
+  const start : number = Math.atan2(_y1 - _cy, _x1 - _cx)
+  let end : number = Math.atan2(_y2 - _cy, _x2 - _cx)
+
+  if (fs === 0 && end > start) {
+    end -= 2 * Math.PI
+  }
+
+  if (fs === 1 && end < start) {
+    end += 2 * Math.PI
+  }
 
   return {
-    ...correctRadii(x1, y1, _rx, _ry, phi, x2, y2),
+    cx,
+    cy,
+    start,
+    end,
+  }
+}
+
+export function centerToMatrix(
+  cx : number = 0,
+  cy : number = 0,
+  rx : number = 0,
+  ry : number = 0,
+  phi : number = 0,
+) : MatrixT {
+  return mat(
+    rx * Math.cos(phi), rx * Math.sin(phi), 0, 0,
+    -ry * Math.sin(phi), ry * Math.cos(phi), 0, 0,
+    cx, cy, 1, 0,
+    0, 0, 0, 1,
+  )
+}
+
+export function matrixToImplicit(
+  matrix : MatrixT,
+) : Array<number> {
+  const m : MatrixT = inverse(matrix)
+
+  const A : number = (m[0] ** 2) + (m[4] ** 2)
+  const B : number = 2 * ((m[0] * m[1]) + (m[4] * m[5]))
+  const C : number = (m[1] ** 2) + (m[5] ** 2)
+  const D : number = 2 * ((m[0] * m[2]) + (m[4] * m[6]))
+  const E : number = 2 * ((m[1] * m[2]) + (m[5] * m[6]))
+  const F : number = (m[2] ** 2) + (m[6] ** 2) - 1
+
+  return [A, B, C, D, E, F]
+}
+
+export function implicitToEllipse(
+  A : number,
+  B : number,
+  C : number,
+  D : number,
+  E : number,
+  F : number,
+) : EllipseParameterizationT {
+  const d : number = (B ** 2) - (4 * A * C)
+
+  if (d >= 0) {
+    return {
+      cx: 0,
+      cy: 0,
+      rx: 0,
+      ry: 0,
+      phi: 0,
+    }
+  }
+
+  const cx : number = ((2 * C * D) - (B * E)) / d
+  const cy : number = ((2 * A * E) - (B * D)) / d
+  const phi : number = B === 0 ?
+    0 :
+    B !== 0 && A === C ?
+      Math.PI / 4 :
+      Math.atan(B / (A - C)) / 2
+
+  const K : number = Math.sqrt(1 + ((B / (A - C)) ** 2))
+  const _A : number = B === 0 ?
+    A :
+    B !== 0 && A === C ?
+      A + (B / 2) :
+      (A + C + (K * (A - C))) / 2
+  const _C : number = B === 0 ?
+    C :
+    B !== 0 && A === C ?
+      A - (B / 2) :
+      (A + C - (K * (A - C))) / 2
+
+  const rx : number = 1 / Math.sqrt(_A)
+  const ry : number = 1 / Math.sqrt(_C)
+
+  return {
+    cx,
+    cy,
+    rx,
+    ry,
     phi,
-    large,
-    sweep,
   }
 }
 
@@ -78,223 +215,30 @@ export function foci(
   ]
 }
 
-export function radii(
-  x : number = 0,
-  y : number = 0,
-  f1x : number = 0,
-  f1y : number = 0,
-  f2x : number = 0,
-  f2y : number = 0,
+export function correctRadii(
+  x1 : number = 0,
+  y1 : number = 0,
+  rx : number = 0,
+  ry : number = 0,
   phi : number = 0,
+  x2 : number = 0,
+  y2 : number = 0,
 ) : RadiiT {
-  const f : number = Math.sqrt(((f1x - f2x) ** 2) + ((f1y - f2y) ** 2))
-  const a : number = Math.sqrt(((f1x - x) ** 2) + ((f1y - y) ** 2))
-  const b : number = Math.sqrt(((f2x - x) ** 2) + ((f2y - y) ** 2))
-
-  const major : number = (a + b) / 2
-  const minor : number = Math.sqrt(((a + b) ** 2) - (f ** 2)) / 2
-
-  const _f1x : number = (Math.cos(-phi) * f1x) - (Math.sin(-phi) * f1y)
-  const _f1y : number = (Math.cos(-phi) * f1y) + (Math.sin(-phi) * f1x)
-
-  const _f2x : number = (Math.cos(-phi) * f2x) - (Math.sin(-phi) * f2y)
-  const _f2y : number = (Math.cos(-phi) * f2y) + (Math.sin(-phi) * f2x)
-
-  if (_f1x === _f2x) {
-    return {
-      rx: minor,
-      ry: major,
-    }
-  }
-
-  if (_f1y === _f2y) {
-    return {
-      rx: major,
-      ry: minor,
-    }
-  }
-
-  return {
-    rx: 0,
-    ry: 0,
-  }
-}
-
-export function center(
-  x1 : number = 0,
-  y1 : number = 0,
-  _rx : number = 0,
-  _ry : number = 0,
-  _phi : number = 0,
-  _large : number = 0,
-  _sweep : number = 0,
-  x2 : number = 0,
-  y2 : number = 0,
-) : CoordsT {
-  const {
-    rx,
-    ry,
-    phi,
-    large,
-    sweep,
-  } : ArcParamsT = arcParameters(
-    x1, y1,
-    _rx, _ry, _phi, _large, _sweep,
-    x2, y2,
-  )
-
   if (rx === 0 || ry === 0) {
-    return {
-      x: (x2 - x1) / 2,
-      y: (y2 - y1) / 2,
-    }
+    return { rx, ry }
   }
 
-  const n : CoordsT = normalizedCenter(
-    x1, y1,
-    rx, ry, phi, large, sweep,
-    x2, y2,
+  const xm : number = (x1 - x2) / 2
+  const ym : number = (y1 - y2) / 2
+  const x : number = (Math.cos(phi) * xm) + (Math.sin(phi) * ym)
+  const y : number = (Math.cos(phi) * ym) - (Math.sin(phi) * xm)
+  const root : number = Math.sqrt(
+    ((x ** 2) / (Math.abs(rx) ** 2))
+    + ((y ** 2) / (Math.abs(ry) ** 2))
   )
 
-  const cx : number = parseFloat(n.x)
-  const cy : number = parseFloat(n.y)
-
   return {
-    x: ((Math.cos(phi) * cx) - (Math.sin(phi) * cy)) + ((x1 + x2) / 2),
-    y: ((Math.sin(phi) * cx) + (Math.cos(phi) * cy)) + ((y1 + y2) / 2),
+    rx: Math.max(1, root) * Math.abs(rx),
+    ry: Math.max(1, root) * Math.abs(ry),
   }
-}
-
-export function angles(
-  x1 : number = 0,
-  y1 : number = 0,
-  _rx : number = 0,
-  _ry : number = 0,
-  _phi : number = 0,
-  _large : number = 0,
-  _sweep : number = 0,
-  x2 : number = 0,
-  y2 : number = 0,
-) : AnglesT {
-  const {
-    rx,
-    ry,
-    phi,
-    large,
-    sweep,
-  } : ArcParamsT = arcParameters(
-    x1, y1,
-    _rx, _ry, _phi, _large, _sweep,
-    x2, y2,
-  )
-
-  if (rx === 0 || ry === 0) {
-    return {
-      start: 0,
-      end: 0,
-      delta: 0,
-    }
-  }
-
-  const x_2 : number = ((x1 - x2) / 2)
-  const y_2 : number = ((y1 - y2) / 2)
-  const x : number = (Math.cos(phi) * x_2) + (Math.sin(phi) * y_2)
-  const y : number = (Math.cos(phi) * y_2) - (Math.sin(phi) * x_2)
-
-  const n : CoordsT = normalizedCenter(
-    x1, y1,
-    rx, ry, phi, large, sweep,
-    x2, y2,
-  )
-
-  const cx : number = parseFloat(n.x)
-  const cy : number = parseFloat(n.y)
-
-  const v1 : VectorT = vec(1, 0, 0, 1)
-  const v2 : VectorT = vec((x - cx) / rx, (y - cy) / ry, 0, 1)
-  const v3 : VectorT = vec((-x - cx) / rx, (-y - cy) / ry, 0, 1)
-
-  const start : number = mod2PI(angle(v1, v2))
-  const _delta : number = mod2PI(angle(v2, v3))
-  const delta : number = normalizedDelta(_delta, sweep)
-  const end : number = mod2PI(start + delta)
-
-  return { start, end, delta }
-}
-
-function correctRadii(
-  x1 : number = 0,
-  y1 : number = 0,
-  _rx : number = 0,
-  _ry : number = 0,
-  phi : number = 0,
-  x2 : number = 0,
-  y2 : number = 0,
-) : { rx : number, ry : number } {
-  if (_rx === 0 || _ry === 0) {
-    return {
-      rx: 0,
-      ry: 0,
-    }
-  }
-
-  const x_2 : number = ((x1 - x2) / 2)
-  const y_2 : number = ((y1 - y2) / 2)
-  const x : number = (Math.cos(phi) * x_2) + (Math.sin(phi) * y_2)
-  const y : number = (Math.cos(phi) * y_2) - (Math.sin(phi) * x_2)
-
-  const prx : number = Math.abs(_rx)
-  const pry : number = Math.abs(_ry)
-  const coef : number = ((x ** 2) / (prx ** 2)) + ((y ** 2) / (pry ** 2))
-  const root : number = Math.sqrt(coef)
-
-  return {
-    rx: root > 1 ? root * prx : prx,
-    ry: root > 1 ? root * pry : pry,
-  }
-}
-
-function normalizedCenter(
-  x1 : number,
-  y1 : number,
-  rx : number,
-  ry : number,
-  phi : number,
-  large : 0 | 1,
-  sweep : 0 | 1,
-  x2 : number,
-  y2 : number,
-) : CoordsT {
-  const x_2 : number = ((x1 - x2) / 2)
-  const y_2 : number = ((y1 - y2) / 2)
-  const x : number = (Math.cos(phi) * x_2) + (Math.sin(phi) * y_2)
-  const y : number = (Math.cos(phi) * y_2) - (Math.sin(phi) * x_2)
-
-  const xx : number = x ** 2
-  const yy : number = y ** 2
-  const rxx : number = rx ** 2
-  const ryy : number = ry ** 2
-
-  const sign : -1 | 1 = large === sweep ? -1 : 1
-  const num : number = (rxx * ryy) - (rxx * yy) - (ryy * xx)
-  const den : number = (rxx * yy) + (ryy * xx)
-  const coef : number = sign * Math.sqrt(num / den)
-
-  return {
-    x: coef * ((rx * y) / ry),
-    y: coef * ((-ry * x) / rx),
-  }
-}
-
-function normalizedDelta(
-  delta : number,
-  sweep : 0 | 1 = 0,
-) : number {
-  if (sweep === 0 && delta > 0) {
-    return delta - (2 * Math.PI)
-  } else if (sweep !== 0 && delta < 0) {
-    return delta + (2 * Math.PI)
-  }
-
-  return delta
 }

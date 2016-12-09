@@ -3,7 +3,9 @@
 import type {
   MatrixT,
   VectorT,
+  CoordsT,
   AbsoluteCoordsT,
+  RadiiT,
   PointT,
   PointCodeT,
   PointParamsT,
@@ -26,6 +28,7 @@ import { translate3d } from './translate'
 import { point, defaultPoint } from '../point'
 import { isH, isV, isRelative } from '../point/is'
 import { absoluteCoords } from '../utils/absolute'
+import { degToRad } from '../utils/angle'
 
 export function transformOptions(
   options : {} = {},
@@ -166,6 +169,9 @@ export function applyMatrix(
         if (
           typeof current.parameters.rx !== 'undefined'
           && typeof current.parameters.ry !== 'undefined'
+          && typeof current.parameters.rotation !== 'undefined'
+          && typeof current.parameters.large !== 'undefined'
+          && typeof current.parameters.sweep !== 'undefined'
         ) {}
 
         acc.push(point(code, x, y, {

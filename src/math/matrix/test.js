@@ -1,6 +1,8 @@
 import {
   mat,
   identity,
+  det,
+  inverse,
   multiply,
   multiplyVec,
 } from './index'

@@ -49,7 +49,7 @@ test('should return the point located at the provided offset on the line', () =>
 
 test('should return the point located at the provided offset on the rotated arc', () => {
   const test = arc(100, 0, 50, 150, Math.PI / 2, 1, 1, 100, 300)(0.5)
-  const expected = { x: 550, y: 149.99999999999997 }
+  const expected = { x: 550, y: 149.99999999999994 }
 
   expect(test).toEqual(expected)
 })

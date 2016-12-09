@@ -24,7 +24,7 @@ test('should return the point at the provided offset on the cubic curve', () => 
 
 test('should return the point at the provided offset on the arc', () => {
   const test = pointAt(M(100, 0)(), A(50, 150, 90, 1, 1, 100, 300)())(0.5)
-  const expected = { x: 550, y: 149.99999999999997 }
+  const expected = { x: 550, y: 149.99999999999994 }
 
   expect(test).toEqual(expected)
 })
