@@ -57,10 +57,10 @@ export function endpointToCenter(
   rx : number = 0,
   ry : number = 0,
   phi : number = 0,
-  large : 0 | 1,
-  sweep : 0 | 1,
-  x2 : number,
-  y2 : number,
+  large : 0 | 1 = 0,
+  sweep : 0 | 1 = 0,
+  x2 : number = x1,
+  y2 : number = y1,
 ) : CenterParameterizationT {
   const r : RadiiT = correctRadii(x1, y1, rx, ry, phi, x2, y2)
   const fl : 0 | 1 = flag(large)
@@ -119,8 +119,8 @@ export function centerToMatrix(
   return mat(
     rx * Math.cos(phi), rx * Math.sin(phi), 0, 0,
     -ry * Math.sin(phi), ry * Math.cos(phi), 0, 0,
-    cx, cy, 1, 0,
-    0, 0, 0, 1,
+    0, 0, 1, 0,
+    cx, cy, 0, 1,
   )
 }
 
@@ -132,9 +132,9 @@ export function matrixToImplicit(
   const A : number = (m[0] ** 2) + (m[4] ** 2)
   const B : number = 2 * ((m[0] * m[1]) + (m[4] * m[5]))
   const C : number = (m[1] ** 2) + (m[5] ** 2)
-  const D : number = 2 * ((m[0] * m[2]) + (m[4] * m[6]))
-  const E : number = 2 * ((m[1] * m[2]) + (m[5] * m[6]))
-  const F : number = (m[2] ** 2) + (m[6] ** 2) - 1
+  const D : number = 2 * ((m[0] * m[3]) + (m[4] * m[7]))
+  const E : number = 2 * ((m[1] * m[3]) + (m[5] * m[7]))
+  const F : number = (m[3] ** 2) + (m[7] ** 2) - 1
 
   return [A, B, C, D, E, F]
 }
@@ -149,7 +149,7 @@ export function implicitToEllipse(
 ) : EllipseParameterizationT {
   const d : number = (B ** 2) - (4 * A * C)
 
-  if (d >= 0) {
+  if (d >= 0 || A === 0 || C === 0 || A * C < 0) {
     return {
       cx: 0,
       cy: 0,
