@@ -2,6 +2,7 @@
 
 import type {
   CoordsT,
+  EndpointParameterizationT,
   CenterParameterizationT,
 } from '../../types'
 
@@ -72,24 +73,25 @@ export function arcExtremums(
   x2 : number = x1,
   y2 : number = y1,
 ) : Array<CoordsT> {
-  const { start, end } : CenterParameterizationT = endpointToCenter(
+  const endpoint : EndpointParameterizationT = {
     x1, y1,
     rx, ry, phi, large, sweep,
     x2, y2,
-  )
+  }
 
+  const center : CenterParameterizationT = endpointToCenter(endpoint)
   const angleX : Function = dArcComponentX(rx, ry, phi)
   const angleY : Function = dArcComponentY(rx, ry, phi)
 
   return extremums(parametric.arc(x1, y1, rx, ry, phi, large, sweep, x2, y2))(
     0,
     1,
-    normalize(angleX(0), start, end),
-    normalize(angleX(1), start, end),
-    normalize(angleX(-1), start, end),
-    normalize(angleY(0), start, end),
-    normalize(angleY(1), start, end),
-    normalize(angleY(-1), start, end),
+    normalize(angleX(0), center.start, center.end),
+    normalize(angleX(1), center.start, center.end),
+    normalize(angleX(-1), center.start, center.end),
+    normalize(angleY(0), center.start, center.end),
+    normalize(angleY(1), center.start, center.end),
+    normalize(angleY(-1), center.start, center.end),
   )
 }
 

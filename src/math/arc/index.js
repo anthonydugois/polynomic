@@ -6,10 +6,9 @@ import type {
   MatrixT,
   CenterParameterizationT,
   EndpointParameterizationT,
-  EllipseParameterizationT,
 } from '../../types'
 
-import { mat, inverse } from '../matrix'
+import { mat, det, multiply } from '../matrix'
 
 export function makeMod(
   m : number,
@@ -32,37 +31,18 @@ export function flag(
   return f === 0 ? 0 : 1
 }
 
-export function centerToEndpoint(
-  cx : number = 0,
-  cy : number = 0,
-  rx : number = 0,
-  ry : number = 0,
-  phi : number = 0,
-  start : number = 0,
-  end : number = 0,
-) : EndpointParameterizationT {
-  return {
-    x1: cx + (rx * Math.cos(start) * Math.cos(phi)) - (ry * Math.sin(start) * Math.sin(phi)),
-    y1: cy + (ry * Math.sin(start) * Math.cos(phi)) + (rx * Math.cos(start) * Math.sin(phi)),
-    x2: cx + (rx * Math.cos(end) * Math.cos(phi)) - (ry * Math.sin(end) * Math.sin(phi)),
-    y2: cy + (ry * Math.sin(end) * Math.cos(phi)) + (rx * Math.cos(end) * Math.sin(phi)),
-    large: Math.abs(end - start) > Math.PI ? 1 : 0,
-    sweep: end - start > 0 ? 1 : 0,
-  }
-}
-
-export function endpointToCenter(
-  x1 : number,
-  y1 : number,
-  rx : number = 0,
-  ry : number = 0,
-  phi : number = 0,
-  large : 0 | 1 = 0,
-  sweep : 0 | 1 = 0,
-  x2 : number = x1,
-  y2 : number = y1,
-) : CenterParameterizationT {
-  const r : RadiiT = correctRadii(x1, y1, rx, ry, phi, x2, y2)
+export function endpointToCenter({
+  x1 = 0,
+  y1 = 0,
+  rx = 0,
+  ry = 0,
+  phi = 0,
+  large = 0,
+  sweep = 0,
+  x2 = x1,
+  y2 = y1,
+} : EndpointParameterizationT) : CenterParameterizationT {
+  const r : RadiiT = correctRadii({ x1, y1, rx, ry, phi, large, sweep, x2, y2 })
   const fl : 0 | 1 = flag(large)
   const fs : 0 | 1 = flag(sweep)
 
@@ -104,126 +84,144 @@ export function endpointToCenter(
   return {
     cx,
     cy,
+    rx,
+    ry,
+    phi,
     start,
     end,
   }
 }
 
-export function centerToMatrix(
-  cx : number = 0,
-  cy : number = 0,
-  rx : number = 0,
-  ry : number = 0,
-  phi : number = 0,
-) : MatrixT {
-  return mat(
-    rx * Math.cos(phi), rx * Math.sin(phi), 0, 0,
-    -ry * Math.sin(phi), ry * Math.cos(phi), 0, 0,
-    0, 0, 1, 0,
-    cx, cy, 0, 1,
-  )
-}
-
-export function matrixToImplicit(
-  matrix : MatrixT,
-) : Array<number> {
-  const m : MatrixT = inverse(matrix)
-
-  const A : number = (m[0] ** 2) + (m[4] ** 2)
-  const B : number = 2 * ((m[0] * m[1]) + (m[4] * m[5]))
-  const C : number = (m[1] ** 2) + (m[5] ** 2)
-  const D : number = 2 * ((m[0] * m[3]) + (m[4] * m[7]))
-  const E : number = 2 * ((m[1] * m[3]) + (m[5] * m[7]))
-  const F : number = (m[3] ** 2) + (m[7] ** 2) - 1
-
-  return [A, B, C, D, E, F]
-}
-
-export function implicitToEllipse(
-  A : number,
-  B : number,
-  C : number,
-  D : number,
-  E : number,
-  F : number,
-) : EllipseParameterizationT {
-  const d : number = (B ** 2) - (4 * A * C)
-
-  if (d >= 0 || A === 0 || C === 0 || A * C < 0) {
-    return {
-      cx: 0,
-      cy: 0,
-      rx: 0,
-      ry: 0,
-      phi: 0,
-    }
-  }
-
-  const cx : number = ((2 * C * D) - (B * E)) / d
-  const cy : number = ((2 * A * E) - (B * D)) / d
-  const phi : number = B === 0 ?
-    0 :
-    B !== 0 && A === C ?
-      Math.PI / 4 :
-      Math.atan(B / (A - C)) / 2
-
-  const K : number = Math.sqrt(1 + ((B / (A - C)) ** 2))
-  const _A : number = B === 0 ?
-    A :
-    B !== 0 && A === C ?
-      A + (B / 2) :
-      (A + C + (K * (A - C))) / 2
-  const _C : number = B === 0 ?
-    C :
-    B !== 0 && A === C ?
-      A - (B / 2) :
-      (A + C - (K * (A - C))) / 2
-
-  const rx : number = 1 / Math.sqrt(_A)
-  const ry : number = 1 / Math.sqrt(_C)
+export function centerToEndpoint({
+  cx = 0,
+  cy = 0,
+  rx = 0,
+  ry = 0,
+  phi = 0,
+  start = 0,
+  end = 0,
+} : CenterParameterizationT) : EndpointParameterizationT {
+  const x1 : number = cx +
+    (rx * Math.cos(start) * Math.cos(phi))
+    - (ry * Math.sin(start) * Math.sin(phi))
+  const y1 : number = cy
+    + (ry * Math.sin(start) * Math.cos(phi))
+    + (rx * Math.cos(start) * Math.sin(phi))
+  const x2 : number = cx
+    + (rx * Math.cos(end) * Math.cos(phi))
+    - (ry * Math.sin(end) * Math.sin(phi))
+  const y2 : number = cy
+    + (ry * Math.sin(end) * Math.cos(phi))
+    + (rx * Math.cos(end) * Math.sin(phi))
+  const large : 0 | 1 = Math.abs(end - start) > Math.PI ? 1 : 0
+  const sweep : 0 | 1 = end - start > 0 ? 1 : 0
 
   return {
-    cx,
-    cy,
+    x1,
+    y1,
     rx,
     ry,
     phi,
+    large,
+    sweep,
+    x2,
+    y2,
   }
 }
 
-export function foci(
-  cx : number = 0,
-  cy : number = 0,
-  rx : number = 0,
-  ry : number = 0,
-  phi : number = 0,
-) : [CoordsT, CoordsT] {
+export function transformArc({
+  x1 = 0,
+  y1 = 0,
+  rx = 0,
+  ry = 0,
+  phi = 0,
+  large = 0,
+  sweep = 0,
+  x2 = x1,
+  y2 = y1,
+} : EndpointParameterizationT) : Function {
+  const endpoint : EndpointParameterizationT = {
+    x1, y1,
+    rx, ry, phi, large, sweep,
+    x2, y2,
+  }
+
+  return (
+    matrix : MatrixT,
+  ) : EndpointParameterizationT => {
+    const d : number = det(matrix)
+    const m : MatrixT = multiply(matrix, mat(
+      rx * Math.cos(phi), rx * Math.sin(phi), 0, 0,
+      -ry * Math.sin(phi), ry * Math.cos(phi), 0, 0,
+      0, 0, 1, 0,
+      0, 0, 0, 1,
+    ))
+
+    const A : number = (m[0] ** 2) + (m[4] ** 2)
+    const B : number = 2 * ((m[0] * m[1]) + (m[4] * m[5]))
+    const C : number = (m[1] ** 2) + (m[5] ** 2)
+    const AC : number = A - C
+
+    if (B === 0) {
+      endpoint.rx = AC <= 0 ? Math.sqrt(C) : Math.sqrt(A)
+      endpoint.ry = AC <= 0 ? Math.sqrt(A) : Math.sqrt(C)
+      endpoint.phi = 0
+    } else if (AC === 0) {
+      endpoint.rx = Math.sqrt(A - (B / 2))
+      endpoint.ry = Math.sqrt(A + (B / 2))
+      endpoint.phi = Math.PI / 4
+    } else {
+      const K : number = Math.sqrt(1 + ((B / AC) ** 2))
+      const _A : number = (A + C + (K * AC)) / 2
+      const _C : number = (A + C - (K * AC)) / 2
+
+      endpoint.rx = AC <= 0 ? Math.sqrt(_C) : Math.sqrt(_A)
+      endpoint.ry = AC <= 0 ? Math.sqrt(_A) : Math.sqrt(_C)
+      endpoint.phi = Math.atan2(-B, AC) / 2
+    }
+
+    if (d < 0) {
+      endpoint.sweep = endpoint.sweep === 0 ? 1 : 0
+    }
+
+    return endpoint
+  }
+}
+
+export function foci({
+  cx = 0,
+  cy = 0,
+  rx = 0,
+  ry = 0,
+  phi = 0,
+} : CenterParameterizationT) : [CoordsT, CoordsT] {
   const major : number = Math.max(rx, ry)
   const minor : number = Math.min(rx, ry)
   const f : number = Math.sqrt(Math.abs((major ** 2) - (minor ** 2)))
   const theta : number = major === rx ? phi : phi + (Math.PI / 2)
 
-  return [
-    {
-      x: cx - (f * Math.cos(theta)),
-      y: cy - (f * Math.sin(theta)),
-    },
-    {
-      x: cx + (f * Math.cos(theta)),
-      y: cy + (f * Math.sin(theta)),
-    },
-  ]
+  const f1 : CoordsT = {
+    x: cx - (f * Math.cos(theta)),
+    y: cy - (f * Math.sin(theta)),
+  }
+
+  const f2 : CoordsT = {
+    x: cx + (f * Math.cos(theta)),
+    y: cy + (f * Math.sin(theta)),
+  }
+
+  return [f1, f2]
 }
 
-export function correctRadii(
-  x1 : number = 0,
-  y1 : number = 0,
-  rx : number = 0,
-  ry : number = 0,
-  phi : number = 0,
-  x2 : number = 0,
-  y2 : number = 0,
-) : RadiiT {
+export function correctRadii({
+  x1 = 0,
+  y1 = 0,
+  rx = 0,
+  ry = 0,
+  phi = 0,
+  x2 = 0,
+  y2 = 0,
+} : EndpointParameterizationT) : RadiiT {
   if (rx === 0 || ry === 0) {
     return { rx, ry }
   }

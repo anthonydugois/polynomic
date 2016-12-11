@@ -3,9 +3,7 @@ import {
   flag,
   centerToEndpoint,
   endpointToCenter,
-  centerToMatrix,
-  matrixToImplicit,
-  implicitToEllipse,
+  transformArc,
   foci,
 } from './index'
 
@@ -40,76 +38,65 @@ test('should normalize a number to have the flag 1', () => {
   expect(test).toBe(expected)
 })
 
-test('should convert a center parameterization into a matrix', () => {
-  const center = endpointToCenter(0, 0, 50, 100, 3 * Math.PI / 4, 1, 0, 100, 0)
+test('should transform an endpoint parameterization', () => {
+  const test = transformArc({
+    x1: 0,
+    y1: 0,
+    rx: 100,
+    ry: 50,
+    phi: Math.PI / 4,
+    large: 1,
+    sweep: 0,
+    x2: 100,
+    y2: 0,
+  })(scale(2, 1)())
 
-  const test = centerToMatrix(center.cx, center.cy, 50, 100, 3 * Math.PI / 4)
-  const expected = mat(
-    50 * Math.cos(3 * Math.PI / 4), 50 * Math.sin(3 * Math.PI / 4), 0, 0,
-    -100 * Math.sin(3 * Math.PI / 4), 100 * Math.cos(3 * Math.PI / 4), 0, 0,
-    0, 0, 1, 0,
-    center.cx, center.cy, 0, 1,
-  )
-
-  expect(test).toEqual(expected)
-})
-
-test('should convert a matrix into an implicit ellipse equation', () => {
-  const center = endpointToCenter(0, 0, 50, 100, 3 * Math.PI / 4, 1, 0, 100, 0)
-
-  const test = matrixToImplicit(mat(
-    50 * Math.cos(3 * Math.PI / 4), 50 * Math.sin(3 * Math.PI / 4), 0, 0,
-    -100 * Math.sin(3 * Math.PI / 4), 100 * Math.cos(3 * Math.PI / 4), 0, 0,
-    0, 0, 1, 0,
-    center.cx, center.cy, 0, 1,
-  ))
-  const expected = [
-    0.00025,
-    -0.0003000000000000001,
-    0.0002500000000000001,
-    -0.02500000000000001,
-    -0.0004919333848296664,
-    4.440892098500626e-16,
-  ]
-
-  expect(test).toEqual(expected)
-})
-
-test('should convert an implicit parameterization into an ellipse parameterization', () => {
-  const center = endpointToCenter(0, 0, 100, 50, Math.PI / 4, 1, 0, 100, 0)
-  const matrix = centerToMatrix(center.cx, center.cy, 100, 50, Math.PI / 4)
-  const implicit = matrixToImplicit(matrix)
-  const ellipse = implicitToEllipse(...implicit)
-
-  console.log(center)
-  console.log(matrix)
-  console.log(implicit)
-  console.log(ellipse)
-
-  // rx = 60.5
-  // ry = 164.9
-  // theta = 160.7
+  console.log(test)
 })
 
 test('should convert a center parameterization into a endpoint parameterization', () => {
-  const test = centerToEndpoint(150, 125, 50, 100, Math.PI / 4, 2.9764439761751667, -0.16514867741462674)
+  const test = centerToEndpoint({
+    cx: 150,
+    cy: 125,
+    rx: 50,
+    ry: 100,
+    phi: Math.PI / 4,
+    start: 2.9764439761751667,
+    end: -0.16514867741462674,
+  })
   const expected = {
     x1: 103.50094450247231,
     y1: 101.75047225123612,
-    x2: 196.4990554975277,
-    y2: 148.24952774876385,
+    rx: 50,
+    ry: 100,
+    phi: Math.PI / 4,
     large: 1,
     sweep: 0,
+    x2: 196.4990554975277,
+    y2: 148.24952774876385,
   }
 
   expect(test).toEqual(expected)
 })
 
 test('should convert a endpoint parameterization into a center parameterization', () => {
-  const test = endpointToCenter(100, 100, 50, 100, Math.PI / 4, 1, 0, 200, 150)
+  const test = endpointToCenter({
+    x1: 100,
+    y1: 100,
+    rx: 50,
+    ry: 100,
+    phi: Math.PI / 4,
+    large: 1,
+    sweep: 0,
+    x2: 200,
+    y2: 150,
+  })
   const expected = {
     cx: 150,
     cy: 125.00000000000001,
+    rx: 50,
+    ry: 100,
+    phi: Math.PI / 4,
     start: 2.9764439761751667,
     end: -0.16514867741462674,
   }

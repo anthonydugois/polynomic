@@ -3,6 +3,7 @@
 import type {
   CoordsT,
   RadiiT,
+  EndpointParameterizationT,
   CenterParameterizationT,
 } from '../../types'
 
@@ -89,12 +90,14 @@ export function arc(
     return linear(x1, y1, x2, y2)
   }
 
-  const r : RadiiT = correctRadii(x1, y1, rx, ry, phi, x2, y2)
-  const center : CenterParameterizationT = endpointToCenter(
+  const endpoint : EndpointParameterizationT = {
     x1, y1,
     rx, ry, phi, large, sweep,
     x2, y2,
-  )
+  }
+
+  const r : RadiiT = correctRadii(endpoint)
+  const center : CenterParameterizationT = endpointToCenter(endpoint)
 
   return function arc(
     t : number,
