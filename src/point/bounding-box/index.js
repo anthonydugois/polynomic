@@ -4,13 +4,21 @@ import type {
   CoordsT,
   PointT,
   RectT,
+  EndpointParameterizationT,
 } from '../../types'
 
 import { degToRad } from '../../utils/angle'
 import { isQ, isT, isC, isS, isA } from '../is'
 import { point } from '../../primitives/point'
 import { rect } from '../../primitives/rect'
-import * as derivative from '../../math/derivative'
+import { endpointParameterization } from '../../primitives/endpoint-parameterization'
+
+import {
+  linearExtremums,
+  quadraticExtremums,
+  cubicExtremums,
+  arcExtremums,
+} from '../../math/derivative'
 
 export function boundingBox(
   current : PointT,
@@ -37,7 +45,7 @@ export function linearBoundingBox(
   current : PointT,
   previous : PointT = point(),
 ) : RectT {
-  return extremumsToBoundingBox(...derivative.linearExtremums(
+  return extremumsToBoundingBox(...linearExtremums(
     previous.x,
     previous.y,
     current.x,
@@ -49,7 +57,7 @@ export function quadraticBoundingBox(
   current : PointT,
   previous : PointT = point(),
 ) : RectT {
-  return extremumsToBoundingBox(...derivative.quadraticExtremums(
+  return extremumsToBoundingBox(...quadraticExtremums(
     previous.x,
     previous.y,
     current.parameters.x1,
@@ -63,7 +71,7 @@ export function cubicBoundingBox(
   current : PointT,
   previous : PointT = point(),
 ) : RectT {
-  return extremumsToBoundingBox(...derivative.cubicExtremums(
+  return extremumsToBoundingBox(...cubicExtremums(
     previous.x,
     previous.y,
     current.parameters.x1,
@@ -79,7 +87,7 @@ export function arcBoundingBox(
   current : PointT,
   previous : PointT = point(),
 ) : RectT {
-  return extremumsToBoundingBox(...derivative.arcExtremums(
+  return extremumsToBoundingBox(...arcExtremums(endpointParameterization(
     previous.x,
     previous.y,
     current.parameters.rx,
@@ -89,7 +97,7 @@ export function arcBoundingBox(
     current.parameters.sweep,
     current.x,
     current.y,
-  ))
+  )))
 }
 
 function extremumsToBoundingBox(

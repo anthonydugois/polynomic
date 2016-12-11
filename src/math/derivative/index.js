@@ -63,35 +63,21 @@ export function cubicExtremums(
 }
 
 export function arcExtremums(
-  x1 : number,
-  y1 : number,
-  rx : number = 0,
-  ry : number = 0,
-  phi : number = 0,
-  large : 0 | 1 = 0,
-  sweep : 0 | 1 = 0,
-  x2 : number = x1,
-  y2 : number = y1,
+  e : EndpointParameterizationT,
 ) : Array<CoordsT> {
-  const endpoint : EndpointParameterizationT = {
-    x1, y1,
-    rx, ry, phi, large, sweep,
-    x2, y2,
-  }
+  const c : CenterParameterizationT = endpointToCenter(e)
+  const angleX : Function = dArcComponentX(e.rx, e.ry, e.phi)
+  const angleY : Function = dArcComponentY(e.rx, e.ry, e.phi)
 
-  const center : CenterParameterizationT = endpointToCenter(endpoint)
-  const angleX : Function = dArcComponentX(rx, ry, phi)
-  const angleY : Function = dArcComponentY(rx, ry, phi)
-
-  return extremums(parametric.arc(x1, y1, rx, ry, phi, large, sweep, x2, y2))(
+  return extremums(parametric.arc(e))(
     0,
     1,
-    normalize(angleX(0), center.start, center.end),
-    normalize(angleX(1), center.start, center.end),
-    normalize(angleX(-1), center.start, center.end),
-    normalize(angleY(0), center.start, center.end),
-    normalize(angleY(1), center.start, center.end),
-    normalize(angleY(-1), center.start, center.end),
+    normalize(angleX(0), c.start, c.end),
+    normalize(angleX(1), c.start, c.end),
+    normalize(angleX(-1), c.start, c.end),
+    normalize(angleY(0), c.start, c.end),
+    normalize(angleY(1), c.start, c.end),
+    normalize(angleY(-1), c.start, c.end),
   )
 }
 

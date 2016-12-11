@@ -2,7 +2,6 @@
 
 import type {
   CoordsT,
-  RadiiT,
   EndpointParameterizationT,
   CenterParameterizationT,
 } from '../../types'
@@ -76,41 +75,27 @@ export function cubic(
 }
 
 export function arc(
-  x1 : number,
-  y1 : number,
-  rx : number = 0,
-  ry : number = 0,
-  phi : number = 0,
-  large : 0 | 1 = 0,
-  sweep : 0 | 1 = 0,
-  x2 : number = x1,
-  y2 : number = y1,
+  e : EndpointParameterizationT,
 ) : Function {
-  if (rx === 0 || ry === 0) {
-    return linear(x1, y1, x2, y2)
+  if (e.rx === 0 || e.ry === 0) {
+    return linear(e.x1, e.y1, e.x2, e.y2)
   }
 
-  const endpoint : EndpointParameterizationT = {
-    x1, y1,
-    rx, ry, phi, large, sweep,
-    x2, y2,
-  }
-
-  const r : RadiiT = correctRadii(endpoint)
-  const center : CenterParameterizationT = endpointToCenter(endpoint)
+  const [rx, ry] : [number, number] = correctRadii(e)
+  const c : CenterParameterizationT = endpointToCenter(e)
 
   return function arc(
     t : number,
   ) : CoordsT {
-    const theta : number = center.start + (t * (center.end - center.start))
+    const theta : number = c.start + (t * (c.end - c.start))
 
     return {
-      x: center.cx
-        + (r.rx * Math.cos(theta) * Math.cos(phi))
-        - (r.ry * Math.sin(theta) * Math.sin(phi)),
-      y: center.cy
-        + (r.rx * Math.cos(theta) * Math.sin(phi))
-        + (r.ry * Math.sin(theta) * Math.cos(phi)),
+      x: c.cx
+        + (rx * Math.cos(theta) * Math.cos(e.phi))
+        - (ry * Math.sin(theta) * Math.sin(e.phi)),
+      y: c.cy
+        + (rx * Math.cos(theta) * Math.sin(e.phi))
+        + (ry * Math.sin(theta) * Math.cos(e.phi)),
     }
   }
 }

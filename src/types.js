@@ -12,12 +12,6 @@ export type AbsoluteCoordsT = {
   z : number,
 }
 
-export type AnglesT = {
-  start : number,
-  end : number,
-  delta : number,
-}
-
 export type MatrixT = [
   number, number, number, number,
   number, number, number, number,
@@ -130,17 +124,4 @@ export type EndpointParameterizationT = {
   sweep : 0 | 1,
   x2 : number,
   y2 : number,
-}
-
-export type RadiiT = {
-  rx : number,
-  ry : number,
-}
-
-export type ArcParamsT = {
-  rx : number,
-  ry : number,
-  phi : number,
-  large : 0 | 1,
-  sweep : 0 | 1,
 }

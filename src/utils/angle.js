@@ -1,16 +1,16 @@
 // @flow
 
 export function angle(
-  alpha: number | string = 0,
-): number {
+  alpha : number | string = 0,
+) : number {
   return typeof alpha === 'string' ?
     convertAngle(alpha) :
     alpha
 }
 
 function convertAngle(
-  alpha: string,
-): number {
+  alpha : string,
+) : number {
   alpha = alpha.trim()
 
   switch (true) {
@@ -32,26 +32,32 @@ function convertAngle(
 }
 
 export function parseAngle(
-  alpha: string,
-  unit: string = 'deg',
-): number {
+  alpha : string,
+  unit : string = 'deg',
+) : number {
   return parseFloat(alpha.replace(unit, ''))
 }
 
 export function degToRad(
-  deg: number = 0,
-): number {
+  deg : number = 0,
+) : number {
   return (Math.PI / 180) * deg
 }
 
 export function gradToRad(
-  grad: number = 0,
-): number {
+  grad : number = 0,
+) : number {
   return (Math.PI / 200) * grad
 }
 
 export function turnToRad(
-  turn: number = 0,
-): number {
+  turn : number = 0,
+) : number {
   return (2 * Math.PI) * turn
+}
+
+export function radToDeg(
+  rad : number = 0,
+) : number {
+  return (180 / Math.PI) * rad
 }

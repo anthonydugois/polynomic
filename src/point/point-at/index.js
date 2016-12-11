@@ -9,6 +9,7 @@ import {
   arc,
 } from '../../math/parametric'
 
+import { endpointParameterization } from '../../primitives/endpoint-parameterization'
 import { isL, isH, isV, isQ, isT, isC, isS, isA } from '../is'
 import { degToRad } from '../../utils/angle'
 
@@ -102,7 +103,7 @@ export function arcPointAt(
   previous : PointT,
   current : PointT,
 ) : Function {
-  const f : Function = arc(
+  const f : Function = arc(endpointParameterization(
     previous.x,
     previous.y,
     current.parameters.rx,
@@ -112,7 +113,7 @@ export function arcPointAt(
     current.parameters.sweep,
     current.x,
     current.y,
-  )
+  ))
 
   return function arcPointAt(
     t : number,

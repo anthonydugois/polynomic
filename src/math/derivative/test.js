@@ -5,6 +5,8 @@ import {
   arcExtremums,
 } from './index'
 
+import { endpointParameterization } from '../../primitives/endpoint-parameterization'
+
 test('should return the extremums of the line', () => {
   const test = linearExtremums(0, 0, 100, 100)
   const expected = [
@@ -39,7 +41,7 @@ test('should return the extremums of the cubic curve', () => {
 })
 
 test('should return the extremums of the arc', () => {
-  const test = arcExtremums(100, 100, 50, 100, 4.06661715715, 1, 0, 200, 50)
+  const test = arcExtremums(endpointParameterization(100, 100, 50, 100, 4.06661715715, 1, 0, 200, 50))
   const expected = [
     { x: 100, y: 100 },
     { x: 200, y: 49.99999999999999 },

@@ -5,7 +5,6 @@ import type {
   VectorT,
   CoordsT,
   AbsoluteCoordsT,
-  RadiiT,
   PointT,
   PointCodeT,
   PointParamsT,

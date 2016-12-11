@@ -4,11 +4,13 @@ import type {
   PointT,
   PointParamsT,
   PointCodeT,
+  EndpointParameterizationT,
 } from '../types'
 
 import * as codes from './codes'
 import { isQ, isT, isC, isS } from './is'
-import { mod360, flag } from '../math/arc'
+import { endpointParameterization } from '../primitives/endpoint-parameterization'
+import { degToRad, radToDeg } from '../utils/angle'
 
 export const defaultPoint: PointT = point('', 0, 0)
 
@@ -292,12 +294,18 @@ export function a(
   return function a(
     prev: PointT = defaultPoint,
   ): PointT {
-    return point(codes.a, prev.x + dx, prev.y + dy, {
-      rx: Math.abs(rx),
-      ry: Math.abs(ry),
-      rotation: mod360(rotation),
-      large: flag(large),
-      sweep: flag(sweep),
+    const e : EndpointParameterizationT = endpointParameterization(
+      prev.x, prev.y,
+      rx, ry, degToRad(rotation), large, sweep,
+      prev.x + dx, prev.y + dy,
+    )
+
+    return point(codes.a, e.x2, e.y2, {
+      rx: e.rx,
+      ry: e.ry,
+      rotation: radToDeg(e.phi),
+      large: e.large,
+      sweep: e.sweep,
     })
   }
 }
@@ -311,13 +319,21 @@ export function A(
   x: number,
   y: number,
 ): Function {
-  return function A(): PointT {
-    return point(codes.A, x, y, {
-      rx: Math.abs(rx),
-      ry: Math.abs(ry),
-      rotation: mod360(rotation),
-      large: flag(large),
-      sweep: flag(sweep),
+  return function A(
+    prev : PointT = defaultPoint,
+  ): PointT {
+    const e : EndpointParameterizationT = endpointParameterization(
+      prev.x, prev.y,
+      rx, ry, degToRad(rotation), large, sweep,
+      x, y,
+    )
+
+    return point(codes.A, e.x2, e.y2, {
+      rx: e.rx,
+      ry: e.ry,
+      rotation: radToDeg(e.phi),
+      large: e.large,
+      sweep: e.sweep,
     })
   }
 }
