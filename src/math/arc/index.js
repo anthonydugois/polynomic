@@ -7,8 +7,7 @@ import type {
   EndpointParameterizationT,
 } from '../../types'
 
-import { centerParameterization } from '../../primitives/center-parameterization'
-import { endpointParameterization } from '../../primitives/endpoint-parameterization'
+import { endpoint, center } from '../../primitives/arc'
 import { mat, det, multiply } from '../matrix'
 
 export function endpointToCenter(
@@ -51,7 +50,7 @@ export function endpointToCenter(
     end += 2 * Math.PI
   }
 
-  return centerParameterization(cx, cy, e.rx, e.ry, e.phi, start, end)
+  return center(cx, cy, e.rx, e.ry, e.phi, start, end)
 }
 
 export function centerToEndpoint(
@@ -73,7 +72,7 @@ export function centerToEndpoint(
   const large : number = Math.abs(c.end - c.start) > Math.PI ? 1 : 0
   const sweep : number = c.end - c.start > 0 ? 1 : 0
 
-  return endpointParameterization(x1, y1, c.rx, c.ry, c.phi, large, sweep, x2, y2)
+  return endpoint(x1, y1, c.rx, c.ry, c.phi, large, sweep, x2, y2)
 }
 
 export function transformArc(

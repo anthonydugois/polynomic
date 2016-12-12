@@ -9,7 +9,7 @@ import type {
 
 import * as codes from './codes'
 import { isQ, isT, isC, isS } from './is'
-import { endpointParameterization } from '../primitives/endpoint-parameterization'
+import { endpoint } from '../primitives/arc'
 import { degToRad, radToDeg } from '../utils/angle'
 
 export const defaultPoint: PointT = point('', 0, 0)
@@ -294,7 +294,7 @@ export function a(
   return function a(
     prev: PointT = defaultPoint,
   ): PointT {
-    const e : EndpointParameterizationT = endpointParameterization(
+    const e : EndpointParameterizationT = endpoint(
       prev.x, prev.y,
       rx, ry, degToRad(rotation), large, sweep,
       prev.x + dx, prev.y + dy,
@@ -322,7 +322,7 @@ export function A(
   return function A(
     prev : PointT = defaultPoint,
   ): PointT {
-    const e : EndpointParameterizationT = endpointParameterization(
+    const e : EndpointParameterizationT = endpoint(
       prev.x, prev.y,
       rx, ry, degToRad(rotation), large, sweep,
       x, y,

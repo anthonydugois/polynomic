@@ -20,14 +20,18 @@ import {
 } from '../math/matrix'
 
 import { vec } from '../math/vector'
+import { transformArc } from '../math/arc'
 
 import { rect } from '../primitives/rect'
+import { endpoint } from '../primitives/arc'
+
 import { boundingBox } from '../properties/bounding-box'
 import { translate3d } from './translate'
 import { point, defaultPoint } from '../point'
 import { isH, isV, isRelative } from '../point/is'
+
 import { absoluteCoords } from '../utils/absolute'
-import { degToRad } from '../utils/angle'
+import { degToRad, radToDeg } from '../utils/angle'
 
 export function transformOptions(
   options : {} = {},
@@ -171,7 +175,26 @@ export function applyMatrix(
           && typeof current.parameters.rotation !== 'undefined'
           && typeof current.parameters.large !== 'undefined'
           && typeof current.parameters.sweep !== 'undefined'
-        ) {}
+        ) {
+          const [rx, ry, phi] : [number, number, number] = transformArc(
+            endpoint(
+              path[index - 1].x,
+              path[index - 1].y,
+              current.parameters.rx,
+              current.parameters.ry,
+              degToRad(current.parameters.rotation),
+              current.parameters.large,
+              current.parameters.sweep,
+              current.x,
+              current.y,
+            ),
+            matrix,
+          )
+
+          parameters.rx = rx
+          parameters.ry = ry
+          parameters.rotation = radToDeg(phi)
+        }
 
         acc.push(point(code, x, y, {
           ...current.parameters,

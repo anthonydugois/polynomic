@@ -12,10 +12,7 @@ import { isEqual } from '../path/is-equal'
 test('should apply the transform on the arc', () => {
   const path = parse('M50 0A100 50 45 1 0 150 0')
 
-  const test = transform(scaleX(2))(
-    path,
-    { transformOrigin: { x: 'center', y: 'center' }},
-  )
+  const test = transform(scaleX(2))(path)
 
   console.log(test)
 })

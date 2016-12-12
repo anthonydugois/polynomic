@@ -11,7 +11,7 @@ import { degToRad } from '../../utils/angle'
 import { isQ, isT, isC, isS, isA } from '../is'
 import { point } from '../../primitives/point'
 import { rect } from '../../primitives/rect'
-import { endpointParameterization } from '../../primitives/endpoint-parameterization'
+import { endpoint } from '../../primitives/arc'
 
 import {
   linearExtremums,
@@ -87,7 +87,7 @@ export function arcBoundingBox(
   current : PointT,
   previous : PointT = point(),
 ) : RectT {
-  return extremumsToBoundingBox(...arcExtremums(endpointParameterization(
+  return extremumsToBoundingBox(...arcExtremums(endpoint(
     previous.x,
     previous.y,
     current.parameters.rx,
