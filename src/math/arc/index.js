@@ -9,7 +9,7 @@ import type {
 
 import { arc } from '../../primitives/arc'
 import { ellipse } from '../../primitives/ellipse'
-import { mat, det, multiply } from '../matrix'
+import { mat, det, inverse, multiply } from '../matrix'
 
 export function arcToEllipse(
   a : ArcT,
@@ -83,15 +83,16 @@ export function ellipseToArc(
 export function transformArc(
   a : ArcT,
   matrix : MatrixT,
-) : [number, number, number] {
-  const d : number = det(matrix)
-  const m : MatrixT = multiply(matrix, mat(
-    a.rx * Math.cos(a.phi), a.rx * Math.sin(a.phi), 0, 0,
-    -a.ry * Math.sin(a.phi), a.ry * Math.cos(a.phi), 0, 0,
+) : Array<number> {
+  const e : EllipseT = arcToEllipse(a)
+  const eMatrix : MatrixT = mat(
+    e.rx * Math.cos(e.phi), e.rx * Math.sin(e.phi), 0, 0,
+    -e.ry * Math.sin(e.phi), e.ry * Math.cos(e.phi), 0, 0,
     0, 0, 1, 0,
-    0, 0, 0, 1,
-  ))
+    e.cx, e.cy, 0, 1,
+  )
 
+  const m : MatrixT = inverse(multiply(matrix, eMatrix))
   const A : number = (m[0] ** 2) + (m[4] ** 2)
   const B : number = 2 * ((m[0] * m[1]) + (m[4] * m[5]))
   const C : number = (m[1] ** 2) + (m[5] ** 2)
@@ -99,16 +100,16 @@ export function transformArc(
 
   if (B === 0) {
     return [
-      AC <= 0 ? Math.sqrt(C) : Math.sqrt(A),
-      AC <= 0 ? Math.sqrt(A) : Math.sqrt(C),
+      1 / Math.sqrt(A),
+      1 / Math.sqrt(C),
       0,
     ]
   }
 
   if (AC === 0) {
     return [
-      Math.sqrt(A - (B / 2)),
-      Math.sqrt(A + (B / 2)),
+      1 / Math.sqrt(A + (B / 2)),
+      1 / Math.sqrt(A - (B / 2)),
       Math.PI / 4,
     ]
   }
@@ -118,9 +119,9 @@ export function transformArc(
   const _C : number = (A + C - (K * AC)) / 2
 
   return [
-    AC <= 0 ? Math.sqrt(_C) : Math.sqrt(_A),
-    AC <= 0 ? Math.sqrt(_A) : Math.sqrt(_C),
-    Math.atan2(-B, AC) / 2,
+    1 / Math.sqrt(_A),
+    1 / Math.sqrt(_C),
+    Math.atan(B / AC) / 2,
   ]
 }
 
