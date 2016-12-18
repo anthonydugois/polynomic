@@ -4,20 +4,20 @@ import type {
   CoordsT,
   PointT,
   RectT,
-  EndpointParameterizationT,
+  ArcT,
 } from '../../types'
 
 import { degToRad } from '../../utils/angle'
 import { isQ, isT, isC, isS, isA } from '../is'
 import { point } from '../../primitives/point'
 import { rect } from '../../primitives/rect'
-import { endpoint } from '../../primitives/arc'
+import { arc } from '../../primitives/arc'
 
 import {
   linearExtremums,
   quadraticExtremums,
   cubicExtremums,
-  arcExtremums,
+  ellipticExtremums,
 } from '../../math/derivative'
 
 export function boundingBox(
@@ -87,7 +87,7 @@ export function arcBoundingBox(
   current : PointT,
   previous : PointT = point(),
 ) : RectT {
-  return extremumsToBoundingBox(...arcExtremums(endpoint(
+  return extremumsToBoundingBox(...ellipticExtremums(arc(
     previous.x,
     previous.y,
     current.parameters.rx,

@@ -4,12 +4,12 @@ import type {
   PointT,
   PointParamsT,
   PointCodeT,
-  EndpointParameterizationT,
+  ArcT,
 } from '../types'
 
 import * as codes from './codes'
 import { isQ, isT, isC, isS } from './is'
-import { endpoint } from '../primitives/arc'
+import { arc } from '../primitives/arc'
 import { degToRad, radToDeg } from '../utils/angle'
 
 export const defaultPoint: PointT = point('', 0, 0)
@@ -294,7 +294,7 @@ export function a(
   return function a(
     prev: PointT = defaultPoint,
   ): PointT {
-    const e : EndpointParameterizationT = endpoint(
+    const e : ArcT = arc(
       prev.x, prev.y,
       rx, ry, degToRad(rotation), large, sweep,
       prev.x + dx, prev.y + dy,
@@ -322,7 +322,7 @@ export function A(
   return function A(
     prev : PointT = defaultPoint,
   ): PointT {
-    const e : EndpointParameterizationT = endpoint(
+    const e : ArcT = arc(
       prev.x, prev.y,
       rx, ry, degToRad(rotation), large, sweep,
       x, y,

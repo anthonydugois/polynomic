@@ -6,25 +6,25 @@ import { path } from '../../path'
 import { M, A, Z } from '../../point'
 
 export function fromEllipse(
-  ellipse: EllipseT | HTMLElement,
-): PathT {
+  ellipse : EllipseT | HTMLElement,
+) : PathT {
   if (ellipse instanceof HTMLElement && ellipse.nodeName.toLowerCase() !== 'ellipse') {
     throw new Error('The element you provided in the `fromEllipse` function should be a valid SVG ellipse node.')
   }
 
-  const cx: number = ellipse instanceof HTMLElement ?
+  const cx : number = ellipse instanceof HTMLElement ?
     parseFloat(ellipse.getAttribute('cx')) :
     ellipse.cx
 
-  const cy: number = ellipse instanceof HTMLElement ?
+  const cy : number = ellipse instanceof HTMLElement ?
     parseFloat(ellipse.getAttribute('cy')) :
     ellipse.cy
 
-  const rx: number = ellipse instanceof HTMLElement ?
+  const rx : number = ellipse instanceof HTMLElement ?
     parseFloat(ellipse.getAttribute('rx')) :
     ellipse.rx
 
-  const ry: number = ellipse instanceof HTMLElement ?
+  const ry : number = ellipse instanceof HTMLElement ?
     parseFloat(ellipse.getAttribute('ry')) :
     ellipse.ry
 

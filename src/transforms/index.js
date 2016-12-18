@@ -23,7 +23,7 @@ import { vec } from '../math/vector'
 import { transformArc } from '../math/arc'
 
 import { rect } from '../primitives/rect'
-import { endpoint } from '../primitives/arc'
+import { arc } from '../primitives/arc'
 
 import { boundingBox } from '../properties/bounding-box'
 import { translate3d } from './translate'
@@ -177,7 +177,7 @@ export function applyMatrix(
           && typeof current.parameters.sweep !== 'undefined'
         ) {
           const [rx, ry, phi] : [number, number, number] = transformArc(
-            endpoint(
+            arc(
               path[index - 1].x,
               path[index - 1].y,
               current.parameters.rx,

@@ -2,10 +2,10 @@ import {
   linearExtremums,
   quadraticExtremums,
   cubicExtremums,
-  arcExtremums,
+  ellipticExtremums,
 } from './index'
 
-import { endpoint } from '../../primitives/arc'
+import { arc } from '../../primitives/arc'
 
 test('should return the extremums of the line', () => {
   const test = linearExtremums(0, 0, 100, 100)
@@ -41,7 +41,7 @@ test('should return the extremums of the cubic curve', () => {
 })
 
 test('should return the extremums of the arc', () => {
-  const test = arcExtremums(endpoint(100, 100, 50, 100, 4.06661715715, 1, 0, 200, 50))
+  const test = ellipticExtremums(arc(100, 100, 50, 100, 4.06661715715, 1, 0, 200, 50))
   const expected = [
     { x: 100, y: 100 },
     { x: 200, y: 49.99999999999999 },

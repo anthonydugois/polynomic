@@ -6,41 +6,41 @@ import { path } from '../../path'
 import { M, L, A, Z } from '../../point'
 
 export function fromRect(
-  rect: RectT | HTMLElement,
-): PathT {
+  rect : RectT | HTMLElement,
+) : PathT {
   if (rect instanceof HTMLElement && rect.nodeName.toLowerCase() !== 'rect') {
     throw new Error('The element you provided in the `fromRect` function should be a valid SVG rect node.')
   }
 
-  const x: number = rect instanceof HTMLElement ?
+  const x : number = rect instanceof HTMLElement ?
     parseFloat(rect.getAttribute('x')) :
     rect.x
 
-  const y: number = rect instanceof HTMLElement ?
+  const y : number = rect instanceof HTMLElement ?
     parseFloat(rect.getAttribute('y')) :
     rect.y
 
-  const width: number = rect instanceof HTMLElement ?
+  const width : number = rect instanceof HTMLElement ?
     parseFloat(rect.getAttribute('width')) :
     rect.width
 
-  const height: number = rect instanceof HTMLElement ?
+  const height : number = rect instanceof HTMLElement ?
     parseFloat(rect.getAttribute('height')) :
     rect.height
 
-  const _rx: number = parseFloat(
+  const _rx : number = parseFloat(
     rect instanceof HTMLElement ?
       rect.getAttribute('rx') :
       rect.rx
   )
 
-  const _ry: number = parseFloat(
+  const _ry : number = parseFloat(
     rect instanceof HTMLElement ?
       rect.getAttribute('ry') :
       rect.ry
   )
 
-  const noRadius: boolean = (isNaN(_rx) && isNaN(_ry))
+  const noRadius : boolean = (isNaN(_rx) && isNaN(_ry))
     || _rx === 0
     || _ry === 0
 
@@ -54,8 +54,8 @@ export function fromRect(
     )
   }
 
-  const rx: number = isNaN(_rx) ? _ry : _rx
-  const ry: number = isNaN(_ry) ? _rx : _ry
+  const rx : number = isNaN(_rx) ? _ry : _rx
+  const ry : number = isNaN(_ry) ? _rx : _ry
 
   return path(
     M(x + rx, y),

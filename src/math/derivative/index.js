@@ -2,13 +2,19 @@
 
 import type {
   CoordsT,
-  EndpointParameterizationT,
-  CenterParameterizationT,
+  ArcT,
+  EllipseT,
 } from '../../types'
 
 import { normalize } from '../../utils/normalize'
-import { endpointToCenter } from '../arc'
-import * as parametric from '../parametric'
+import { arcToEllipse } from '../arc'
+
+import {
+  linear,
+  quadratic,
+  cubic,
+  elliptic,
+} from '../parametric'
 
 export function linearExtremums(
   x1 : number,
@@ -16,10 +22,7 @@ export function linearExtremums(
   x2 : number = x1,
   y2 : number = y1,
 ) : Array<CoordsT> {
-  return extremums(parametric.linear(x1, y1, x2, y2))(
-    0,
-    1,
-  )
+  return extremums(linear(x1, y1, x2, y2))(0, 1)
 }
 
 export function quadraticExtremums(
@@ -30,15 +33,10 @@ export function quadraticExtremums(
   x3 : number = x1,
   y3 : number = y1,
 ) : Array<CoordsT> {
-  const tx : number = dQuadraticComponent(x1, x2, x3)
-  const ty : number = dQuadraticComponent(y1, y2, y3)
+  const tx : number = dQuadraticRoot(x1, x2, x3)
+  const ty : number = dQuadraticRoot(y1, y2, y3)
 
-  return extremums(parametric.quadratic(x1, y1, x2, y2, x3, y3))(
-    0,
-    1,
-    tx,
-    ty,
-  )
+  return extremums(quadratic(x1, y1, x2, y2, x3, y3))(0, 1, tx, ty)
 }
 
 export function cubicExtremums(
@@ -51,45 +49,44 @@ export function cubicExtremums(
   x4 : number = x1,
   y4 : number = y1,
 ) : Array<CoordsT> {
-  const tx : Array<number> = dCubicComponent(x1, x2, x3, x4)
-  const ty : Array<number> = dCubicComponent(y1, y2, y3, y4)
+  const tx : Array<number> = dCubicRoots(x1, x2, x3, x4)
+  const ty : Array<number> = dCubicRoots(y1, y2, y3, y4)
 
-  return extremums(parametric.cubic(x1, y1, x2, y2, x3, y3, x4, y4))(
-    0,
-    1,
-    ...tx,
-    ...ty,
-  )
+  return extremums(cubic(x1, y1, x2, y2, x3, y3, x4, y4))(0, 1, ...tx, ...ty)
 }
 
-export function arcExtremums(
-  e : EndpointParameterizationT,
+export function ellipticExtremums(
+  a : ArcT,
 ) : Array<CoordsT> {
-  const c : CenterParameterizationT = endpointToCenter(e)
-  const angleX : Function = dArcComponentX(e.rx, e.ry, e.phi)
-  const angleY : Function = dArcComponentY(e.rx, e.ry, e.phi)
+  const e : EllipseT = arcToEllipse(a)
+  const angleX : Function = dEllipticRootX(a.rx, a.ry, a.phi)
+  const angleY : Function = dEllipticRootY(a.rx, a.ry, a.phi)
 
-  return extremums(parametric.arc(e))(
+  return extremums(elliptic(a))(
     0,
     1,
-    normalize(angleX(0), c.start, c.end),
-    normalize(angleX(1), c.start, c.end),
-    normalize(angleX(-1), c.start, c.end),
-    normalize(angleY(0), c.start, c.end),
-    normalize(angleY(1), c.start, c.end),
-    normalize(angleY(-1), c.start, c.end),
+    normalize(angleX(0), e.start, e.end),
+    normalize(angleX(1), e.start, e.end),
+    normalize(angleX(-1), e.start, e.end),
+    normalize(angleY(0), e.start, e.end),
+    normalize(angleY(1), e.start, e.end),
+    normalize(angleY(-1), e.start, e.end),
   )
 }
 
 function extremums(
   f : Function,
 ) : Function {
-  return (
+  return function extremums(
     ...inputs : Array<number>
-  ) : Array<CoordsT> => inputs.filter((t) => t >= 0 && t <= 1).map((t) => f(t))
+  ) : Array<CoordsT> {
+    return inputs
+      .filter((t) => t >= 0 && t <= 1)
+      .map((t) => f(t))
+  }
 }
 
-function dQuadraticComponent(
+function dQuadraticRoot(
   c1 : number,
   c2 : number = c1,
   c3 : number = c1,
@@ -100,7 +97,7 @@ function dQuadraticComponent(
   return -b / a
 }
 
-function dCubicComponent(
+function dCubicRoots(
   c1 : number,
   c2 : number = c1,
   c3 : number = c1,
@@ -121,22 +118,20 @@ function dCubicComponent(
   ]
 }
 
-function dArcComponentX(
+function dEllipticRootX(
   rx : number = 0,
   ry : number = 0,
   phi : number = 0,
 ) : Function {
   const t : number = Math.atan((-ry * Math.tan(phi)) / rx)
-
   return (n : number = 0) : number => t + (n * Math.PI)
 }
 
-function dArcComponentY(
+function dEllipticRootY(
   rx : number = 0,
   ry : number = 0,
   phi : number = 0,
 ) : Function {
   const t : number = Math.atan(ry / (rx * Math.tan(phi)))
-
   return (n : number = 0) : number => t + (n * Math.PI)
 }

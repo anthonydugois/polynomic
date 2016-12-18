@@ -6,10 +6,10 @@ import {
   linear,
   quadratic,
   cubic,
-  arc,
+  elliptic,
 } from '../../math/parametric'
 
-import { endpoint } from '../../primitives/arc'
+import { arc } from '../../primitives/arc'
 import { isL, isH, isV, isQ, isT, isC, isS, isA } from '../is'
 import { degToRad } from '../../utils/angle'
 
@@ -103,7 +103,7 @@ export function arcPointAt(
   previous : PointT,
   current : PointT,
 ) : Function {
-  const f : Function = arc(endpoint(
+  const f : Function = elliptic(arc(
     previous.x,
     previous.y,
     current.parameters.rx,

@@ -10,25 +10,25 @@ import { fromRect } from './rect'
 import { fromCircle } from './circle'
 import { fromEllipse } from './ellipse'
 
-const parser = {
-  path: fromPath,
-  line: fromLine,
-  polyline: fromPolyline,
-  polygon: fromPolygon,
-  rect: fromRect,
-  circle: fromCircle,
-  ellipse: fromEllipse,
+const _from = {
+  path : fromPath,
+  line : fromLine,
+  polyline : fromPolyline,
+  polygon : fromPolygon,
+  rect : fromRect,
+  circle : fromCircle,
+  ellipse : fromEllipse,
 }
 
 export function from(
-  node: HTMLElement,
-): PathT {
-  const name: string = node.nodeName.toLowerCase()
-  const fn: Function = parser[name]
+  node : HTMLElement,
+) : PathT {
+  const name : string = node.nodeName.toLowerCase()
+  const f : Function = _from[name]
 
-  if (typeof fn === 'undefined') {
+  if (typeof f === 'undefined') {
     throw new Error('The element you provided in the `from` function is not supported.')
   }
 
-  return fn(node)
+  return f(node)
 }

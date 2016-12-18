@@ -102,19 +102,12 @@ export type EllipseT = {
   cy : number,
   rx : number,
   ry : number,
-}
-
-export type CenterParameterizationT = {
-  cx : number,
-  cy : number,
-  rx : number,
-  ry : number,
   phi : number,
   start : number,
   end : number,
 }
 
-export type EndpointParameterizationT = {
+export type ArcT = {
   x1 : number,
   y1 : number,
   rx : number,

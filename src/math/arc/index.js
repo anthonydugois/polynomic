@@ -3,22 +3,27 @@
 import type {
   CoordsT,
   MatrixT,
-  CenterParameterizationT,
-  EndpointParameterizationT,
+  EllipseT,
+  ArcT,
 } from '../../types'
 
-import { endpoint, center } from '../../primitives/arc'
+import { arc } from '../../primitives/arc'
+import { ellipse } from '../../primitives/ellipse'
 import { mat, det, multiply } from '../matrix'
 
-export function endpointToCenter(
-  e : EndpointParameterizationT,
-) : CenterParameterizationT {
-  const [rx, ry] : [number, number] = correctRadii(e)
+export function arcToEllipse(
+  a : ArcT,
+) : EllipseT {
+  const [rx, ry] : [number, number] = correctRadii(a)
 
-  const _x1 : number = ((e.x1 * Math.cos(e.phi)) + (e.y1 * Math.sin(e.phi))) / rx
-  const _y1 : number = ((e.y1 * Math.cos(e.phi)) - (e.x1 * Math.sin(e.phi))) / ry
-  const _x2 : number = ((e.x2 * Math.cos(e.phi)) + (e.y2 * Math.sin(e.phi))) / rx
-  const _y2 : number = ((e.y2 * Math.cos(e.phi)) - (e.x2 * Math.sin(e.phi))) / ry
+  const _x1 : number = ((a.x1 * Math.cos(a.phi))
+    + (a.y1 * Math.sin(a.phi))) / rx
+  const _y1 : number = ((a.y1 * Math.cos(a.phi))
+    - (a.x1 * Math.sin(a.phi))) / ry
+  const _x2 : number = ((a.x2 * Math.cos(a.phi))
+    + (a.y2 * Math.sin(a.phi))) / rx
+  const _y2 : number = ((a.y2 * Math.cos(a.phi))
+    - (a.x2 * Math.sin(a.phi))) / ry
 
   const dx : number = _x1 - _x2
   const dy : number = _y1 - _y2
@@ -31,58 +36,58 @@ export function endpointToCenter(
   const _cx2 : number = xm - (d * dy)
   const _cy2 : number = ym + (d * dx)
 
-  const _cx : number = e.large === e.sweep ? _cx2 : _cx1
-  const _cy : number = e.large === e.sweep ? _cy2 : _cy1
+  const _cx : number = a.large === a.sweep ? _cx2 : _cx1
+  const _cy : number = a.large === a.sweep ? _cy2 : _cy1
 
-  const cx : number = (rx * _cx * Math.cos(e.phi))
-    - (ry * _cy * Math.sin(e.phi))
-  const cy : number = (rx * _cx * Math.sin(e.phi))
-    + (ry * _cy * Math.cos(e.phi))
+  const cx : number = (rx * _cx * Math.cos(a.phi))
+    - (ry * _cy * Math.sin(a.phi))
+  const cy : number = (rx * _cx * Math.sin(a.phi))
+    + (ry * _cy * Math.cos(a.phi))
 
   const start : number = Math.atan2(_y1 - _cy, _x1 - _cx)
   let end : number = Math.atan2(_y2 - _cy, _x2 - _cx)
 
-  if (e.sweep === 0 && end > start) {
+  if (a.sweep === 0 && end > start) {
     end -= 2 * Math.PI
   }
 
-  if (e.sweep === 1 && end < start) {
+  if (a.sweep === 1 && end < start) {
     end += 2 * Math.PI
   }
 
-  return center(cx, cy, e.rx, e.ry, e.phi, start, end)
+  return ellipse(cx, cy, a.rx, a.ry, a.phi, start, end)
 }
 
-export function centerToEndpoint(
-  c : CenterParameterizationT,
-) : EndpointParameterizationT {
-  const x1 : number = c.cx
-    + (c.rx * Math.cos(c.start) * Math.cos(c.phi))
-    - (c.ry * Math.sin(c.start) * Math.sin(c.phi))
-  const y1 : number = c.cy
-    + (c.ry * Math.sin(c.start) * Math.cos(c.phi))
-    + (c.rx * Math.cos(c.start) * Math.sin(c.phi))
-  const x2 : number = c.cx
-    + (c.rx * Math.cos(c.end) * Math.cos(c.phi))
-    - (c.ry * Math.sin(c.end) * Math.sin(c.phi))
-  const y2 : number = c.cy
-    + (c.ry * Math.sin(c.end) * Math.cos(c.phi))
-    + (c.rx * Math.cos(c.end) * Math.sin(c.phi))
+export function ellipseToArc(
+  e : EllipseT,
+) : ArcT {
+  const x1 : number = e.cx
+    + (e.rx * Math.cos(e.start) * Math.cos(e.phi))
+    - (e.ry * Math.sin(e.start) * Math.sin(e.phi))
+  const y1 : number = e.cy
+    + (e.ry * Math.sin(e.start) * Math.cos(e.phi))
+    + (e.rx * Math.cos(e.start) * Math.sin(e.phi))
+  const x2 : number = e.cx
+    + (e.rx * Math.cos(e.end) * Math.cos(e.phi))
+    - (e.ry * Math.sin(e.end) * Math.sin(e.phi))
+  const y2 : number = e.cy
+    + (e.ry * Math.sin(e.end) * Math.cos(e.phi))
+    + (e.rx * Math.cos(e.end) * Math.sin(e.phi))
 
-  const large : number = Math.abs(c.end - c.start) > Math.PI ? 1 : 0
-  const sweep : number = c.end - c.start > 0 ? 1 : 0
+  const large : number = Math.abs(e.end - e.start) > Math.PI ? 1 : 0
+  const sweep : number = e.end - e.start > 0 ? 1 : 0
 
-  return endpoint(x1, y1, c.rx, c.ry, c.phi, large, sweep, x2, y2)
+  return arc(x1, y1, e.rx, e.ry, e.phi, large, sweep, x2, y2)
 }
 
 export function transformArc(
-  e : EndpointParameterizationT,
+  a : ArcT,
   matrix : MatrixT,
 ) : [number, number, number] {
   const d : number = det(matrix)
   const m : MatrixT = multiply(matrix, mat(
-    e.rx * Math.cos(e.phi), e.rx * Math.sin(e.phi), 0, 0,
-    -e.ry * Math.sin(e.phi), e.ry * Math.cos(e.phi), 0, 0,
+    a.rx * Math.cos(a.phi), a.rx * Math.sin(a.phi), 0, 0,
+    -a.ry * Math.sin(a.phi), a.ry * Math.cos(a.phi), 0, 0,
     0, 0, 1, 0,
     0, 0, 0, 1,
   ))
@@ -120,44 +125,44 @@ export function transformArc(
 }
 
 export function foci(
-  c : CenterParameterizationT,
+  e : EllipseT,
 ) : [CoordsT, CoordsT] {
-  const major : number = Math.max(c.rx, c.ry)
-  const minor : number = Math.min(c.rx, c.ry)
+  const major : number = Math.max(e.rx, e.ry)
+  const minor : number = Math.min(e.rx, e.ry)
   const f : number = Math.sqrt(Math.abs((major ** 2) - (minor ** 2)))
-  const theta : number = major === c.rx ? c.phi : c.phi + (Math.PI / 2)
+  const theta : number = major === e.rx ? e.phi : e.phi + (Math.PI / 2)
 
   const f1 : CoordsT = {
-    x: c.cx - (f * Math.cos(theta)),
-    y: c.cy - (f * Math.sin(theta)),
+    x: e.cx - (f * Math.cos(theta)),
+    y: e.cy - (f * Math.sin(theta)),
   }
 
   const f2 : CoordsT = {
-    x: c.cx + (f * Math.cos(theta)),
-    y: c.cy + (f * Math.sin(theta)),
+    x: e.cx + (f * Math.cos(theta)),
+    y: e.cy + (f * Math.sin(theta)),
   }
 
   return [f1, f2]
 }
 
 export function correctRadii(
-  e : EndpointParameterizationT,
+  a : ArcT,
 ) : [number, number] {
-  if (e.rx === 0 || e.ry === 0) {
-    return [e.rx, e.ry]
+  if (a.rx === 0 || a.ry === 0) {
+    return [a.rx, a.ry]
   }
 
-  const xm : number = (e.x1 - e.x2) / 2
-  const ym : number = (e.y1 - e.y2) / 2
-  const x : number = (Math.cos(e.phi) * xm) + (Math.sin(e.phi) * ym)
-  const y : number = (Math.cos(e.phi) * ym) - (Math.sin(e.phi) * xm)
+  const xm : number = (a.x1 - a.x2) / 2
+  const ym : number = (a.y1 - a.y2) / 2
+  const x : number = (Math.cos(a.phi) * xm) + (Math.sin(a.phi) * ym)
+  const y : number = (Math.cos(a.phi) * ym) - (Math.sin(a.phi) * xm)
   const root : number = Math.sqrt(
-    ((x ** 2) / (Math.abs(e.rx) ** 2))
-    + ((y ** 2) / (Math.abs(e.ry) ** 2))
+    ((x ** 2) / (Math.abs(a.rx) ** 2))
+    + ((y ** 2) / (Math.abs(a.ry) ** 2))
   )
 
   return [
-    Math.max(1, root) * Math.abs(e.rx),
-    Math.max(1, root) * Math.abs(e.ry),
+    Math.max(1, root) * Math.abs(a.rx),
+    Math.max(1, root) * Math.abs(a.ry),
   ]
 }
