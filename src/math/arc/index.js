@@ -3,6 +3,7 @@
 import type {
   CoordsT,
   MatrixT,
+  VectorT,
   EllipseT,
   ArcT,
 } from '../../types'
@@ -82,20 +83,20 @@ export function ellipseToArc(
 
 export function transformArc(
   a : ArcT,
-  matrix : MatrixT,
-) : Array<number> {
+  T : MatrixT,
+) : VectorT {
   const e : EllipseT = arcToEllipse(a)
-  const eMatrix : MatrixT = mat(
+  const E : MatrixT = mat(
     e.rx * Math.cos(e.phi), e.rx * Math.sin(e.phi), 0, 0,
     -e.ry * Math.sin(e.phi), e.ry * Math.cos(e.phi), 0, 0,
     0, 0, 1, 0,
     e.cx, e.cy, 0, 1,
   )
 
-  const m : MatrixT = inverse(multiply(matrix, eMatrix))
-  const A : number = (m[0] ** 2) + (m[4] ** 2)
-  const B : number = 2 * ((m[0] * m[1]) + (m[4] * m[5]))
-  const C : number = (m[1] ** 2) + (m[5] ** 2)
+  const M : MatrixT = inverse(multiply(T, E))
+  const A : number = (M[0] ** 2) + (M[4] ** 2)
+  const B : number = 2 * ((M[0] * M[1]) + (M[4] * M[5]))
+  const C : number = (M[1] ** 2) + (M[5] ** 2)
   const AC : number = A - C
 
   if (B === 0) {
@@ -103,6 +104,7 @@ export function transformArc(
       1 / Math.sqrt(A),
       1 / Math.sqrt(C),
       0,
+      1,
     ]
   }
 
@@ -111,6 +113,7 @@ export function transformArc(
       1 / Math.sqrt(A + (B / 2)),
       1 / Math.sqrt(A - (B / 2)),
       Math.PI / 4,
+      1,
     ]
   }
 
@@ -122,6 +125,7 @@ export function transformArc(
     1 / Math.sqrt(_A),
     1 / Math.sqrt(_C),
     Math.atan(B / AC) / 2,
+    1,
   ]
 }
 
