@@ -35,26 +35,26 @@ export function translate3d(
 }
 
 export function translate(
-  tx: number | string,
-  ty: number | string = 0,
-): Function {
+  tx : number | string,
+  ty : number | string = 0,
+) : Function {
   return translate3d(tx, ty, 0)
 }
 
 export function translateX(
-  tx: number | string,
-): Function {
+  tx : number | string,
+) : Function {
   return translate3d(tx, 0, 0)
 }
 
 export function translateY(
-  ty: number | string,
-): Function {
+  ty : number | string,
+) : Function {
   return translate3d(0, ty, 0)
 }
 
 export function translateZ(
-  tz: number,
-): Function {
+  tz : number,
+) : Function {
   return translate3d(0, 0, tz)
 }

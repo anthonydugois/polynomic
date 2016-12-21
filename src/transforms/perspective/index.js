@@ -5,8 +5,8 @@ import type { MatrixT } from '../../types'
 import { mat, multiply } from '../../math/matrix'
 
 export function perspective(
-  d: number,
-): Function {
+  d : number,
+) : Function {
   return (
     matrix : MatrixT,
   ) : MatrixT => {

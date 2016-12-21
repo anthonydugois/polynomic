@@ -16,7 +16,7 @@ import { arc } from '../../primitives/arc'
 
 import { degToRad, radToDeg } from '../../utils/angle'
 
-export function transform(
+export function transformPoint(
   current : PointT,
   previous : PointT,
   T : MatrixT,

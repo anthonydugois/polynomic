@@ -14,7 +14,7 @@ import { identity } from '../math/matrix'
 import { point } from '../primitives/point'
 import { boundingBox, transformBoundingBox } from '../properties/bounding-box'
 import { translate3d } from './translate'
-import { transform as transformPoint } from '../point/transform'
+import { transformPoint } from '../point/transform'
 import { correct } from '../point/correct'
 import { absoluteCoords } from '../utils/absolute'
 

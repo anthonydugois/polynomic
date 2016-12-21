@@ -6,9 +6,9 @@ import { mat, multiply } from '../../math/matrix'
 import { angle } from '../../utils/angle'
 
 export function skew(
-  alpha: number | string,
-  beta: number | string = 0,
-): Function {
+  alpha : number | string,
+  beta : number | string = 0,
+) : Function {
   return (
     matrix : MatrixT,
   ) : MatrixT => {
@@ -26,13 +26,13 @@ export function skew(
 }
 
 export function skewX(
-  alpha: number | string,
-): Function {
+  alpha : number | string,
+) : Function {
   return skew(alpha, 0)
 }
 
 export function skewY(
-  beta: number | string,
-): Function {
+  beta : number | string,
+) : Function {
   return skew(0, beta)
 }

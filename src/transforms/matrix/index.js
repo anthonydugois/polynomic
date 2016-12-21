@@ -5,23 +5,23 @@ import type { MatrixT } from '../../types'
 import { mat, multiply } from '../../math/matrix'
 
 export function matrix3d(
-  m11: number,
-  m12: number,
-  m13: number,
-  m14: number,
-  m21: number,
-  m22: number,
-  m23: number,
-  m24: number,
-  m31: number,
-  m32: number,
-  m33: number,
-  m34: number,
-  m41: number,
-  m42: number,
-  m43: number,
-  m44: number,
-): Function {
+  m11 : number,
+  m12 : number,
+  m13 : number,
+  m14 : number,
+  m21 : number,
+  m22 : number,
+  m23 : number,
+  m24 : number,
+  m31 : number,
+  m32 : number,
+  m33 : number,
+  m34 : number,
+  m41 : number,
+  m42 : number,
+  m43 : number,
+  m44 : number,
+) : Function {
   return (
     matrix : MatrixT,
   ) : MatrixT => {
@@ -39,13 +39,13 @@ export function matrix3d(
 }
 
 export function matrix(
-  a: number,
-  b: number,
-  c: number,
-  d: number,
-  e: number,
-  f: number,
-): Function {
+  a : number,
+  b : number,
+  c : number,
+  d : number,
+  e : number,
+  f : number,
+) : Function {
   return matrix3d(
     a, b, 0, 0,
     c, d, 0, 0,

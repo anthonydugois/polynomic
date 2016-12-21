@@ -15,8 +15,6 @@ test('should transform radii and rotation of an arc', () => {
     arc(0, 0, 100, 50, Math.PI / 4, 1, 0, 100, 0),
     translate(100, 100)(),
   )
-
-  console.log(test)
 })
 
 test('should convert a center parameterization into a arc parameterization', () => {

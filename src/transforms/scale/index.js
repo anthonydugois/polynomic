@@ -5,10 +5,10 @@ import type { MatrixT } from '../../types'
 import { mat, multiply } from '../../math/matrix'
 
 export function scale3d(
-  sx: number,
-  sy: number,
-  sz: number,
-): Function {
+  sx : number,
+  sy : number,
+  sz : number,
+) : Function {
   return (
     matrix : MatrixT,
   ) : MatrixT => {
@@ -26,26 +26,26 @@ export function scale3d(
 }
 
 export function scale(
-  sx: number,
-  sy: number = sx,
-): Function {
+  sx : number,
+  sy : number = sx,
+) : Function {
   return scale3d(sx, sy, 1)
 }
 
 export function scaleX(
-  sx: number,
-): Function {
+  sx : number,
+) : Function {
   return scale3d(sx, 1, 1)
 }
 
 export function scaleY(
-  sy: number,
-): Function {
+  sy : number,
+) : Function {
   return scale3d(1, sy, 1)
 }
 
 export function scaleZ(
-  sz: number,
-): Function {
+  sz : number,
+) : Function {
   return scale3d(1, 1, sz)
 }
