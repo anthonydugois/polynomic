@@ -45,7 +45,7 @@ export function linearBoundingBox(
   current : PointT,
   previous : PointT = point(),
 ) : RectT {
-  return extremumsToBoundingBox(...linearExtremums(
+  return extremumsToBoundingBox(linearExtremums(
     previous.x,
     previous.y,
     current.x,
@@ -57,7 +57,7 @@ export function quadraticBoundingBox(
   current : PointT,
   previous : PointT = point(),
 ) : RectT {
-  return extremumsToBoundingBox(...quadraticExtremums(
+  return extremumsToBoundingBox(quadraticExtremums(
     previous.x,
     previous.y,
     current.parameters.x1,
@@ -71,7 +71,7 @@ export function cubicBoundingBox(
   current : PointT,
   previous : PointT = point(),
 ) : RectT {
-  return extremumsToBoundingBox(...cubicExtremums(
+  return extremumsToBoundingBox(cubicExtremums(
     previous.x,
     previous.y,
     current.parameters.x1,
@@ -87,7 +87,7 @@ export function arcBoundingBox(
   current : PointT,
   previous : PointT = point(),
 ) : RectT {
-  return extremumsToBoundingBox(...ellipticExtremums(arc(
+  return extremumsToBoundingBox(ellipticExtremums(arc(
     previous.x,
     previous.y,
     current.parameters.rx,
@@ -101,7 +101,7 @@ export function arcBoundingBox(
 }
 
 function extremumsToBoundingBox(
-  ...extremums : Array<CoordsT>
+  extremums : Array<CoordsT>
 ) : RectT {
   const xPositions : Array<number> = extremums.map(({ x }) => parseFloat(x))
   const yPositions : Array<number> = extremums.map(({ y }) => parseFloat(y))

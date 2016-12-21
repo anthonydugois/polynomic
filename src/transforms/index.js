@@ -10,9 +10,11 @@ import type {
   RectT,
 } from '../types'
 
-import { identity } from '../math/matrix'
+import { identity, multiplyVec } from '../math/matrix'
+import { vec } from '../math/vector'
 import { point } from '../primitives/point'
-import { boundingBox, transformBoundingBox } from '../properties/bounding-box'
+import { rect } from '../primitives/rect'
+import { boundingBox } from '../properties/bounding-box'
 import { translate3d } from './translate'
 import { transformPoint } from '../point/transform'
 import { correct } from '../point/correct'
@@ -21,16 +23,21 @@ import { absoluteCoords } from '../utils/absolute'
 export function transform(
   ...matrices: Array<Function>
 ) : Function {
-  const makeMatrix : Function = transformList(...matrices)
+  const list : Function = transformList(...matrices)
 
   return (
     path : PathT,
     options : {} = {},
   ) : PathT => {
-    const opt : PathTransformOptionsT = transformOptions(options)
-    const matrix : MatrixT = makeMatrix(path)
+    const transformer : Function = transformFromOrigin(transformPath(options))
 
-    return applyMatrix(path, matrix, opt)
+    const bbox : RectT = boundingBox(path)
+    const opt : PathTransformOptionsT = transformOptions(options)
+    const origin : AbsoluteCoordsT = absoluteCoords(opt.transformOrigin, bbox)
+
+    const T : MatrixT = list(bbox, origin)
+
+    return transformer(path, T, origin)
   }
 }
 
@@ -47,85 +54,101 @@ function transformOptions(
 function transformList(
   ...matrices: Array<Function>
 ) : Function {
-  return (
-    path : PathT,
-  ) : MatrixT => {
-    const bbox : RectT = boundingBox(path)
+  const transformer : Function = transformFromOrigin(transformRect())
 
+  return (
+    bbox : RectT,
+    origin : AbsoluteCoordsT,
+  ) : MatrixT => {
     return matrices.reduce(
       (
-        acc : MatrixT,
+        T : MatrixT,
         matrix : Function,
-      ) : MatrixT => matrix(acc, transformBoundingBox(bbox, acc)),
+      ) : MatrixT => matrix(T, transformer(bbox, T, origin)),
       identity(),
     )
   }
 }
 
-function applyMatrix(
-  path : PathT,
-  matrix : MatrixT,
-  options : {} = {},
-) : PathT {
-  const opt : PathTransformOptionsT = transformOptions(options)
-  const { transformOrigin: origin } : PathTransformOptionsT = opt
-  const shouldTransform : boolean = origin.x !== 0 || origin.y !== 0 || (
-    typeof origin.z !== 'undefined'
-    && origin.z !== 0
-  )
+function transformFromOrigin(
+  transformer : Function,
+) : Function {
+  return function transformFromOrigin(
+    primitive : any,
+    T : MatrixT,
+    origin : AbsoluteCoordsT,
+  ) : PathT {
+    const shouldTransformFromOrigin : boolean = origin.x !== 0
+      || origin.y !== 0
+      || origin.z !== 0
 
-  if (shouldTransform) {
-    const { x, y, z } : AbsoluteCoordsT = absoluteCoords(
-      origin,
-      boundingBox(path),
-    )
+    if (shouldTransformFromOrigin) {
+      const forward : MatrixT = translate3d(origin.x, origin.y, origin.z)()
+      const backward : MatrixT = translate3d(-origin.x, -origin.y, -origin.z)()
 
-    const forward : MatrixT = translate3d(x, y, z)()
-    const backward : MatrixT = translate3d(-x, -y, -z)()
-    const translatedBackward : PathT = transformPath(path, backward, opt)
-    const transformed : PathT = transformPath(translatedBackward, matrix, opt)
+      const translatedBackward : any = transformer(primitive, backward)
+      const transformed : any = transformer(translatedBackward, T)
 
-    return transformPath(transformed, forward, opt)
+      return transformer(transformed, forward)
+    }
+
+    return transformer(primitive, T)
   }
-
-  return transformPath(path, matrix, opt)
 }
 
 function transformPath(
-  path : PathT,
-  T : MatrixT,
   options : {} = {},
-) : PathT {
+) : Function {
   const opt : PathTransformOptionsT = transformOptions(options)
 
-  return path.reduce(
-    (
-      acc : PathT,
-      current : PointT,
-      index : number,
-    ) : PathT => {
-      if (opt.indices.length > 0 && !opt.indices.includes(index)) {
-        acc.push(current)
-      } else {
-        const previous : PointT = index > 0 ?
-          path[index - 1] :
-          point()
+  return function transformPath(
+    path : PathT,
+    T : MatrixT,
+  ) : PathT {
+    return path.reduce(
+      (
+        acc : PathT,
+        current : PointT,
+        index : number,
+      ) : PathT => {
+        if (opt.indices.length > 0 && !opt.indices.includes(index)) {
+          acc.push(current)
+        } else {
+          const previous : PointT = index > 0 ?
+            path[index - 1] :
+            point()
 
-        const tPrevious : PointT = acc.length > 0 ?
-          acc[acc.length - 1] :
-          point()
+          const tPrevious : PointT = acc.length > 0 ?
+            acc[acc.length - 1] :
+            point()
 
-        const tCurrent : PointT = correct(
-          transformPoint(current, previous, T),
-          tPrevious,
-          index,
-        )
+          const tCurrent : PointT = correct(
+            transformPoint(current, previous, T),
+            tPrevious,
+            index,
+          )
 
-        acc.push(tCurrent)
-      }
+          acc.push(tCurrent)
+        }
 
-      return acc
-    },
-    [],
-  )
+        return acc
+      },
+      [],
+    )
+  }
+}
+
+function transformRect() : Function {
+  return function transformRect(
+    bbox : RectT,
+    T : MatrixT,
+  ) : RectT {
+    const vMin : VectorT = vec(bbox.x, bbox.y, 0, 1)
+    const [x0, y0] : VectorT = multiplyVec(T, vMin)
+
+    const vMax : VectorT = vec(bbox.x + bbox.width, bbox.y + bbox.height, 0, 1)
+    const [x1, y1] : VectorT = multiplyVec(T, vMax)
+
+    return rect(x0, y0, x1 - x0, y1 - y0)
+  }
 }

@@ -120,11 +120,12 @@ export function transformArcParameters(
   const K : number = Math.sqrt(1 + ((B / AC) ** 2))
   const _A : number = (A + C + (K * AC)) / 2
   const _C : number = (A + C - (K * AC)) / 2
+  const phi : number = Math.atan(B / AC) / 2
 
   return [
     1 / Math.sqrt(_A),
     1 / Math.sqrt(_C),
-    Math.atan(B / AC) / 2,
+    phi < 0 ? phi + (2 * Math.PI) : phi,
     1,
   ]
 }

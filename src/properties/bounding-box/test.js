@@ -1,7 +1,4 @@
-import {
-  boundingBox,
-  transformBoundingBox,
-} from './index'
+import { boundingBox } from './index'
 
 import { parse } from '../../pathstring/parse'
 import { rect } from '../../primitives/rect'
