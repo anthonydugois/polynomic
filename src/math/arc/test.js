@@ -1,7 +1,7 @@
 import {
   ellipseToArc,
   arcToEllipse,
-  transformArc,
+  transformArcParameters,
   foci,
 } from './index'
 
@@ -11,7 +11,7 @@ import { scale } from '../../transforms/scale'
 import { translate } from '../../transforms/translate'
 
 test('should transform radii and rotation of an arc', () => {
-  const test = transformArc(
+  const test = transformArcParameters(
     arc(0, 0, 100, 50, Math.PI / 4, 1, 0, 100, 0),
     translate(100, 100)(),
   )

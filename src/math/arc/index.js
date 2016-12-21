@@ -81,7 +81,7 @@ export function ellipseToArc(
   return arc(x1, y1, e.rx, e.ry, e.phi, large, sweep, x2, y2)
 }
 
-export function transformArc(
+export function transformArcParameters(
   a : ArcT,
   T : MatrixT,
 ) : VectorT {
