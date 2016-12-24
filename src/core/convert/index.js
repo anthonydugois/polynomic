@@ -4,9 +4,9 @@ import type { PointT, PathT } from '../../types'
 
 import { point } from '../point'
 import { isL, isH, isV, isQ, isT, isA, isRelative } from '../../is'
-import { transform } from '../../transforms'
-import { rotate } from '../../transforms/rotate'
-import { degToRad } from '../../utils/angle'
+import { transform } from '../../transform'
+import { rotate } from '../../rotate'
+import { degToRad } from '../angle'
 
 export function toCubic(
   previous : PointT,

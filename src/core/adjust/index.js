@@ -19,44 +19,44 @@ import {
   isRelative,
 } from '../../is'
 
-export function correct(
+export function adjust(
   current : PointT,
   previous : PointT,
   index : number,
 ) : PointT {
   return point(
-    correctCode(current, previous, index),
+    adjustCode(current, previous, index),
     current.x,
     current.y,
     current.parameters,
   )
 }
 
-function correctCode(
+function adjustCode(
   current : PointT,
   previous : PointT,
   index : number,
 ) : PointCodeT {
-  if (shouldCorrectMoveTo(current, previous, index)) {
+  if (shouldAdjustMoveTo(current, previous, index)) {
     return isRelative(current) ? 'm' : 'M'
   }
 
-  if (shouldCorrectLineTo(current, previous)) {
+  if (shouldAdjustLineTo(current, previous)) {
     return isRelative(current) ? 'l' : 'L'
   }
 
-  if (shouldCorrectQuadraticTo(current, previous)) {
+  if (shouldAdjustQuadraticTo(current, previous)) {
     return isRelative(current) ? 'q' : 'Q'
   }
 
-  if (shouldCorrectCubicTo(current, previous)) {
+  if (shouldAdjustCubicTo(current, previous)) {
     return isRelative(current) ? 'c' : 'C'
   }
 
   return current.code
 }
 
-function shouldCorrectMoveTo(
+function shouldAdjustMoveTo(
   current : PointT,
   previous : PointT,
   index : number,
@@ -67,19 +67,19 @@ function shouldCorrectMoveTo(
   )
 }
 
-function shouldCorrectLineTo(
+function shouldAdjustLineTo(
   current : PointT,
   previous : PointT,
 ) : boolean {
-  const shouldCorrectHorizontalLineTo : boolean = isH(current)
+  const shouldAdjustHorizontalLineTo : boolean = isH(current)
     && current.y !== previous.y
-  const shouldCorrectVerticalLineTo : boolean = isV(current)
+  const shouldAdjustVerticalLineTo : boolean = isV(current)
     && current.x !== previous.x
 
-  return shouldCorrectHorizontalLineTo || shouldCorrectVerticalLineTo
+  return shouldAdjustHorizontalLineTo || shouldAdjustVerticalLineTo
 }
 
-function shouldCorrectQuadraticTo(
+function shouldAdjustQuadraticTo(
   current : PointT,
   previous : PointT,
 ) : boolean {
@@ -98,7 +98,7 @@ function shouldCorrectQuadraticTo(
   )
 }
 
-function shouldCorrectCubicTo(
+function shouldAdjustCubicTo(
   current : PointT,
   previous : PointT,
 ) : boolean {

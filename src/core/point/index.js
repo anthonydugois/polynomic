@@ -11,7 +11,7 @@ export function point(
   x : number = 0,
   y : number = 0,
   parameters : PointParamsT = {},
-): PointT {
+) : PointT {
   return {
     code,
     x,

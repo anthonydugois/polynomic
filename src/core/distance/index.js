@@ -1,40 +1,42 @@
 // @flow
 
-import type { PointT } from '../../types'
+import type { PointT, LineT } from '../../types'
 
-import { point } from '../point'
+export function distance(
+  x1 : number,
+  y1 : number,
+  x2 : number,
+  y2 : number,
+) : number {
+  return Math.sqrt(((x1 - x2) ** 2) + ((y1 - y2) ** 2))
+}
 
 export function distanceToPoint(
-  from: PointT,
-  to: PointT,
-): number {
-  return Math.sqrt(((from.x - to.x) ** 2) + ((from.y - to.y) ** 2))
+  from : PointT,
+  to : PointT,
+) : number {
+  return distance(from.x, from.y, to.x, to.y)
 }
 
 export function distanceToLine(
-  from: PointT,
-  previous: PointT,
-  current: PointT,
-): number {
-  const d: number = distanceToPoint(previous, current)
+  from : PointT,
+  to : LineT,
+) : number {
+  const d : number = distance(to.x1, to.y1, to.x2, to.y2)
 
   if (d === 0) {
-    return distanceToPoint(from, previous)
+    return distance(from.x, from.y, to.x1, to.y1)
   }
 
-  const t: number = Math.max(
-    0,
-    Math.min(
-      1,
-      (((from.x - previous.x) * (current.x - previous.x)) + ((from.y - previous.y) * (current.y - previous.y))) / (d ** 2),
-    ),
-  )
+  const ax : number = (from.x - to.x1) * (to.x2 - to.x1)
+  const ay : number = (from.y - to.y1) * (to.y2 - to.y1)
+  const d2 : number = d ** 2
+  const t : number = Math.max(0, Math.min(1, (ax + ay) / d2))
 
-  const p: PointT = point(
-    '',
-    previous.x + (t * (current.x - previous.x)),
-    previous.y + (t * (current.y - previous.y)),
+  return distance(
+    from.x,
+    from.y,
+    to.x1 + (t * (to.x2 - to.x1)),
+    to.y1 + (t * (to.y2 - to.y1)),
   )
-
-  return distanceToPoint(from, p)
 }

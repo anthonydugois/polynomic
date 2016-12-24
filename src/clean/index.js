@@ -2,7 +2,8 @@
 
 import type { PointT, PathT } from '../types'
 
-import { m, M, z, defaultPoint } from '../points'
+import { point } from '../core/point'
+import { m, M, z } from '../points'
 import { isM, isL, isH, isV, isZ, isRelative } from '../is'
 
 export function clean(
@@ -14,7 +15,7 @@ export function clean(
 function simplifyClosures(
   path: PathT,
 ): PathT {
-  let lastM: PointT = defaultPoint
+  let lastM: PointT = point()
 
   return path.map(
     (
@@ -72,7 +73,7 @@ function removeConsecutiveSamePoints(
     ) => {
       const previous: PointT = index > 0 ?
         acc[acc.length - 1] :
-        defaultPoint
+        point()
 
       const sameCoordinates: boolean = previous.x === current.x
         && previous.y === current.y

@@ -10,12 +10,20 @@ export function rect(
   rx : number = 0,
   ry : number = rx,
 ) : RectT {
-  return {
+  const r : RectT = {
     x,
     y,
     width,
     height,
-    ...rx !== 0 ? { rx } : {},
-    ...ry !== 0 ? { ry } : {},
   }
+
+  if (rx !== 0) {
+    r.rx = rx
+  }
+
+  if (ry !== 0) {
+    r.ry = ry
+  }
+
+  return r
 }

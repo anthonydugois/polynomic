@@ -14,7 +14,7 @@ test('should return the extremums of the line', () => {
     { x: 100, y: 100 },
   ]
 
-  expect(test).toEqual(expected)
+  expect(test).toEqualCloseTo(expected)
 })
 
 test('should return the extremums of the quadratic curve', () => {
@@ -25,7 +25,7 @@ test('should return the extremums of the quadratic curve', () => {
     { x: 50, y: 50 },
   ]
 
-  expect(test).toEqual(expected)
+  expect(test).toEqualCloseTo(expected)
 })
 
 test('should return the extremums of the cubic curve', () => {
@@ -33,22 +33,22 @@ test('should return the extremums of the cubic curve', () => {
   const expected = [
     { x: 0, y: 100 },
     { x: 100, y: 0 },
-    { x: 141.4213562373095, y: 82.84271247461899 },
-    { x: 82.842712474619, y: 141.4213562373095 },
+    { x: 141.421, y: 82.843 },
+    { x: 82.843, y: 141.421 },
   ]
 
-  expect(test).toEqual(expected)
+  expect(test).toEqualCloseTo(expected)
 })
 
 test('should return the extremums of the arc', () => {
-  const test = ellipticExtremums(arc(100, 100, 50, 100, 4.06661715715, 1, 0, 200, 50))
+  const test = ellipticExtremums(arc(100, 100, 50, 100, 233 * Math.PI / 180, 1, 0, 200, 50))
   const expected = [
     { x: 100, y: 100 },
-    { x: 200, y: 49.99999999999999 },
-    { x: 65.16877323888131, y: 164.46057332000126 },
-    { x: 235.85726241535627, y: 79.98548359007526 },
-    { x: 100.60283850316692, y: 194.44740048874374 },
+    { x: 200, y: 50 },
+    { x: 65.169, y: 164.461 },
+    { x: 235.857, y: 79.985 },
+    { x: 100.603, y: 194.447 },
   ]
 
-  expect(test).toEqual(expected)
+  expect(test).toEqualCloseTo(expected)
 })

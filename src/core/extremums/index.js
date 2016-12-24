@@ -58,19 +58,18 @@ export function cubicExtremums(
 export function ellipticExtremums(
   a : ArcT,
 ) : Array<CoordsT> {
-  const e : EllipseT = arcToEllipse(a)
-  const angleX : Function = dEllipticRootX(a.rx, a.ry, a.phi)
-  const angleY : Function = dEllipticRootY(a.rx, a.ry, a.phi)
+  const { start, end } : EllipseT = arcToEllipse(a)
+  const [ax, ay] : Array<number> = dEllipticRoots(a.rx, a.ry, a.phi)
 
   return extremums(elliptic(a))(
     0,
     1,
-    normalize(angleX(0), e.start, e.end),
-    normalize(angleX(1), e.start, e.end),
-    normalize(angleX(-1), e.start, e.end),
-    normalize(angleY(0), e.start, e.end),
-    normalize(angleY(1), e.start, e.end),
-    normalize(angleY(-1), e.start, e.end),
+    normalize(ax, start, end),
+    normalize(ax + Math.PI, start, end),
+    normalize(ax - Math.PI, start, end),
+    normalize(ay, start, end),
+    normalize(ay + Math.PI, start, end),
+    normalize(ay - Math.PI, start, end),
   )
 }
 
@@ -103,10 +102,10 @@ function dCubicRoots(
   c3 : number = c1,
   c4 : number = c1,
 ) : Array<number> {
-  const a: number = ((3 * c4) - (9 * c3)) + ((9 * c2) - (3 * c1))
-  const b: number = ((6 * c3) - (12 * c2)) + (6 * c1)
-  const c: number = (3 * c2) - (3 * c1)
-  const delta: number = (b ** 2) - (4 * a * c)
+  const a : number = ((3 * c4) - (9 * c3)) + ((9 * c2) - (3 * c1))
+  const b : number = ((6 * c3) - (12 * c2)) + (6 * c1)
+  const c : number = (3 * c2) - (3 * c1)
+  const delta : number = (b ** 2) - (4 * a * c)
 
   if (a === 0) {
     return [-c / b]
@@ -118,20 +117,13 @@ function dCubicRoots(
   ]
 }
 
-function dEllipticRootX(
+function dEllipticRoots(
   rx : number = 0,
   ry : number = 0,
   phi : number = 0,
-) : Function {
-  const t : number = Math.atan((-ry * Math.tan(phi)) / rx)
-  return (n : number = 0) : number => t + (n * Math.PI)
-}
-
-function dEllipticRootY(
-  rx : number = 0,
-  ry : number = 0,
-  phi : number = 0,
-) : Function {
-  const t : number = Math.atan(ry / (rx * Math.tan(phi)))
-  return (n : number = 0) : number => t + (n * Math.PI)
+) : Array<number> {
+  return [
+    Math.atan((-ry * Math.tan(phi)) / rx),
+    Math.atan(ry / (rx * Math.tan(phi))),
+  ]
 }

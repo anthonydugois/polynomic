@@ -2,13 +2,14 @@
 
 import type { PointCodeT, PointT, PathT } from '../types'
 
+import { point } from '../core/point'
 import * as points from '../points'
 import { isM } from '../is'
 
 export function parse(
   d: string,
 ): PathT {
-  let lastM: PointT = points.defaultPoint
+  let lastM: PointT = point()
 
   return parseSegments(d).reduce(
     (
@@ -17,7 +18,7 @@ export function parse(
     ): PathT => {
       let previous: PointT  = acc.length > 0 ?
         acc[acc.length - 1] :
-        points.defaultPoint
+        point()
 
       if (isM(previous)) {
         lastM = previous

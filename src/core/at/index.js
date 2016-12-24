@@ -39,29 +39,23 @@ export function pointAt(
   }
 }
 
-export function linearPointAt(
+function linearPointAt(
   previous : PointT,
   current : PointT,
 ) : Function {
-  const f : Function = linear(
+  return linear(
     previous.x,
     previous.y,
     current.x,
     current.y,
   )
-
-  return function linearPointAt(
-    t : number,
-  ) : PointT {
-    return f(t)
-  }
 }
 
-export function quadraticPointAt(
+function quadraticPointAt(
   previous : PointT,
   current : PointT,
 ) : Function {
-  const f : Function = quadratic(
+  return quadratic(
     previous.x,
     previous.y,
     current.parameters.x1,
@@ -69,19 +63,13 @@ export function quadraticPointAt(
     current.x,
     current.y,
   )
-
-  return function quadraticPointAt(
-    t : number,
-  ) : PointT {
-    return f(t)
-  }
 }
 
-export function cubicPointAt(
+function cubicPointAt(
   previous : PointT,
   current : PointT,
 ) : Function {
-  const f : Function = cubic(
+  return cubic(
     previous.x,
     previous.y,
     current.parameters.x1,
@@ -91,19 +79,13 @@ export function cubicPointAt(
     current.x,
     current.y,
   )
-
-  return function cubicPointAt(
-    t : number,
-  ) : PointT {
-    return f(t)
-  }
 }
 
-export function arcPointAt(
+function arcPointAt(
   previous : PointT,
   current : PointT,
 ) : Function {
-  const f : Function = elliptic(arc(
+  return elliptic(arc(
     previous.x,
     previous.y,
     current.parameters.rx,
@@ -114,10 +96,4 @@ export function arcPointAt(
     current.x,
     current.y,
   ))
-
-  return function arcPointAt(
-    t : number,
-  ) : PointT {
-    return f(t)
-  }
 }

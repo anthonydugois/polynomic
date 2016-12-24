@@ -1,20 +1,35 @@
-import { point } from '../point'
-import { distanceToPoint, distanceToLine } from './index'
+import {
+  distance,
+  distanceToPoint,
+  distanceToLine,
+} from './index'
 
-test('should give the distance between two points', () => {
-  const test = distanceToPoint(point('', 0, 0), point('', 0, 100))
+import { point } from '../point'
+import { line } from '../../line'
+
+test('should give the distance between a set of coords', () => {
+  const test = distance(0, 0, 0, 100)
   const expected = 100
 
-  expect(test).toBe(expected)
+  expect(test).toBeCloseTo(expected)
 })
 
-test('should give the distance between a point and a segment', () => {
-  const test = distanceToLine(
-    point('', 100, 50),
+test('should give the distance between two points', () => {
+  const test = distanceToPoint(
     point('', 0, 0),
     point('', 0, 100),
   )
   const expected = 100
 
-  expect(test).toBe(expected)
+  expect(test).toBeCloseTo(expected)
+})
+
+test('should give the distance between a point and a line', () => {
+  const test = distanceToLine(
+    point('', 100, 50),
+    line(0, 0, 0, 100),
+  )
+  const expected = 100
+
+  expect(test).toBeCloseTo(expected)
 })

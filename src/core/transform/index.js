@@ -14,7 +14,10 @@ import { point } from '../point'
 import { arc } from '../../arc'
 import { degToRad, radToDeg } from '../angle'
 
-export function transformPoint(
+const transformAnchor1 : Function = transformAnchor(1)
+const transformAnchor2 : Function = transformAnchor(2)
+
+export function transform(
   current : PointT,
   previous : PointT,
   T : MatrixT,
@@ -41,9 +44,6 @@ function transformParameters(
     ...transformArc(current, previous, T),
   }
 }
-
-const transformAnchor1 = transformAnchor(1)
-const transformAnchor2 = transformAnchor(2)
 
 function transformAnchor(
   n : number = 1,
@@ -92,16 +92,16 @@ function transformArc(
     && typeof large !== 'undefined'
     && typeof sweep !== 'undefined'
   ) {
-    const [_rx, _ry, _phi] : VectorT = transformArcParameters(arc(
+    const V : VectorT = transformArcParameters(arc(
       previous.x, previous.y,
       rx, ry, degToRad(rotation), large, sweep,
       current.x, current.y,
     ), T)
 
     return {
-      rx: _rx,
-      ry: _ry,
-      rotation: radToDeg(_phi),
+      rx: V[0],
+      ry: V[1],
+      rotation: radToDeg(V[2]),
       large,
       sweep,
     }

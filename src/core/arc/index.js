@@ -8,14 +8,15 @@ import type {
   ArcT,
 } from '../../types'
 
+import { mat, det, inverse, multiply } from '../matrix'
+import { vec } from '../vector'
 import { arc } from '../../arc'
 import { ellipse } from '../../ellipse'
-import { mat, det, inverse, multiply } from '../matrix'
 
 export function arcToEllipse(
   a : ArcT,
 ) : EllipseT {
-  const [rx, ry] : [number, number] = correctRadii(a)
+  const [rx, ry] : VectorT = correctRadii(a)
 
   const _x1 : number = ((a.x1 * Math.cos(a.phi))
     + (a.y1 * Math.sin(a.phi))) / rx
@@ -100,21 +101,21 @@ export function transformArcParameters(
   const AC : number = A - C
 
   if (B === 0) {
-    return [
+    return vec(
       1 / Math.sqrt(A),
       1 / Math.sqrt(C),
       0,
       1,
-    ]
+    )
   }
 
   if (AC === 0) {
-    return [
+    return vec(
       1 / Math.sqrt(A + (B / 2)),
       1 / Math.sqrt(A - (B / 2)),
       Math.PI / 4,
       1,
-    ]
+    )
   }
 
   const K : number = Math.sqrt(1 + ((B / AC) ** 2))
@@ -122,12 +123,12 @@ export function transformArcParameters(
   const _C : number = (A + C - (K * AC)) / 2
   const phi : number = Math.atan(B / AC) / 2
 
-  return [
+  return vec(
     1 / Math.sqrt(_A),
     1 / Math.sqrt(_C),
     phi < 0 ? phi + (2 * Math.PI) : phi,
     1,
-  ]
+  )
 }
 
 export function foci(
@@ -153,9 +154,9 @@ export function foci(
 
 export function correctRadii(
   a : ArcT,
-) : [number, number] {
+) : VectorT {
   if (a.rx === 0 || a.ry === 0) {
-    return [a.rx, a.ry]
+    return vec(a.rx, a.ry, 0, 1)
   }
 
   const xm : number = (a.x1 - a.x2) / 2
@@ -167,8 +168,10 @@ export function correctRadii(
     + ((y ** 2) / (Math.abs(a.ry) ** 2))
   )
 
-  return [
+  return vec(
     Math.max(1, root) * Math.abs(a.rx),
     Math.max(1, root) * Math.abs(a.ry),
-  ]
+    0,
+    1,
+  )
 }

@@ -8,55 +8,57 @@ import type {
 
 const positions = {
   left: 0,
-  right: 100,
+  right: 1,
   top: 0,
-  bottom: 100,
-  center: 50,
+  bottom: 1,
+  center: 0.5,
 }
 
 export function absoluteCoords(
-  coords: CoordsT,
-  bbox: RectT,
+  coords : CoordsT,
+  bbox : RectT,
 ) : AbsoluteCoordsT {
   return {
-    x: typeof coords.x === 'string' ?
-      absoluteX(coords.x, bbox) :
-      coords.x,
-    y: typeof coords.y === 'string' ?
-      absoluteY(coords.y, bbox) :
-      coords.y,
-    z: typeof coords.z === 'undefined' ?
-      0 :
-      coords.z,
+    x: absoluteX(coords.x, bbox),
+    y: absoluteY(coords.y, bbox),
+    z: typeof coords.z !== 'undefined' ? coords.z : 0,
   }
 }
 
 function absoluteX(
-  x: string,
-  bbox: RectT,
-): number {
-  const _x: string = x.toLowerCase()
-  const X: number = Object.keys(positions).includes(_x) ?
-    positions[_x] :
-    parseRelative(_x)
+  x : number | string,
+  bbox : RectT,
+) : number {
+  if (typeof x !== 'string') {
+    return x
+  }
 
-  return bbox.x + ((bbox.width * X) / 100)
+  const lx : string = x.toLowerCase()
+  const t : number = Object.keys(positions).includes(lx) ?
+    positions[lx] :
+    parseRelative(lx)
+
+  return bbox.x + (bbox.width * t)
 }
 
 function absoluteY(
-  y: string,
-  bbox: RectT,
-): number {
-  const _y: string = y.toLowerCase()
-  const Y: number = Object.keys(positions).includes(_y) ?
-    positions[_y] :
-    parseRelative(_y)
+  y : number | string,
+  bbox : RectT,
+) : number {
+  if (typeof y !== 'string') {
+    return y
+  }
 
-  return bbox.y + ((bbox.height * Y) / 100)
+  const ly : string = y.toLowerCase()
+  const t : number = Object.keys(positions).includes(ly) ?
+    positions[ly] :
+    parseRelative(ly)
+
+  return bbox.y + (bbox.height * t)
 }
 
 function parseRelative(
-  str: string,
-): number {
-  return parseFloat(str.replace('%', ''))
+  str : string,
+) : number {
+  return parseFloat(str.replace('%', '')) / 100
 }

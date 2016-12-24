@@ -23,7 +23,7 @@ test('should return an array with a length of 16 in column-major order', () => {
     4, 8, 12, 16,
   ]
 
-  expect(test).toEqual(expected)
+  expect(test).toEqualCloseTo(expected)
 })
 
 test('should return a 4x4 identity matrix', () => {
@@ -35,7 +35,7 @@ test('should return a 4x4 identity matrix', () => {
     0, 0, 0, 1,
   )
 
-  expect(test).toEqual(expected)
+  expect(test).toEqualCloseTo(expected)
 })
 
 test('should return the determinant of the matrix', () => {
@@ -47,7 +47,7 @@ test('should return the determinant of the matrix', () => {
   ))
   const expected = -6
 
-  expect(test).toBe(expected)
+  expect(test).toBeCloseTo(expected)
 })
 
 test('should return the inverse of the matrix', () => {
@@ -58,13 +58,13 @@ test('should return the inverse of the matrix', () => {
     4, 5, 0, 1,
   ))
   const expected = mat(
-    -1 / 3, 2 / 3, -0, -0,
-    1 / 2, -1 / 2, -0, -0,
-    -0, -0, 1, -0,
-    -7 / 6, -1 / 6, -0, 1,
+    -0.333, 0.667, 0, 0,
+    0.5, -0.5, 0, 0,
+    0, 0, 1, 0,
+    -1.167, -0.167, 0, 1,
   )
 
-  expect(test).toEqual(expected)
+  expect(test).toEqualCloseTo(expected)
 })
 
 test('should multiply two 4x4 matrices', () => {
@@ -89,10 +89,10 @@ test('should multiply two 4x4 matrices', () => {
     0, 0, 0, 6,
   )
 
-  expect(test).toEqual(expected)
+  expect(test).toEqualCloseTo(expected)
 })
 
-test('should multiply a 4x4 matrix and a 4-length vector', () => {
+test('should multiply a 4x4 matrix and a 4-vector', () => {
   const m = mat(
     2, 0, 0, 0,
     0, 2, 0, 0,
@@ -104,5 +104,5 @@ test('should multiply a 4x4 matrix and a 4-length vector', () => {
   const test = multiplyVec(m, v)
   const expected = vec(6, 6, 6, 6)
 
-  expect(test).toEqual(expected)
+  expect(test).toEqualCloseTo(expected)
 })

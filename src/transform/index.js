@@ -13,8 +13,8 @@ import type {
 import { identity, multiplyVec } from '../core/matrix'
 import { vec } from '../core/vector'
 import { point } from '../core/point'
-import { transformPoint } from '../core/transform'
-import { correct } from '../core/adjust'
+import { transform as transformPoint } from '../core/transform'
+import { adjust } from '../core/adjust'
 import { absoluteCoords } from '../core/absolute'
 import { rect } from '../rect'
 import { boundingBox } from '../bounding-box'
@@ -122,7 +122,7 @@ function transformPath(
             acc[acc.length - 1] :
             point()
 
-          const tCurrent : PointT = correct(
+          const tCurrent : PointT = adjust(
             transformPoint(current, previous, T),
             tPrevious,
             index,

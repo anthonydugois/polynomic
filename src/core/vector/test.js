@@ -10,14 +10,14 @@ test('should return an array with a length of 4', () => {
   const test = vec()
   const expected = [0, 0, 0, 0]
 
-  expect(test).toEqual(expected)
+  expect(test).toEqualCloseTo(expected)
 })
 
 test('should return the length of the vector', () => {
   const test = length(vec(5, 0, 0, 1))
   const expected = 5
 
-  expect(test).toBe(expected)
+  expect(test).toBeCloseTo(expected)
 })
 
 test('should return the dot product of the vectors', () => {
@@ -27,7 +27,7 @@ test('should return the dot product of the vectors', () => {
   )
   const expected = 10
 
-  expect(test).toBe(expected)
+  expect(test).toBeCloseTo(expected)
 })
 
 test('should return the cross product of the vectors', () => {
@@ -37,7 +37,7 @@ test('should return the cross product of the vectors', () => {
   )
   const expected = [-3, 6, -3, 1]
 
-  expect(test).toEqual(expected)
+  expect(test).toEqualCloseTo(expected)
 })
 
 test('should return the angle between the vectors', () => {
@@ -47,5 +47,5 @@ test('should return the angle between the vectors', () => {
   )
   const expected = -Math.PI / 2
 
-  expect(test).toBe(expected)
+  expect(test).toBeCloseTo(expected)
 })

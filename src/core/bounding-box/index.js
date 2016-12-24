@@ -103,13 +103,29 @@ export function arcBoundingBox(
 function extremumsToBoundingBox(
   extremums : Array<CoordsT>
 ) : RectT {
-  const xPositions : Array<number> = extremums.map(({ x }) => parseFloat(x))
-  const yPositions : Array<number> = extremums.map(({ y }) => parseFloat(y))
+  const initialX : number = parseFloat(extremums[0].x)
+  const initialY : number = parseFloat(extremums[0].y)
 
-  const x : number = Math.min(...xPositions)
-  const y : number = Math.min(...yPositions)
-  const width : number = Math.max(...xPositions) - x
-  const height : number = Math.max(...yPositions) - y
+  return extremums.reduce(
+    (
+      acc : RectT,
+      extremum : CoordsT,
+    ) : RectT => {
+      const x : number = parseFloat(extremum.x)
+      const y : number = parseFloat(extremum.y)
 
-  return rect(x, y, width, height)
+      const xMin : number = Math.min(acc.x, x)
+      const yMin : number = Math.min(acc.y, y)
+      const xMax : number = Math.max(acc.x + acc.width, x)
+      const yMax : number = Math.max(acc.y + acc.height, y)
+
+      acc.x = xMin
+      acc.y = yMin
+      acc.width = xMax - xMin
+      acc.height = yMax - yMin
+
+      return acc
+    },
+    rect(initialX, initialY),
+  )
 }
