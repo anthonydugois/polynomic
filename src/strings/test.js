@@ -1,4 +1,4 @@
-import * as points from '../../point'
+import * as points from '../points'
 import * as build from './index'
 
 test('should build a m point as string', () => {

@@ -1,6 +1,6 @@
 // @flow
 
-import type { CircleT } from '../../types'
+import type { CircleT } from '../types'
 
 export function circle(
   cx : number = 0,

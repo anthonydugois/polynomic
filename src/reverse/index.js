@@ -5,10 +5,10 @@ import type {
   PointParamsT,
   PointT,
   PathT,
-} from '../../types'
+} from '../types'
 
-import { point } from '../../point'
-import { isM, isT, isC, isS, isA, isZ, isRelative } from '../../point/is'
+import { point } from '../core/point'
+import { isM, isT, isC, isS, isA, isZ, isRelative } from '../is'
 
 export function reverse(
   path: PathT,

@@ -1,9 +1,9 @@
 // @flow
 
-import type { MatrixT } from '../../types'
+import type { MatrixT } from '../types'
 
-import { mat, multiply } from '../../math/matrix'
-import { angle } from '../../utils/angle'
+import { mat, multiply } from '../core/matrix'
+import { angle } from '../core/angle'
 
 export function skew(
   alpha : number | string,

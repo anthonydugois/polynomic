@@ -1,6 +1,6 @@
 // @flow
 
-import type { RectT } from '../../types'
+import type { RectT } from '../types'
 
 export function rect(
   x : number = 0,

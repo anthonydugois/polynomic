@@ -7,18 +7,18 @@ import type {
   ArcT,
 } from '../../types'
 
-import { degToRad } from '../../utils/angle'
-import { isQ, isT, isC, isS, isA } from '../is'
-import { point } from '../../primitives/point'
-import { rect } from '../../primitives/rect'
-import { arc } from '../../primitives/arc'
+import { degToRad } from '../angle'
+import { isQ, isT, isC, isS, isA } from '../../is'
+import { point } from '../point'
+import { rect } from '../../rect'
+import { arc } from '../../arc'
 
 import {
   linearExtremums,
   quadraticExtremums,
   cubicExtremums,
   ellipticExtremums,
-} from '../../math/derivative'
+} from '../extremums'
 
 export function boundingBox(
   current : PointT,

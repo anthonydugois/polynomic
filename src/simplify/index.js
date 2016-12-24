@@ -1,8 +1,8 @@
 // @flow
 
-import type { PointT, PathT } from '../../types'
+import type { PointT, PathT } from '../types'
 
-import { distanceToLine } from '../../point/distance-to-line'
+import { distanceToLine } from '../core/distance'
 
 type DistanceT = {
   index: number,

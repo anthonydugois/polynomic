@@ -5,7 +5,7 @@ import {
   ellipticExtremums,
 } from './index'
 
-import { arc } from '../../primitives/arc'
+import { arc } from '../../arc'
 
 test('should return the extremums of the line', () => {
   const test = linearExtremums(0, 0, 100, 100)

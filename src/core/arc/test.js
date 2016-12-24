@@ -5,10 +5,10 @@ import {
   foci,
 } from './index'
 
-import { arc } from '../../primitives/arc'
-import { ellipse } from '../../primitives/ellipse'
-import { scale } from '../../transforms/scale'
-import { translate } from '../../transforms/translate'
+import { arc } from '../../arc'
+import { ellipse } from '../../ellipse'
+import { scale } from '../../scale'
+import { translate } from '../../translate'
 
 test('should transform radii and rotation of an arc', () => {
   const test = transformArcParameters(

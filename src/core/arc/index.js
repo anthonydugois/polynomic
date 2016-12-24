@@ -8,8 +8,8 @@ import type {
   ArcT,
 } from '../../types'
 
-import { arc } from '../../primitives/arc'
-import { ellipse } from '../../primitives/ellipse'
+import { arc } from '../../arc'
+import { ellipse } from '../../ellipse'
 import { mat, det, inverse, multiply } from '../matrix'
 
 export function arcToEllipse(

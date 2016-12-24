@@ -7,10 +7,10 @@ import type {
   ArcT,
 } from '../types'
 
-import * as codes from './codes'
-import { isQ, isT, isC, isS } from './is'
-import { arc } from '../primitives/arc'
-import { degToRad, radToDeg } from '../utils/angle'
+import * as codes from '../core/codes'
+import { isQ, isT, isC, isS } from '../is'
+import { arc } from '../arc'
+import { degToRad, radToDeg } from '../core/angle'
 
 export const defaultPoint: PointT = point('', 0, 0)
 

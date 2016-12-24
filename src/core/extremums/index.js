@@ -6,7 +6,7 @@ import type {
   EllipseT,
 } from '../../types'
 
-import { normalize } from '../../utils/normalize'
+import { normalize } from '../utils/normalize'
 import { arcToEllipse } from '../arc'
 
 import {

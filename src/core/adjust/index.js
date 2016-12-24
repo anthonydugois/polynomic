@@ -5,7 +5,7 @@ import type {
   PointCodeT,
 } from '../../types'
 
-import { point } from '../../primitives/point'
+import { point } from '../point'
 
 import {
   isM,
@@ -17,7 +17,7 @@ import {
   isS,
   isZ,
   isRelative,
-} from '../is'
+} from '../../is'
 
 export function correct(
   current : PointT,

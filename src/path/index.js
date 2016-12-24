@@ -2,8 +2,8 @@
 
 import type { PointT, PathT } from '../types'
 
-import { point } from '../primitives/point'
-import { isM, isZ } from '../point/is'
+import { point } from '../core/point'
+import { isM, isZ } from '../is'
 
 export function path(
   ...cmds : Array<PointT | Function>

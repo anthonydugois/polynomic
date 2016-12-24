@@ -1,8 +1,8 @@
 // @flow
 
-import type { PointT } from '../../types'
+import type { PointT } from '../types'
 
-import * as codes from '../codes'
+import * as codes from '../core/codes'
 
 export function is(
   current : PointT | Function,

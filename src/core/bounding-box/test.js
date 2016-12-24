@@ -1,5 +1,5 @@
-import { M, L, Q, C, A } from '../index'
-import { rect } from '../../primitives/rect'
+import { M, L, Q, C, A } from '../../points'
+import { rect } from '../../rect'
 import { boundingBox } from './index'
 
 test('should return the bounding box of the line', () => {

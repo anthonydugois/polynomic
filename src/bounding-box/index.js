@@ -4,10 +4,10 @@ import type {
   PointT,
   PathT,
   RectT,
-} from '../../types'
+} from '../types'
 
-import { rect } from '../../primitives/rect'
-import { boundingBox as pointBoundingBox } from '../../point/bounding-box'
+import { rect } from '../rect'
+import { boundingBox as pointBoundingBox } from '../core/bounding-box'
 
 export function boundingBox(
   path: PathT,

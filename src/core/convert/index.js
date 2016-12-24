@@ -2,8 +2,8 @@
 
 import type { PointT, PathT } from '../../types'
 
-import { point } from '../index'
-import { isL, isH, isV, isQ, isT, isA, isRelative } from '../is'
+import { point } from '../point'
+import { isL, isH, isV, isQ, isT, isA, isRelative } from '../../is'
 import { transform } from '../../transforms'
 import { rotate } from '../../transforms/rotate'
 import { degToRad } from '../../utils/angle'

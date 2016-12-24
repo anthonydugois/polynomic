@@ -1,6 +1,6 @@
 import { correct } from './index'
 
-import * as points from '../index'
+import * as points from '../../points'
 
 test('should convert the first point into a M point', () => {
   const test = correct(points.L(50, 50)(), undefined, 0)

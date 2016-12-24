@@ -2,8 +2,14 @@
 
 import type { PointT } from '../../types'
 
-import { point } from '../index'
-import { distanceToPoint } from '../distance-to-point'
+import { point } from '../point'
+
+export function distanceToPoint(
+  from: PointT,
+  to: PointT,
+): number {
+  return Math.sqrt(((from.x - to.x) ** 2) + ((from.y - to.y) ** 2))
+}
 
 export function distanceToLine(
   from: PointT,

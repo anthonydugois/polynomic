@@ -8,10 +8,9 @@ import type {
   RectT,
 } from '../types'
 
-import { path } from '../../path'
-import { parse } from '../../pathstring/parse'
-import { parseSegments } from '../../pathstring/parse-segments'
-import { M, L, A, Z } from '../../point'
+import { path } from '../path'
+import { parse, parseSegments } from '../parse'
+import { M, L, A, Z } from '../points'
 
 export function from(
   primitive : any | HTMLElement,

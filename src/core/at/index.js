@@ -7,11 +7,11 @@ import {
   quadratic,
   cubic,
   elliptic,
-} from '../../math/parametric'
+} from '../parametric'
 
-import { arc } from '../../primitives/arc'
-import { isL, isH, isV, isQ, isT, isC, isS, isA } from '../is'
-import { degToRad } from '../../utils/angle'
+import { arc } from '../../arc'
+import { isL, isH, isV, isQ, isT, isC, isS, isA } from '../../is'
+import { degToRad } from '../angle'
 
 export function pointAt(
   previous : PointT,

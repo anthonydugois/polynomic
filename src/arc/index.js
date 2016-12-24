@@ -1,6 +1,6 @@
 // @flow
 
-import type { ArcT } from '../../types'
+import type { ArcT } from '../types'
 
 export function arc(
   x1 : number = 0,

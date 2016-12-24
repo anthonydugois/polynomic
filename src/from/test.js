@@ -1,4 +1,4 @@
-import { isEqual } from '../path/is-equal'
+import { isEqual } from '../is-equal'
 import { from } from './index'
 
 test('should get the corresponding path from the SVG path node', () => {

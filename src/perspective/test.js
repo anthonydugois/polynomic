@@ -1,5 +1,5 @@
 import { perspective } from './index'
-import { mat } from '../../math/matrix'
+import { mat } from '../core/matrix'
 
 test('should return a perspective transformation matrix', () => {
   const test = perspective(100)()

@@ -1,6 +1,6 @@
-import { parse } from '../../pathstring/parse'
-import { M, z } from '../../point'
-import { isM, isZ } from '../../point/is'
+import { parse } from '../parse'
+import { M, z } from '../points'
+import { isM, isZ } from '../is'
 import { isEqual } from '../is-equal'
 import { join } from './index'
 

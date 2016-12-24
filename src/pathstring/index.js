@@ -2,10 +2,10 @@
 
 import type { PointT, PathT } from '../types'
 
-import { defaultPoint } from '../point'
-import * as builders from './builders'
-import { defaultPrecision } from '../utils/round'
-import { format } from '../utils/format'
+import { point } from '../core/point'
+import * as strings from '../strings'
+import { defaultPrecision } from '../core/utils/round'
+import { format } from '../core/utils/format'
 
 export function build(
   path: PathT,
@@ -21,10 +21,10 @@ export function build(
         return acc
       }
 
-      const fn: Function = builders[current.code]
+      const fn: Function = strings[current.code]
       const previous: PointT = index > 0 ?
         path[index - 1] :
-        defaultPoint
+        point()
 
       return format`
         ${ acc }

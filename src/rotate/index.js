@@ -1,9 +1,9 @@
 // @flow
 
-import type { MatrixT } from '../../types'
+import type { MatrixT } from '../types'
 
-import { identity, mat, multiply } from '../../math/matrix'
-import { angle } from '../../utils/angle'
+import { identity, mat, multiply } from '../core/matrix'
+import { angle } from '../core/angle'
 
 export function rotate3d(
   x : number,

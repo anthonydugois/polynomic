@@ -1,16 +1,16 @@
 
 // @flow
 
-import type { PointT } from '../../types'
+import type { PointT } from '../types'
 
-import { defaultPoint } from '../../point'
-import * as codes from '../../point/codes'
-import { round, defaultPrecision } from '../../utils/round'
-import { format } from '../../utils/format'
+import { point } from '../core/point'
+import * as codes from '../core/codes'
+import { round, defaultPrecision } from '../core/utils/round'
+import { format } from '../core/utils/format'
 
 export function m(
   current: PointT,
-  previous: PointT = defaultPoint,
+  previous: PointT = point(),
   precision: number = defaultPrecision,
 ): string {
   return format`
@@ -22,7 +22,7 @@ export function m(
 
 export function M(
   current: PointT,
-  previous: PointT = defaultPoint,
+  previous: PointT = point(),
   precision: number = defaultPrecision,
 ): string {
   return format`
@@ -34,7 +34,7 @@ export function M(
 
 export function l(
   current: PointT,
-  previous: PointT = defaultPoint,
+  previous: PointT = point(),
   precision: number = defaultPrecision,
 ): string {
   return format`
@@ -46,7 +46,7 @@ export function l(
 
 export function L(
   current: PointT,
-  previous: PointT = defaultPoint,
+  previous: PointT = point(),
   precision: number = defaultPrecision,
 ): string {
   return format`
@@ -58,7 +58,7 @@ export function L(
 
 export function h(
   current: PointT,
-  previous: PointT = defaultPoint,
+  previous: PointT = point(),
   precision: number = defaultPrecision,
 ): string {
   return format`
@@ -69,7 +69,7 @@ export function h(
 
 export function H(
   current: PointT,
-  previous: PointT = defaultPoint,
+  previous: PointT = point(),
   precision: number = defaultPrecision,
 ): string {
   return format`
@@ -80,7 +80,7 @@ export function H(
 
 export function v(
   current: PointT,
-  previous: PointT = defaultPoint,
+  previous: PointT = point(),
   precision: number = defaultPrecision,
 ): string {
   return format`
@@ -91,7 +91,7 @@ export function v(
 
 export function V(
   current: PointT,
-  previous: PointT = defaultPoint,
+  previous: PointT = point(),
   precision: number = defaultPrecision,
 ): string {
   return format`
@@ -102,7 +102,7 @@ export function V(
 
 export function q(
   current: PointT,
-  previous: PointT = defaultPoint,
+  previous: PointT = point(),
   precision: number = defaultPrecision,
 ): string {
   return format`
@@ -124,7 +124,7 @@ export function q(
 
 export function Q(
   current: PointT,
-  previous: PointT = defaultPoint,
+  previous: PointT = point(),
   precision: number = defaultPrecision,
 ): string {
   return format`
@@ -146,7 +146,7 @@ export function Q(
 
 export function t(
   current: PointT,
-  previous: PointT = defaultPoint,
+  previous: PointT = point(),
   precision: number = defaultPrecision,
 ): string {
   return format`
@@ -158,7 +158,7 @@ export function t(
 
 export function T(
   current: PointT,
-  previous: PointT = defaultPoint,
+  previous: PointT = point(),
   precision: number = defaultPrecision,
 ): string {
   return format`
@@ -170,7 +170,7 @@ export function T(
 
 export function c(
   current: PointT,
-  previous: PointT = defaultPoint,
+  previous: PointT = point(),
   precision: number = defaultPrecision,
 ): string {
   return format`
@@ -202,7 +202,7 @@ export function c(
 
 export function C(
   current: PointT,
-  previous: PointT = defaultPoint,
+  previous: PointT = point(),
   precision: number = defaultPrecision,
 ): string {
   return format`
@@ -234,7 +234,7 @@ export function C(
 
 export function s(
   current: PointT,
-  previous: PointT = defaultPoint,
+  previous: PointT = point(),
   precision: number = defaultPrecision,
 ): string {
   return format`
@@ -256,7 +256,7 @@ export function s(
 
 export function S(
   current: PointT,
-  previous: PointT = defaultPoint,
+  previous: PointT = point(),
   precision: number = defaultPrecision,
 ): string {
   return format`
@@ -278,7 +278,7 @@ export function S(
 
 export function a(
   current: PointT,
-  previous: PointT = defaultPoint,
+  previous: PointT = point(),
   precision: number = defaultPrecision,
 ): string {
   return format`
@@ -315,7 +315,7 @@ export function a(
 
 export function A(
   current: PointT,
-  previous: PointT = defaultPoint,
+  previous: PointT = point(),
   precision: number = defaultPrecision,
 ): string {
   return format`

@@ -1,9 +1,10 @@
 // @flow
 
-import type { PointT, PathT } from '../../types'
+import type { PointT, PathT } from '../types'
 
-import { point, z, Z } from '../../point'
-import { isM, isZ, isRelative } from '../../point/is'
+import { point } from '../core/point'
+import { z, Z } from '../points'
+import { isM, isZ, isRelative } from '../is'
 
 export function combine(
   path: PathT,

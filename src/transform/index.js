@@ -10,15 +10,15 @@ import type {
   RectT,
 } from '../types'
 
-import { identity, multiplyVec } from '../math/matrix'
-import { vec } from '../math/vector'
-import { point } from '../primitives/point'
-import { rect } from '../primitives/rect'
-import { boundingBox } from '../properties/bounding-box'
-import { translate3d } from './translate'
-import { transformPoint } from '../point/transform'
-import { correct } from '../point/correct'
-import { absoluteCoords } from '../utils/absolute'
+import { identity, multiplyVec } from '../core/matrix'
+import { vec } from '../core/vector'
+import { point } from '../core/point'
+import { transformPoint } from '../core/transform'
+import { correct } from '../core/adjust'
+import { absoluteCoords } from '../core/absolute'
+import { rect } from '../rect'
+import { boundingBox } from '../bounding-box'
+import { translate3d } from '../translate'
 
 export function transform(
   ...matrices: Array<Function>

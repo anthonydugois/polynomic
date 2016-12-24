@@ -5,7 +5,7 @@ import {
   elliptic,
 } from './index'
 
-import { arc } from '../../primitives/arc'
+import { arc } from '../../arc'
 
 test('should return the point located at the provided offset on the line', () => {
   const test = linear(0, 0, 100, 0)(0.5)

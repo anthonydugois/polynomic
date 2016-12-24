@@ -1,4 +1,4 @@
-import { M, L, Q, C, A } from '../index'
+import { M, L, Q, C, A } from '../../points'
 import { pointAt } from './index'
 
 test('should return the point at the provided offset on the line', () => {

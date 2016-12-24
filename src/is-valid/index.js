@@ -1,7 +1,7 @@
 // @flow
 
-import * as points from '../../point'
-import { parseSegments } from '../parse-segments'
+import * as points from '../points'
+import { parseSegments } from '../parse'
 
 export function isValid(
   d: string,

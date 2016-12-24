@@ -5,10 +5,10 @@ import type {
   CoordsT,
   AbsoluteCoordsT,
   RectT,
-} from '../../types'
+} from '../types'
 
-import { mat, multiply } from '../../math/matrix'
-import { absoluteCoords } from '../../utils/absolute'
+import { mat, multiply } from '../core/matrix'
+import { absoluteCoords } from '../core/absolute'
 
 export function translate3d(
   tx : number | string,

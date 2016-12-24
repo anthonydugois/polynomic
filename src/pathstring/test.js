@@ -1,6 +1,6 @@
-import { parse } from './parse'
-import { isEqual } from '../path/is-equal'
-import { isValid } from './is-valid'
+import { parse } from '../parse'
+import { isEqual } from '../is-equal'
+import { isValid } from '../is-valid'
 import { build } from './index'
 
 test('should build a pathstring from array of points', () => {

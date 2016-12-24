@@ -1,6 +1,6 @@
 // @flow
 
-import type { LineT } from '../../types'
+import type { LineT } from '../types'
 
 export function line(
   x1 : number = 0,

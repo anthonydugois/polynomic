@@ -7,14 +7,12 @@ import type {
   VectorT,
 } from '../../types'
 
-import { vec } from '../../math/vector'
-import { multiplyVec } from '../../math/matrix'
-import { transformArcParameters } from '../../math/arc'
-
-import { point } from '../../primitives/point'
-import { arc } from '../../primitives/arc'
-
-import { degToRad, radToDeg } from '../../utils/angle'
+import { vec } from '../vector'
+import { multiplyVec } from '../matrix'
+import { transformArcParameters } from '../arc'
+import { point } from '../point'
+import { arc } from '../../arc'
+import { degToRad, radToDeg } from '../angle'
 
 export function transformPoint(
   current : PointT,

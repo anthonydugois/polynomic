@@ -1,5 +1,5 @@
-import { parse } from '../../pathstring/parse'
-import { isEqual } from '../../path/is-equal'
+import { parse } from '../parse'
+import { isEqual } from '../is-equal'
 import { toCubics } from './index'
 
 test('should convert points into cubic curves', () => {

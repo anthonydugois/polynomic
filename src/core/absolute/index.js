@@ -4,7 +4,7 @@ import type {
   CoordsT,
   AbsoluteCoordsT,
   RectT,
-} from '../types'
+} from '../../types'
 
 const positions = {
   left: 0,

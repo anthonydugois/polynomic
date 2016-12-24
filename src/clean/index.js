@@ -1,9 +1,9 @@
 // @flow
 
-import type { PointT, PathT } from '../../types'
+import type { PointT, PathT } from '../types'
 
-import { m, M, z, defaultPoint } from '../../point'
-import { isM, isL, isH, isV, isZ, isRelative } from '../../point/is'
+import { m, M, z, defaultPoint } from '../points'
+import { isM, isL, isH, isV, isZ, isRelative } from '../is'
 
 export function clean(
   path: PathT,

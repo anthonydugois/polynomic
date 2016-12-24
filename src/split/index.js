@@ -1,6 +1,6 @@
 // @flow
 
-import type { PointT, PathT } from '../../types'
+import type { PointT, PathT } from '../types'
 
 export function split(
   path: PathT,

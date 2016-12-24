@@ -1,12 +1,12 @@
-import { transform } from '../index'
+import { transform } from '../transform'
 
 import {
   matrix3d,
   matrix,
 } from './index'
 
-import { parse } from '../../pathstring/parse'
-import { isEqual } from '../../path/is-equal'
+import { parse } from '../parse'
+import { isEqual } from '../is-equal'
 
 test('should apply a matrix3d transform on the path', () => {
   const path = parse('M0 0L100 0Q150 150 200 200')

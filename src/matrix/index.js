@@ -1,8 +1,8 @@
 // @flow
 
-import type { MatrixT } from '../../types'
+import type { MatrixT } from '../types'
 
-import { mat, multiply } from '../../math/matrix'
+import { mat, multiply } from '../core/matrix'
 
 export function matrix3d(
   m11 : number,

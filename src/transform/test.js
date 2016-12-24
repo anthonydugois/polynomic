@@ -1,9 +1,9 @@
 import { transform } from './index'
 
-import { translate } from './translate'
-import { scale } from './scale'
-import { parse } from '../pathstring/parse'
-import { isEqual } from '../path/is-equal'
+import { translate } from '../translate'
+import { scale } from '../scale'
+import { parse } from '../parse'
+import { isEqual } from '../is-equal'
 
 test('should return a function and apply the transform list on the path', () => {
   const path = parse('M0 0L100 100Q200 125 200 200')

@@ -1,6 +1,6 @@
 // @flow
 
-import type { EllipseT } from '../../types'
+import type { EllipseT } from '../types'
 
 export function ellipse(
   cx : number = 0,

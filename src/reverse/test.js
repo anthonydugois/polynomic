@@ -1,4 +1,4 @@
-import { parse } from '../../pathstring/parse'
+import { parse } from '../parse'
 import { isEqual } from '../is-equal'
 import { reverse } from './index'
 
