@@ -4,270 +4,200 @@ import type {
   PointT,
   PointParamsT,
   PointCodeT,
-  ArcT,
 } from '../types'
 
+import { curry } from 'lodash'
 import { point } from '../core/point'
 import * as codes from '../core/codes'
-import { degToRad, radToDeg } from '../core/angle'
 import { isQ, isT, isC, isS } from '../is'
-import { arc } from '../arc'
 
-export function m(
+export const m : Function = curry((
   dx : number,
   dy : number,
-) : Function {
-  return function m(
-    previous : PointT = point(),
-  ) : PointT {
-    return point(codes.m, previous.x + dx, previous.y + dy)
-  }
-}
+  previous : PointT,
+) : PointT => point(codes.m, previous.x + dx, previous.y + dy))
 
-export function M(
+export const M : Function = curry((
   x : number,
   y : number,
-): Function {
-  return function M() : PointT {
-    return point(codes.M, x, y)
-  }
-}
+) : PointT => point(codes.M, x, y))
 
-export function l(
+export const l : Function = curry((
   dx : number,
   dy : number,
-) : Function {
-  return function l(
-    previous : PointT = point(),
-  ) : PointT {
-    return point(codes.l, previous.x + dx, previous.y + dy)
-  }
-}
+  previous : PointT,
+) : PointT => point(codes.l, previous.x + dx, previous.y + dy))
 
-export function L(
+export const L : Function = curry((
   x : number,
   y : number,
-) : Function {
-  return function L() : PointT {
-    return point(codes.L, x, y)
-  }
-}
+) : PointT => point(codes.L, x, y))
 
-export function h(
+export const h : Function = curry((
   dx : number,
-) : Function {
-  return function h(
-    previous : PointT = point(),
-  ) : PointT {
-    return point(codes.h, previous.x + dx, previous.y)
-  }
-}
+  previous : PointT,
+) : PointT => point(codes.h, previous.x + dx, previous.y))
 
-export function H(
+export const H : Function = curry((
   x : number,
-) : Function {
-  return function H(
-    previous : PointT = point(),
-  ) : PointT {
-    return point(codes.H, x, previous.y)
-  }
-}
+  previous : PointT,
+) : PointT => point(codes.H, x, previous.y))
 
-export function v(
+export const v : Function = curry((
   dy : number,
-) : Function {
-  return function v(
-    previous : PointT = point(),
-  ) : PointT {
-    return point(codes.v, previous.x, previous.y + dy)
-  }
-}
+  previous : PointT,
+) : PointT => point(codes.v, previous.x, previous.y + dy))
 
-export function V(
+export const V : Function = curry((
   y : number,
-) : Function {
-  return function V(
-    previous : PointT = point(),
-  ) : PointT {
-    return point(codes.V, previous.x, y)
-  }
-}
+  previous : PointT,
+) : PointT => point(codes.V, previous.x, y))
 
-export function q(
+export const q : Function = curry((
   dx1 : number,
   dy1 : number,
   dx : number,
   dy : number,
-) : Function {
-  return function q(
-    previous : PointT = point(),
-  ) : PointT {
-    return point(codes.q, previous.x + dx, previous.y + dy, {
-      x1: previous.x + dx1,
-      y1: previous.y + dy1,
-    })
-  }
-}
+  previous : PointT,
+) : PointT => point(codes.q, previous.x + dx, previous.y + dy, {
+  x1: previous.x + dx1,
+  y1: previous.y + dy1,
+}))
 
-export function Q(
+export const Q : Function = curry((
   x1 : number,
   y1 : number,
   x : number,
   y : number,
-) : Function {
-  return function Q() : PointT {
-    return point(codes.Q, x, y, {
-      x1,
-      y1,
-    })
-  }
-}
+) : PointT => point(codes.Q, x, y, {
+  x1,
+  y1,
+}))
 
-export function t(
+export const t : Function = curry((
   dx : number,
   dy : number,
-) : Function {
-  return function t(
-    previous : PointT = point(),
-  ) : PointT {
-    const parameters : PointParamsT = { x1: previous.x, y1: previous.y }
+  previous : PointT,
+) : PointT => {
+  const parameters : PointParamsT = { x1: previous.x, y1: previous.y }
 
-    if (isQ(previous) || isT(previous)) {
-      parameters.x1 = typeof previous.parameters.x1 !== 'undefined' ?
-        (2 * previous.x) - previous.parameters.x1 :
-        parameters.x1
+  if (isQ(previous) || isT(previous)) {
+    parameters.x1 = typeof previous.parameters.x1 !== 'undefined' ?
+      (2 * previous.x) - previous.parameters.x1 :
+      parameters.x1
 
-      parameters.y1 = typeof previous.parameters.y1 !== 'undefined' ?
-        (2 * previous.y) - previous.parameters.y1 :
-        parameters.y1
-    }
-
-    return point(codes.t, previous.x + dx, previous.y + dy, parameters)
+    parameters.y1 = typeof previous.parameters.y1 !== 'undefined' ?
+      (2 * previous.y) - previous.parameters.y1 :
+      parameters.y1
   }
-}
 
-export function T(
+  return point(codes.t, previous.x + dx, previous.y + dy, parameters)
+})
+
+export const T : Function = curry((
   x : number,
   y : number,
-) : Function {
-  return function T(
-    previous : PointT = point(),
-  ) : PointT {
-    const parameters : PointParamsT = { x1: previous.x, y1: previous.y }
+  previous : PointT,
+) : PointT => {
+  const parameters : PointParamsT = { x1: previous.x, y1: previous.y }
 
-    if (isQ(previous) || isT(previous)) {
-      parameters.x1 = typeof previous.parameters.x1 !== 'undefined' ?
-        (2 * previous.x) - previous.parameters.x1 :
-        parameters.x1
+  if (isQ(previous) || isT(previous)) {
+    parameters.x1 = typeof previous.parameters.x1 !== 'undefined' ?
+      (2 * previous.x) - previous.parameters.x1 :
+      parameters.x1
 
-      parameters.y1 = typeof previous.parameters.y1 !== 'undefined' ?
-        (2 * previous.y) - previous.parameters.y1 :
-        parameters.y1
-    }
-
-    return point(codes.T, x, y, parameters)
+    parameters.y1 = typeof previous.parameters.y1 !== 'undefined' ?
+      (2 * previous.y) - previous.parameters.y1 :
+      parameters.y1
   }
-}
 
-export function c(
+  return point(codes.T, x, y, parameters)
+})
+
+export const c : Function = curry((
   dx1 : number,
   dy1 : number,
   dx2 : number,
   dy2 : number,
   dx : number,
   dy : number,
-) : Function {
-  return function c(
-    previous : PointT = point(),
-  ) : PointT {
-    return point(codes.c, previous.x + dx, previous.y + dy, {
-      x1: previous.x + dx1,
-      y1: previous.y + dy1,
-      x2: previous.x + dx2,
-      y2: previous.y + dy2,
-    })
-  }
-}
+  previous : PointT,
+) : PointT => point(codes.c, previous.x + dx, previous.y + dy, {
+  x1: previous.x + dx1,
+  y1: previous.y + dy1,
+  x2: previous.x + dx2,
+  y2: previous.y + dy2,
+}))
 
-export function C(
+export const C : Function = curry((
   x1 : number,
   y1 : number,
   x2 : number,
   y2 : number,
   x : number,
   y : number,
-) : Function {
-  return function C() : PointT {
-    return point(codes.C, x, y, {
-      x1,
-      y1,
-      x2,
-      y2,
-    })
-  }
-}
+) : PointT => point(codes.C, x, y, {
+  x1,
+  y1,
+  x2,
+  y2,
+}))
 
-export function s(
+export const s : Function = curry((
   dx2 : number,
   dy2 : number,
   dx : number,
   dy : number,
-) : Function {
-  return function s(
-    previous : PointT = point(),
-  ) : PointT {
-    const parameters : PointParamsT = {
-      x1: previous.x,
-      y1: previous.y,
-      x2: previous.x + dx2,
-      y2: previous.y + dy2,
-    }
-
-    if (isC(previous) || isS(previous)) {
-      parameters.x1 = typeof previous.parameters.x2 !== 'undefined' ?
-        (2 * previous.x) - previous.parameters.x2 :
-        parameters.x1
-
-      parameters.y1 = typeof previous.parameters.y2 !== 'undefined' ?
-        (2 * previous.y) - previous.parameters.y2 :
-        parameters.y1
-    }
-
-    return point(codes.s, previous.x + dx, previous.y + dy, parameters)
+  previous : PointT,
+) : PointT => {
+  const parameters : PointParamsT = {
+    x1: previous.x,
+    y1: previous.y,
+    x2: previous.x + dx2,
+    y2: previous.y + dy2,
   }
-}
 
-export function S(
+  if (isC(previous) || isS(previous)) {
+    parameters.x1 = typeof previous.parameters.x2 !== 'undefined' ?
+      (2 * previous.x) - previous.parameters.x2 :
+      parameters.x1
+
+    parameters.y1 = typeof previous.parameters.y2 !== 'undefined' ?
+      (2 * previous.y) - previous.parameters.y2 :
+      parameters.y1
+  }
+
+  return point(codes.s, previous.x + dx, previous.y + dy, parameters)
+})
+
+export const S : Function = curry((
   x2 : number,
   y2 : number,
   x : number,
   y : number,
-) : Function {
-  return function S(
-    previous : PointT = point(),
-  ) : PointT {
-    const parameters : PointParamsT = {
-      x1: previous.x,
-      y1: previous.y,
-      x2,
-      y2,
-    }
-
-    if (isC(previous) || isS(previous)) {
-      parameters.x1 = typeof previous.parameters.x2 !== 'undefined' ?
-        (2 * previous.x) - previous.parameters.x2 :
-        parameters.x1
-
-      parameters.y1 = typeof previous.parameters.y2 !== 'undefined' ?
-        (2 * previous.y) - previous.parameters.y2 :
-        parameters.y1
-    }
-
-    return point(codes.S, x, y, parameters)
+  previous : PointT,
+) : PointT => {
+  const parameters : PointParamsT = {
+    x1: previous.x,
+    y1: previous.y,
+    x2,
+    y2,
   }
-}
 
-export function a(
+  if (isC(previous) || isS(previous)) {
+    parameters.x1 = typeof previous.parameters.x2 !== 'undefined' ?
+      (2 * previous.x) - previous.parameters.x2 :
+      parameters.x1
+
+    parameters.y1 = typeof previous.parameters.y2 !== 'undefined' ?
+      (2 * previous.y) - previous.parameters.y2 :
+      parameters.y1
+  }
+
+  return point(codes.S, x, y, parameters)
+})
+
+export const a : Function = curry((
   rx : number,
   ry : number,
   rotation : number,
@@ -275,27 +205,20 @@ export function a(
   sweep : number,
   dx : number,
   dy : number,
-) : Function {
-  return function a(
-    previous : PointT = point(),
-  ) : PointT {
-    const e : ArcT = arc(
-      previous.x, previous.y,
-      rx, ry, degToRad(rotation), large, sweep,
-      previous.x + dx, previous.y + dy,
-    )
+  previous : PointT,
+) : PointT => {
+  const theta : number = rotation % 360
 
-    return point(codes.a, e.x2, e.y2, {
-      rx: e.rx,
-      ry: e.ry,
-      rotation: radToDeg(e.phi),
-      large: e.large,
-      sweep: e.sweep,
-    })
-  }
-}
+  return point(codes.a, previous.x + dx, previous.y + dy, {
+    rx,
+    ry,
+    rotation: theta < 0 ? theta + 360 : theta,
+    large: large === 0 ? 0 : 1,
+    sweep: sweep === 0 ? 0 : 1,
+  })
+})
 
-export function A(
+export const A : Function = curry((
   rx : number,
   ry : number,
   rotation : number,
@@ -303,38 +226,22 @@ export function A(
   sweep : number,
   x : number,
   y : number,
-) : Function {
-  return function A(
-    previous : PointT = point(),
-  ) : PointT {
-    const e : ArcT = arc(
-      previous.x, previous.y,
-      rx, ry, degToRad(rotation), large, sweep,
-      x, y,
-    )
+) : PointT => {
+  const theta : number = rotation % 360
 
-    return point(codes.A, e.x2, e.y2, {
-      rx: e.rx,
-      ry: e.ry,
-      rotation: radToDeg(e.phi),
-      large: e.large,
-      sweep: e.sweep,
-    })
-  }
-}
+  return point(codes.A, x, y, {
+    rx,
+    ry,
+    rotation: theta < 0 ? theta + 360 : theta,
+    large: large === 0 ? 0 : 1,
+    sweep: sweep === 0 ? 0 : 1,
+  })
+})
 
-export function z() : Function {
-  return function z(
-    related : PointT = point(),
-  ) : PointT {
-    return point(codes.z, related.x, related.y)
-  }
-}
+export const z : Function = curry((
+  related : PointT,
+) : PointT => point(codes.z, related.x, related.y))
 
-export function Z() : Function {
-  return function Z(
-    related : PointT = point(),
-  ) : PointT {
-    return point(codes.Z, related.x, related.y)
-  }
-}
+export const Z : Function = curry((
+  related : PointT,
+) : PointT => point(codes.Z, related.x, related.y))
