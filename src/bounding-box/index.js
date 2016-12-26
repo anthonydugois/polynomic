@@ -1,36 +1,134 @@
 // @flow
 
 import type {
+  CoordsT,
   PointT,
   PathT,
   RectT,
 } from '../types'
 
+import { degToRad } from '../core/angle'
+import { point } from '../core/point'
+import * as ex from '../core/extremums'
 import { rect } from '../rect'
-import { boundingBox as pointBoundingBox } from '../core/bounding-box'
+import { arc } from '../arc'
+import { isQ, isT, isC, isS, isA } from '../is'
 
 export function boundingBox(
-  path: PathT,
-): RectT {
-  const bb : Array<RectT> = path.reduce(
+  path : PathT,
+) : RectT {
+  return path.reduce(
     (
-      acc : Array<RectT>,
+      acc : RectT,
       current : PointT,
       index : number,
-    ) : Array<RectT> => {
+    ) : RectT => {
       if (index > 0) {
-        acc.push(pointBoundingBox(current, path[index - 1]))
+        const {
+          x,
+          y,
+          width,
+          height,
+        } : RectT = _boundingBox(current, path[index - 1])
+
+        const xMin : number = Math.min(acc.x, x)
+        const yMin : number = Math.min(acc.y, y)
+        const xMax : number = Math.max(acc.x + acc.width, x + width)
+        const yMax : number = Math.max(acc.y + acc.height, y + height)
+
+        acc.x = xMin
+        acc.y = yMin
+        acc.width = xMax - xMin
+        acc.height = yMax - yMin
       }
 
       return acc
     },
-    [],
+    rect(
+      path[0].x,
+      path[0].y,
+    ),
   )
+}
 
-  const x : number = Math.min(...bb.map(({ x }) => x))
-  const y : number = Math.min(...bb.map(({ y }) => y))
-  const width : number = Math.max(...bb.map(({ x, width }) => x + width)) - x
-  const height : number = Math.max(...bb.map(({ y, height }) => y + height)) - y
+function _boundingBox(
+  current : PointT,
+  previous : PointT = point(),
+) : RectT {
+  switch (true) {
+  case isQ(current):
+  case isT(current):
+    return extremumsToBoundingBox(ex.quadraticExtremums(
+      previous.x,
+      previous.y,
+      current.parameters.x1,
+      current.parameters.y1,
+      current.x,
+      current.y,
+    ))
 
-  return rect(x, y, width, height)
+  case isC(current):
+  case isS(current):
+    return extremumsToBoundingBox(ex.cubicExtremums(
+      previous.x,
+      previous.y,
+      current.parameters.x1,
+      current.parameters.y1,
+      current.parameters.x2,
+      current.parameters.y2,
+      current.x,
+      current.y,
+    ))
+
+  case isA(current):
+    return extremumsToBoundingBox(ex.ellipticExtremums(arc(
+      previous.x,
+      previous.y,
+      current.parameters.rx,
+      current.parameters.ry,
+      degToRad(current.parameters.rotation),
+      current.parameters.large,
+      current.parameters.sweep,
+      current.x,
+      current.y,
+    )))
+
+  default:
+    return extremumsToBoundingBox(ex.linearExtremums(
+      previous.x,
+      previous.y,
+      current.x,
+      current.y,
+    ))
+  }
+}
+
+function extremumsToBoundingBox(
+  extremums : Array<CoordsT>
+) : RectT {
+  return extremums.reduce(
+    (
+      acc : RectT,
+      extremum : CoordsT,
+    ) : RectT => {
+      const x : number = parseFloat(extremum.x)
+      const y : number = parseFloat(extremum.y)
+
+      const xMin : number = Math.min(acc.x, x)
+      const yMin : number = Math.min(acc.y, y)
+      const xMax : number = Math.max(acc.x + acc.width, x)
+      const yMax : number = Math.max(acc.y + acc.height, y)
+
+      acc.x = xMin
+      acc.y = yMin
+      acc.width = xMax - xMin
+      acc.height = yMax - yMin
+
+      return acc
+    },
+    rect(
+      parseFloat(extremums[0].x),
+      parseFloat(extremums[0].y),
+    ),
+  )
 }
