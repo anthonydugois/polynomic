@@ -32,7 +32,9 @@
     "rimraf": "^2.5.4",
     "webpack": "^1.13.2"
   },
-  "dependencies": {},
+  "dependencies": {
+    "lodash.curry": "^4.1.1"
+  },
   "scripts": {
     "start": "npm test -- --watch --notify",
     "lint": "npm run lint:eslint && npm run lint:flow",
