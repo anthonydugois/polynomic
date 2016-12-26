@@ -27,8 +27,8 @@ expect.extend({
 
     return { pass: true }
   },
-  toEqualPath(received, expected) {
-    expect(isEqual(received, expected)).toBe(true)
+  toEqualPath(received, expected, precision = 3) {
+    expect(isEqual(received, expected, precision)).toBe(true)
 
     return { pass: true }
   },

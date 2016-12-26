@@ -2,23 +2,23 @@
 
 import type { MatrixT } from '../types'
 
+import { curry } from 'lodash'
 import { mat, multiply } from '../core/matrix'
 
-export function perspective(
-  d : number,
-) : Function {
-  return (
-    matrix : MatrixT,
-  ) : MatrixT => {
-    const perspectiveMatrix : MatrixT = mat(
-      1, 0, 0, 0,
-      0, 1, 0, 0,
-      0, 0, 1, -1 / d,
-      0, 0, 0, 1,
-    )
+export const perspective : Function = curry(_perspective)
 
-    return typeof matrix !== 'undefined' ?
-      multiply(matrix, perspectiveMatrix) :
-      perspectiveMatrix
-  }
+function _perspective(
+  d : number,
+  matrix : MatrixT,
+) : MatrixT {
+  const perspectiveMatrix : MatrixT = mat(
+    1, 0, 0, 0,
+    0, 1, 0, 0,
+    0, 0, 1, -1 / d,
+    0, 0, 0, 1,
+  )
+
+  return typeof matrix !== 'undefined' ?
+    multiply(matrix, perspectiveMatrix) :
+    perspectiveMatrix
 }

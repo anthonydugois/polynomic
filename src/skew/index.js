@@ -2,37 +2,35 @@
 
 import type { MatrixT } from '../types'
 
+import { curry } from 'lodash'
 import { mat, multiply } from '../core/matrix'
 import { angle } from '../core/angle'
 
-export function skew(
+export const skew : Function = curry(function skew(
   alpha : number | string,
-  beta : number | string = 0,
-) : Function {
-  return (
-    matrix : MatrixT,
-  ) : MatrixT => {
-    const skewMatrix : MatrixT = mat(
-      1, Math.tan(angle(beta)), 0, 0,
-      Math.tan(angle(alpha)), 1, 0, 0,
-      0, 0, 1, 0,
-      0, 0, 0, 1,
-    )
-
-    return typeof matrix !== 'undefined' ?
-      multiply(matrix, skewMatrix) :
-      skewMatrix
-  }
-}
-
-export function skewX(
-  alpha : number | string,
-) : Function {
-  return skew(alpha, 0)
-}
-
-export function skewY(
   beta : number | string,
-) : Function {
-  return skew(0, beta)
-}
+  matrix : MatrixT,
+) : MatrixT {
+  const skewMatrix : MatrixT = mat(
+    1, Math.tan(angle(beta)), 0, 0,
+    Math.tan(angle(alpha)), 1, 0, 0,
+    0, 0, 1, 0,
+    0, 0, 0, 1,
+  )
+
+  return multiply(matrix, skewMatrix)
+})
+
+export const skewX : Function = curry(function skewX(
+  alpha : number | string,
+  matrix : MatrixT,
+) : MatrixT {
+  return skew(alpha, 0, matrix)
+})
+
+export const skewY : Function = curry(function skewY(
+  beta : number | string,
+  matrix : MatrixT,
+) : MatrixT {
+  return skew(0, beta, matrix)
+})

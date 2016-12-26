@@ -106,8 +106,8 @@ export function arcToCubic(
     f2 = center[3]
   } else {
     const rotation = rotate(-angle)
-    const _previous = transform(rotation)([previous])[0]
-    const _current = transform(rotation)([current])[0]
+    const _previous = transform([rotation], [previous])[0]
+    const _current = transform([rotation], [current])[0]
 
     x1 = _previous.x
     y1 = _previous.y
@@ -207,5 +207,5 @@ export function arcToCubic(
     return path
   }
 
-  return transform(rotate(angle))(path)
+  return transform([rotate(angle)], path)
 }

@@ -2,50 +2,50 @@
 
 import type { MatrixT } from '../types'
 
+import { curry } from 'lodash'
 import { mat, multiply } from '../core/matrix'
 
-export function scale3d(
+export const scale3d : Function = curry(function scale3d(
   sx : number,
   sy : number,
   sz : number,
-) : Function {
-  return (
-    matrix : MatrixT,
-  ) : MatrixT => {
-    const scaleMatrix : MatrixT = mat(
-      sx, 0, 0, 0,
-      0, sy, 0, 0,
-      0, 0, sz, 0,
-      0, 0, 0, 1,
-    )
+  matrix : MatrixT,
+) : MatrixT {
+  const scaleMatrix : MatrixT = mat(
+    sx, 0, 0, 0,
+    0, sy, 0, 0,
+    0, 0, sz, 0,
+    0, 0, 0, 1,
+  )
 
-    return typeof matrix !== 'undefined' ?
-      multiply(matrix, scaleMatrix) :
-      scaleMatrix
-  }
-}
+  return multiply(matrix, scaleMatrix)
+})
 
-export function scale(
+export const scale : Function = curry(function scale(
   sx : number,
-  sy : number = sx,
-) : Function {
-  return scale3d(sx, sy, 1)
-}
-
-export function scaleX(
-  sx : number,
-) : Function {
-  return scale3d(sx, 1, 1)
-}
-
-export function scaleY(
   sy : number,
-) : Function {
-  return scale3d(1, sy, 1)
-}
+  matrix : MatrixT,
+) : MatrixT {
+  return scale3d(sx, sy, 1, matrix)
+})
 
-export function scaleZ(
+export const scaleX : Function = curry(function scaleX(
+  sx : number,
+  matrix : MatrixT,
+) : MatrixT {
+  return scale3d(sx, 1, 1, matrix)
+})
+
+export const scaleY : Function = curry(function scaleY(
+  sy : number,
+  matrix : MatrixT,
+) : MatrixT {
+  return scale3d(1, sy, 1, matrix)
+})
+
+export const scaleZ : Function = curry(function scaleZ(
   sz : number,
-) : Function {
-  return scale3d(1, 1, sz)
-}
+  matrix : MatrixT,
+) : MatrixT {
+  return scale3d(1, 1, sz, matrix)
+})

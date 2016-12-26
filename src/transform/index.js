@@ -11,10 +11,9 @@ import type {
   RectT,
 } from '../types'
 
-import curry from 'lodash.curry'
-
+import { curry } from 'lodash'
 import { degToRad, radToDeg } from '../core/angle'
-import { identity, multiplyVec } from '../core/matrix'
+import { identity, multiply, multiplyVec } from '../core/matrix'
 import { vec } from '../core/vector'
 import { point } from '../core/point'
 import { adjust } from '../core/adjust'
@@ -25,28 +24,25 @@ import { arc } from '../arc'
 import { boundingBox } from '../bounding-box'
 import { translate3d } from '../translate'
 
-export function transform(
-  ...matrices: Array<Function>
-) : Function {
-  const list : Function = transformList(...matrices)
+export const transform : Function = curry(function transform(
+  matrices : Array<MatrixT | Function>,
+  path : PathT,
+  options : {} = {},
+) : PathT {
+  const bbox : RectT = boundingBox(path)
+  const { transformOrigin } : PathTransformOptionsT = transformOptions(options)
+  const origin : AbsoluteCoordsT = absolute(transformOrigin, bbox)
+  const transformMatrix : MatrixT = transformList(matrices, bbox, origin)
 
-  return (
-    path : PathT,
-    options : {} = {},
-  ) : PathT => {
-    const transformer : Function = transformFromOrigin(transformPath(options))
+  return transformFromOrigin(
+    transformPath(options),
+    transformMatrix,
+    path,
+    origin,
+  )
+})
 
-    const bbox : RectT = boundingBox(path)
-    const { transformOrigin } : PathTransformOptionsT = transformOptions(options)
-    const origin : AbsoluteCoordsT = absolute(transformOrigin, bbox)
-
-    const T : MatrixT = list(bbox, origin)
-
-    return transformer(path, T, origin)
-  }
-}
-
-function transformOptions(
+const transformOptions : Function = curry(function transformOptions(
   options : {} = {},
 ) : PathTransformOptionsT {
   return {
@@ -54,210 +50,187 @@ function transformOptions(
     transformOrigin: { x: 0, y: 0 },
     ...options,
   }
-}
+})
 
-function transformList(
-  ...matrices: Array<Function>
-) : Function {
-  const transformer : Function = transformFromOrigin(transformRect())
+const transformList : Function = curry(function transformList(
+  matrices : Array<MatrixT | Function>,
+  bbox : RectT,
+  origin : AbsoluteCoordsT,
+) : MatrixT {
+  return matrices.reduce(
+    (
+      transformMatrix : MatrixT,
+      matrix : MatrixT | Function,
+    ) : MatrixT => typeof matrix === 'function' ?
+      matrix(
+        transformMatrix,
+        transformFromOrigin(
+          transformRect,
+          transformMatrix,
+          bbox,
+          origin,
+        ),
+      ) :
+      multiply(
+        transformMatrix,
+        matrix,
+      ),
+    identity(),
+  )
+})
 
-  return (
-    bbox : RectT,
-    origin : AbsoluteCoordsT,
-  ) : MatrixT => {
-    return matrices.reduce(
-      (
-        T : MatrixT,
-        matrix : Function,
-      ) : MatrixT => matrix(T, transformer(bbox, T, origin)),
-      identity(),
-    )
-  }
-}
-
-function transformFromOrigin(
+const transformFromOrigin : Function = curry(function transformFromOrigin(
   transformer : Function,
-) : Function {
-  return function transformFromOrigin(
-    primitive : any,
-    T : MatrixT,
-    origin : AbsoluteCoordsT,
-  ) : PathT {
-    const shouldTransformFromOrigin : boolean = origin.x !== 0
-      || origin.y !== 0
-      || origin.z !== 0
+  transformMatrix : MatrixT,
+  primitive : any,
+  origin : AbsoluteCoordsT,
+) : any {
+  if (origin.x !== 0 || origin.y !== 0 || origin.z !== 0) {
+    const I : MatrixT = identity()
+    const forward : MatrixT = translate3d(origin.x, origin.y, origin.z, I)
+    const backward : MatrixT = translate3d(-origin.x, -origin.y, -origin.z, I)
 
-    if (shouldTransformFromOrigin) {
-      const forward : MatrixT = translate3d(origin.x, origin.y, origin.z)()
-      const backward : MatrixT = translate3d(-origin.x, -origin.y, -origin.z)()
+    const translatedBackward : any = transformer(backward, primitive)
+    const transformed : any = transformer(transformMatrix, translatedBackward)
 
-      const translatedBackward : any = transformer(primitive, backward)
-      const transformed : any = transformer(translatedBackward, T)
-
-      return transformer(transformed, forward)
-    }
-
-    return transformer(primitive, T)
+    return transformer(forward, transformed)
   }
-}
 
-function transformPath(
-  options : {} = {},
-) : Function {
-  const opt : PathTransformOptionsT = transformOptions(options)
+  return transformer(transformMatrix, primitive)
+})
 
-  return function transformPath(
-    path : PathT,
-    T : MatrixT,
-  ) : PathT {
-    return path.reduce(
-      (
-        acc : PathT,
-        current : PointT,
-        index : number,
-      ) : PathT => {
-        if (opt.indices.length > 0 && !opt.indices.includes(index)) {
-          acc.push(current)
-        } else {
-          const previous : PointT = index > 0 ? path[index - 1] : point()
-          const tPrevious : PointT = acc.length > 0 ? acc[acc.length - 1] : point()
+const transformPath : Function = curry(function transformPath(
+  options : Object,
+  transformMatrix : MatrixT,
+  path : PathT,
+) : PathT {
+  const { indices } : PathTransformOptionsT = transformOptions(options)
 
-          const tCurrent : PointT = adjust(
-            transformPoint(previous)(current, T),
-            tPrevious,
-            index,
-          )
+  return path.reduce(
+    (
+      acc : PathT,
+      current : PointT,
+      index : number,
+    ) : PathT => {
+      if (indices.length > 0 && !indices.includes(index)) {
+        acc.push(current)
+      } else {
+        const previous : PointT = index > 0 ? path[index - 1] : point()
+        const tPrevious : PointT = acc.length > 0 ? acc[acc.length - 1] : point()
 
-          acc.push(tCurrent)
-        }
+        const tCurrent : PointT = adjust(
+          transformPoint(transformMatrix, previous, current),
+          tPrevious,
+          index,
+        )
 
-        return acc
-      },
-      [],
-    )
-  }
-}
+        acc.push(tCurrent)
+      }
 
-const anchor1 : Function = transformAnchor(1)
-const anchor2 : Function = transformAnchor(2)
+      return acc
+    },
+    [],
+  )
+})
 
-function transformPoint(
+const transformPoint : Function = curry(function transformPoint(
+  transformMatrix : MatrixT,
   previous : PointT,
-) : Function {
-  const parameters : Function = transformParameters(previous)
+  current : PointT,
+) : PointT {
+  const vPosition : VectorT = vec(current.x, current.y, 0, 1)
+  const [x, y, , w] : VectorT = multiplyVec(transformMatrix, vPosition)
 
-  return function transformPoint(
-    current : PointT,
-    T : MatrixT,
-  ) : PointT {
-    const vPosition : VectorT = vec(current.x, current.y, 0, 1)
-    const [x, y, , w] : VectorT = multiplyVec(T, vPosition)
+  return point(
+    current.code,
+    x / w,
+    y / w,
+    transformParameters(transformMatrix, previous, current),
+  )
+})
 
-    return point(
-      current.code,
-      x / w,
-      y / w,
-      parameters(current, T),
-    )
-  }
-}
-
-function transformParameters(
+const transformParameters : Function = curry(function transformParameters(
+  transformMatrix : MatrixT,
   previous : PointT,
-) : Function {
-  const arc : Function = transformArc(previous)
-
-  return function transformParameters(
-    current : PointT,
-    T : MatrixT,
-  ) : PointParamsT {
-    return {
-      ...anchor1(current, T),
-      ...anchor2(current, T),
-      ...arc(current, T),
-    }
+  current : PointT,
+) : PointParamsT {
+  return {
+    ...transformAnchor(transformMatrix, current, 1),
+    ...transformAnchor(transformMatrix, current, 2),
+    ...transformArc(transformMatrix, previous, current),
   }
-}
+})
 
-function transformAnchor(
+const transformAnchor : Function = curry(function transformAnchor(
+  transformMatrix : MatrixT,
+  current : PointT,
   n : number = 1,
-) : Function {
+) : PointParamsT {
   const xn : string = `x${ n }`
   const yn : string = `y${ n }`
+  const ax : number = current.parameters[xn]
+  const ay : number = current.parameters[yn]
 
-  return function transformAnchor(
-    current : PointT,
-    T : MatrixT,
-  ) : PointParamsT {
-    const ax : number = current.parameters[xn]
-    const ay : number = current.parameters[yn]
+  if (typeof ax !== 'undefined' && typeof ay !== 'undefined') {
+    const vPosition : VectorT = vec(ax, ay, 0, 1)
+    const [x, y, , w] : VectorT = multiplyVec(transformMatrix, vPosition)
 
-    if (typeof ax !== 'undefined' && typeof ay !== 'undefined') {
-      const vPosition : VectorT = vec(ax, ay, 0, 1)
-      const [x, y, , w] : VectorT = multiplyVec(T, vPosition)
-
-      return {
-        [xn]: x / w,
-        [yn]: y / w,
-      }
+    return {
+      [xn]: x / w,
+      [yn]: y / w,
     }
-
-    return {}
   }
-}
 
-function transformArc(
+  return {}
+})
+
+const transformArc : Function = curry(function transformArc(
+  transformMatrix : MatrixT,
   previous : PointT,
-) : Function {
-  return function transformArc(
-    current : PointT,
-    T : MatrixT,
-  ) : PointParamsT {
-    const {
-      rx,
-      ry,
-      rotation,
+  current : PointT,
+) : PointParamsT {
+  const {
+    rx,
+    ry,
+    rotation,
+    large,
+    sweep,
+  } : PointParamsT = current.parameters
+
+  if (
+    typeof rx !== 'undefined'
+    && typeof ry !== 'undefined'
+    && typeof rotation !== 'undefined'
+    && typeof large !== 'undefined'
+    && typeof sweep !== 'undefined'
+  ) {
+    const V : VectorT = transformArcParameters(arc(
+      previous.x, previous.y,
+      rx, ry, degToRad(rotation), large, sweep,
+      current.x, current.y,
+    ), transformMatrix)
+
+    return {
+      rx: V[0],
+      ry: V[1],
+      rotation: radToDeg(V[2]),
       large,
       sweep,
-    } : PointParamsT = current.parameters
-
-    if (
-      typeof rx !== 'undefined'
-      && typeof ry !== 'undefined'
-      && typeof rotation !== 'undefined'
-      && typeof large !== 'undefined'
-      && typeof sweep !== 'undefined'
-    ) {
-      const V : VectorT = transformArcParameters(arc(
-        previous.x, previous.y,
-        rx, ry, degToRad(rotation), large, sweep,
-        current.x, current.y,
-      ), T)
-
-      return {
-        rx: V[0],
-        ry: V[1],
-        rotation: radToDeg(V[2]),
-        large,
-        sweep,
-      }
     }
-
-    return {}
   }
-}
 
-function transformRect() : Function {
-  return function transformRect(
-    bbox : RectT,
-    T : MatrixT,
-  ) : RectT {
-    const vMin : VectorT = vec(bbox.x, bbox.y, 0, 1)
-    const [x0, y0] : VectorT = multiplyVec(T, vMin)
+  return {}
+})
 
-    const vMax : VectorT = vec(bbox.x + bbox.width, bbox.y + bbox.height, 0, 1)
-    const [x1, y1] : VectorT = multiplyVec(T, vMax)
+const transformRect : Function = curry(function transformRect(
+  transformMatrix : MatrixT,
+  primitive : RectT,
+) : RectT {
+  const vMin : VectorT = vec(primitive.x, primitive.y, 0, 1)
+  const [x0, y0] : VectorT = multiplyVec(transformMatrix, vMin)
 
-    return rect(x0, y0, x1 - x0, y1 - y0)
-  }
-}
+  const vMax : VectorT = vec(primitive.x + primitive.width, primitive.y + primitive.height, 0, 1)
+  const [x1, y1] : VectorT = multiplyVec(transformMatrix, vMax)
+
+  return rect(x0, y0, x1 - x0, y1 - y0)
+})
