@@ -3,9 +3,16 @@ import { transform } from './index'
 import { translate } from '../translate'
 import { scale } from '../scale'
 import { parse } from '../parse'
-import { isEqual } from '../is-equal'
 
-test('should return a function and apply the transform list on the path', () => {
+test('should transform the line', () => {})
+
+test('should transform the quadratic curve', () => {})
+
+test('should transform the cubic curve', () => {})
+
+test('should transform the arc', () => {})
+
+test('should apply the transform list on the path', () => {
   const path = parse('M0 0L100 100Q200 125 200 200')
 
   const test = transform(
@@ -14,7 +21,7 @@ test('should return a function and apply the transform list on the path', () => 
   )(path)
   const expected = 'M100 100L250 300Q400 350 400 500'
 
-  expect(isEqual(test, expected)).toBe(true)
+  expect(test).toEqualPath(expected)
 })
 
 test('should apply the transform on the arc', () => {
@@ -26,7 +33,7 @@ test('should apply the transform on the arc', () => {
   )(path)
   const expected = 'M175 100A83.8 178.997 327.962 1 0 325 100'
 
-  expect(isEqual(test, expected)).toBe(true)
+  expect(test).toEqualPath(expected)
 })
 
 test('should apply the transform on the arc with a different origin', () => {
@@ -38,5 +45,5 @@ test('should apply the transform on the arc with a different origin', () => {
   )(path, { transformOrigin: { x: 'center', y: 'center' }})
   const expected = 'M110.476 36.265A83.8 178.997 327.962 1 0 260.476 36.265'
 
-  expect(isEqual(test, expected)).toBe(true)
+  expect(test).toEqualPath(expected)
 })

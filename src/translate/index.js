@@ -8,7 +8,7 @@ import type {
 } from '../types'
 
 import { mat, multiply } from '../core/matrix'
-import { absoluteCoords } from '../core/absolute'
+import { absolute } from '../core/absolute'
 
 export function translate3d(
   tx : number | string,
@@ -20,7 +20,7 @@ export function translate3d(
     bbox : RectT,
   ) : MatrixT => {
     const coords : CoordsT = { x: tx, y: ty, z: tz }
-    const { x, y, z } : AbsoluteCoordsT = absoluteCoords(coords, bbox)
+    const { x, y, z } : AbsoluteCoordsT = absolute(coords, bbox)
     const translateMatrix : MatrixT = mat(
       1, 0, 0, 0,
       0, 1, 0, 0,

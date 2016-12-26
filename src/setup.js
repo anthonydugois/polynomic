@@ -1,3 +1,5 @@
+import { isEqual } from './is-equal'
+
 expect.extend({
   toEqualCloseTo(received, expected, precision = 3) {
     const { getType } = this.utils
@@ -22,6 +24,11 @@ expect.extend({
     }
 
     expect(round(received)).toEqual(expected)
+
+    return { pass: true }
+  },
+  toEqualPath(received, expected) {
+    expect(isEqual(received, expected)).toBe(true)
 
     return { pass: true }
   },

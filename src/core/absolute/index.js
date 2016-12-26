@@ -14,7 +14,7 @@ const positions = {
   center: 0.5,
 }
 
-export function absoluteCoords(
+export function absolute(
   coords : CoordsT,
   bbox : RectT,
 ) : AbsoluteCoordsT {
