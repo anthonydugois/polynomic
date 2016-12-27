@@ -4,7 +4,7 @@ import type { MatrixT } from '../types'
 
 import { curry } from 'lodash'
 import { mat, multiply } from '../core/matrix'
-import { angle } from '../core/angle'
+import { anyToRad } from '../core/angle'
 
 export const skew : Function = curry(function skew(
   alpha : number | string,
@@ -12,8 +12,8 @@ export const skew : Function = curry(function skew(
   matrix : MatrixT,
 ) : MatrixT {
   const skewMatrix : MatrixT = mat(
-    1, Math.tan(angle(beta)), 0, 0,
-    Math.tan(angle(alpha)), 1, 0, 0,
+    1, Math.tan(anyToRad(beta)), 0, 0,
+    Math.tan(anyToRad(alpha)), 1, 0, 0,
     0, 0, 1, 0,
     0, 0, 0, 1,
   )

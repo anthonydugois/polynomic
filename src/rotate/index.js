@@ -4,7 +4,7 @@ import type { MatrixT } from '../types'
 
 import { curry } from 'lodash'
 import { identity, mat, multiply } from '../core/matrix'
-import { angle } from '../core/angle'
+import { anyToRad } from '../core/angle'
 
 export const rotate3d : Function = curry(function rotate3d(
   x : number,
@@ -19,7 +19,7 @@ export const rotate3d : Function = curry(function rotate3d(
       identity()
   }
 
-  const a : number = angle(alpha)
+  const a : number = anyToRad(alpha)
 
   const sc : number = Math.sin(a / 2) * Math.cos(a / 2)
   const sq : number = Math.sin(a / 2) ** 2

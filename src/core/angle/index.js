@@ -1,63 +1,45 @@
 // @flow
 
-export function angle(
-  alpha : number | string = 0,
-) : number {
-  return typeof alpha === 'string' ?
-    convertAngle(alpha) :
-    alpha
-}
+import { curry } from 'lodash'
+import { parseUnit } from '../utils/units'
+import * as units from '../units'
 
-function convertAngle(
-  alpha : string,
-) : number {
-  alpha = alpha.trim()
+export const anyToRad : Function = curry((
+  alpha : number | string,
+) : number => {
+  if (typeof alpha === 'string') {
+    const [value, unit] : [number, string] = parseUnit(alpha)
 
-  switch (true) {
-  case alpha.endsWith('deg'):
-    return degToRad(parseAngle(alpha, 'deg'))
+    switch (unit) {
+    case units.deg:
+      return degToRad(value)
 
-  case alpha.endsWith('rad'):
-    return parseAngle(alpha, 'rad')
+    case units.grad:
+      return gradToRad(value)
 
-  case alpha.endsWith('grad'):
-    return gradToRad(parseAngle(alpha, 'grad'))
+    case units.turn:
+      return turnToRad(value)
 
-  case alpha.endsWith('turn'):
-    return turnToRad(parseAngle(alpha, 'turn'))
-
-  default:
-    return parseFloat(alpha)
+    default:
+      return value
+    }
   }
-}
 
-export function parseAngle(
-  alpha : string,
-  unit : string = 'deg',
-) : number {
-  return parseFloat(alpha.replace(unit, ''))
-}
+  return alpha
+})
 
-export function degToRad(
-  deg : number = 0,
-) : number {
-  return (Math.PI / 180) * deg
-}
+export const degToRad : Function = curry((
+  deg : number,
+) : number => (Math.PI / 180) * deg)
 
-export function gradToRad(
-  grad : number = 0,
-) : number {
-  return (Math.PI / 200) * grad
-}
+export const gradToRad : Function = curry((
+  grad : number,
+) : number => (Math.PI / 200) * grad)
 
-export function turnToRad(
-  turn : number = 0,
-) : number {
-  return (2 * Math.PI) * turn
-}
+export const turnToRad : Function = curry((
+  turn : number,
+) : number => (2 * Math.PI) * turn)
 
-export function radToDeg(
-  rad : number = 0,
-) : number {
-  return (180 / Math.PI) * rad
-}
+export const radToDeg : Function = curry((
+  rad : number,
+) : number => (180 / Math.PI) * rad)

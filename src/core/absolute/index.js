@@ -6,13 +6,7 @@ import type {
   RectT,
 } from '../../types'
 
-const positions = {
-  left: 0,
-  right: 1,
-  top: 0,
-  bottom: 1,
-  center: 0.5,
-}
+import * as positions from '../positions'
 
 export function absolute(
   coords : CoordsT,
