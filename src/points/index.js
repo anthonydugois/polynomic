@@ -6,7 +6,7 @@ import type {
   PointCodeT,
 } from '../types'
 
-import { curry } from 'lodash'
+import { curry } from 'lodash/fp'
 import { point } from '../core/point'
 import * as codes from '../core/codes'
 import { isQ, isT, isC, isS } from '../is'

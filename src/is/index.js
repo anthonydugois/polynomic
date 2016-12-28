@@ -2,91 +2,58 @@
 
 import type { PointT } from '../types'
 
+import { curry } from 'lodash/fp'
 import * as codes from '../core/codes'
 
-export function is(
-  current : PointT | Function,
+export const is : Function = curry((
+  current : PointT,
   code : string,
-) : boolean {
-  const type : string = typeof current === 'function' ?
-    current.name :
-    current.code
+) : boolean => current.code.toLowerCase() === code.toLowerCase())
 
-  return type.toLowerCase() === code.toLowerCase()
-}
+export const isM : Function = curry((
+  current : PointT,
+) : boolean => is(current, codes.M))
 
-export function isM(
-  current : PointT | Function,
-) : boolean {
-  return is(current, codes.M)
-}
+export const isL : Function = curry((
+  current : PointT,
+) : boolean => is(current, codes.L))
 
-export function isL(
-  current : PointT | Function,
-) : boolean {
-  return is(current, codes.L)
-}
+export const isH : Function = curry((
+  current : PointT,
+) : boolean => is(current, codes.H))
 
-export function isH(
-  current : PointT | Function,
-) : boolean {
-  return is(current, codes.H)
-}
+export const isV : Function = curry((
+  current : PointT,
+) : boolean => is(current, codes.V))
 
-export function isV(
-  current : PointT | Function,
-) : boolean {
-  return is(current, codes.V)
-}
+export const isQ : Function = curry((
+  current : PointT,
+) : boolean => is(current, codes.Q))
 
-export function isQ(
-  current : PointT | Function,
-) : boolean {
-  return is(current, codes.Q)
-}
+export const isT : Function = curry((
+  current : PointT,
+) : boolean => is(current, codes.T))
 
-export function isT(
-  current : PointT | Function,
-) : boolean {
-  return is(current, codes.T)
-}
+export const isC : Function = curry((
+  current : PointT,
+) : boolean => is(current, codes.C))
 
-export function isC(
-  current : PointT | Function,
-) : boolean {
-  return is(current, codes.C)
-}
+export const isS : Function = curry((
+  current : PointT,
+) : boolean => is(current, codes.S))
 
-export function isS(
-  current : PointT | Function,
-) : boolean {
-  return is(current, codes.S)
-}
+export const isA : Function = curry((
+  current : PointT,
+) : boolean => is(current, codes.A))
 
-export function isA(
-  current : PointT | Function,
-) : boolean {
-  return is(current, codes.A)
-}
+export const isZ : Function = curry((
+  current : PointT,
+) : boolean => is(current, codes.Z))
 
-export function isZ(
-  current : PointT | Function,
-) : boolean {
-  return is(current, codes.Z)
-}
+export const isRelative : Function = curry((
+  current : PointT,
+) : boolean => current.code.toLowerCase() === current.code)
 
-export function isRelative(
-  current : PointT | Function,
-) : boolean {
-  const type : string = typeof current === 'function' ?
-    current.name :
-    current.code
-
-  return type.toLowerCase() === type
-}
-
-export function isAbsolute(
-  current : PointT | Function,
-) : boolean {
-  return !isRelative(current)
-}
+export const isAbsolute : Function = curry((
+  current : PointT,
+) : boolean => !isRelative(current))

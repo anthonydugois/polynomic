@@ -2,16 +2,16 @@
 
 import type { LineT } from '../types'
 
-export function line(
+import { curry } from 'lodash/fp'
+
+export const line : Function = curry((
   x1 : number = 0,
   y1 : number = 0,
   x2 : number = 0,
   y2 : number = 0,
-) : LineT {
-  return {
-    x1,
-    y1,
-    x2,
-    y2,
-  }
-}
+) : LineT => ({
+  x1,
+  y1,
+  x2,
+  y2,
+}))

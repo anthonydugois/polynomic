@@ -1,6 +1,6 @@
 // @flow
 
-import { curry } from 'lodash'
+import { curry } from 'lodash/fp'
 import { parseUnit } from '../utils/units'
 import * as units from '../units'
 

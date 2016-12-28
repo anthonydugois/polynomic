@@ -6,22 +6,23 @@ import type {
   RectT,
 } from '../../types'
 
+import { parseUnit } from '../utils/units'
 import * as positions from '../positions'
 
 export function absolute(
   coords : CoordsT,
-  bbox : RectT,
+  box : RectT,
 ) : AbsoluteCoordsT {
   return {
-    x: absoluteX(coords.x, bbox),
-    y: absoluteY(coords.y, bbox),
+    x: absoluteX(coords.x, box),
+    y: absoluteY(coords.y, box),
     z: typeof coords.z !== 'undefined' ? coords.z : 0,
   }
 }
 
 function absoluteX(
   x : number | string,
-  bbox : RectT,
+  box : RectT,
 ) : number {
   if (typeof x !== 'string') {
     return x
@@ -30,14 +31,14 @@ function absoluteX(
   const lx : string = x.toLowerCase()
   const t : number = Object.keys(positions).includes(lx) ?
     positions[lx] :
-    parseRelative(lx)
+    parseUnit(lx)[0] / 100
 
-  return bbox.x + (bbox.width * t)
+  return box.x + (box.width * t)
 }
 
 function absoluteY(
   y : number | string,
-  bbox : RectT,
+  box : RectT,
 ) : number {
   if (typeof y !== 'string') {
     return y
@@ -46,13 +47,7 @@ function absoluteY(
   const ly : string = y.toLowerCase()
   const t : number = Object.keys(positions).includes(ly) ?
     positions[ly] :
-    parseRelative(ly)
+    parseUnit(ly)[0] / 100
 
-  return bbox.y + (bbox.height * t)
-}
-
-function parseRelative(
-  str : string,
-) : number {
-  return parseFloat(str.replace('%', '')) / 100
+  return box.y + (box.height * t)
 }

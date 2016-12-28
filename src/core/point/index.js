@@ -6,16 +6,16 @@ import type {
   PointCodeT,
 } from '../../types'
 
-export function point(
+import { curry } from 'lodash/fp'
+
+export const point : Function = curry((
   code : PointCodeT = '',
   x : number = 0,
   y : number = 0,
   parameters : PointParamsT = {},
-) : PointT {
-  return {
-    code,
-    x,
-    y,
-    parameters,
-  }
-}
+) : PointT => ({
+  code,
+  x,
+  y,
+  parameters,
+}))

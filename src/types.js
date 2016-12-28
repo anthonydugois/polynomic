@@ -26,6 +26,11 @@ export type VectorT = [
   number,
 ]
 
+export type PathTransformOptionsT = {
+  indices : Array<number>,
+  transformOrigin : CoordsT,
+}
+
 export type PointCodeT =
   | ''
   | 'm'
@@ -70,9 +75,12 @@ export type PointT = {
 
 export type PathT = Array<PointT>
 
-export type PathTransformOptionsT = {
-  indices : Array<number>,
-  transformOrigin : CoordsT,
+export type PolygonT = {
+  points : string,
+}
+
+export type PolylineT = {
+  points : string,
 }
 
 export type LineT = {
@@ -118,3 +126,14 @@ export type ArcT = {
   x2 : number,
   y2 : number,
 }
+
+export type PrimitiveT =
+  | PointT
+  | PathT
+  | PolygonT
+  | PolylineT
+  | LineT
+  | RectT
+  | CircleT
+  | EllipseT
+  | ArcT

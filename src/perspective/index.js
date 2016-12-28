@@ -2,7 +2,7 @@
 
 import type { MatrixT } from '../types'
 
-import { curry } from 'lodash'
+import { curry } from 'lodash/fp'
 import { mat, multiply } from '../core/matrix'
 
 export const perspective : Function = curry(_perspective)

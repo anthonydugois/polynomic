@@ -7,7 +7,7 @@ import type {
   RectT,
 } from '../types'
 
-import { curry } from 'lodash'
+import { curry } from 'lodash/fp'
 import { mat, multiply } from '../core/matrix'
 import { absolute } from '../core/absolute'
 import { rect } from '../rect'

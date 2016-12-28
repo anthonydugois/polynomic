@@ -3,7 +3,7 @@
 
 import type { PointT } from '../types'
 
-import { curry } from 'lodash'
+import { curry } from 'lodash/fp'
 import * as codes from '../core/codes'
 import { round, defaultPrecision } from '../core/utils/round'
 import { format } from '../core/utils/format'

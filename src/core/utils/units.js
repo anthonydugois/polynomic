@@ -1,6 +1,6 @@
 // @flow
 
-import { curry } from 'lodash'
+import { curry } from 'lodash/fp'
 
 export const parseUnit : Function = curry((
   str : string,

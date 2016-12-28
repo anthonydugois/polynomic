@@ -11,7 +11,7 @@ import type {
   RectT,
 } from '../types'
 
-import { curry } from 'lodash'
+import { curry } from 'lodash/fp'
 import { degToRad, radToDeg } from '../core/angle'
 import { identity, multiply, multiplyVec } from '../core/matrix'
 import { vec } from '../core/vector'

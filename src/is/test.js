@@ -1,58 +1,37 @@
-import { m, M, L, Q } from '../points'
-import { isM, isQ, isZ, isRelative } from './index'
+import { M, l, L, Q } from '../points'
+import { isM, isQ, isZ, isRelative, isAbsolute } from './index'
 
 test('should check that the point is M', () => {
-  const point = m(0, 0)()
-  const test = isM(point)
+  const test = isM(M(0, 0))
+  const expected = true
 
-  expect(test).toBe(true)
+  expect(test).toBe(expected)
 })
 
-test('should check that the point factory is Q', () => {
-  const point = Q(20, 20, 0, 0)
-  const test = isQ(point)
+test('should check that the point is Q', () => {
+  const test = isQ(Q(20, 20, 0, 0))
+  const expected = true
 
-  expect(test).toBe(true)
+  expect(test).toBe(expected)
 })
 
 test('should check that the point is not Z', () => {
-  const point = L(0, 0)()
-  const test = isZ(point)
+  const test = isZ(L(0, 0))
+  const expected = false
 
-  expect(test).toBe(false)
-})
-
-test('should check that the point factory is not Z', () => {
-  const point = L(0, 0)
-  const test = isZ(point)
-
-  expect(test).toBe(false)
-})
-
-test('should check that the point factory is relative', () => {
-  const point = m(0, 0)
-  const test = isRelative(point)
-
-  expect(test).toBe(true)
+  expect(test).toBe(expected)
 })
 
 test('should check that the point is relative', () => {
-  const point = m(0, 0)()
-  const test = isRelative(point)
+  const test = isRelative(l(0, 0, M(0, 0)))
+  const expected = true
 
-  expect(test).toBe(true)
-})
-
-test('should check that the point factory is absolute', () => {
-  const point = M(0, 0)
-  const test = isRelative(point)
-
-  expect(test).toBe(false)
+  expect(test).toBe(expected)
 })
 
 test('should check that the point is absolute', () => {
-  const point = M(0, 0)()
-  const test = isRelative(point)
+  const test = isAbsolute(M(0, 0))
+  const expected = true
 
-  expect(test).toBe(false)
+  expect(test).toBe(expected)
 })
