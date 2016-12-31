@@ -18,3 +18,10 @@ test('should return the object representation of a point', () => {
 
   expect(test).toEqual(expected)
 })
+
+test('should be unable to mutate the object', () => {
+  const obj = point()
+  const test = () => obj.x = 0
+
+  expect(test).toThrow()
+})
