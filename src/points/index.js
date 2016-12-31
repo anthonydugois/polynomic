@@ -6,8 +6,16 @@ import type {
 } from '../types'
 
 import { curry } from 'lodash/fp'
-import { point, anchor, anchors, arc } from '../core/point'
 import * as codes from '../core/codes'
+
+import {
+  point,
+  anchor,
+  anchors,
+  implicitAnchor,
+  implicitAnchors,
+  arc,
+} from '../core/point'
 
 export const m : Function = curry((
   dx : number,
@@ -93,11 +101,7 @@ export const q : Function = curry((
   codes.q,
   previous.x + dx,
   previous.y + dy,
-  anchor(
-    undefined,
-    previous.x + dx1,
-    previous.y + dy1,
-  ),
+  anchor(previous.x + dx1, previous.y + dy1),
 ))
 
 export const Q : Function = curry((
@@ -109,11 +113,7 @@ export const Q : Function = curry((
   codes.Q,
   x,
   y,
-  anchor(
-    undefined,
-    x1,
-    y1,
-  ),
+  anchor(x1, y1),
 ))
 
 export const t : Function = curry((
@@ -124,7 +124,7 @@ export const t : Function = curry((
   codes.t,
   previous.x + dx,
   previous.y + dy,
-  anchor(previous),
+  implicitAnchor(previous),
 ))
 
 export const T : Function = curry((
@@ -135,7 +135,7 @@ export const T : Function = curry((
   codes.T,
   x,
   y,
-  anchor(previous),
+  implicitAnchor(previous),
 ))
 
 export const c : Function = curry((
@@ -150,13 +150,7 @@ export const c : Function = curry((
   codes.c,
   previous.x + dx,
   previous.y + dy,
-  anchors(
-    undefined,
-    previous.x + dx1,
-    previous.y + dy1,
-    previous.x + dx2,
-    previous.y + dy2,
-  ),
+  anchors(previous.x + dx1, previous.y + dy1, previous.x + dx2, previous.y + dy2),
 ))
 
 export const C : Function = curry((
@@ -170,13 +164,7 @@ export const C : Function = curry((
   codes.C,
   x,
   y,
-  anchors(
-    undefined,
-    x1,
-    y1,
-    x2,
-    y2,
-  ),
+  anchors(x1, y1, x2, y2),
 ))
 
 export const s : Function = curry((
@@ -189,13 +177,7 @@ export const s : Function = curry((
   codes.s,
   previous.x + dx,
   previous.y + dy,
-  anchors(
-    previous,
-    0,
-    0,
-    previous.x + dx2,
-    previous.y + dy2,
-  ),
+  implicitAnchors(previous, previous.x + dx2, previous.y + dy2),
 ))
 
 export const S : Function = curry((
@@ -208,13 +190,7 @@ export const S : Function = curry((
   codes.S,
   x,
   y,
-  anchors(
-    previous,
-    0,
-    0,
-    x2,
-    y2,
-  ),
+  implicitAnchors(previous, x2, y2),
 ))
 
 export const a : Function = curry((

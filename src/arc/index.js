@@ -14,7 +14,7 @@ export const arc : Function = curry((
   sweep : number = 0,
   x2 : number = x1,
   y2 : number = y1,
-) : ArcT => ({
+) : ArcT => Object.freeze({
   x1,
   y1,
   rx,

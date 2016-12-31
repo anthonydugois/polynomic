@@ -11,21 +11,11 @@ export const rect : Function = curry((
   height : number = width,
   rx : number = 0,
   ry : number = rx,
-) : RectT => {
-  const r : RectT = {
-    x,
-    y,
-    width,
-    height,
-  }
-
-  if (rx !== 0) {
-    r.rx = rx
-  }
-
-  if (ry !== 0) {
-    r.ry = ry
-  }
-
-  return r
-})
+) : RectT => Object.freeze({
+  x,
+  y,
+  width,
+  height,
+  ...rx !== 0 ? { rx } : {},
+  ...ry !== 0 ? { ry } : {},
+}))

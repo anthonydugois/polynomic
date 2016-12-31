@@ -8,7 +8,7 @@ export const circle : Function = curry((
   cx : number = 0,
   cy : number = 0,
   r : number = 0,
-) : CircleT => ({
+) : CircleT => Object.freeze({
   cx,
   cy,
   r,

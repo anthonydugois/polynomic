@@ -12,7 +12,7 @@ export const ellipse : Function = curry((
   phi : number = 0,
   start : number = 0,
   end : number = 0,
-) : EllipseT => ({
+) : EllipseT => Object.freeze({
   cx,
   cy,
   rx,
