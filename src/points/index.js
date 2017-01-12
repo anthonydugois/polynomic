@@ -7,15 +7,15 @@ import type {
 
 import { curry } from 'lodash/fp'
 import * as codes from '../core/codes'
+import { point } from '../core/point'
 
 import {
-  point,
   anchor,
   anchors,
   implicitAnchor,
   implicitAnchors,
   arc,
-} from '../core/point'
+} from '../core/parameters'
 
 export const m : Function = curry((
   dx : number,

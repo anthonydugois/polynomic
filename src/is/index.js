@@ -2,8 +2,7 @@
 
 import type { PointT } from '../types'
 
-import { curry } from 'lodash/fp'
-import { hydratePoint } from '../hydrate'
+import { hydrate as hydratePoint } from '../core/point'
 import * as codes from '../core/codes'
 
 export const is : Function =

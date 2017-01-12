@@ -3,7 +3,7 @@
 import type { PathT, PointT } from '../types'
 
 import { curry, reduce } from 'lodash/fp'
-import { point } from '../core/point'
+import { hydrate as hydratePoint } from '../core/point'
 import { isZ } from '../is'
 import { findLastPoint, findLastM } from '../find'
 
@@ -26,8 +26,3 @@ export const hydrate : Function = curry((
   [],
   func(...args),
 ), length))
-
-export const hydratePoint : Function = (
-  cmd : PointT | Function,
-  hydratee : PointT = point(),
-) : PointT => typeof cmd === 'function' ? cmd(hydratee) : cmd

@@ -8,6 +8,13 @@ test('should check that the point is M', () => {
   expect(test).toBe(expected)
 })
 
+test('should check that the point is not M', () => {
+  const test = isM(L(0, 0))
+  const expected = false
+
+  expect(test).toBe(expected)
+})
+
 test('should check that the generated point will be Q', () => {
   const test = isQ(q(20, 20, 0, 0))
   const expected = true

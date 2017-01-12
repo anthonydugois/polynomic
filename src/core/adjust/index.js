@@ -7,7 +7,8 @@ import type {
 } from '../../types'
 
 import { curry } from 'lodash/fp'
-import { point, implicitAnchor, implicitAnchors } from '../point'
+import { point } from '../point'
+import { implicitAnchor, implicitAnchors } from '../parameters'
 
 import {
   isM,

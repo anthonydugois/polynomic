@@ -2,11 +2,8 @@
 
 import type { PathT, PointT } from '../types'
 
-import {
-  curry,
-  last,
-  findLast,
-} from 'lodash/fp'
+import { last, findLast } from 'lodash/fp'
+import { point } from '../core/point'
 
 import {
   isM,
@@ -23,21 +20,21 @@ import {
   isAbsolute,
 } from '../is'
 
-import { point } from '../core/point'
+const findOrPoint : Function =
+  (func : Function) : Function =>
+    (path : PathT) =>
+      func(path) || point()
 
-export const findLastPoint : Function = curry((
-  path : PathT,
-) : PointT => path.length > 0 ? last(path) : point())
-
-export const findLastM : Function = findLast(isM)
-export const findLastL : Function = findLast(isL)
-export const findLastH : Function = findLast(isH)
-export const findLastV : Function = findLast(isV)
-export const findLastQ : Function = findLast(isQ)
-export const findLastT : Function = findLast(isT)
-export const findLastC : Function = findLast(isC)
-export const findLastS : Function = findLast(isS)
-export const findLastA : Function = findLast(isA)
-export const findLastZ : Function = findLast(isZ)
-export const findLastRelative : Function = findLast(isRelative)
-export const findLastAbsolute : Function = findLast(isAbsolute)
+export const findLastPoint : Function = findOrPoint(last)
+export const findLastM : Function = findOrPoint(findLast(isM))
+export const findLastL : Function = findOrPoint(findLast(isL))
+export const findLastH : Function = findOrPoint(findLast(isH))
+export const findLastV : Function = findOrPoint(findLast(isV))
+export const findLastQ : Function = findOrPoint(findLast(isQ))
+export const findLastT : Function = findOrPoint(findLast(isT))
+export const findLastC : Function = findOrPoint(findLast(isC))
+export const findLastS : Function = findOrPoint(findLast(isS))
+export const findLastA : Function = findOrPoint(findLast(isA))
+export const findLastZ : Function = findOrPoint(findLast(isZ))
+export const findLastRelative : Function = findOrPoint(findLast(isRelative))
+export const findLastAbsolute : Function = findOrPoint(findLast(isAbsolute))
