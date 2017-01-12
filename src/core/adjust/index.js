@@ -3,9 +3,11 @@
 import type {
   PointT,
   PointCodeT,
+  PointParamsT,
 } from '../../types'
 
-import { point } from '../point'
+import { curry } from 'lodash/fp'
+import { point, implicitAnchor, implicitAnchors } from '../point'
 
 import {
   isM,
@@ -19,100 +21,86 @@ import {
   isRelative,
 } from '../../is'
 
-export function adjust(
+export const adjust : Function = curry((
   current : PointT,
   previous : PointT,
-  index : number,
-) : PointT {
-  return point(
+  index : number = -1,
+) : PointT => shouldAdjustCode(current, previous, index) ?
+  point(
     adjustCode(current, previous, index),
     current.x,
     current.y,
     current.parameters,
-  )
-}
+  ) :
+  current
+)
 
-function adjustCode(
+const adjustCode : Function = curry((
   current : PointT,
   previous : PointT,
   index : number,
-) : PointCodeT {
-  if (shouldAdjustMoveTo(current, previous, index)) {
-    return isRelative(current) ? 'm' : 'M'
+) : PointCodeT => {
+  switch (true) {
+    case shouldAdjustMoveTo(current, previous, index):
+      return isRelative(current) ? 'm' : 'M'
+
+    case shouldAdjustLineTo(current, previous):
+      return isRelative(current) ? 'l' : 'L'
+
+    case shouldAdjustQuadraticTo(current, previous):
+      return isRelative(current) ? 'q' : 'Q'
+
+    case shouldAdjustCubicTo(current, previous):
+      return isRelative(current) ? 'c' : 'C'
+
+    default:
+      return current.code
   }
+})
 
-  if (shouldAdjustLineTo(current, previous)) {
-    return isRelative(current) ? 'l' : 'L'
-  }
-
-  if (shouldAdjustQuadraticTo(current, previous)) {
-    return isRelative(current) ? 'q' : 'Q'
-  }
-
-  if (shouldAdjustCubicTo(current, previous)) {
-    return isRelative(current) ? 'c' : 'C'
-  }
-
-  return current.code
-}
-
-function shouldAdjustMoveTo(
+const shouldAdjustCode : Function = curry((
   current : PointT,
   previous : PointT,
   index : number,
-) : boolean {
-  return !isM(current) && (
-    index === 0
-    || isZ(previous)
-  )
-}
+) : boolean => shouldAdjustMoveTo(current, previous, index)
+  || shouldAdjustLineTo(current, previous)
+  || shouldAdjustQuadraticTo(current, previous)
+  || shouldAdjustCubicTo(current, previous))
 
-function shouldAdjustLineTo(
+const shouldAdjustMoveTo : Function = curry((
   current : PointT,
   previous : PointT,
-) : boolean {
-  const shouldAdjustHorizontalLineTo : boolean = isH(current)
-    && current.y !== previous.y
-  const shouldAdjustVerticalLineTo : boolean = isV(current)
-    && current.x !== previous.x
+  index : number,
+) : boolean => !isM(current) && (index === 0 || isZ(previous)))
 
-  return shouldAdjustHorizontalLineTo || shouldAdjustVerticalLineTo
-}
-
-function shouldAdjustQuadraticTo(
+const shouldAdjustLineTo : Function = curry((
   current : PointT,
   previous : PointT,
-) : boolean {
-  const expectedX : number = typeof previous.parameters.x1 !== 'undefined' ?
-    (2 * previous.x) - previous.parameters.x1 :
-    previous.x
+) : boolean => (isH(current) && current.y !== previous.y)
+  || (isV(current) && current.x !== previous.x))
 
-  const expectedY : number = typeof previous.parameters.y1 !== 'undefined' ?
-    (2 * previous.y) - previous.parameters.y1 :
-    previous.y
+const shouldAdjustQuadraticTo : Function = curry((
+  current : PointT,
+  previous : PointT,
+) : boolean => {
+  const { x1, y1 } : PointParamsT = implicitAnchor(previous)
 
   return isT(current) && (
     !isQ(previous)
-    || current.parameters.x1 !== expectedX
-    || current.parameters.y1 !== expectedY
+    || current.parameters.x1 !== x1
+    || current.parameters.y1 !== y1
   )
-}
+})
 
-function shouldAdjustCubicTo(
+const shouldAdjustCubicTo : Function = curry((
   current : PointT,
   previous : PointT,
-) : boolean {
-  const expectedX : number = typeof previous.parameters.x2 !== 'undefined' ?
-    (2 * previous.x) - previous.parameters.x2 :
-    previous.x
-
-  const expectedY : number = typeof previous.parameters.y2 !== 'undefined' ?
-    (2 * previous.y) - previous.parameters.y2 :
-    previous.y
+) : boolean => {
+  const { x1, y1 } : PointParamsT = implicitAnchors(previous)
 
   return isS(current) && (
     !isC(previous)
-    || current.parameters.x1 !== expectedX
-    || current.parameters.y1 !== expectedY
+    || current.parameters.x1 !== x1
+    || current.parameters.y1 !== y1
   )
-}
+})

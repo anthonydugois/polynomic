@@ -2,27 +2,26 @@
 
 import type { PointT, PathT } from '../types'
 
-import { curry, last, findLast } from 'lodash/fp'
+import { curry, reduce, last, findLast } from 'lodash/fp'
 import { point } from '../core/point'
 import { isM, isZ } from '../is'
 
 export const path : Function = curry((
-  cmds : Array<PointT | Function>,
-) : PathT => cmds.reduce(
-  (
-    acc : PathT,
-    cmd : PointT | Function,
-  ) : PathT => {
-    acc.push(
-      typeof cmd === 'function' ?
-        hydrate(cmd, acc) :
-        cmd
-    )
+  points : Array<PointT | Function>,
+) : PathT => reduce((
+  acc : PathT,
+  cmd : PointT | Function,
+) : PathT => {
+  acc.push(
+    typeof cmd === 'function' ?
+      hydrate(cmd, acc) :
+      cmd
+  )
 
-    return acc
-  },
-  [],
-))
+  return acc
+},
+[],
+points))
 
 const findLastM : Function = findLast(isM)
 

@@ -1,4 +1,4 @@
-import { M, l, L, Q } from '../points'
+import { M, l, L, q } from '../points'
 import { isM, isQ, isZ, isRelative, isAbsolute } from './index'
 
 test('should check that the point is M', () => {
@@ -8,8 +8,8 @@ test('should check that the point is M', () => {
   expect(test).toBe(expected)
 })
 
-test('should check that the point is Q', () => {
-  const test = isQ(Q(20, 20, 0, 0))
+test('should check that the generated point will be Q', () => {
+  const test = isQ(q(20, 20, 0, 0))
   const expected = true
 
   expect(test).toBe(expected)
@@ -22,8 +22,8 @@ test('should check that the point is not Z', () => {
   expect(test).toBe(expected)
 })
 
-test('should check that the point is relative', () => {
-  const test = isRelative(l(0, 0, M(0, 0)))
+test('should check that the generated point will be relative', () => {
+  const test = isRelative(l(0, 0))
   const expected = true
 
   expect(test).toBe(expected)

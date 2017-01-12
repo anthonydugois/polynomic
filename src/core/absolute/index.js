@@ -6,24 +6,23 @@ import type {
   RectT,
 } from '../../types'
 
+import { curry } from 'lodash/fp'
 import { parseUnit } from '../utils/units'
 import * as positions from '../positions'
 
-export function absolute(
+export const absolute : Function = curry((
+  box : RectT,
   coords : CoordsT,
-  box : RectT,
-) : AbsoluteCoordsT {
-  return {
-    x: absoluteX(coords.x, box),
-    y: absoluteY(coords.y, box),
-    z: typeof coords.z !== 'undefined' ? coords.z : 0,
-  }
-}
+) : AbsoluteCoordsT => ({
+  x: typeof coords.x !== 'undefined' ? absoluteX(box, coords.x) : 0,
+  y: typeof coords.y !== 'undefined' ? absoluteY(box, coords.y) : 0,
+  z: typeof coords.z !== 'undefined' ? coords.z : 0,
+}))
 
-function absoluteX(
-  x : number | string,
+const absoluteX : Function = curry((
   box : RectT,
-) : number {
+  x : number | string,
+) : number => {
   if (typeof x !== 'string') {
     return x
   }
@@ -34,12 +33,12 @@ function absoluteX(
     parseUnit(lx)[0] / 100
 
   return box.x + (box.width * t)
-}
+})
 
-function absoluteY(
-  y : number | string,
+const absoluteY : Function = curry((
   box : RectT,
-) : number {
+  y : number | string,
+) : number => {
   if (typeof y !== 'string') {
     return y
   }
@@ -50,4 +49,4 @@ function absoluteY(
     parseUnit(ly)[0] / 100
 
   return box.y + (box.height * t)
-}
+})

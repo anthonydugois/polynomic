@@ -2,48 +2,53 @@
 
 import type { PointCodeT, PointT, PathT } from '../types'
 
+import {
+  curry,
+  reduce,
+} from 'lodash/fp'
+
 import { point } from '../core/point'
 import * as points from '../points'
 import { isM } from '../is'
+import { findLastPoint, findLastM } from '../find'
 
-export function parse(
-  d: string,
-): PathT {
-  let lastM: PointT = point()
-
-  return parseSegments(d).reduce(
-    (
-      acc: PathT,
-      segment: Array<string | number>,
-    ): PathT => {
-      let previous: PointT  = acc.length > 0 ?
-        acc[acc.length - 1] :
-        point()
-
-      if (isM(previous)) {
-        lastM = previous
-      }
-
-      const [code, ...parameters]: Array<string | number> = segment
-      const pointFactory: Function = points[code]
-
-      if (pointFactory.length > 0) {
-        const path: PathT = chunks(parameters, pointFactory.length).map(
-          (chunk) => previous = pointFactory(...chunk)(previous)
-        )
-
-        acc.push(...path)
-      } else {
-        const point: PointT = pointFactory()(lastM)
-
-        acc.push(point)
-      }
-
-      return acc
-    },
-    [],
-  )
+const mapping : Object = {
+  m: 2,
+  l: 2,
+  h: 1,
+  v: 1,
+  q: 4,
+  t: 2,
+  c: 6,
+  s: 4,
+  a: 7,
+  z: 0,
 }
+
+export const parse : Function = curry((
+  d : string,
+) : PathT => reduce(
+  (
+    acc : PathT,
+    segment : Array<string | number>,
+  ) : PathT => {
+    const code : string = String(segment[0])
+    const parameters : Array<string | number> = segment.slice(1)
+    const fct : Function = points[code]
+
+    if (code.toLowerCase() !== 'z') {
+      chunks(parameters, mapping[code.toLowerCase()]).forEach(
+        (chunk) => acc.push(fct(...chunk, findLastPoint(acc)))
+      )
+    } else {
+      acc.push(fct(findLastM(acc)))
+    }
+
+    return acc
+  },
+  [],
+  parseSegments(d),
+))
 
 export function parseSegments(
   d: string,

@@ -8,14 +8,15 @@ import type {
   ArcT,
 } from '../../types'
 
+import { curry } from 'lodash/fp'
 import { mat, det, inverse, multiply } from '../matrix'
 import { vec } from '../vector'
 import { arc } from '../../arc'
 import { ellipse } from '../../ellipse'
 
-export function arcToEllipse(
+export const arcToEllipse : Function = curry((
   a : ArcT,
-) : EllipseT {
+) : EllipseT => {
   const [rx, ry] : VectorT = correctRadii(a)
 
   const _x1 : number = ((a.x1 * Math.cos(a.phi))
@@ -58,11 +59,11 @@ export function arcToEllipse(
   }
 
   return ellipse(cx, cy, a.rx, a.ry, a.phi, start, end)
-}
+})
 
-export function ellipseToArc(
+export const ellipseToArc : Function = curry((
   e : EllipseT,
-) : ArcT {
+) : ArcT => {
   const x1 : number = e.cx
     + (e.rx * Math.cos(e.start) * Math.cos(e.phi))
     - (e.ry * Math.sin(e.start) * Math.sin(e.phi))
@@ -80,24 +81,28 @@ export function ellipseToArc(
   const sweep : number = e.end - e.start > 0 ? 1 : 0
 
   return arc(x1, y1, e.rx, e.ry, e.phi, large, sweep, x2, y2)
-}
+})
 
-export function transformArcParameters(
+export const transformArcParameters : Function = curry((
   a : ArcT,
-  T : MatrixT,
-) : VectorT {
+  transformMatrix : MatrixT,
+) : VectorT => {
   const e : EllipseT = arcToEllipse(a)
-  const E : MatrixT = mat(
+  const ellipseMatrix : MatrixT = mat(
     e.rx * Math.cos(e.phi), e.rx * Math.sin(e.phi), 0, 0,
     -e.ry * Math.sin(e.phi), e.ry * Math.cos(e.phi), 0, 0,
     0, 0, 1, 0,
     e.cx, e.cy, 0, 1,
   )
 
-  const M : MatrixT = inverse(multiply(T, E))
-  const A : number = (M[0] ** 2) + (M[4] ** 2)
-  const B : number = 2 * ((M[0] * M[1]) + (M[4] * M[5]))
-  const C : number = (M[1] ** 2) + (M[5] ** 2)
+  const [
+    m0, m1, , ,
+    m4, m5,
+  ] : MatrixT = inverse(multiply(transformMatrix, ellipseMatrix))
+
+  const A : number = (m0 ** 2) + (m4 ** 2)
+  const B : number = 2 * ((m0 * m1) + (m4 * m5))
+  const C : number = (m1 ** 2) + (m5 ** 2)
   const AC : number = A - C
 
   if (B === 0) {
@@ -129,11 +134,11 @@ export function transformArcParameters(
     phi < 0 ? phi + (2 * Math.PI) : phi,
     1,
   )
-}
+})
 
-export function foci(
+export const foci : Function = curry((
   e : EllipseT,
-) : [CoordsT, CoordsT] {
+) : [CoordsT, CoordsT] => {
   const major : number = Math.max(e.rx, e.ry)
   const minor : number = Math.min(e.rx, e.ry)
   const f : number = Math.sqrt(Math.abs((major ** 2) - (minor ** 2)))
@@ -150,11 +155,11 @@ export function foci(
   }
 
   return [f1, f2]
-}
+})
 
-export function correctRadii(
+export const correctRadii : Function = curry((
   a : ArcT,
-) : VectorT {
+) : VectorT => {
   if (a.rx === 0 || a.ry === 0) {
     return vec(a.rx, a.ry, 0, 1)
   }
@@ -174,4 +179,4 @@ export function correctRadii(
     0,
     1,
   )
-}
+})
