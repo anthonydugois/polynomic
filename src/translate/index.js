@@ -8,7 +8,7 @@ import type {
 
 import { curry } from 'lodash/fp'
 import { mat, multiply } from '../core/matrix'
-import { relativeCoords } from '../core/coords'
+import { weakCoords, relativeCoords } from '../core/coords'
 import { rect } from '../rect'
 
 export const translate3d : Function = curry(function translate3d(
@@ -18,7 +18,10 @@ export const translate3d : Function = curry(function translate3d(
   matrix : MatrixT,
   bbox : RectT = rect(),
 ) : MatrixT {
-  const { x, y, z } : CoordsT = relativeCoords(bbox, tx, ty, tz)
+  const { x, y, z } : CoordsT = relativeCoords(
+    bbox,
+    weakCoords(tx, ty, tz),
+  )
   const translateMatrix : MatrixT = mat(
     1, 0, 0, 0,
     0, 1, 0, 0,

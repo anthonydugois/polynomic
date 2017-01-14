@@ -2,38 +2,45 @@
 
 import type { PointT, PathT } from '../../types'
 
+import { curry } from 'lodash/fp'
 import { point } from '../point'
 import { isL, isH, isV, isQ, isT, isA, isRelative } from '../../is'
 import { transform } from '../../transform'
 import { rotate } from '../../rotate'
 import { degToRad } from '../angle'
 
-export function toCubic(
+export const toL : Function = () => {}
+
+export const toQ : Function = () => {}
+
+export const toA : Function = () => {}
+
+export const toC : Function = curry((
   previous : PointT,
   current : PointT,
-) : PointT | PathT {
+) : PointT | PathT => {
   switch (true) {
   case isL(current):
   case isH(current):
   case isV(current):
-    return lineToCubic(previous, current)
+    return lToC(previous, current)
 
   case isQ(current):
   case isT(current):
-    return quadraticToCubic(previous, current)
+    return qToC(previous, current)
 
   case isA(current):
-    return arcToCubic(previous, current)
+    return aToC(previous, current)
 
   default:
     return current
   }
-}
+})
 
-export function lineToCubic(
+const lToC : Function = (
   previous : PointT,
   current : PointT,
-) : PointT {
+) : PointT => {
   const x1 : number = previous.x
   const y1 : number = previous.y
   const x2 : number = current.x
@@ -47,10 +54,10 @@ export function lineToCubic(
   )
 }
 
-export function quadraticToCubic(
+const qToC : Function = (
   previous : PointT,
   current : PointT,
-) : PointT {
+) : PointT => {
   const x1 : number = typeof current.parameters.x1 !== 'undefined' ?
     ((1 / 3) * previous.x) + ((2 / 3) * current.parameters.x1) :
     previous.x
@@ -75,11 +82,11 @@ export function quadraticToCubic(
   )
 }
 
-export function arcToCubic(
+const aToC : Function = (
   previous : PointT,
   current : PointT,
   center : Array<number> = [],
-) {
+) : PathT => {
   let partial = []
   let cx, cy, f1, f2
 
@@ -176,7 +183,7 @@ export function arcToCubic(
 
     const _previous = point(previous.code, x2, y2, previous.parameters)
 
-    partial = arcToCubic(_previous, _current, [cx, cy, f2, _f2])
+    partial = aToC(_previous, _current, [cx, cy, f2, _f2])
   }
 
   const t = Math.tan((f2 - f1) / 4)

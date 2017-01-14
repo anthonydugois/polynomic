@@ -1,5 +1,6 @@
 import {
   coords,
+  weakCoords,
   relativeCoords,
 } from './index'
 
@@ -16,11 +17,20 @@ test('should return the object representation of coordinates', () => {
   expect(test).toEqual(expected)
 })
 
+test('should return the object representation of weak coordinates', () => {
+  const test = weakCoords(10, 20)
+  const expected = {
+    x: 10,
+    y: 20,
+  }
+
+  expect(test).toEqual(expected)
+})
+
 test('should convert relative coords to absolute coords', () => {
   const test = relativeCoords(
     rect(0, 0, 100, 100),
-    '50%',
-    'center',
+    weakCoords('50%', 'center'),
   )
   const expected = {
     x: 50,

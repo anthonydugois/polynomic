@@ -2,6 +2,7 @@
 
 import type {
   CoordsT,
+  WeakCoordsT,
   RectT,
 } from '../../types'
 
@@ -15,15 +16,23 @@ export const coords : Function = (
   z ?: number = 0,
 ) : CoordsT => Object.freeze({ x, y, z })
 
-export const relativeCoords : Function = (
-  boundary ?: RectT = rect(),
+export const weakCoords : Function = (
   x ?: number | string = 0,
   y ?: number | string = 0,
   z ?: number = 0,
+) : WeakCoordsT => Object.freeze({
+  x,
+  y,
+  ...z !== 0 ? { z } : {},
+})
+
+export const relativeCoords : Function = (
+  boundary ?: RectT = rect(),
+  c ?: WeakCoordsT = weakCoords(),
 ) : CoordsT => coords(
-  relativeCoordX(boundary, x),
-  relativeCoordY(boundary, y),
-  z,
+  relativeCoordX(boundary, c.x),
+  relativeCoordY(boundary, c.y),
+  c.z,
 )
 
 const relativeCoordX : Function = (

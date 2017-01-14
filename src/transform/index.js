@@ -30,8 +30,8 @@ export const transform : Function = curry(function transform(
   options : {} = {},
 ) : PathT {
   const bbox : RectT = boundingBox(path)
-  const { transformOrigin: { x, y, z } } : PathTransformOptionsT = transformOptions(options)
-  const origin : CoordsT = relativeCoords(bbox, x, y, z)
+  const { transformOrigin } : PathTransformOptionsT = transformOptions(options)
+  const origin : CoordsT = relativeCoords(bbox, transformOrigin)
   const transformMatrix : MatrixT = transformList(matrices, bbox, origin)
 
   return transformFromOrigin(
