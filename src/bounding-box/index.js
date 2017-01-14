@@ -1,7 +1,7 @@
 // @flow
 
 import type {
-  CoordsT,
+  WeakCoordsT,
   PointT,
   PathT,
   RectT,
@@ -104,12 +104,12 @@ function _boundingBox(
 }
 
 function extremumsToBoundingBox(
-  extremums : Array<CoordsT>
+  extremums : Array<WeakCoordsT>
 ) : RectT {
   return extremums.reduce(
     (
       acc : RectT,
-      extremum : CoordsT,
+      extremum : WeakCoordsT,
     ) : RectT => {
       const x : number = parseFloat(extremum.x)
       const y : number = parseFloat(extremum.y)

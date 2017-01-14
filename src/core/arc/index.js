@@ -1,7 +1,7 @@
 // @flow
 
 import type {
-  CoordsT,
+  WeakCoordsT,
   MatrixT,
   VectorT,
   EllipseT,
@@ -14,9 +14,7 @@ import { vec } from '../vector'
 import { arc } from '../../arc'
 import { ellipse } from '../../ellipse'
 
-export const arcToEllipse : Function = curry((
-  a : ArcT,
-) : EllipseT => {
+export const arcToEllipse : Function = (a : ArcT) : EllipseT => {
   const [rx, ry] : VectorT = correctRadii(a)
 
   const _x1 : number = ((a.x1 * Math.cos(a.phi))
@@ -59,11 +57,9 @@ export const arcToEllipse : Function = curry((
   }
 
   return ellipse(cx, cy, a.rx, a.ry, a.phi, start, end)
-})
+}
 
-export const ellipseToArc : Function = curry((
-  e : EllipseT,
-) : ArcT => {
+export const ellipseToArc : Function = (e : EllipseT) : ArcT => {
   const x1 : number = e.cx
     + (e.rx * Math.cos(e.start) * Math.cos(e.phi))
     - (e.ry * Math.sin(e.start) * Math.sin(e.phi))
@@ -81,7 +77,7 @@ export const ellipseToArc : Function = curry((
   const sweep : number = e.end - e.start > 0 ? 1 : 0
 
   return arc(x1, y1, e.rx, e.ry, e.phi, large, sweep, x2, y2)
-})
+}
 
 export const transformArcParameters : Function = curry((
   a : ArcT,
@@ -136,30 +132,26 @@ export const transformArcParameters : Function = curry((
   )
 })
 
-export const foci : Function = curry((
-  e : EllipseT,
-) : [CoordsT, CoordsT] => {
+export const foci : Function = (e : EllipseT) : [WeakCoordsT, WeakCoordsT] => {
   const major : number = Math.max(e.rx, e.ry)
   const minor : number = Math.min(e.rx, e.ry)
   const f : number = Math.sqrt(Math.abs((major ** 2) - (minor ** 2)))
   const theta : number = major === e.rx ? e.phi : e.phi + (Math.PI / 2)
 
-  const f1 : CoordsT = {
+  const f1 : WeakCoordsT = {
     x: e.cx - (f * Math.cos(theta)),
     y: e.cy - (f * Math.sin(theta)),
   }
 
-  const f2 : CoordsT = {
+  const f2 : WeakCoordsT = {
     x: e.cx + (f * Math.cos(theta)),
     y: e.cy + (f * Math.sin(theta)),
   }
 
   return [f1, f2]
-})
+}
 
-export const correctRadii : Function = curry((
-  a : ArcT,
-) : VectorT => {
+export const correctRadii : Function = (a : ArcT) : VectorT => {
   if (a.rx === 0 || a.ry === 0) {
     return vec(a.rx, a.ry, 0, 1)
   }
@@ -179,4 +171,4 @@ export const correctRadii : Function = curry((
     0,
     1,
   )
-})
+}

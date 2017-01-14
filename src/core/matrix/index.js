@@ -5,7 +5,7 @@ import type { MatrixT, VectorT } from '../../types'
 import { curry } from 'lodash/fp'
 import { vec } from '../vector'
 
-export const mat : Function = curry((
+export const mat : Function = (
   m11 : number = 0,
   m12 : number = m11,
   m13 : number = m11,
@@ -22,21 +22,21 @@ export const mat : Function = curry((
   m42 : number = m11,
   m43 : number = m11,
   m44 : number = m11,
-) : MatrixT => [
+) : MatrixT => Object.freeze([
   m11, m21, m31, m41,
   m12, m22, m32, m42,
   m13, m23, m33, m43,
   m14, m24, m34, m44,
 ])
 
-export const identity : Function = curry(() : MatrixT => mat(
+export const identity : Function = () : MatrixT => mat(
   1, 0, 0, 0,
   0, 1, 0, 0,
   0, 0, 1, 0,
   0, 0, 0, 1,
-))
+)
 
-export const det : Function = curry((
+export const det : Function = (
   m : MatrixT,
 ) : number => (m[0] * m[5] * m[10] * m[15])
   + (m[0] * m[6] * m[11] * m[13])
@@ -68,9 +68,9 @@ export const det : Function = curry((
 
   - (m[3] * m[4] * m[9] * m[14])
   - (m[3] * m[5] * m[10] * m[12])
-  - (m[3] * m[6] * m[8] * m[13]))
+  - (m[3] * m[6] * m[8] * m[13])
 
-export const inverse : Function = curry((
+export const inverse : Function = (
   m : MatrixT,
 ) : MatrixT => {
   const d : number = det(m)
@@ -180,7 +180,7 @@ export const inverse : Function = curry((
     - (m[1] * m[4] * m[10])
     - (m[2] * m[5] * m[8])) / d,
   )
-})
+}
 
 export const multiply : Function = curry((
   a : MatrixT,

@@ -20,21 +20,21 @@ import {
   isAbsolute,
 } from '../is'
 
-const findOrPoint : Function =
+const safeFind : Function =
   (func : Function) : Function =>
     (path : PathT) =>
       func(path) || point()
 
-export const findLastPoint : Function = findOrPoint(last)
-export const findLastM : Function = findOrPoint(findLast(isM))
-export const findLastL : Function = findOrPoint(findLast(isL))
-export const findLastH : Function = findOrPoint(findLast(isH))
-export const findLastV : Function = findOrPoint(findLast(isV))
-export const findLastQ : Function = findOrPoint(findLast(isQ))
-export const findLastT : Function = findOrPoint(findLast(isT))
-export const findLastC : Function = findOrPoint(findLast(isC))
-export const findLastS : Function = findOrPoint(findLast(isS))
-export const findLastA : Function = findOrPoint(findLast(isA))
-export const findLastZ : Function = findOrPoint(findLast(isZ))
-export const findLastRelative : Function = findOrPoint(findLast(isRelative))
-export const findLastAbsolute : Function = findOrPoint(findLast(isAbsolute))
+export const findLastPoint : Function = safeFind(last)
+export const findLastM : Function = safeFind(findLast(isM))
+export const findLastL : Function = safeFind(findLast(isL))
+export const findLastH : Function = safeFind(findLast(isH))
+export const findLastV : Function = safeFind(findLast(isV))
+export const findLastQ : Function = safeFind(findLast(isQ))
+export const findLastT : Function = safeFind(findLast(isT))
+export const findLastC : Function = safeFind(findLast(isC))
+export const findLastS : Function = safeFind(findLast(isS))
+export const findLastA : Function = safeFind(findLast(isA))
+export const findLastZ : Function = safeFind(findLast(isZ))
+export const findLastRelative : Function = safeFind(findLast(isRelative))
+export const findLastAbsolute : Function = safeFind(findLast(isAbsolute))

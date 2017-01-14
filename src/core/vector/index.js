@@ -4,16 +4,15 @@ import type { VectorT } from '../../types'
 
 import { curry } from 'lodash/fp'
 
-export const vec : Function = curry((
+export const vec : Function = (
   v1 : number = 0,
   v2 : number = v1,
   v3 : number = v1,
   v4 : number = v1,
-) : VectorT => [v1, v2, v3, v4])
+) : VectorT => Object.freeze([v1, v2, v3, v4])
 
-export const length : Function = curry((
-  v : VectorT,
-) : number => Math.sqrt((v[0] ** 2) + (v[1] ** 2) + (v[2] ** 2)))
+export const length : Function = (v : VectorT) : number =>
+  Math.sqrt((v[0] ** 2) + (v[1] ** 2) + (v[2] ** 2))
 
 export const dot : Function = curry((
   u : VectorT,

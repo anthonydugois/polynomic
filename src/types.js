@@ -1,15 +1,15 @@
 // @flow
 
 export type CoordsT = {
-  x : number | string,
-  y : number | string,
-  z ?: number,
-}
-
-export type AbsoluteCoordsT = {
   x : number,
   y : number,
   z : number,
+}
+
+export type WeakCoordsT = {
+  x : number | string,
+  y : number | string,
+  z ?: number,
 }
 
 export type MatrixT = [
@@ -28,7 +28,7 @@ export type VectorT = [
 
 export type PathTransformOptionsT = {
   indices : Array<number>,
-  transformOrigin : CoordsT,
+  transformOrigin : WeakCoordsT,
 }
 
 export type PointCodeT =

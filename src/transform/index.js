@@ -3,7 +3,7 @@
 import type {
   MatrixT,
   VectorT,
-  AbsoluteCoordsT,
+  CoordsT,
   PointT,
   PointParamsT,
   PathT,
@@ -17,7 +17,7 @@ import { identity, multiply, multiplyVec } from '../core/matrix'
 import { vec } from '../core/vector'
 import { point } from '../core/point'
 import { adjust } from '../core/adjust'
-import { absolute } from '../core/absolute'
+import { relativeCoords } from '../core/coords'
 import { transformArcParameters } from '../core/arc'
 import { rect } from '../rect'
 import { arc } from '../arc'
@@ -30,8 +30,8 @@ export const transform : Function = curry(function transform(
   options : {} = {},
 ) : PathT {
   const bbox : RectT = boundingBox(path)
-  const { transformOrigin } : PathTransformOptionsT = transformOptions(options)
-  const origin : AbsoluteCoordsT = absolute(transformOrigin, bbox)
+  const { transformOrigin: { x, y, z } } : PathTransformOptionsT = transformOptions(options)
+  const origin : CoordsT = relativeCoords(bbox, x, y, z)
   const transformMatrix : MatrixT = transformList(matrices, bbox, origin)
 
   return transformFromOrigin(
@@ -55,7 +55,7 @@ const transformOptions : Function = curry(function transformOptions(
 const transformList : Function = curry(function transformList(
   matrices : Array<MatrixT | Function>,
   bbox : RectT,
-  origin : AbsoluteCoordsT,
+  origin : CoordsT,
 ) : MatrixT {
   return matrices.reduce(
     (
@@ -83,7 +83,7 @@ const transformFromOrigin : Function = curry(function transformFromOrigin(
   transformer : Function,
   transformMatrix : MatrixT,
   primitive : any,
-  origin : AbsoluteCoordsT,
+  origin : CoordsT,
 ) : any {
   if (origin.x !== 0 || origin.y !== 0 || origin.z !== 0) {
     const I : MatrixT = identity()

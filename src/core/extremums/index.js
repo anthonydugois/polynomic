@@ -1,11 +1,12 @@
 // @flow
 
 import type {
-  CoordsT,
+  WeakCoordsT,
   ArcT,
   EllipseT,
 } from '../../types'
 
+import { curry, map, filter } from 'lodash/fp'
 import { normalize } from '../utils/normalize'
 import { arcToEllipse } from '../arc'
 
@@ -16,92 +17,101 @@ import {
   elliptic,
 } from '../parametric'
 
-export function linearExtremums(
+export const linearExtremums : Function = curry((
   x1 : number,
   y1 : number,
-  x2 : number = x1,
-  y2 : number = y1,
-) : Array<CoordsT> {
-  return extremums(linear(x1, y1, x2, y2))(0, 1)
-}
+  x2 : number,
+  y2 : number,
+) : Array<WeakCoordsT> => extremums(
+  linear(x1, y1, x2, y2),
+  [0, 1],
+))
 
-export function quadraticExtremums(
+export const quadraticExtremums : Function = curry((
   x1 : number,
   y1 : number,
-  x2 : number = x1,
-  y2 : number = y1,
-  x3 : number = x1,
-  y3 : number = y1,
-) : Array<CoordsT> {
-  const tx : number = dQuadraticRoot(x1, x2, x3)
-  const ty : number = dQuadraticRoot(y1, y2, y3)
+  x2 : number,
+  y2 : number,
+  x3 : number,
+  y3 : number,
+) : Array<WeakCoordsT> => extremums(
+  quadratic(x1, y1, x2, y2, x3, y3),
+  [
+    0,
+    1,
+    dQuadraticRoot(x1, x2, x3),
+    dQuadraticRoot(y1, y2, y3),
+  ],
+))
 
-  return extremums(quadratic(x1, y1, x2, y2, x3, y3))(0, 1, tx, ty)
-}
-
-export function cubicExtremums(
+export const cubicExtremums : Function = curry((
   x1 : number,
   y1 : number,
-  x2 : number = x1,
-  y2 : number = y1,
-  x3 : number = x1,
-  y3 : number = y1,
-  x4 : number = x1,
-  y4 : number = y1,
-) : Array<CoordsT> {
-  const tx : Array<number> = dCubicRoots(x1, x2, x3, x4)
-  const ty : Array<number> = dCubicRoots(y1, y2, y3, y4)
+  x2 : number,
+  y2 : number,
+  x3 : number,
+  y3 : number,
+  x4 : number,
+  y4 : number,
+) : Array<WeakCoordsT> => extremums(
+  cubic(x1, y1, x2, y2, x3, y3, x4, y4),
+  [
+    0,
+    1,
+    ...dCubicRoots(x1, x2, x3, x4),
+    ...dCubicRoots(y1, y2, y3, y4),
+  ],
+))
 
-  return extremums(cubic(x1, y1, x2, y2, x3, y3, x4, y4))(0, 1, ...tx, ...ty)
-}
-
-export function ellipticExtremums(
+export const ellipticExtremums : Function = curry((
   a : ArcT,
-) : Array<CoordsT> {
+) : Array<WeakCoordsT> => {
   const { start, end } : EllipseT = arcToEllipse(a)
   const [ax, ay] : Array<number> = dEllipticRoots(a.rx, a.ry, a.phi)
 
-  return extremums(elliptic(a))(
-    0,
-    1,
-    normalize(ax, start, end),
-    normalize(ax + Math.PI, start, end),
-    normalize(ax - Math.PI, start, end),
-    normalize(ay, start, end),
-    normalize(ay + Math.PI, start, end),
-    normalize(ay - Math.PI, start, end),
+  return extremums(
+    elliptic(a),
+    [
+      0,
+      1,
+      normalize(ax, start, end),
+      normalize(ax + Math.PI, start, end),
+      normalize(ax - Math.PI, start, end),
+      normalize(ay, start, end),
+      normalize(ay + Math.PI, start, end),
+      normalize(ay - Math.PI, start, end),
+    ],
   )
-}
+})
 
-function extremums(
+const extremums : Function = curry((
   f : Function,
-) : Function {
-  return function extremums(
-    ...inputs : Array<number>
-  ) : Array<CoordsT> {
-    return inputs
-      .filter((t) => t >= 0 && t <= 1)
-      .map((t) => f(t))
-  }
-}
+  inputs : Array<number>,
+) : Array<WeakCoordsT> => map(
+  (t) => f(t),
+  filter(
+    (t) => t >= 0 && t <= 1,
+    inputs,
+  ),
+))
 
-function dQuadraticRoot(
+const dQuadraticRoot : Function = curry((
   c1 : number,
-  c2 : number = c1,
-  c3 : number = c1,
-) : number {
+  c2 : number,
+  c3 : number,
+) : number => {
   const a : number = (c1 - (2 * c2)) + c3
   const b : number = c2 - c1
 
   return -b / a
-}
+})
 
-function dCubicRoots(
+const dCubicRoots : Function = curry((
   c1 : number,
-  c2 : number = c1,
-  c3 : number = c1,
-  c4 : number = c1,
-) : Array<number> {
+  c2 : number,
+  c3 : number,
+  c4 : number,
+) : Array<number> => {
   const a : number = ((3 * c4) - (9 * c3)) + ((9 * c2) - (3 * c1))
   const b : number = ((6 * c3) - (12 * c2)) + (6 * c1)
   const c : number = (3 * c2) - (3 * c1)
@@ -115,15 +125,13 @@ function dCubicRoots(
     (-b + Math.sqrt(delta)) / (2 * a),
     (-b - Math.sqrt(delta)) / (2 * a),
   ]
-}
+})
 
-function dEllipticRoots(
-  rx : number = 0,
-  ry : number = 0,
-  phi : number = 0,
-) : Array<number> {
-  return [
-    Math.atan((-ry * Math.tan(phi)) / rx),
-    Math.atan(ry / (rx * Math.tan(phi))),
-  ]
-}
+const dEllipticRoots : Function = curry((
+  rx : number,
+  ry : number,
+  phi : number,
+) : Array<number> => [
+  Math.atan((-ry * Math.tan(phi)) / rx),
+  Math.atan(ry / (rx * Math.tan(phi))),
+])
