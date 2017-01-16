@@ -2,30 +2,29 @@
 
 import type { PointT, PathT } from '../types'
 
-export function join(
-  paths: Array<PathT>,
-  makeJoin: Function = () => [],
-): PathT {
-  return paths.reduce(
-    (
-      acc: PathT,
-      path: PathT,
-      index: number,
-    ): PathT => {
-      if (index < paths.length - 1) {
-        const prevPath: PathT = path
-        const nextPath: PathT = paths[index + 1]
-        const segment: PointT | PathT = makeJoin(prevPath, nextPath)
-        const segments: PathT = Array.isArray(segment) ? segment : [segment]
+import { curry, reduce } from 'lodash/fp'
 
-        acc.push(...path)
-        acc.push(...segments)
-      } else {
-        acc.push(...path)
-      }
+export const join : Function = curry((
+  joiner : Function,
+  paths : Array<PathT>,
+) : PathT => reduce.convert({ cap: false })(
+  (
+    acc : PathT,
+    path : PathT,
+    index : number,
+  ) : PathT => {
+    acc.push(...path)
 
-      return acc
-    },
-    [],
-  )
-}
+    if (index < paths.length - 1) {
+      const nextPath : PathT = paths[index + 1]
+      const segment : PointT | PathT = joiner(path, nextPath)
+      const segments : PathT = Array.isArray(segment) ? segment : [segment]
+
+      acc.push(...segments)
+    }
+
+    return acc
+  },
+  [],
+  paths,
+))

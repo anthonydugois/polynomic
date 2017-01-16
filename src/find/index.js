@@ -2,7 +2,7 @@
 
 import type { PathT, PointT } from '../types'
 
-import { last, findLast } from 'lodash/fp'
+import { last, findLast, findLastIndex } from 'lodash/fp'
 import { point } from '../core/point'
 
 import {
@@ -26,6 +26,7 @@ const safeFind : Function =
       func(path) || point()
 
 export const findLastPoint : Function = safeFind(last)
+
 export const findLastM : Function = safeFind(findLast(isM))
 export const findLastL : Function = safeFind(findLast(isL))
 export const findLastH : Function = safeFind(findLast(isH))
@@ -38,3 +39,16 @@ export const findLastA : Function = safeFind(findLast(isA))
 export const findLastZ : Function = safeFind(findLast(isZ))
 export const findLastRelative : Function = safeFind(findLast(isRelative))
 export const findLastAbsolute : Function = safeFind(findLast(isAbsolute))
+
+export const findLastIndexM : Function = findLastIndex(isM)
+export const findLastIndexL : Function = findLastIndex(isL)
+export const findLastIndexH : Function = findLastIndex(isH)
+export const findLastIndexV : Function = findLastIndex(isV)
+export const findLastIndexQ : Function = findLastIndex(isQ)
+export const findLastIndexT : Function = findLastIndex(isT)
+export const findLastIndexC : Function = findLastIndex(isC)
+export const findLastIndexS : Function = findLastIndex(isS)
+export const findLastIndexA : Function = findLastIndex(isA)
+export const findLastIndexZ : Function = findLastIndex(isZ)
+export const findLastIndexRelative : Function = findLastIndex(isRelative)
+export const findLastIndexAbsolute : Function = findLastIndex(isAbsolute)

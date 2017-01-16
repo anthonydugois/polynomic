@@ -7,48 +7,49 @@ import type {
   PathT,
 } from '../types'
 
+import { reduce } from 'lodash/fp'
 import { point } from '../core/point'
+import { anchors, arc } from '../core/parameters'
 import { isM, isT, isC, isS, isA, isZ, isRelative } from '../is'
 
-export function reverse(
-  path: PathT,
-): PathT {
+export const reverse : Function = (
+  path : PathT,
+) : PathT => {
   let lastMIndex: number = 0
 
-  return path.reduce(
+  return reduce.convert({ cap: false })(
     (
-      acc: PathT,
-      current: PointT,
-      index: number,
-    ): PathT => {
+      acc : PathT,
+      current : PointT,
+      index : number,
+    ) : PathT => {
       if (isM(current)) {
         lastMIndex = index
       }
 
-      const after: PointT = index < path.length - 1 && !isZ(path[index + 1]) ?
+      const after : PointT = index < path.length - 1 && !isZ(path[index + 1]) ?
         path[index + 1] :
         path[lastMIndex]
 
-      const close: boolean = isZ(current)
-      const next: PointT = close ? current : after
-      const insert: number = close ? acc.length - lastMIndex : 0
-      const { x, y }: PointT = close ? path[index - 1] : current
+      const close : boolean = isZ(current)
+      const next : PointT = close ? current : after
+      const insert : number = close ? acc.length - lastMIndex : 0
+      const { x, y } : PointT = close ? path[index - 1] : current
 
-      const code: PointCodeT = absoluteCode(next)
-      const parameters: PointParamsT = reverseParameters(next)
+      const code : PointCodeT = cancelSmoothCode(next)
+      const parameters : PointParamsT = invertParameters(next)
 
       acc.splice(insert, 0, point(code, x, y, parameters))
 
       return acc
     },
     [],
+    path,
   )
 }
 
-function absoluteCode(
-  current: PointT,
-): PointCodeT {
-  const relative: boolean = isRelative(current)
+const cancelSmoothCode : Function = (current : PointT) : PointCodeT => {
+  const relative : boolean = isRelative(current)
 
   switch (true) {
   case isT(current):
@@ -62,27 +63,25 @@ function absoluteCode(
   }
 }
 
-function reverseParameters(
-  current: PointT,
-): PointParamsT {
+const invertParameters : Function = (current : PointT) : PointParamsT => {
   switch (true) {
   case isC(current):
   case isS(current):
-    return {
-      ...current.parameters,
-      x1: current.parameters.x2,
-      y1: current.parameters.y2,
-      x2: current.parameters.x1,
-      y2: current.parameters.y1,
-    }
+    return anchors(
+      current.parameters.x2,
+      current.parameters.y2,
+      current.parameters.x1,
+      current.parameters.y1,
+    )
 
   case isA(current):
-    return {
-      ...current.parameters,
-      sweep: typeof current.parameters.sweep !== 'undefined' ?
-        (current.parameters.sweep === 0 ? 1 : 0) :
-        0,
-    }
+    return arc(
+      current.parameters.rx,
+      current.parameters.ry,
+      current.parameters.rotation,
+      current.parameters.large,
+      current.parameters.sweep === 0 ? 1 : 0,
+    )
 
   default:
     return current.parameters

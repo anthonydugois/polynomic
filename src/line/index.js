@@ -2,9 +2,7 @@
 
 import type { LineT } from '../types'
 
-import { curry } from 'lodash/fp'
-
-export const line : Function = curry((
+export const line : Function = (
   x1 : number = 0,
   y1 : number = 0,
   x2 : number = 0,
@@ -14,4 +12,4 @@ export const line : Function = curry((
   y1,
   x2,
   y2,
-}))
+})

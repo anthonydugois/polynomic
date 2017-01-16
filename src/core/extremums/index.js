@@ -22,10 +22,7 @@ export const linearExtremums : Function = curry((
   y1 : number,
   x2 : number,
   y2 : number,
-) : Array<WeakCoordsT> => extremums(
-  linear(x1, y1, x2, y2),
-  [0, 1],
-))
+) : Array<WeakCoordsT> => extremums(linear(x1, y1, x2, y2), [0, 1]))
 
 export const quadraticExtremums : Function = curry((
   x1 : number,
@@ -34,15 +31,12 @@ export const quadraticExtremums : Function = curry((
   y2 : number,
   x3 : number,
   y3 : number,
-) : Array<WeakCoordsT> => extremums(
-  quadratic(x1, y1, x2, y2, x3, y3),
-  [
-    0,
-    1,
-    dQuadraticRoot(x1, x2, x3),
-    dQuadraticRoot(y1, y2, y3),
-  ],
-))
+) : Array<WeakCoordsT> => extremums(quadratic(x1, y1, x2, y2, x3, y3), [
+  0,
+  1,
+  dQuadraticRoot(x1, x2, x3),
+  dQuadraticRoot(y1, y2, y3),
+]))
 
 export const cubicExtremums : Function = curry((
   x1 : number,
@@ -53,36 +47,28 @@ export const cubicExtremums : Function = curry((
   y3 : number,
   x4 : number,
   y4 : number,
-) : Array<WeakCoordsT> => extremums(
-  cubic(x1, y1, x2, y2, x3, y3, x4, y4),
-  [
-    0,
-    1,
-    ...dCubicRoots(x1, x2, x3, x4),
-    ...dCubicRoots(y1, y2, y3, y4),
-  ],
-))
+) : Array<WeakCoordsT> => extremums(cubic(x1, y1, x2, y2, x3, y3, x4, y4), [
+  0,
+  1,
+  ...dCubicRoots(x1, x2, x3, x4),
+  ...dCubicRoots(y1, y2, y3, y4),
+]))
 
-export const ellipticExtremums : Function = curry((
-  a : ArcT,
-) : Array<WeakCoordsT> => {
+export const ellipticExtremums : Function = (a : ArcT) : Array<WeakCoordsT> => {
   const { start, end } : EllipseT = arcToEllipse(a)
   const [ax, ay] : Array<number> = dEllipticRoots(a.rx, a.ry, a.phi)
 
-  return extremums(
-    elliptic(a),
-    [
-      0,
-      1,
-      normalize(ax, start, end),
-      normalize(ax + Math.PI, start, end),
-      normalize(ax - Math.PI, start, end),
-      normalize(ay, start, end),
-      normalize(ay + Math.PI, start, end),
-      normalize(ay - Math.PI, start, end),
-    ],
-  )
-})
+  return extremums(elliptic(a), [
+    0,
+    1,
+    normalize(ax, start, end),
+    normalize(ax + Math.PI, start, end),
+    normalize(ax - Math.PI, start, end),
+    normalize(ay, start, end),
+    normalize(ay + Math.PI, start, end),
+    normalize(ay - Math.PI, start, end),
+  ])
+}
 
 const extremums : Function = curry((
   f : Function,

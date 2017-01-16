@@ -2,9 +2,7 @@
 
 import type { ArcT } from '../types'
 
-import { curry } from 'lodash/fp'
-
-export const arc : Function = curry((
+export const arc : Function = (
   x1 : number = 0,
   y1 : number = 0,
   rx : number = 0,
@@ -24,4 +22,4 @@ export const arc : Function = curry((
   sweep: sweep === 0 ? 0 : 1,
   x2,
   y2,
-}))
+})

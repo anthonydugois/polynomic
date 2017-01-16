@@ -2,9 +2,7 @@
 
 import type { RectT } from '../types'
 
-import { curry } from 'lodash/fp'
-
-export const rect : Function = curry((
+export const rect : Function = (
   x : number = 0,
   y : number = 0,
   width : number = 0,
@@ -18,4 +16,4 @@ export const rect : Function = curry((
   height,
   ...rx !== 0 ? { rx } : {},
   ...ry !== 0 ? { ry } : {},
-}))
+})

@@ -30,12 +30,12 @@ export const relativeCoords : Function = (
   boundary ?: RectT = rect(),
   c ?: WeakCoordsT = weakCoords(),
 ) : CoordsT => coords(
-  relativeCoordX(boundary, c.x),
-  relativeCoordY(boundary, c.y),
+  relativeX(boundary, c.x),
+  relativeY(boundary, c.y),
   c.z,
 )
 
-const relativeCoordX : Function = (
+const relativeX : Function = (
   boundary ?: RectT = rect(),
   x ?: number | string = 0,
 ) : number => {
@@ -51,7 +51,7 @@ const relativeCoordX : Function = (
   return boundary.x + (boundary.width * t)
 }
 
-const relativeCoordY : Function = (
+const relativeY : Function = (
   boundary ?: RectT = rect(),
   y ?: number | string = 0,
 ) : number => {

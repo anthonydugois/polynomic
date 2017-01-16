@@ -2,9 +2,7 @@
 
 import type { EllipseT } from '../types'
 
-import { curry } from 'lodash/fp'
-
-export const ellipse : Function = curry((
+export const ellipse : Function = (
   cx : number = 0,
   cy : number = 0,
   rx : number = 0,
@@ -20,4 +18,4 @@ export const ellipse : Function = curry((
   phi: phi % (2 * Math.PI),
   start,
   end,
-}))
+})

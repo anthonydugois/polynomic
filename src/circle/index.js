@@ -2,9 +2,7 @@
 
 import type { CircleT } from '../types'
 
-import { curry } from 'lodash/fp'
-
-export const circle : Function = curry((
+export const circle : Function = (
   cx : number = 0,
   cy : number = 0,
   r : number = 0,
@@ -12,4 +10,4 @@ export const circle : Function = curry((
   cx,
   cy,
   r,
-}))
+})

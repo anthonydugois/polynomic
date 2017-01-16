@@ -2,6 +2,8 @@ import {
   findLastPoint,
   findLastM,
   findLastQ,
+  findLastIndexM,
+  findLastIndexQ,
 } from './index'
 
 import { parse } from '../parse'
@@ -40,4 +42,18 @@ test('should return a point even if there is no result', () => {
   }
 
   expect(test).toEqual(expected)
+})
+
+test('should return the index of last M point', () => {
+  const test = findLastIndexM(parse('M0 0H100m10 10l50 50z'))
+  const expected = 2
+
+  expect(test).toBe(expected)
+})
+
+test('should not find the index of last Q point', () => {
+  const test = findLastIndexQ(parse('M0 0H100m10 10l50 50z'))
+  const expected = -1
+
+  expect(test).toBe(expected)
 })
