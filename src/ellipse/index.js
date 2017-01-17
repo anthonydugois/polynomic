@@ -1,6 +1,6 @@
 // @flow
 
-import type { EllipseT } from '../types'
+import type { PrimitiveEllipseT } from '../types'
 
 export const ellipse : Function = (
   cx : number = 0,
@@ -10,7 +10,8 @@ export const ellipse : Function = (
   phi : number = 0,
   start : number = 0,
   end : number = 0,
-) : EllipseT => Object.freeze({
+) : PrimitiveEllipseT => Object.freeze({
+  type: 'ellipse',
   cx,
   cy,
   rx,

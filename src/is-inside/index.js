@@ -1,36 +1,39 @@
 // @flow
 
-import type { PointT, PathT } from '../types'
+import type {
+  PrimitivePointT,
+  PathT,
+} from '../types'
 
-export function isInside(
-  point: PointT,
-  path: PathT,
-): boolean {
-  return path.reduce(
-    (
-      acc: boolean,
-      current: PointT,
-      index: number,
-    ): boolean => {
-      const previous: PointT = index === 0 ?
-        path[path.length - 1] :
-        path[index - 1]
+import { curry } from 'lodash/fp'
 
-      const isVerticallyBefore: boolean = previous.y > point.y
-      const isVerticallyAfter: boolean = current.y > point.y
-      const isVerticallyBetween: boolean = isVerticallyBefore !== isVerticallyAfter
+export const isInside : Function = curry((
+  point : PrimitivePointT,
+  path : PathT,
+) : boolean => path.reduce(
+  (
+    acc: boolean,
+    current: PrimitivePointT,
+    index: number,
+  ): boolean => {
+    const previous: PrimitivePointT = index === 0 ?
+      path[path.length - 1] :
+      path[index - 1]
 
-      const diff: number = point.y - current.y
-      const slope: number = (previous.y - current.y) / (previous.x - current.x)
-      const position: number = current.x + (diff / slope)
-      const isHorizontallyBefore: boolean = point.x < position
+    const isVerticallyBefore: boolean = previous.y > point.y
+    const isVerticallyAfter: boolean = current.y > point.y
+    const isVerticallyBetween: boolean = isVerticallyBefore !== isVerticallyAfter
 
-      if (isVerticallyBetween && isHorizontallyBefore) {
-        return !acc
-      }
+    const diff: number = point.y - current.y
+    const slope: number = (previous.y - current.y) / (previous.x - current.x)
+    const position: number = current.x + (diff / slope)
+    const isHorizontallyBefore: boolean = point.x < position
 
-      return acc
-    },
-    false,
-  )
-}
+    if (isVerticallyBetween && isHorizontallyBefore) {
+      return !acc
+    }
+
+    return acc
+  },
+  false,
+))

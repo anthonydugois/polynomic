@@ -1,6 +1,6 @@
 // @flow
 
-import type { PointT, PathT } from '../types'
+import type { PrimitivePointT, PathT } from '../types'
 
 import { point } from '../core/point'
 import * as strings from '../strings'
@@ -14,7 +14,7 @@ export function build(
   return path.reduce(
     (
       acc: string,
-      current: PointT,
+      current: PrimitivePointT,
       index: number,
     ): string => {
       if (current.code === '') {
@@ -22,7 +22,7 @@ export function build(
       }
 
       const fn: Function = strings[current.code]
-      const previous: PointT = index > 0 ?
+      const previous: PrimitivePointT = index > 0 ?
         path[index - 1] :
         point()
 

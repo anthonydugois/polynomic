@@ -1,6 +1,6 @@
 // @flow
 
-import type { PointT, PathT, LineT } from '../types'
+import type { PointT, PathT, PrimitiveLineT } from '../types'
 
 import { distanceToLine } from '../core/distance'
 import { line } from '../line'
@@ -37,7 +37,7 @@ function getMaxDistance(
 ) : DistanceT {
   const first : PointT = path[0]
   const last : PointT = path[path.length - 1]
-  const to : LineT = line(first.x, first.y, last.x, last.y)
+  const to : PrimitiveLineT = line(first.x, first.y, last.x, last.y)
 
   return path.reduce(
     (

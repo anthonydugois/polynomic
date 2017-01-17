@@ -1,7 +1,7 @@
 // @flow
 
 import type {
-  PointT,
+  PrimitivePointT,
   PointCodeT,
   PointParamsT,
 } from '../../types'
@@ -23,10 +23,10 @@ import {
 } from '../../is'
 
 export const adjust : Function = curry((
-  current : PointT,
-  previous : PointT,
+  current : PrimitivePointT,
+  previous : PrimitivePointT,
   index : number = -1,
-) : PointT => shouldAdjustCode(current, previous, index) ?
+) : PrimitivePointT => shouldAdjustCode(current, previous, index) ?
   point(
     adjustCode(current, previous, index),
     current.x,
@@ -37,8 +37,8 @@ export const adjust : Function = curry((
 )
 
 const adjustCode : Function = curry((
-  current : PointT,
-  previous : PointT,
+  current : PrimitivePointT,
+  previous : PrimitivePointT,
   index : number,
 ) : PointCodeT => {
   switch (true) {
@@ -60,8 +60,8 @@ const adjustCode : Function = curry((
 })
 
 const shouldAdjustCode : Function = curry((
-  current : PointT,
-  previous : PointT,
+  current : PrimitivePointT,
+  previous : PrimitivePointT,
   index : number,
 ) : boolean => shouldAdjustMoveTo(current, previous, index)
   || shouldAdjustLineTo(current, previous)
@@ -69,20 +69,20 @@ const shouldAdjustCode : Function = curry((
   || shouldAdjustCubicTo(current, previous))
 
 const shouldAdjustMoveTo : Function = curry((
-  current : PointT,
-  previous : PointT,
+  current : PrimitivePointT,
+  previous : PrimitivePointT,
   index : number,
 ) : boolean => !isM(current) && (index === 0 || isZ(previous)))
 
 const shouldAdjustLineTo : Function = curry((
-  current : PointT,
-  previous : PointT,
+  current : PrimitivePointT,
+  previous : PrimitivePointT,
 ) : boolean => (isH(current) && current.y !== previous.y)
   || (isV(current) && current.x !== previous.x))
 
 const shouldAdjustQuadraticTo : Function = curry((
-  current : PointT,
-  previous : PointT,
+  current : PrimitivePointT,
+  previous : PrimitivePointT,
 ) : boolean => {
   const { x1, y1 } : PointParamsT = implicitAnchor(previous)
 
@@ -94,8 +94,8 @@ const shouldAdjustQuadraticTo : Function = curry((
 })
 
 const shouldAdjustCubicTo : Function = curry((
-  current : PointT,
-  previous : PointT,
+  current : PrimitivePointT,
+  previous : PrimitivePointT,
 ) : boolean => {
   const { x1, y1 } : PointParamsT = implicitAnchors(previous)
 

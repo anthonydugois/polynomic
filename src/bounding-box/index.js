@@ -2,9 +2,9 @@
 
 import type {
   WeakCoordsT,
-  PointT,
+  PrimitivePointT,
   PathT,
-  RectT,
+  PrimitiveRectT,
 } from '../types'
 
 import { degToRad } from '../core/angle'
@@ -16,20 +16,20 @@ import { isQ, isT, isC, isS, isA } from '../is'
 
 export function boundingBox(
   path : PathT,
-) : RectT {
+) : PrimitiveRectT {
   return path.reduce(
     (
-      acc : RectT,
-      current : PointT,
+      acc : PrimitiveRectT,
+      current : PrimitivePointT,
       index : number,
-    ) : RectT => {
+    ) : PrimitiveRectT => {
       if (index > 0) {
         const {
           x,
           y,
           width,
           height,
-        } : RectT = _boundingBox(current, path[index - 1])
+        } : PrimitiveRectT = _boundingBox(current, path[index - 1])
 
         const xMin : number = Math.min(acc.x, x)
         const yMin : number = Math.min(acc.y, y)
@@ -52,9 +52,9 @@ export function boundingBox(
 }
 
 function _boundingBox(
-  current : PointT,
-  previous : PointT = point(),
-) : RectT {
+  current : PrimitivePointT,
+  previous : PrimitivePointT = point(),
+) : PrimitiveRectT {
   switch (true) {
   case isQ(current):
   case isT(current):
@@ -105,12 +105,12 @@ function _boundingBox(
 
 function extremumsToBoundingBox(
   extremums : Array<WeakCoordsT>
-) : RectT {
+) : PrimitiveRectT {
   return extremums.reduce(
     (
-      acc : RectT,
+      acc : PrimitiveRectT,
       extremum : WeakCoordsT,
-    ) : RectT => {
+    ) : PrimitiveRectT => {
       const x : number = parseFloat(extremum.x)
       const y : number = parseFloat(extremum.y)
 

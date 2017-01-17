@@ -3,8 +3,8 @@
 import type {
   WeakCoordsT,
   VectorT,
-  ArcT,
-  EllipseT,
+  PrimitiveArcT,
+  PrimitiveEllipseT,
 } from '../../types'
 
 import { curry } from 'lodash/fp'
@@ -80,7 +80,7 @@ export const cubic : Function = curry((
 })
 
 export const elliptic : Function = curry((
-  a : ArcT,
+  a : PrimitiveArcT,
   t : number,
 ) : WeakCoordsT => {
   if (a.rx === 0 || a.ry === 0) {
@@ -88,7 +88,7 @@ export const elliptic : Function = curry((
   }
 
   const [rx, ry] : VectorT = correctRadii(a)
-  const { cx, cy, start, end } : EllipseT = arcToEllipse(a)
+  const { cx, cy, start, end } : PrimitiveEllipseT = arcToEllipse(a)
   const delta : number = end - start
 
   const rxc : number = rx * Math.cos(a.phi)

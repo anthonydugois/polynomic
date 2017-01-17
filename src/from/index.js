@@ -1,20 +1,23 @@
 // @flow
 
 import type {
+  PrimitiveT,
+  PrimitiveCircleT,
+  PrimitiveEllipseT,
+  PrimitiveLineT,
+  PrimitivePolygonT,
+  PrimitivePolylineT,
+  PrimitivePathT,
+  PrimitiveRectT,
   PathT,
-  CircleT,
-  EllipseT,
-  LineT,
-  RectT,
 } from '../types'
 
+import { reduce } from 'lodash/fp'
 import { path } from '../path'
 import { parse, parseSegments } from '../parse'
 import { M, L, A, Z } from '../points'
 
-export function from(
-  primitive : any | HTMLElement,
-) : PathT {
+export const from : Function = (primitive : PrimitiveT | HTMLElement) : PathT => {
   const name : string = primitive instanceof HTMLElement ?
     primitive.nodeName.toLowerCase() :
     primitive.type.toLowerCase()
@@ -42,17 +45,11 @@ export function from(
     return fromPath(primitive)
 
   default:
-    throw new Error('The element you provided in the `from` function is not supported.')
+    return path([])
   }
 }
 
-export function fromLine(
-  line : LineT | HTMLElement,
-) : PathT {
-  if (line instanceof HTMLElement && line.nodeName.toLowerCase() !== 'line') {
-    throw new Error('The element you provided in the `fromLine` function should be a valid SVG line node.')
-  }
-
+export const fromLine : Function = (line : PrimitiveLineT | HTMLElement) : PathT => {
   const x1 : number = line instanceof HTMLElement ?
     parseFloat(line.getAttribute('x1')) :
     line.x1
@@ -75,13 +72,7 @@ export function fromLine(
   )
 }
 
-export function fromRect(
-  rect : RectT | HTMLElement,
-) : PathT {
-  if (rect instanceof HTMLElement && rect.nodeName.toLowerCase() !== 'rect') {
-    throw new Error('The element you provided in the `fromRect` function should be a valid SVG rect node.')
-  }
-
+export const fromRect : Function = (rect : PrimitiveRectT | HTMLElement) : PathT => {
   const x : number = rect instanceof HTMLElement ?
     parseFloat(rect.getAttribute('x')) :
     rect.x
@@ -141,13 +132,7 @@ export function fromRect(
   )
 }
 
-export function fromCircle(
-  circle : CircleT | HTMLElement,
-): PathT {
-  if (circle instanceof HTMLElement && circle.nodeName.toLowerCase() !== 'circle') {
-    throw new Error('The element you provided in the `fromCircle` function should be a valid SVG circle node.')
-  }
-
+export const fromCircle : Function = (circle : PrimitiveCircleT | HTMLElement): PathT => {
   const cx : number = circle instanceof HTMLElement ?
     parseFloat(circle.getAttribute('cx')) :
     circle.cx
@@ -168,13 +153,7 @@ export function fromCircle(
   )
 }
 
-export function fromEllipse(
-  ellipse : EllipseT | HTMLElement,
-) : PathT {
-  if (ellipse instanceof HTMLElement && ellipse.nodeName.toLowerCase() !== 'ellipse') {
-    throw new Error('The element you provided in the `fromEllipse` function should be a valid SVG ellipse node.')
-  }
-
+export const fromEllipse : Function = (ellipse : PrimitiveEllipseT | HTMLElement) : PathT => {
   const cx : number = ellipse instanceof HTMLElement ?
     parseFloat(ellipse.getAttribute('cx')) :
     ellipse.cx
@@ -199,17 +178,14 @@ export function fromEllipse(
   )
 }
 
-export function fromPolygon(
-  polygon : HTMLElement,
-) : PathT {
-  if (polygon instanceof HTMLElement && polygon.nodeName.toLowerCase() !== 'polygon') {
-    throw new Error('The element you provided in the `fromPolygon` function should be a valid SVG polygon node.')
-  }
+export const fromPolygon : Function = (polygon : PrimitivePolygonT | HTMLElement) : PathT => {
+  const points : string = polygon instanceof HTMLElement ?
+    polygon.getAttribute('points') :
+    polygon.points
 
-  const points : string = polygon.getAttribute('points')
   const coords : Array<string | number> = parseSegments(points)[0]
 
-  return coords.reduce(
+  return reduce.convert({ cap: false })(
     (
       acc : PathT,
       coord : string | number,
@@ -228,20 +204,18 @@ export function fromPolygon(
       return acc
     },
     [],
+    coords,
   )
 }
 
-export function fromPolyline(
-  polyline : HTMLElement,
-) : PathT {
-  if (polyline instanceof HTMLElement && polyline.nodeName.toLowerCase() !== 'polyline') {
-    throw new Error('The element you provided in the `fromPolyline` function should be a valid SVG polyline node.')
-  }
+export const fromPolyline : Function = (polyline : PrimitivePolylineT | HTMLElement) : PathT => {
+  const points : string = polyline instanceof HTMLElement ?
+    polyline.getAttribute('points') :
+    polyline.points
 
-  const points : string = polyline.getAttribute('points')
   const coords : Array<string | number> = parseSegments(points)[0]
 
-  return coords.reduce(
+  return reduce.convert({ cap: false })(
     (
       acc : PathT,
       coord : string | number,
@@ -258,17 +232,13 @@ export function fromPolyline(
       return acc
     },
     [],
+    coords,
   )
 }
 
-export function fromPath(
-  path : HTMLElement,
-) : PathT {
-  if (path instanceof HTMLElement && path.nodeName.toLowerCase() !== 'path') {
-    throw new Error('The element you provided in the `fromPath` function should be a valid SVG path node.')
-  }
-
-  const d : string = path.getAttribute('d')
-
-  return parse(d)
-}
+export const fromPath : Function = (path : PrimitivePathT | HTMLElement) : PathT =>
+  parse(
+    path instanceof HTMLElement ?
+      path.getAttribute('d') :
+      path.d
+  )

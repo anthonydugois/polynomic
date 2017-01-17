@@ -1,6 +1,6 @@
 // @flow
 
-import type { PathT, PointT } from '../types'
+import type { PathT } from '../types'
 
 import { last, findLast, findLastIndex } from 'lodash/fp'
 import { point } from '../core/point'

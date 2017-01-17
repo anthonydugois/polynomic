@@ -2,12 +2,13 @@
 
 import type { PointT, PathT } from '../types'
 
-import { curry, reduce } from 'lodash/fp'
+import { curry } from 'lodash/fp'
+import { reduce } from '../reduce'
 
 export const join : Function = curry((
   joiner : Function,
   paths : Array<PathT>,
-) : PathT => reduce.convert({ cap: false })(
+) : PathT => reduce(
   (
     acc : PathT,
     path : PathT,

@@ -31,6 +31,10 @@ export type PathTransformOptionsT = {
   transformOrigin : WeakCoordsT,
 }
 
+export type PathT = Array<PrimitivePointT>
+
+export type PointT = PrimitivePointT | Function
+
 export type PointCodeT =
   | ''
   | 'm'
@@ -66,31 +70,39 @@ export type PointParamsT = {
   sweep ?: 0 | 1,
 }
 
-export type PointT = {
+export type PrimitivePointT = {
+  type: 'point',
   code : PointCodeT,
   x : number,
   y : number,
   parameters : PointParamsT,
 }
 
-export type PathT = Array<PointT>
+export type PrimitivePathT = {
+  type: 'path',
+  d : string,
+}
 
-export type PolygonT = {
+export type PrimitivePolygonT = {
+  type: 'polygon',
   points : string,
 }
 
-export type PolylineT = {
+export type PrimitivePolylineT = {
+  type: 'polyline',
   points : string,
 }
 
-export type LineT = {
+export type PrimitiveLineT = {
+  type: 'line',
   x1 : number,
   y1 : number,
   x2 : number,
   y2 : number,
 }
 
-export type RectT = {
+export type PrimitiveRectT = {
+  type: 'rect',
   x : number,
   y : number,
   width : number,
@@ -99,13 +111,15 @@ export type RectT = {
   ry ?: number,
 }
 
-export type CircleT = {
+export type PrimitiveCircleT = {
+  type: 'circle',
   cx : number,
   cy : number,
   r : number,
 }
 
-export type EllipseT = {
+export type PrimitiveEllipseT = {
+  type: 'ellipse',
   cx : number,
   cy : number,
   rx : number,
@@ -115,7 +129,8 @@ export type EllipseT = {
   end : number,
 }
 
-export type ArcT = {
+export type PrimitiveArcT = {
+  type: 'arc',
   x1 : number,
   y1 : number,
   rx : number,
@@ -128,12 +143,12 @@ export type ArcT = {
 }
 
 export type PrimitiveT =
-  | PointT
-  | PathT
-  | PolygonT
-  | PolylineT
-  | LineT
-  | RectT
-  | CircleT
-  | EllipseT
-  | ArcT
+  | PrimitivePointT
+  | PrimitivePathT
+  | PrimitivePolygonT
+  | PrimitivePolylineT
+  | PrimitiveLineT
+  | PrimitiveRectT
+  | PrimitiveCircleT
+  | PrimitiveEllipseT
+  | PrimitiveArcT

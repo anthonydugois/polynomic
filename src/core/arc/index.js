@@ -4,8 +4,8 @@ import type {
   WeakCoordsT,
   MatrixT,
   VectorT,
-  EllipseT,
-  ArcT,
+  PrimitiveEllipseT,
+  PrimitiveArcT,
 } from '../../types'
 
 import { curry } from 'lodash/fp'
@@ -14,7 +14,7 @@ import { vec } from '../vector'
 import { arc } from '../../arc'
 import { ellipse } from '../../ellipse'
 
-export const arcToEllipse : Function = (a : ArcT) : EllipseT => {
+export const arcToEllipse : Function = (a : PrimitiveArcT) : PrimitiveEllipseT => {
   const [rx, ry] : VectorT = correctRadii(a)
 
   const _x1 : number = ((a.x1 * Math.cos(a.phi))
@@ -59,7 +59,7 @@ export const arcToEllipse : Function = (a : ArcT) : EllipseT => {
   return ellipse(cx, cy, a.rx, a.ry, a.phi, start, end)
 }
 
-export const ellipseToArc : Function = (e : EllipseT) : ArcT => {
+export const ellipseToArc : Function = (e : PrimitiveEllipseT) : PrimitiveArcT => {
   const x1 : number = e.cx
     + (e.rx * Math.cos(e.start) * Math.cos(e.phi))
     - (e.ry * Math.sin(e.start) * Math.sin(e.phi))
@@ -80,10 +80,10 @@ export const ellipseToArc : Function = (e : EllipseT) : ArcT => {
 }
 
 export const transformArcParameters : Function = curry((
-  a : ArcT,
+  a : PrimitiveArcT,
   transformMatrix : MatrixT,
 ) : VectorT => {
-  const e : EllipseT = arcToEllipse(a)
+  const e : PrimitiveEllipseT = arcToEllipse(a)
   const ellipseMatrix : MatrixT = mat(
     e.rx * Math.cos(e.phi), e.rx * Math.sin(e.phi), 0, 0,
     -e.ry * Math.sin(e.phi), e.ry * Math.cos(e.phi), 0, 0,
@@ -132,7 +132,7 @@ export const transformArcParameters : Function = curry((
   )
 })
 
-export const foci : Function = (e : EllipseT) : [WeakCoordsT, WeakCoordsT] => {
+export const foci : Function = (e : PrimitiveEllipseT) : [WeakCoordsT, WeakCoordsT] => {
   const major : number = Math.max(e.rx, e.ry)
   const minor : number = Math.min(e.rx, e.ry)
   const f : number = Math.sqrt(Math.abs((major ** 2) - (minor ** 2)))
@@ -151,7 +151,7 @@ export const foci : Function = (e : EllipseT) : [WeakCoordsT, WeakCoordsT] => {
   return [f1, f2]
 }
 
-export const correctRadii : Function = (a : ArcT) : VectorT => {
+export const correctRadii : Function = (a : PrimitiveArcT) : VectorT => {
   if (a.rx === 0 || a.ry === 0) {
     return vec(a.rx, a.ry, 0, 1)
   }

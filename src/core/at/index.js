@@ -1,7 +1,7 @@
 // @flow
 
 import type {
-  PointT,
+  PrimitivePointT,
   WeakCoordsT,
 } from '../../types'
 
@@ -19,8 +19,8 @@ import {
 } from '../parametric'
 
 export const pointAt : Function = curry((
-  previous : PointT,
-  current : PointT,
+  previous : PrimitivePointT,
+  current : PrimitivePointT,
   t : number,
 ) : WeakCoordsT => {
   switch (true) {

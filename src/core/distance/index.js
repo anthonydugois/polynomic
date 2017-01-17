@@ -1,6 +1,9 @@
 // @flow
 
-import type { PointT, LineT } from '../../types'
+import type {
+  PrimitivePointT,
+  PrimitiveLineT,
+} from '../../types'
 
 import { curry, clamp } from 'lodash/fp'
 
@@ -12,13 +15,13 @@ export const distance : Function = curry((
 ) : number => Math.sqrt(((x1 - x2) ** 2) + ((y1 - y2) ** 2)))
 
 export const distanceToPoint : Function = curry((
-  from : PointT,
-  to : PointT,
+  from : PrimitivePointT,
+  to : PrimitivePointT,
 ) : number => distance(from.x, from.y, to.x, to.y))
 
 export const distanceToLine : Function = curry((
-  from : PointT,
-  to : LineT,
+  from : PrimitivePointT,
+  to : PrimitiveLineT,
 ) : number => {
   const d : number = distance(to.x1, to.y1, to.x2, to.y2)
 

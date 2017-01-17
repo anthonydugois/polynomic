@@ -1,13 +1,16 @@
 // @flow
 
-import type { PointT } from '../types'
+import type {
+  PrimitivePointT,
+  PointT,
+} from '../types'
 
 import { hydrate as hydratePoint } from '../core/point'
 import * as codes from '../core/codes'
 
 export const is : Function =
   (code : string) : Function =>
-    (cmd : PointT | Function) : boolean =>
+    (cmd : PointT) : boolean =>
       hydratePoint(cmd).code.toLowerCase() === code.toLowerCase()
 
 export const isM : Function = is(codes.M)
@@ -21,13 +24,10 @@ export const isS : Function = is(codes.S)
 export const isA : Function = is(codes.A)
 export const isZ : Function = is(codes.Z)
 
-export const isRelative : Function = (
-  cmd : PointT | Function,
-) : boolean => {
-  const current : PointT = hydratePoint(cmd)
+export const isRelative : Function = (cmd : PointT) : boolean => {
+  const current : PrimitivePointT = hydratePoint(cmd)
   return current.code.toLowerCase() === current.code
 }
 
-export const isAbsolute : Function = (
-  cmd : PointT | Function,
-) : boolean => !isRelative(cmd)
+export const isAbsolute : Function = (cmd : PointT) : boolean =>
+  !isRelative(cmd)

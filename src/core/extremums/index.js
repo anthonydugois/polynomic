@@ -2,8 +2,8 @@
 
 import type {
   WeakCoordsT,
-  ArcT,
-  EllipseT,
+  PrimitiveArcT,
+  PrimitiveEllipseT,
 } from '../../types'
 
 import { curry, map, filter } from 'lodash/fp'
@@ -54,8 +54,8 @@ export const cubicExtremums : Function = curry((
   ...dCubicRoots(y1, y2, y3, y4),
 ]))
 
-export const ellipticExtremums : Function = (a : ArcT) : Array<WeakCoordsT> => {
-  const { start, end } : EllipseT = arcToEllipse(a)
+export const ellipticExtremums : Function = (a : PrimitiveArcT) : Array<WeakCoordsT> => {
+  const { start, end } : PrimitiveEllipseT = arcToEllipse(a)
   const [ax, ay] : Array<number> = dEllipticRoots(a.rx, a.ry, a.phi)
 
   return extremums(elliptic(a), [

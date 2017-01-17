@@ -1,6 +1,6 @@
 // @flow
 
-import type { PointT, PathT } from '../../types'
+import type { PrimitivePointT, PathT } from '../../types'
 
 import { curry } from 'lodash/fp'
 import { point } from '../point'
@@ -16,9 +16,9 @@ export const toQ : Function = () => {}
 export const toA : Function = () => {}
 
 export const toC : Function = curry((
-  previous : PointT,
-  current : PointT,
-) : PointT | PathT => {
+  previous : PrimitivePointT,
+  current : PrimitivePointT,
+) : PrimitivePointT | PathT => {
   switch (true) {
   case isL(current):
   case isH(current):
@@ -38,9 +38,9 @@ export const toC : Function = curry((
 })
 
 const lToC : Function = (
-  previous : PointT,
-  current : PointT,
-) : PointT => {
+  previous : PrimitivePointT,
+  current : PrimitivePointT,
+) : PrimitivePointT => {
   const x1 : number = previous.x
   const y1 : number = previous.y
   const x2 : number = current.x
@@ -55,9 +55,9 @@ const lToC : Function = (
 }
 
 const qToC : Function = (
-  previous : PointT,
-  current : PointT,
-) : PointT => {
+  previous : PrimitivePointT,
+  current : PrimitivePointT,
+) : PrimitivePointT => {
   const x1 : number = typeof current.parameters.x1 !== 'undefined' ?
     ((1 / 3) * previous.x) + ((2 / 3) * current.parameters.x1) :
     previous.x
@@ -83,8 +83,8 @@ const qToC : Function = (
 }
 
 const aToC : Function = (
-  previous : PointT,
-  current : PointT,
+  previous : PrimitivePointT,
+  current : PrimitivePointT,
   center : Array<number> = [],
 ) : PathT => {
   let partial = []

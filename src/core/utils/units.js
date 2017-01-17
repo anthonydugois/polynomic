@@ -2,9 +2,7 @@
 
 import { curry } from 'lodash/fp'
 
-export const parseUnit : Function = curry((
-  str : string,
-) : [number, string] => {
+export const parseUnit : Function = (str : string) : [number, string] => {
   const res : ?Array<string> = str.match(/([\d.+-]+e?[\d.+-]*)\s*([a-z]*|\%)/i)
 
   if (res) {
@@ -15,4 +13,4 @@ export const parseUnit : Function = curry((
   }
 
   return [0, '']
-})
+}

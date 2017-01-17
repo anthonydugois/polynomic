@@ -8,7 +8,7 @@ import type {
   PointParamsT,
   PathT,
   PathTransformOptionsT,
-  RectT,
+  PrimitiveRectT,
 } from '../types'
 
 import { curry } from 'lodash/fp'
@@ -29,7 +29,7 @@ export const transform : Function = curry(function transform(
   path : PathT,
   options : {} = {},
 ) : PathT {
-  const bbox : RectT = boundingBox(path)
+  const bbox : PrimitiveRectT = boundingBox(path)
   const { transformOrigin } : PathTransformOptionsT = transformOptions(options)
   const origin : CoordsT = relativeCoords(bbox, transformOrigin)
   const transformMatrix : MatrixT = transformList(matrices, bbox, origin)
@@ -54,7 +54,7 @@ const transformOptions : Function = curry(function transformOptions(
 
 const transformList : Function = curry(function transformList(
   matrices : Array<MatrixT | Function>,
-  bbox : RectT,
+  bbox : PrimitiveRectT,
   origin : CoordsT,
 ) : MatrixT {
   return matrices.reduce(
@@ -224,8 +224,8 @@ const transformArc : Function = curry(function transformArc(
 
 const transformRect : Function = curry(function transformRect(
   transformMatrix : MatrixT,
-  primitive : RectT,
-) : RectT {
+  primitive : PrimitiveRectT,
+) : PrimitiveRectT {
   const vMin : VectorT = vec(primitive.x, primitive.y, 0, 1)
   const [x0, y0] : VectorT = multiplyVec(transformMatrix, vMin)
 

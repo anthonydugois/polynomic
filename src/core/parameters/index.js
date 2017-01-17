@@ -1,7 +1,7 @@
 // @flow
 
 import type {
-  PointT,
+  PrimitivePointT,
   PointParamsT,
 } from '../../types'
 
@@ -20,7 +20,7 @@ export const anchors : Function = (
 ) : PointParamsT => Object.freeze({ x1, y1, x2, y2 })
 
 export const implicitAnchor : Function = (
-  previous : PointT,
+  previous : PrimitivePointT,
 ) : PointParamsT => {
   const isQuadratic : boolean = isQ(previous) || isT(previous)
 
@@ -35,7 +35,7 @@ export const implicitAnchor : Function = (
 }
 
 export const implicitAnchors : Function = (
-  previous : PointT,
+  previous : PrimitivePointT,
   x2 ?: number = 0,
   y2 ?: number = 0,
 ) : PointParamsT => {

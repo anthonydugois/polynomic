@@ -1,6 +1,6 @@
 // @flow
 
-import type { ArcT } from '../types'
+import type { PrimitiveArcT } from '../types'
 
 export const arc : Function = (
   x1 : number = 0,
@@ -12,7 +12,8 @@ export const arc : Function = (
   sweep : number = 0,
   x2 : number = x1,
   y2 : number = y1,
-) : ArcT => Object.freeze({
+) : PrimitiveArcT => Object.freeze({
+  type: 'arc',
   x1,
   y1,
   rx,

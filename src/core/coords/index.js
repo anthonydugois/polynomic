@@ -3,7 +3,7 @@
 import type {
   CoordsT,
   WeakCoordsT,
-  RectT,
+  PrimitiveRectT,
 } from '../../types'
 
 import { rect } from '../../rect'
@@ -27,7 +27,7 @@ export const weakCoords : Function = (
 })
 
 export const relativeCoords : Function = (
-  boundary ?: RectT = rect(),
+  boundary ?: PrimitiveRectT = rect(),
   c ?: WeakCoordsT = weakCoords(),
 ) : CoordsT => coords(
   relativeX(boundary, c.x),
@@ -36,7 +36,7 @@ export const relativeCoords : Function = (
 )
 
 const relativeX : Function = (
-  boundary ?: RectT = rect(),
+  boundary ?: PrimitiveRectT = rect(),
   x ?: number | string = 0,
 ) : number => {
   if (typeof x !== 'string') {
@@ -52,7 +52,7 @@ const relativeX : Function = (
 }
 
 const relativeY : Function = (
-  boundary ?: RectT = rect(),
+  boundary ?: PrimitiveRectT = rect(),
   y ?: number | string = 0,
 ) : number => {
   if (typeof y !== 'string') {

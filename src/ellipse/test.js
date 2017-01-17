@@ -3,6 +3,7 @@ import { ellipse } from './index'
 test('should return the object representation of an ellipse', () => {
   const test = ellipse(0, 0, 50, 100, Math.PI / 2, 0, Math.PI)
   const expected = {
+    type: 'ellipse',
     cx: 0,
     cy: 0,
     rx: 50,

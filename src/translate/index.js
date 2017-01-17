@@ -3,7 +3,7 @@
 import type {
   MatrixT,
   CoordsT,
-  RectT,
+  PrimitiveRectT,
 } from '../types'
 
 import { curry } from 'lodash/fp'
@@ -16,7 +16,7 @@ export const translate3d : Function = curry(function translate3d(
   ty : number | string,
   tz : number,
   matrix : MatrixT,
-  bbox : RectT = rect(),
+  bbox : PrimitiveRectT = rect(),
 ) : MatrixT {
   const { x, y, z } : CoordsT = relativeCoords(
     bbox,
@@ -36,7 +36,7 @@ export const translate : Function = curry(function translate(
   tx : number | string,
   ty : number | string,
   matrix : MatrixT,
-  bbox : RectT = rect(),
+  bbox : PrimitiveRectT = rect(),
 ) : MatrixT {
   return translate3d(tx, ty, 0, matrix, bbox)
 })
@@ -44,7 +44,7 @@ export const translate : Function = curry(function translate(
 export const translateX : Function = curry(function translateX(
   tx : number | string,
   matrix : MatrixT,
-  bbox : RectT = rect(),
+  bbox : PrimitiveRectT = rect(),
 ) : MatrixT {
   return translate3d(tx, 0, 0, matrix, bbox)
 })
@@ -52,7 +52,7 @@ export const translateX : Function = curry(function translateX(
 export const translateY : Function = curry(function translateY(
   ty : number | string,
   matrix : MatrixT,
-  bbox : RectT = rect(),
+  bbox : PrimitiveRectT = rect(),
 ) : MatrixT {
   return translate3d(0, ty, 0, matrix, bbox)
 })
@@ -60,7 +60,7 @@ export const translateY : Function = curry(function translateY(
 export const translateZ : Function = curry(function translateZ(
   tz : number,
   matrix : MatrixT,
-  bbox : RectT = rect(),
+  bbox : PrimitiveRectT = rect(),
 ) : MatrixT {
   return translate3d(0, 0, tz, matrix, bbox)
 })

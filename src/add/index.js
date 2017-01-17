@@ -1,6 +1,6 @@
 // @flow
 
-import type { PathT, PointT } from '../types'
+import type { PathT, PointT, PrimitivePointT } from '../types'
 
 import { curry, first, last } from 'lodash/fp'
 import { hydrate as hydratePoint } from '../core/point'
@@ -9,7 +9,7 @@ import { M } from '../points'
 import { path } from '../path'
 
 export const add : Function = curry((
-  primitive : PointT | PathT | Function,
+  primitive : PointT | PathT,
   _path : PathT,
   index : number = _path.length,
 ) : PathT => {
@@ -30,8 +30,8 @@ const keepIntegrity : Function = curry((
   path1 : PathT,
   path2 : PathT,
 ) : PathT => {
-  const lastPoint : PointT = last(path1)
-  const firstPoint : PointT = first(path2)
+  const lastPoint : PrimitivePointT = last(path1)
+  const firstPoint : PrimitivePointT = first(path2)
 
   if (isZ(lastPoint) && !isM(firstPoint)) {
     return path([

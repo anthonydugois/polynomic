@@ -1,6 +1,6 @@
 // @flow
 
-import type { RectT } from '../types'
+import type { PrimitiveRectT } from '../types'
 
 export const rect : Function = (
   x : number = 0,
@@ -9,7 +9,8 @@ export const rect : Function = (
   height : number = width,
   rx : number = 0,
   ry : number = rx,
-) : RectT => Object.freeze({
+) : PrimitiveRectT => Object.freeze({
+  type: 'rect',
   x,
   y,
   width,
