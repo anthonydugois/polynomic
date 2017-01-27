@@ -11,6 +11,7 @@ import { parse } from '../parse'
 test('should find the last point', () => {
   const test = findLastPoint(parse('M0 0L100 100L200 200'))
   const expected = {
+    type: 'point',
     code: 'L',
     x: 200,
     y: 200,
@@ -23,6 +24,7 @@ test('should find the last point', () => {
 test('should find the last M point', () => {
   const test = findLastM(parse('M0 0L100 100L200 200'))
   const expected = {
+    type: 'point',
     code: 'M',
     x: 0,
     y: 0,
@@ -35,6 +37,7 @@ test('should find the last M point', () => {
 test('should return a point even if there is no result', () => {
   const test = findLastQ(parse('M0 0L100 100L200 200'))
   const expected = {
+    type: 'point',
     code: '',
     x: 0,
     y: 0,

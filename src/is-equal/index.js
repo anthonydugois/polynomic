@@ -29,7 +29,7 @@ export const isEqual : Function = curry((
   ) : boolean => arePointsEqual(point, path2[index], precision))
 })
 
-const arePointsEqual : Function = (
+export const arePointsEqual : Function = (
   point1 : PrimitivePointT,
   point2 : PrimitivePointT,
   precision ?: number = defaultPrecision,
@@ -38,7 +38,7 @@ const arePointsEqual : Function = (
   && round(point1.y, precision) === round(point2.y, precision)
   && areParametersEqual(point1.parameters, point2.parameters)
 
-const areParametersEqual : Function = (
+export const areParametersEqual : Function = (
   params1 : PointParamsT,
   params2 : PointParamsT,
   precision ?: number = defaultPrecision,

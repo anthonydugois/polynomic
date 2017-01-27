@@ -30,13 +30,13 @@ const keepIntegrity : Function = curry((
   path1 : PathT,
   path2 : PathT,
 ) : PathT => {
-  const lastPoint : PrimitivePointT = last(path1)
-  const firstPoint : PrimitivePointT = first(path2)
+  if (path1.length > 0 && path2.length > 0) {
+    const lastPoint : PrimitivePointT = last(path1)
+    const firstPoint : PrimitivePointT = first(path2)
 
-  if (isZ(lastPoint) && !isM(firstPoint)) {
-    return path([
-      M(lastPoint.x, lastPoint.y),
-    ])
+    if (isZ(lastPoint) && !isM(firstPoint)) {
+      return path([M(lastPoint.x, lastPoint.y)])
+    }
   }
 
   return path([])

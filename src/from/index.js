@@ -12,7 +12,8 @@ import type {
   PathT,
 } from '../types'
 
-import { reduce } from 'lodash/fp'
+import { add } from '../add'
+import { reduce } from '../reduce'
 import { path } from '../path'
 import { parse, parseSegments } from '../parse'
 import { M, L, A, Z } from '../points'
@@ -66,10 +67,10 @@ export const fromLine : Function = (line : PrimitiveLineT | HTMLElement) : PathT
     parseFloat(line.getAttribute('y2')) :
     line.y2
 
-  return path(
+  return path([
     M(x1, y1),
     L(x2, y2),
-  )
+  ])
 }
 
 export const fromRect : Function = (rect : PrimitiveRectT | HTMLElement) : PathT => {
@@ -106,19 +107,19 @@ export const fromRect : Function = (rect : PrimitiveRectT | HTMLElement) : PathT
     || _ry === 0
 
   if (noRadius) {
-    return path(
+    return path([
       M(x, y),
       L(x + width, y),
       L(x + width, y + height),
       L(x, y + height),
       Z(),
-    )
+    ])
   }
 
   const rx : number = isNaN(_rx) ? _ry : _rx
   const ry : number = isNaN(_ry) ? _rx : _ry
 
-  return path(
+  return path([
     M(x + rx, y),
     L((x + width) - rx, y),
     A(rx, ry, 0, 0, 1, x + width, y + ry),
@@ -129,7 +130,7 @@ export const fromRect : Function = (rect : PrimitiveRectT | HTMLElement) : PathT
     L(x, y + ry),
     A(rx, ry, 0, 0, 1, x + rx, y),
     Z(),
-  )
+  ])
 }
 
 export const fromCircle : Function = (circle : PrimitiveCircleT | HTMLElement): PathT => {
@@ -145,12 +146,12 @@ export const fromCircle : Function = (circle : PrimitiveCircleT | HTMLElement): 
     parseFloat(circle.getAttribute('r')) :
     circle.r
 
-  return path(
+  return path([
     M(cx - r, cy),
     A(r, r, 0, 0, 0, cx + r, cy),
     A(r, r, 0, 0, 0, cx - r, cy),
     Z(),
-  )
+  ])
 }
 
 export const fromEllipse : Function = (ellipse : PrimitiveEllipseT | HTMLElement) : PathT => {
@@ -170,42 +171,12 @@ export const fromEllipse : Function = (ellipse : PrimitiveEllipseT | HTMLElement
     parseFloat(ellipse.getAttribute('ry')) :
     ellipse.ry
 
-  return path(
+  return path([
     M(cx - rx, cy),
     A(rx, ry, 0, 0, 0, cx + rx, cy),
     A(rx, ry, 0, 0, 0, cx - rx, cy),
     Z(),
-  )
-}
-
-export const fromPolygon : Function = (polygon : PrimitivePolygonT | HTMLElement) : PathT => {
-  const points : string = polygon instanceof HTMLElement ?
-    polygon.getAttribute('points') :
-    polygon.points
-
-  const coords : Array<string | number> = parseSegments(points)[0]
-
-  return reduce.convert({ cap: false })(
-    (
-      acc : PathT,
-      coord : string | number,
-      index : number,
-    ): PathT => {
-      if (index > 0 && index === coords.length - 1) {
-        acc.push(Z()(acc[0]))
-      } else if (index % 2 === 0) {
-        const x : number = parseFloat(coord)
-        const y : number = parseFloat(coords[index + 1])
-        const cmd : Function = index === 0 ? M : L
-
-        acc.push(cmd(x, y)())
-      }
-
-      return acc
-    },
-    [],
-    coords,
-  )
+  ])
 }
 
 export const fromPolyline : Function = (polyline : PrimitivePolylineT | HTMLElement) : PathT => {
@@ -213,32 +184,30 @@ export const fromPolyline : Function = (polyline : PrimitivePolylineT | HTMLElem
     polyline.getAttribute('points') :
     polyline.points
 
-  const coords : Array<string | number> = parseSegments(points)[0]
-
-  return reduce.convert({ cap: false })(
+  return reduce(
     (
       acc : PathT,
       coord : string | number,
       index : number,
-    ): PathT => {
+      coords : Array<string | number>,
+    ) : PathT => {
       if (index % 2 === 0) {
         const x : number = parseFloat(coord)
         const y : number = parseFloat(coords[index + 1])
         const cmd : Function = index === 0 ? M : L
 
-        acc.push(cmd(x, y)())
+        acc.push(cmd(x, y))
       }
 
       return acc
     },
     [],
-    coords,
+    parseSegments(points)[0],
   )
 }
 
+export const fromPolygon : Function = (polygon : PrimitivePolygonT | HTMLElement) : PathT =>
+  add(Z(), fromPolyline(polygon))
+
 export const fromPath : Function = (path : PrimitivePathT | HTMLElement) : PathT =>
-  parse(
-    path instanceof HTMLElement ?
-      path.getAttribute('d') :
-      path.d
-  )
+  parse(path instanceof HTMLElement ? path.getAttribute('d') : path.d)

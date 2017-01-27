@@ -14,15 +14,13 @@ import { rect } from '../rect'
 import { arc } from '../arc'
 import { isQ, isT, isC, isS, isA } from '../is'
 
-export function boundingBox(
-  path : PathT,
-) : PrimitiveRectT {
-  return path.reduce(
+export const boundingBox : Function = (path : PathT) : PrimitiveRectT => {
+  const { xMin, yMin, xMax, yMax } = path.reduce(
     (
-      acc : PrimitiveRectT,
+      acc,
       current : PrimitivePointT,
       index : number,
-    ) : PrimitiveRectT => {
+    ) => {
       if (index > 0) {
         const {
           x,
@@ -31,30 +29,29 @@ export function boundingBox(
           height,
         } : PrimitiveRectT = _boundingBox(current, path[index - 1])
 
-        const xMin : number = Math.min(acc.x, x)
-        const yMin : number = Math.min(acc.y, y)
-        const xMax : number = Math.max(acc.x + acc.width, x + width)
-        const yMax : number = Math.max(acc.y + acc.height, y + height)
-
-        acc.x = xMin
-        acc.y = yMin
-        acc.width = xMax - xMin
-        acc.height = yMax - yMin
+        acc.xMin = Math.min(acc.xMin, x)
+        acc.yMin = Math.min(acc.yMin, y)
+        acc.xMax = Math.max(acc.xMax, x + width)
+        acc.yMax = Math.max(acc.yMax, y + height)
       }
 
       return acc
     },
-    rect(
-      path[0].x,
-      path[0].y,
-    ),
+    {
+      xMin: path[0].x,
+      yMin: path[0].y,
+      xMax: 0,
+      yMax: 0,
+    },
   )
+
+  return rect(xMin, yMin, xMax - xMin, yMax - yMin)
 }
 
-function _boundingBox(
+const _boundingBox : Function = (
   current : PrimitivePointT,
   previous : PrimitivePointT = point(),
-) : PrimitiveRectT {
+) : PrimitiveRectT => {
   switch (true) {
   case isQ(current):
   case isT(current):
@@ -103,32 +100,29 @@ function _boundingBox(
   }
 }
 
-function extremumsToBoundingBox(
-  extremums : Array<WeakCoordsT>
-) : PrimitiveRectT {
-  return extremums.reduce(
+const extremumsToBoundingBox : Function = (extremums : Array<WeakCoordsT>) : PrimitiveRectT => {
+  const { xMin, yMin, xMax, yMax } = extremums.reduce(
     (
-      acc : PrimitiveRectT,
+      acc,
       extremum : WeakCoordsT,
-    ) : PrimitiveRectT => {
+    ) => {
       const x : number = parseFloat(extremum.x)
       const y : number = parseFloat(extremum.y)
 
-      const xMin : number = Math.min(acc.x, x)
-      const yMin : number = Math.min(acc.y, y)
-      const xMax : number = Math.max(acc.x + acc.width, x)
-      const yMax : number = Math.max(acc.y + acc.height, y)
-
-      acc.x = xMin
-      acc.y = yMin
-      acc.width = xMax - xMin
-      acc.height = yMax - yMin
+      acc.xMin = Math.min(acc.xMin, x)
+      acc.yMin = Math.min(acc.yMin, y)
+      acc.xMax = Math.max(acc.xMax, x)
+      acc.yMax = Math.max(acc.yMax, y)
 
       return acc
     },
-    rect(
-      parseFloat(extremums[0].x),
-      parseFloat(extremums[0].y),
-    ),
+    {
+      xMin: parseFloat(extremums[0].x),
+      yMin: parseFloat(extremums[0].y),
+      xMax: 0,
+      yMax: 0,
+    },
   )
+
+  return rect(xMin, yMin, xMax - xMin, yMax - yMin)
 }

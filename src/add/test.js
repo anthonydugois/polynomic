@@ -4,10 +4,10 @@ import { parse } from '../parse'
 
 test('should add and hydrate the point on the path', () => {
   const test = add(
-    l(10, 10),
+    Z(),
     parse('M0 0L50 50'),
   )
-  const expected = 'M0 0L50 50l10 10'
+  const expected = 'M0 0L50 50Z'
 
   expect(test).toEqualPath(expected)
 })
