@@ -2,6 +2,12 @@ import { Point, C, c } from "../points"
 import isRelative from "../is-relative"
 import rotate from "../../transforms/rotate"
 
+function clamp(value, min, max) {
+  if (value < min) { return min }
+  if (value > max) { return max }
+  return value
+}
+
 export default function arcToCubic(prev, point, center = null) {
   let partial = []
   let cx, cy, f1, f2
@@ -54,8 +60,9 @@ export default function arcToCubic(prev, point, center = null) {
     cx = ((k * rx * y) / ry) + ((x1 + x2) / 2)
     cy = ((k * -ry * x) / rx) + ((y1 + y2) / 2)
 
-    f1 = Math.asin((y1 - cy) / ry)
-    f2 = Math.asin((y2 - cy) / ry)
+
+    f1 = Math.asin(clamp((y1 - cy) / ry, -1, 1))
+    f2 = Math.asin(clamp((y2 - cy) / ry, -1, 1))
 
     if (x1 < cx) {
       f1 = Math.PI - f1

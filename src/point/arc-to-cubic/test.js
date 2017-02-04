@@ -12,3 +12,15 @@ test("should convert the arc into a cubic curve", () => {
 
   expect(test).toEqual(expected)
 })
+test("should convert the arc into a cubic curve (even with floating point errors)", () => {
+  const prev = M(22.759, -46.5)
+  const point = A(10, 10, 0, 0, 1, 22.759, 46.5)
+  const test = arcToCubic(prev, point)
+
+  const expected = [
+    C(58.55471668975679, -46.5, 80.92703896456277, -7.7500000000000036, 23.24999999999999, 75),
+    C(61.24285267014358, 26.34401076758502, 26.331655899081635, 46.5, 22.759, 46.5),
+  ]
+
+  expect(test).toEqual(expected)
+})
