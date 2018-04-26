@@ -1,6 +1,3 @@
 /node_modules
 /lib
-/dist
-/coverage
-/docs
-/*.log
+/package-lock.json

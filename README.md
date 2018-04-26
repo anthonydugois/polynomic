@@ -1,55 +1,97 @@
-# Polynomic
-
-> A set of advanced utilities to manipulate SVG paths.
-
-### Installation
-
-```sh
-npm install --save polynomic
-```
-
-### Basic usage
-
-```js
-import Polynomic from "polynomic"
-
-// Parse a pathstring and build a normalized array of points
-let path = Polynomic.pathstring.parse("M0 0 L100 0 L100 100 L0 100 z")
-
-// Perform some transforms on the path
-path = Polynomic.transforms.rotate(path, Math.PI / 4, "center", "center")
-path = Polynomic.transforms.translate(path, 25, 50)
-
-// Get the new pathstring
-const pathstring = Polynomic.pathstring.build(path)
-
-// ➜ "M75 29.289L145.711 100L75 170.711L4.289 100z"
-```
-
-### Documentation
-
-See the [official documentation](http://anthonydugois.com/polynomic/).
-
-### Contributing
-
-Clone the repo:
+## Grammars
 
 ```
-git clone https://github.com/anthonydugois/polynomic.git
+pathstring
+  : WhiteSpace? group* WhiteSpace?
+
+group
+  : segMoveto command*
+
+command
+  : segClosepath
+  | segLineto
+  | segCurvetoCubic
+  | segCurvetoQuadratic
+  | segArc
+  | segLinetoHorizontal
+  | segLinetoVertical
+  | segCurvetoCubicSmooth
+  | segCurvetoQuadraticSmooth
+
+segClosepath
+  : SegClosepath
+
+segMoveto
+  : (SegMovetoAbs | SegMovetoRel) WhiteSpace? (segMovetoParams sep?)+
+
+segMovetoParams
+  : coordinates
+
+segLineto
+  : (SegLinetoAbs | SegLinetoRel) WhiteSpace? (segLinetoParams sep?)+
+
+segLinetoParams
+  : coordinates
+
+segCurvetoCubic
+  : (SegCurvetoCubicAbs | SegCurvetoCubicRel) WhiteSpace? (segCurvetoCubicParams sep?)+
+
+segCurvetoCubicParams
+  : coordinates sep? coordinates sep? coordinates
+
+segCurvetoQuadratic
+  : (SegCurvetoQuadraticAbs | SegCurvetoQuadraticRel) WhiteSpace? (segCurvetoQuadraticParams sep?)+
+
+segCurvetoQuadraticParams
+  : coordinates sep? coordinates
+
+segArc
+  : (SegArcAbs | SegArcRel) WhiteSpace? (segArcParams sep?)+
+
+segArcParams
+  : NumberLiteral sep? NumberLiteral sep? NumberLiteral sep? Flag sep? Flag sep? coordinates
+
+segLinetoHorizontal
+  : (SegLinetoHorizontalAbs | SegLinetoHorizontalRel) WhiteSpace? (segLinetoHorizontalParams sep?)+
+
+segLinetoHorizontalParams
+  : NumberLiteral
+
+segLinetVerticalo
+  : (SegLinetoVerticalAbs | SegLinetoVerticalRel) WhiteSpace? (segLinetoVerticalParams sep?)+
+
+segLinetoVerticalParams
+  : NumberLiteral
+
+segCurvetoCubicSmooth
+  : (SegCurvetoCubicSmoothAbs | SegCurvetoCubicSmoothRel) WhiteSpace? (segCurvetoCubicSmoothParams sep?)+
+
+segCurvetoCubicSmoothParams
+  : coordinates sep? coordinates
+
+segCurvetoQuadraticSmooth
+  : (SegCurvetoQuadraticSmoothAbs | SegCurvetoQuadraticSmoothRel) WhiteSpace ? (segCurvetoQuadraticSmoothParams sep?)+
+
+segCurvetoQuadraticSmoothParams
+  : coordinates
+
+coordinates
+  : NumberLiteral sep? NumberLiteral
+
+sep
+  : (WhiteSpace Comma? | Comma) WhiteSpace?
 ```
 
-Run tests:
-
 ```
-npm test
+points
+  : WhiteSpace? pairs? WhiteSpace?
+
+pairs
+  : coordinates (sep coordinates)*
+
+coordinates
+  : NumberLiteral sep? NumberLiteral
+
+sep
+  : (WhiteSpace Comma? | Comma) WhiteSpace?
 ```
-
-Run linting:
-
-```
-npm run lint
-```
-
-### License
-
-MIT
