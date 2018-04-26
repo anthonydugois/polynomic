@@ -1,12 +1,4 @@
 {
-  "presets": [
-    "es2015",
-    "es2016"
-  ],
-  "plugins": [
-    "syntax-trailing-function-commas",
-    "transform-object-rest-spread",
-    "transform-export-extensions",
-    "add-module-exports"
-  ]
+  "presets": ["env"],
+  "plugins": ["transform-flow-strip-types", "transform-object-rest-spread"]
 }
